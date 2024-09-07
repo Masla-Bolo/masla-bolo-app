@@ -1,30 +1,26 @@
-import 'package:masla_bolo_app/domain/entities/channel_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/model/user_json.dart';
 
-import '../domain/entities/server_entity.dart';
-import 'channel_json.dart';
+import '../domain/entities/issue_entity.dart';
 
-class ServerJson {
+class IssueJson {
   String id;
   String title;
   String image;
   String description;
   List<UserEntity> members;
-  List<ChannelEntity> channels;
 
-  ServerJson({
+  IssueJson({
     required this.id,
     required this.description,
     required this.image,
     required this.title,
     required this.members,
-    required this.channels,
   });
 
-  factory ServerJson.fromJson(Map<String, dynamic> json) {
-    return ServerJson(
+  factory IssueJson.fromJson(Map<String, dynamic> json) {
+    return IssueJson(
       id: json['id'],
       description: json['description'],
       image: json['image'],
@@ -32,28 +28,23 @@ class ServerJson {
       members: parseList(json['members'], UserJson.fromData)
           .map((json) => json.toDomain())
           .toList(),
-      channels: parseList(json['channels'], ChannelJson.fromJson)
-          .map((json) => json.toDomain())
-          .toList(),
     );
   }
 
-  factory ServerJson.copyWith(ServerEntity serverEntity) => ServerJson(
+  factory IssueJson.copyWith(IssueEntity serverEntity) => IssueJson(
         id: serverEntity.id,
         title: serverEntity.title,
         description: serverEntity.description,
         members: serverEntity.members,
         image: serverEntity.image,
-        channels: serverEntity.channels,
       );
 
-  ServerEntity toDomain() => ServerEntity(
+  IssueEntity toDomain() => IssueEntity(
         id: id,
         description: description,
         image: image,
         title: title,
         members: members,
-        channels: channels,
       );
 
   Map<String, dynamic> toJson() {
@@ -62,7 +53,6 @@ class ServerJson {
       'description': description,
       'image': image,
       'members': members.map((e) => e.id).toList(),
-      'channels': channels.map((e) => e.id).toList(),
     };
   }
 }

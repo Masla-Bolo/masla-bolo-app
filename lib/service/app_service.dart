@@ -18,22 +18,24 @@ import 'package:get_it/get_it.dart';
 class AppService {
   static Future<void> initialize(GetIt getIt) async {
     getIt.registerSingleton<AppNavigation>(AppNavigation());
-    getIt.registerSingleton<LocalStorageRepository>(
-      PrimaryLocalStorageRepository(),
-    );
-    getIt.registerSingleton<ApiService>(ApiService(getIt()));
-    getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
-    getIt.registerSingleton<HomeCubit>(HomeCubit());
-    getIt.registerSingleton<UserStore>(UserStore());
-    getIt.registerSingleton<AuthRepository>(ApiAuthRepository(
-      getIt(),
-      getIt(),
-    ));
-    getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
-    getIt.registerSingleton<SplashNavigator>(SplashNavigator(getIt()));
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));
-    getIt.registerSingleton<AuthCubit>(AuthCubit(getIt(), getIt()));
-    getIt.registerSingleton<BottomBarNavigator>(BottomBarNavigator());
-    getIt.registerSingleton<BottomBarCubit>(BottomBarCubit(getIt()));
+    getIt.registerLazySingleton<LocalStorageRepository>(
+      () => PrimaryLocalStorageRepository(),
+    );
+    getIt.registerLazySingleton<ApiService>(() => ApiService(getIt()));
+    getIt.registerLazySingleton<NetworkRepository>(
+        () => NetworkRepository(getIt()));
+    getIt.registerLazySingleton<HomeCubit>(() => HomeCubit());
+    getIt.registerLazySingleton<UserStore>(() => UserStore());
+    getIt.registerLazySingleton<AuthRepository>(() => ApiAuthRepository(
+          getIt(),
+          getIt(),
+        ));
+    getIt.registerLazySingleton<AuthNavigator>(() => AuthNavigator(getIt()));
+    getIt
+        .registerLazySingleton<SplashNavigator>(() => SplashNavigator(getIt()));
+    getIt.registerLazySingleton<AuthCubit>(() => AuthCubit(getIt(), getIt()));
+    getIt.registerLazySingleton<BottomBarNavigator>(() => BottomBarNavigator());
+    getIt.registerLazySingleton<BottomBarCubit>(() => BottomBarCubit(getIt()));
   }
 }

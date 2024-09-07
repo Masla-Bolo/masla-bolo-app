@@ -1,34 +1,30 @@
-import '../../model/server_json.dart';
-import 'channel_entity.dart';
+import '../../model/issue_json.dart';
 import 'user_entity.dart';
 
-class ServerEntity {
+class IssueEntity {
   String id;
   String title;
   String image;
   String description;
   List<UserEntity> members;
-  List<ChannelEntity> channels;
 
-  ServerEntity({
+  IssueEntity({
     required this.id,
     required this.description,
     required this.image,
     required this.title,
     required this.members,
-    required this.channels,
   });
 
-  factory ServerEntity.empty() => ServerEntity(
+  factory IssueEntity.empty() => IssueEntity(
         id: '',
         description: '',
         image: '',
         title: '',
         members: [],
-        channels: [],
       );
 
-  Map<String, dynamic> toServerJson() {
-    return ServerJson.copyWith(this).toJson();
+  Map<String, dynamic> toIssueJson() {
+    return IssueJson.copyWith(this).toJson();
   }
 }

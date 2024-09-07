@@ -1,11 +1,11 @@
-import 'package:masla_bolo_app/domain/entities/server_entity.dart';
+import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 
 class HomeState {
   UserEntity? user;
   int serverIndex;
-  List<ServerEntity> servers;
-  ServerEntity currentServer;
+  List<IssueEntity> servers;
+  IssueEntity currentServer;
   double panelOffsetX;
   double bottomBarOffset;
   HomeState({
@@ -19,8 +19,8 @@ class HomeState {
 
   copyWith({
     UserEntity? user,
-    List<ServerEntity>? servers,
-    ServerEntity? currentServer,
+    List<IssueEntity>? servers,
+    IssueEntity? currentServer,
     double? panelOffsetX,
     double? bottomBarOffset,
     int? serverIndex,
@@ -37,6 +37,6 @@ class HomeState {
   factory HomeState.empty() => HomeState(
         user: UserEntity(email: '', id: '', name: ''),
         servers: [],
-        currentServer: ServerEntity.empty(),
+        currentServer: IssueEntity.empty(),
       );
 }

@@ -4,7 +4,6 @@ import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrimaryLocalStorageRepository implements LocalStorageRepository {
-  PrimaryLocalStorageRepository();
   @override
   Future<Either<LocalStorageFailure, String>> getValue(String key) async {
     try {

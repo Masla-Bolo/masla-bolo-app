@@ -1,4 +1,3 @@
-import 'package:masla_bolo_app/features/home/chat_room/chat_room.dart';
 import 'package:masla_bolo_app/features/home/components/home_body.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/features/home/home_state.dart';
@@ -44,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Stack(
                   children: [
                     HomeBody(cubit: homeCubit),
-                    ChatRoom(cubit: homeCubit),
                   ],
                 ),
               );
