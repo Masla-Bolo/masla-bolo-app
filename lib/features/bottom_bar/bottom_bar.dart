@@ -27,11 +27,17 @@ class BottomBar extends StatelessWidget {
               }
             },
             child: Scaffold(
-              resizeToAvoidBottomInset: true,
               body: Stack(
+                alignment: Alignment.bottomCenter,
                 children: [
                   state.page,
-                  BottomBarContainer(cubit: getIt(), homeCubit: getIt()),
+                  if (MediaQuery.of(context).viewInsets.bottom <= 100)
+                    Positioned(
+                        bottom: 10,
+                        child: BottomBarContainer(
+                          cubit: getIt(),
+                          homeCubit: getIt(),
+                        )),
                 ],
               ),
             ),

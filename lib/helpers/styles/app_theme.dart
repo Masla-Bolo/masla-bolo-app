@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static const lightColortheme = ColorScheme(
     brightness: Brightness.dark,
-    primary: AppColor.black1,
+    primary: AppColor.white,
     onPrimary: AppColor.black1,
     secondary: AppColor.black1,
     onSecondary: AppColor.black1,
@@ -18,7 +18,7 @@ class AppTheme {
     brightness: Brightness.dark,
     primary: AppColor.black1,
     onPrimary: AppColor.black1,
-    secondary: AppColor.black1,
+    secondary: AppColor.white,
     onSecondary: AppColor.black1,
     error: AppColor.black1,
     onError: AppColor.black1,

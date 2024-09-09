@@ -1,5 +1,6 @@
 import 'package:masla_bolo_app/features/auth/register/resgister_screen.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar.dart';
+import 'package:masla_bolo_app/features/issue/issue_screen.dart';
 import 'package:masla_bolo_app/features/notification/notification_page.dart';
 import 'package:masla_bolo_app/features/profile/profile_screen.dart';
 import 'package:masla_bolo_app/main.dart';
@@ -15,38 +16,37 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   //     (settings.arguments ?? <String, dynamic>{}) as Map<String, dynamic>;
   switch (settings.name) {
     case RouteName.splash:
-      return MaterialPageRoute(
-          builder: (context) => SplashScreen(
-                cubit: getIt(),
-              ));
+      return getRoute(SplashScreen(
+        cubit: getIt(),
+      ));
 
     case RouteName.login:
-      return MaterialPageRoute(
-          builder: (context) => LoginScreen(
-                cubit: getIt(),
-              ));
+      return getRoute(LoginScreen(
+        cubit: getIt(),
+      ));
 
     case RouteName.bottomBar:
-      return MaterialPageRoute(
-          builder: (context) => BottomBar(
-                cubit: getIt(),
-              ));
+      return getRoute(BottomBar(
+        cubit: getIt(),
+      ));
+
     case RouteName.register:
-      return MaterialPageRoute(builder: (context) => const ResgisterScreen());
+      return getRoute(const ResgisterScreen());
 
     case RouteName.profile:
-      return MaterialPageRoute(builder: (context) => const ProfileScreen());
+      return getRoute(const ProfileScreen());
 
     case RouteName.home:
-      return MaterialPageRoute(
-          builder: (context) => HomeScreen(cubit: getIt()));
+      return getRoute(HomeScreen(cubit: getIt()));
 
     case RouteName.notification:
-      return MaterialPageRoute(builder: (context) => const NotificationPage());
+      return getRoute(const NotificationPage());
+
+    case RouteName.issue:
+      return getRoute(IssueScreen(cubit: getIt()));
 
     case RouteName.settings:
-      return MaterialPageRoute(builder: (context) => const ProfileScreen());
-
+      return getRoute(const ProfileScreen());
     default:
       return MaterialPageRoute(
           builder: (context) => const Scaffold(
@@ -55,4 +55,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 ),
               ));
   }
+}
+
+PageRouteBuilder getRoute(Widget page) {
+  return PageRouteBuilder(
+    pageBuilder: (_, __, ___) => page,
+    transitionDuration: const Duration(milliseconds: 300),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+        FadeTransition(
+      opacity: animation,
+      child: child,
+    ),
+  );
 }

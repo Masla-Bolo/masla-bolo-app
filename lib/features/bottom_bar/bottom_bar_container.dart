@@ -1,11 +1,10 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_state.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
-import 'package:masla_bolo_app/features/home/home_state.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/main.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,34 +17,28 @@ class BottomBarContainer extends StatelessWidget {
   final HomeCubit homeCubit;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
-        bloc: homeCubit,
-        builder: (context, homeState) {
-          return AnimatedPositioned(
-            duration: const Duration(milliseconds: 150),
-            bottom: homeState.bottomBarOffset,
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              width: 1.sw,
-              decoration: const BoxDecoration(
-                color: AppColor.black4,
-              ),
-              child: BlocBuilder<BottomBarCubit, BottomBarState>(
-                  bloc: cubit,
-                  builder: (context, bottomBarState) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: bottomBarState.items.mapIndexed((index, item) {
-                        return BottomBarIcon(
-                          item: item,
-                          bottomBarCubit: getIt(),
-                          index: index,
-                        );
-                      }).toList(),
-                    );
-                  }),
-            ),
-          );
-        });
+    return Container(
+      padding: const EdgeInsets.all(12),
+      width: 0.8.sw,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [BoxShadow(color: AppColor.black1, blurRadius: 0.25)],
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: BlocBuilder<BottomBarCubit, BottomBarState>(
+          bloc: cubit,
+          builder: (context, bottomBarState) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: bottomBarState.items.mapIndexed((index, item) {
+                return BottomBarIcon(
+                  item: item,
+                  bottomBarCubit: getIt(),
+                  index: index,
+                );
+              }).toList(),
+            );
+          }),
+    );
   }
 }

@@ -12,16 +12,21 @@ class Styles {
       errorStyle: boldStyle(fontSize: 12, color: AppColor.red),
       errorBorder: InputBorder.none,
       errorMaxLines: 1,
+      contentPadding: const EdgeInsets.all(8),
       focusedErrorBorder: InputBorder.none,
       hintStyle: const TextStyle(color: AppColor.lightGrey),
       focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-        color: Theme.of(context).colorScheme.onPrimary,
-      )),
+        borderSide: const BorderSide(
+          color: AppColor.black1,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-        color: Theme.of(context).colorScheme.onPrimary,
-      )),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(
+          color: AppColor.black1,
+        ),
+      ),
     );
   }
 

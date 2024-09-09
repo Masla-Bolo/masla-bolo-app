@@ -22,6 +22,8 @@ class InputField extends StatefulWidget {
     this.maxLength,
     this.textEditingController,
     this.suffixIcon,
+    this.onCrossTap,
+    this.showCrossIcon = false,
     required this.onChanged,
   });
   final List<TextInputFormatter>? inputFormatters;
@@ -31,10 +33,12 @@ class InputField extends StatefulWidget {
   final bool isDateField;
   final bool readOnly;
   final String? hintText;
+  final bool showCrossIcon;
   final double? width;
   final TextEditingController? textEditingController;
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
+  final void Function()? onCrossTap;
   final String? Function(String?)? validator;
   final void Function(String) onChanged;
   final void Function(String)? onSubmit;
@@ -61,54 +65,59 @@ class _InputFieldState extends State<InputField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8, left: 15, right: 15),
-      child: Container(
-        width: widget.width,
-        color: Theme.of(context).colorScheme.onPrimary,
-        child: TextFormField(
-            keyboardType: widget.keyboardType,
-            controller: controller,
-            inputFormatters: widget.inputFormatters,
-            obscureText: widget.passwordField ? isObsecure : false,
-            readOnly: widget.readOnly,
-            cursorColor: AppColor.lightPurple,
-            cursorErrorColor: AppColor.lightPurple,
-            onChanged: widget.onChanged,
-            validator: widget.validator,
-            onTap: widget.isDateField
-                ? () async {
-                    if (widget.isDateField) {
-                      final selectedDate = await getDateFromPicker(context);
-                      if (selectedDate != null) {
-                        controller.text =
-                            DateFormat('dd/MM/yyyy').format(selectedDate);
-                        setState(() {});
-                      }
+    return SizedBox(
+      width: widget.width,
+      child: TextFormField(
+          onTapOutside: (event) {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          keyboardType: widget.keyboardType,
+          controller: controller,
+          inputFormatters: widget.inputFormatters,
+          obscureText: widget.passwordField ? isObsecure : false,
+          readOnly: widget.readOnly,
+          cursorColor: AppColor.lightPurple,
+          cursorErrorColor: AppColor.lightPurple,
+          onChanged: widget.onChanged,
+          validator: widget.validator,
+          onTap: widget.isDateField
+              ? () async {
+                  if (widget.isDateField) {
+                    final selectedDate = await getDateFromPicker(context);
+                    if (selectedDate != null) {
+                      controller.text =
+                          DateFormat('dd/MM/yyyy').format(selectedDate);
+                      setState(() {});
                     }
                   }
-                : null,
-            maxLength: widget.maxLength,
-            scrollPadding: const EdgeInsets.all(0),
-            onFieldSubmitted: widget.onSubmit,
-            decoration: Styles.inputFieldDecoration(
-              widget.hintText ?? '',
-              context,
-              suffixIcon: widget.passwordField
-                  ? GestureDetector(
-                      onTap: () {
-                        isObsecure = !isObsecure;
-                        setState(() {});
-                      },
-                      child: Icon(
-                        isObsecure
-                            ? Icons.visibility_off
-                            : Icons.remove_red_eye_rounded,
-                        color: Theme.of(context).colorScheme.onSecondary,
-                      ))
-                  : null,
-            )),
-      ),
+                }
+              : null,
+          maxLength: widget.maxLength,
+          scrollPadding: const EdgeInsets.all(0),
+          onFieldSubmitted: widget.onSubmit,
+          decoration: Styles.inputFieldDecoration(
+            widget.hintText ?? '',
+            context,
+            suffixIcon: widget.passwordField
+                ? GestureDetector(
+                    onTap: () {
+                      isObsecure = !isObsecure;
+                      setState(() {});
+                    },
+                    child: Icon(
+                      isObsecure
+                          ? Icons.visibility_off
+                          : Icons.remove_red_eye_rounded,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ))
+                : widget.showCrossIcon
+                    ? GestureDetector(
+                        onTap: () {
+                          widget.onCrossTap?.call();
+                        },
+                        child: const Icon(Icons.cancel))
+                    : null,
+          )),
     );
   }
 }

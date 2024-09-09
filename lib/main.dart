@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -38,10 +39,17 @@ class MaslaBolo extends StatelessWidget {
                 child: ScreenUtilInit(
                     designSize: Size(context.screenWidth, context.screenHeight),
                     builder: (context, _) {
+                      SystemChrome.setSystemUIOverlayStyle(
+                        SystemUiOverlayStyle(
+                          statusBarColor: Colors.transparent,
+                          systemNavigationBarColor:
+                              Theme.of(context).colorScheme.surface,
+                        ),
+                      );
                       return MaterialApp(
                         theme: AppTheme.theme(),
                         darkTheme: AppTheme.theme(dark: true),
-                        themeMode: ThemeMode.dark,
+                        themeMode: ThemeMode.light,
                         debugShowCheckedModeBanner: false,
                         home: SplashScreen(cubit: getIt()),
                         onGenerateRoute: generateRoute,

@@ -1,4 +1,7 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/home/components/home_body.dart';
+import 'package:masla_bolo_app/features/home/components/home_filter.dart';
+import 'package:masla_bolo_app/features/home/components/home_header.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/features/home/home_state.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     homeCubit = widget.cubit;
-    homeCubit.onInit();
+    homeCubit.navigation.context = context;
   }
 
   @override
@@ -33,18 +36,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BlocBuilder<HomeCubit, HomeState>(
             bloc: homeCubit,
             builder: (context, state) {
-              return GestureDetector(
-                onHorizontalDragUpdate: (details) {
-                  homeCubit.onDragUpdate(details);
-                },
-                onHorizontalDragEnd: (details) {
-                  homeCubit.onDragEnd();
-                },
-                child: Stack(
-                  children: [
-                    HomeBody(cubit: homeCubit),
-                  ],
-                ),
+              return Column(
+                children: [
+                  20.verticalSpace,
+                  // header
+                  HomeHeader(cubit: homeCubit),
+                  20.verticalSpace,
+                  //filters
+                  HomeFilter(cubit: homeCubit),
+                  //issues post
+                  HomeBody(cubit: homeCubit),
+                ],
               );
             }),
       ),

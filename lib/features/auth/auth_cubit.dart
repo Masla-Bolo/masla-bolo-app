@@ -17,22 +17,26 @@ class AuthCubit extends Cubit<AuthState> {
     BuildContext context,
   ) async {
     emit(state.copyWith(isLoading: true));
-    authRepository.login(email, password).then((result) => result.fold(
-          (failure) => {
-            emit(state.copyWith(isLoading: false)),
-            if (context.mounted)
-              {
-                showToast(failure.error, context),
-              }
-          },
-          (user) => {
-            emit(state.copyWith(isLoading: false)),
-            if (context.mounted)
-              {
-                navigation.goToBottomBar(),
-                showToast('Logged in successfully!', context),
-              }
-          },
-        ));
+    // authRepository.login(email, password).then((result) => result.fold(
+    //       (failure) => {
+    //         emit(state.copyWith(isLoading: false)),
+    //         if (context.mounted)
+    //           {
+    //             showToast(failure.error, context),
+    //           }
+    //       },
+    //       (user) => {
+    //         emit(state.copyWith(isLoading: false)),
+    //         if (context.mounted)
+    //           {
+    //             navigation.goToBottomBar(),
+    //             showToast('Logged in successfully!', context),
+    //           }
+    //       },
+    //     ));
+    if (context.mounted) {
+      navigation.goToBottomBar();
+      showToast('Logged in successfully!', context);
+    }
   }
 }
