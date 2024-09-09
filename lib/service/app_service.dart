@@ -10,6 +10,7 @@ import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_navigator.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
+import 'package:masla_bolo_app/helpers/image_helper.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/features/splash/splash_navigator.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
@@ -30,8 +31,9 @@ class AppService {
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));
     getIt.registerSingleton<HomeNavigator>(HomeNavigator(getIt()));
     getIt.registerSingleton<HomeCubit>(HomeCubit(getIt()));
+    getIt.registerSingleton<ImageHelper>(ImageHelper());
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
-    getIt.registerSingleton<IssueCubit>(IssueCubit(getIt()));
+    getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
     getIt.registerSingleton<UserStore>(UserStore());
     getIt.registerSingleton<AuthRepository>(ApiAuthRepository(
