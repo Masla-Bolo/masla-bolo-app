@@ -30,8 +30,8 @@ class AppService {
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));
     getIt.registerSingleton<HomeNavigator>(HomeNavigator(getIt()));
     getIt.registerSingleton<HomeCubit>(HomeCubit(getIt()));
-    getIt.registerSingleton<IssueNavigator>(IssueNavigator());
-    getIt.registerSingleton<IssueCubit>(IssueCubit());
+    getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
+    getIt.registerSingleton<IssueCubit>(IssueCubit(getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
     getIt.registerSingleton<UserStore>(UserStore());
     getIt.registerSingleton<AuthRepository>(ApiAuthRepository(
@@ -39,7 +39,7 @@ class AppService {
       getIt(),
     ));
     getIt.registerSingleton<AuthCubit>(AuthCubit(getIt(), getIt()));
-    getIt.registerSingleton<BottomBarNavigator>(BottomBarNavigator());
+    getIt.registerSingleton<BottomBarNavigator>(BottomBarNavigator(getIt()));
     getIt.registerSingleton<BottomBarCubit>(BottomBarCubit(getIt()));
   }
 }

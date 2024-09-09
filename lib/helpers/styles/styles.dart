@@ -5,25 +5,24 @@ import 'app_colors.dart';
 class Styles {
   static InputDecoration inputFieldDecoration(
       String hintText, BuildContext context,
-      {Widget? suffixIcon}) {
+      {Widget? suffixIcon, TextStyle? hintStyle}) {
     return InputDecoration(
       hintText: hintText,
       suffixIcon: suffixIcon,
+      fillColor: AppColor.lightGrey,
       errorStyle: boldStyle(fontSize: 12, color: AppColor.red),
       errorBorder: InputBorder.none,
       errorMaxLines: 1,
       contentPadding: const EdgeInsets.all(8),
       focusedErrorBorder: InputBorder.none,
-      hintStyle: const TextStyle(color: AppColor.lightGrey),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(
+      hintStyle: hintStyle ?? const TextStyle(color: AppColor.lightGrey),
+      focusedBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
           color: AppColor.black1,
         ),
-        borderRadius: BorderRadius.circular(20),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
-        borderSide: const BorderSide(
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
           color: AppColor.black1,
         ),
       ),

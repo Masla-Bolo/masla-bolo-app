@@ -6,4 +6,5 @@ class AppImages {
   static const searchGrey = "$baseDir/search_grey.png";
   static const writeGrey = "$baseDir/write_grey.png";
   static const temp = "$baseDir/temp.png";
+  static const link = "$baseDir/link.png";
 }

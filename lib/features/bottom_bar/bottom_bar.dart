@@ -12,6 +12,7 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    cubit.navigation.context = context;
     return BlocBuilder<BottomBarCubit, BottomBarState>(
         bloc: cubit,
         builder: (context, state) {

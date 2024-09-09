@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static const lightColortheme = ColorScheme(
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     primary: AppColor.white,
     onPrimary: AppColor.black1,
     secondary: AppColor.black1,
@@ -19,11 +19,11 @@ class AppTheme {
     primary: AppColor.black1,
     onPrimary: AppColor.black1,
     secondary: AppColor.white,
-    onSecondary: AppColor.black1,
-    error: AppColor.black1,
-    onError: AppColor.black1,
-    surface: AppColor.black1,
-    onSurface: AppColor.black1,
+    onSecondary: AppColor.white,
+    error: AppColor.red,
+    onError: AppColor.red,
+    surface: AppColor.white,
+    onSurface: AppColor.lightGrey,
   );
 
   static ThemeData theme({bool dark = false}) {
