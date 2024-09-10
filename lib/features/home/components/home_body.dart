@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_post.dart';
+import 'package:masla_bolo_app/features/home/components/issue_post.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 
@@ -28,7 +28,7 @@ class HomeBody extends StatelessWidget {
             );
           },
           itemBuilder: (context, index) {
-            return IssuePost(index: index);
+            return IssuePost(index: index, cubit: cubit);
           },
         ),
       ),

@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     suffix: Row(
                       children: [
                         GestureDetector(
-                          onTap: () => homeCubit.goToNotification(),
+                          onTap: () => homeCubit.navigation.goToNotification(),
                           child: const Icon(
                             Icons.notifications_none,
                             color: AppColor.grey,

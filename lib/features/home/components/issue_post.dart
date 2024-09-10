@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/features/home/home_cubit.dart';
 
 import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/app_images.dart';
 import '../../../helpers/styles/styles.dart';
 
 class IssuePost extends StatelessWidget {
-  const IssuePost({super.key, required this.index});
+  const IssuePost({super.key, required this.index, required this.cubit});
   final int index;
+  final HomeCubit cubit;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +17,9 @@ class IssuePost extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              cubit.navigation.goToIssueDetail();
+            },
             child: Stack(
               children: [
                 Center(
@@ -52,7 +56,9 @@ class IssuePost extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    cubit.navigation.goToIssueDetail();
+                  },
                   child: Text(
                     "So what makes a good headline?",
                     style: Styles.boldStyle(
@@ -65,29 +71,27 @@ class IssuePost extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.favorite,
-                        color: AppColor.red,
-                      ),
+                    const Icon(
+                      Icons.favorite,
+                      color: AppColor.red,
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Text("5.1M Likes"),
-                    ),
+                    const Text("5.1M Likes"),
                     5.horizontalSpace,
                     const Text("•"),
                     5.horizontalSpace,
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        cubit.navigation.goToIssueDetail();
+                      },
                       child: const Icon(
                         Icons.comment_outlined,
                         color: AppColor.lightGrey,
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        cubit.navigation.goToIssueDetail();
+                      },
                       child: const Text("1.5k comments"),
                     ),
                     5.horizontalSpace,

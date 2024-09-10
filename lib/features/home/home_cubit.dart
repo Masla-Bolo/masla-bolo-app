@@ -6,10 +6,6 @@ class HomeCubit extends Cubit<HomeState> {
   final HomeNavigator navigation;
   HomeCubit(this.navigation) : super(HomeState.empty());
 
-  goToNotification() {
-    navigation.goToNotification();
-  }
-
   void toggleSearch() {
     emit(state.copyWith(isExpanded: !state.isExpanded));
   }

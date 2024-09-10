@@ -6,10 +6,11 @@ class IssueDetail extends StatelessWidget {
   final IssueDetailCubit cubit;
   @override
   Widget build(BuildContext context) {
+    cubit.navigator.context = context;
     return const Scaffold(
       body: SafeArea(
           child: Column(
-        children: [],
+        children: [Text("ISSUE DETAIL SCREEN!")],
       )),
     );
   }

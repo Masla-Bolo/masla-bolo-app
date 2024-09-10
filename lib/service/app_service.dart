@@ -18,6 +18,8 @@ import 'package:masla_bolo_app/service/api_service.dart';
 import 'package:get_it/get_it.dart';
 
 import '../features/home/home_navigator.dart';
+import '../features/issue/components/issue_detail/issue_detail_cubit.dart';
+import '../features/issue/components/issue_detail/issue_detail_navigator.dart';
 import '../features/issue/issue_navigator.dart';
 
 class AppService {
@@ -32,6 +34,10 @@ class AppService {
     getIt.registerSingleton<HomeNavigator>(HomeNavigator(getIt()));
     getIt.registerSingleton<HomeCubit>(HomeCubit(getIt()));
     getIt.registerSingleton<ImageHelper>(ImageHelper());
+    getIt
+        .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));
+    getIt.registerSingleton<IssueDetailCubit>(
+        IssueDetailCubit(getIt(), getIt()));
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
     getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
