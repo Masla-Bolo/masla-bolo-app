@@ -7,7 +7,7 @@ class HomeState {
   List<IssueEntity> issues;
   HomeState({
     this.user,
-    this.isExpanded = false,
+    this.isExpanded = true,
     required this.issues,
   });
 
@@ -28,7 +28,7 @@ class HomeState {
 
   factory HomeState.empty() => HomeState(
         user: UserEntity(email: '', id: '', name: ''),
-        isExpanded: false,
+        isExpanded: true,
         issues: [],
       );
 }

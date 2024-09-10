@@ -6,6 +6,7 @@ class RouteName {
   static const profile = '/profile';
   static const notification = '/notification';
   static const issue = "/issue";
+  static const issueDetail = "/issue-detail";
   static const settings = '/settings';
   static const bottomBar = '/bottom-bar';
 }

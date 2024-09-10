@@ -23,10 +23,15 @@ class IssueForm extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  // title field like medium
                   IssueField(
                     hintText: "TITLE",
                     onChanged: (val) {},
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Please enter title";
+                      }
+                      return null;
+                    },
                     cursorSize: const Size(2, 40),
                     hintStyle: Styles.semiBoldStyle(
                       fontSize: 40,
@@ -39,10 +44,15 @@ class IssueForm extends StatelessWidget {
                     ),
                   ),
                   10.verticalSpace,
-                  // body field like medium
                   IssueField(
                     hintText: "Write about your issue...",
                     onChanged: (val) {},
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Please enter your issue description";
+                      }
+                      return null;
+                    },
                     maxLength: null,
                     cursorSize: const Size(2, 15),
                     hintStyle: Styles.mediumStyle(

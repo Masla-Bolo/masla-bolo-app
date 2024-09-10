@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppNavigation {
+  static final navigatorKey = GlobalKey<NavigatorState>();
   void push(BuildContext context, String routeName, {arguments}) {
     Navigator.pushNamed(context, routeName, arguments: arguments);
   }

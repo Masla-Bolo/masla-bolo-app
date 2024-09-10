@@ -2,19 +2,15 @@ import 'package:flutter/widgets.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/navigation/route_name.dart';
 
-class IssueNavigator {
+class IssueDetailNavigator {
   final AppNavigation navigation;
   late BuildContext context;
-  pop() {
-    navigation.pop(context);
-  }
-
-  IssueNavigator(this.navigation);
+  IssueDetailNavigator(this.navigation);
 }
 
-mixin IssueRoute {
+mixin IssueDetailRoute {
   AppNavigation get navigation;
   BuildContext get context;
 
-  void goToIssue() => navigation.push(context, RouteName.issue);
+  void goToIssueDetail() => navigation.push(context, RouteName.issueDetail);
 }

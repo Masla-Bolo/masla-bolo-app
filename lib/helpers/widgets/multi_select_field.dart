@@ -33,18 +33,16 @@ class _MultiSelectFieldState extends State<MultiSelectField> {
   }
 
   void updateDisplayedText() {
-    setState(() {
-      if (widget.selectedValues.isEmpty) {
-        displayedText = '    Select Items';
-      } else if (widget.selectedValues.length <= 3) {
-        displayedText = widget.selectedValues
-            .map((e) => e.toString())
-            .reduce((a, b) => '$a , $b');
-      } else {
-        displayedText =
-            '${widget.selectedValues[0]} ,${widget.selectedValues[1]}, ' '...';
-      }
-    });
+    if (widget.selectedValues.isEmpty) {
+      displayedText = '    Select Items';
+    } else if (widget.selectedValues.length <= 3) {
+      displayedText = widget.selectedValues
+          .map((e) => e.toString())
+          .reduce((a, b) => '$a , $b');
+    } else {
+      displayedText =
+          '${widget.selectedValues[0]} ,${widget.selectedValues[1]}, ' '...';
+    }
   }
 
   @override

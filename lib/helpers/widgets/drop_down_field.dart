@@ -84,10 +84,8 @@ class _DropDownFieldState<T> extends State<DropDownField> {
                   items: _buildDropdownItems(),
                   onChanged: (value) {
                     if (value != null) {
-                      setState(() {
-                        widget.onChanged?.call(value);
-                        valueSelected = value;
-                      });
+                      widget.onChanged?.call(value);
+                      valueSelected = value;
                     }
                   },
                 ),

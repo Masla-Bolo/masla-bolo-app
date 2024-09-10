@@ -20,11 +20,14 @@ class BottomBar extends StatelessWidget {
             canPop: false,
             onPopInvoked: (didPop) async {
               if (didPop) return;
-
-              if (await showConfirmationDialog(
-                      'Do you want to exit the app?', context) &&
-                  context.mounted) {
-                Navigator.pop(context);
+              if (state.currentIndex != 0) {
+                return cubit.updateIndex(0);
+              } else {
+                if (await showConfirmationDialog(
+                        'Do you want to exit the app?', context) &&
+                    context.mounted) {
+                  Navigator.pop(context);
+                }
               }
             },
             child: Scaffold(

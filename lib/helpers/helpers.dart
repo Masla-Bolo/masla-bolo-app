@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/indicator.dart';
@@ -78,19 +80,24 @@ Future<bool> showConfirmationDialog(String title, BuildContext context) async {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(title),
+            contentPadding: const EdgeInsets.all(0),
+            actionsPadding: const EdgeInsets.all(0),
+            backgroundColor: AppColor.white,
+            title: Text(title,
+                style:
+                    Styles.semiBoldStyle(fontSize: 16, color: AppColor.black1)),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
                 child: Text('No',
                     style: Styles.mediumStyle(
-                        fontSize: 14, color: AppColor.white)),
+                        fontSize: 14, color: AppColor.black1)),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
                 child: Text('Yes',
                     style: Styles.mediumStyle(
-                        fontSize: 14, color: AppColor.white)),
+                        fontSize: 14, color: AppColor.black1)),
               ),
             ],
           );
@@ -142,3 +149,5 @@ Future<DateTime?> getDateFromPicker(BuildContext context) async {
   );
   return date;
 }
+
+get scrollBottomPadding => const EdgeInsets.only(bottom: 70, top: 10);

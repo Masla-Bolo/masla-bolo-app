@@ -50,8 +50,10 @@ class ApiService {
       final apiCall = apiQueue[key]!;
       try {
         await apiCall.call();
+        apiQueue.remove(key);
       } catch (e) {
         apiQueue.remove(key);
+        await Future.delayed(const Duration(seconds: 1));
         executeAll();
       }
       await Future.delayed(const Duration(seconds: 1));

@@ -15,16 +15,18 @@ class Styles {
       errorMaxLines: 1,
       contentPadding: const EdgeInsets.all(8),
       focusedErrorBorder: InputBorder.none,
-      hintStyle: hintStyle ?? const TextStyle(color: AppColor.lightGrey),
-      focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
+      hintStyle: hintStyle ?? mediumStyle(fontSize: 12, color: AppColor.black1),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
           color: AppColor.black1,
         ),
+        borderRadius: BorderRadius.circular(20),
       ),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
           color: AppColor.black1,
         ),
+        borderRadius: BorderRadius.circular(20),
       ),
     );
   }

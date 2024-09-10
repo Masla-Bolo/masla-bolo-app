@@ -1,8 +1,5 @@
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-
-import '../helpers.dart';
 import '../styles/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -73,25 +70,15 @@ class _InputFieldState extends State<InputField> {
           },
           keyboardType: widget.keyboardType,
           controller: controller,
+          style: Styles.mediumStyle(fontSize: 12, color: AppColor.black1),
           inputFormatters: widget.inputFormatters,
           obscureText: widget.passwordField ? isObsecure : false,
           readOnly: widget.readOnly,
-          cursorColor: AppColor.lightPurple,
-          cursorErrorColor: AppColor.lightPurple,
+          cursorColor: AppColor.black1,
+          cursorErrorColor: AppColor.black1,
           onChanged: widget.onChanged,
           validator: widget.validator,
-          onTap: widget.isDateField
-              ? () async {
-                  if (widget.isDateField) {
-                    final selectedDate = await getDateFromPicker(context);
-                    if (selectedDate != null) {
-                      controller.text =
-                          DateFormat('dd/MM/yyyy').format(selectedDate);
-                      setState(() {});
-                    }
-                  }
-                }
-              : null,
+          onTap: () {},
           maxLength: widget.maxLength,
           scrollPadding: const EdgeInsets.all(0),
           onFieldSubmitted: widget.onSubmit,
