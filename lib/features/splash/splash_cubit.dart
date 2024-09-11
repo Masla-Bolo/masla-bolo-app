@@ -17,17 +17,19 @@ class SplashCubit extends Cubit<SplashState> {
         () => {
               localStorageRepository.getValue(getStartedKey).then((result) => {
                     result.fold(
-                      (error) => {
-                        navigator.goToGetStarted(),
+                      (error) {
+                        navigator.goToGetStarted();
                       },
                       (success) => {
                         localStorageRepository.getValue(tokenKey).then(
                               (value) => value.fold(
                                 (error) {
-                                  navigator.goToLogin();
+                                  // navigator.goToLogin();
+                                  navigator.goToGetStarted();
                                 },
                                 (value) {
-                                  navigator.goToBottomBar();
+                                  // navigator.goToBottomBar();
+                                  navigator.goToGetStarted();
                                 },
                               ),
                             ),

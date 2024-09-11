@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/features/get_started/componenets/get_started_header.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_state.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
@@ -32,37 +33,20 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
         bloc: cubit,
         builder: (context, state) {
           return Scaffold(
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: GestureDetector(
-                  onTap: () {
-                    cubit.goToNextPage();
-                  },
-                  child: Container(
-                    width: 140.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      color: AppColor.black1,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Center(
-                      child: Text("Get Started",
-                          style: Styles.semiBoldStyle(
-                            fontSize: 20.sp,
-                            color: AppColor.white,
-                          )),
-                    ),
-                  )),
-            ),
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    40.verticalSpace,
+                    15.verticalSpace,
+                    GetStartedHeader(
+                      hideBack: true,
+                      onNextTap: () {
+                        cubit.goToNextPage();
+                      },
+                    ),
+                    30.verticalSpace,
                     Center(
                       child: Icon(
                         Icons.help_outline_sharp,

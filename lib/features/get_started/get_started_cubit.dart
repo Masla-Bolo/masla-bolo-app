@@ -25,6 +25,12 @@ class GetStartedCubit extends Cubit<GetStartedState> {
     }
   }
 
+  void goToPreviousPage() {
+    if (state.currentPage <= state.pages.length - 1) {
+      updateIndex(state.currentPage - 1);
+    }
+  }
+
   goToLogin() => navigator.goToLogin();
 
   selectRole(String role) => emit(state.copyWith(selectedRole: role));

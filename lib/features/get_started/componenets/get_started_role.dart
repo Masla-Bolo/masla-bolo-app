@@ -7,6 +7,7 @@ import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
 import '../../../main.dart';
 import '../get_started_state.dart';
+import 'get_started_header.dart';
 import 'role_card.dart';
 
 class GetStartedRole extends StatefulWidget {
@@ -34,8 +35,15 @@ class _GetStartedRoleState extends State<GetStartedRole> {
         return Scaffold(
           body: SafeArea(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                15.verticalSpace,
+                GetStartedHeader(
+                  hideNext: true,
+                  onBackTap: () {
+                    cubit.goToPreviousPage();
+                  },
+                ),
+                const Spacer(),
                 Text(
                   "Are you a Citizen or Official?",
                   style: Styles.boldStyle(
@@ -94,6 +102,7 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                     ),
                   ),
                 ),
+                const Spacer(),
               ],
             ),
           ),
