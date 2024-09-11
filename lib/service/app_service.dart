@@ -11,6 +11,7 @@ import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_navigator.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
+import 'package:masla_bolo_app/features/profile/profile_navigator.dart';
 import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
@@ -23,6 +24,7 @@ import '../features/home/home_navigator.dart';
 import '../features/issue/components/issue_detail/issue_detail_cubit.dart';
 import '../features/issue/components/issue_detail/issue_detail_navigator.dart';
 import '../features/issue/issue_navigator.dart';
+import '../features/profile/profile_cubit.dart';
 
 class AppService {
   static Future<void> initialize(GetIt getIt) async {
@@ -44,6 +46,8 @@ class AppService {
         IssueDetailCubit(getIt(), getIt()));
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
     getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
+    getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));
+    getIt.registerSingleton<ProfileCubit>(ProfileCubit(getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
     getIt.registerSingleton<UserStore>(UserStore());
     getIt.registerSingleton<AuthRepository>(ApiAuthRepository(

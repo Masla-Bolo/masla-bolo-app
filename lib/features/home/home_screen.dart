@@ -6,9 +6,9 @@ import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/features/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
 import '../../domain/stores/user_store.dart';
-import '../../helpers/styles/app_colors.dart';
 import '../../helpers/widgets/header.dart';
 import '../../main.dart';
 
@@ -50,20 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         GestureDetector(
                           onTap: () => homeCubit.navigation.goToNotification(),
-                          child: const Icon(
-                            Icons.notifications_none,
-                            color: AppColor.grey,
-                          ),
+                          child: Image.asset(AppImages.bell, height: 20),
                         ),
-                        10.horizontalSpace,
+                        15.horizontalSpace,
                         GestureDetector(
                           onTap: () {
                             Scaffold.of(context).openEndDrawer();
                           },
-                          child: const Icon(
-                            Icons.filter_alt_outlined,
-                            color: AppColor.grey,
-                          ),
+                          child: Image.asset(AppImages.filter, height: 30),
                         ),
                       ],
                     ),

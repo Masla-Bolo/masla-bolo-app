@@ -11,4 +11,6 @@ class AppImages {
   static const test = "$_baseDir/test.jpg";
   static const apple = "$_baseDir/apple.jpg";
   static const google = "$_baseDir/google.png";
+  static const bell = "$_baseDir/bell.png";
+  static const filter = "$_baseDir/filter.png";
 }

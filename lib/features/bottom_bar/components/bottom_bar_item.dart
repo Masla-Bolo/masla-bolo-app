@@ -25,7 +25,7 @@ class BottomBarItem {
     ),
     BottomBarItem(
       icon: AppImages.profileGrey,
-      page: const ProfileScreen(),
+      page: ProfileScreen(cubit: getIt()),
     )
   ];
 }
