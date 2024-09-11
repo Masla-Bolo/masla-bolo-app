@@ -19,7 +19,8 @@ class SplashCubit extends Cubit<SplashState> {
                   .getValue(tokenKey)
                   .then((value) => value.fold(
                         (error) {
-                          navigator.goToBottomBar();
+                          // navigator.goToBottomBar();
+                          navigator.goToGetStarted();
                           // navigator.goToLogin();
                         },
                         (value) {

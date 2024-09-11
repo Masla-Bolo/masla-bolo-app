@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
+import 'package:masla_bolo_app/features/get_started/get_started_state.dart';
+import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/helpers/styles/styles.dart';
+
+import '../../../main.dart';
+import 'info_card.dart';
+
+class GetStartedAbout extends StatefulWidget {
+  const GetStartedAbout({super.key});
+
+  @override
+  State<GetStartedAbout> createState() => _GetStartedAboutState();
+}
+
+class _GetStartedAboutState extends State<GetStartedAbout> {
+  late GetStartedCubit cubit;
+  @override
+  void initState() {
+    super.initState();
+    cubit = getIt<GetStartedCubit>();
+    cubit.navigator.context = context;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    cubit.navigator.context = context;
+    return BlocBuilder<GetStartedCubit, GetStartedState>(
+        bloc: cubit,
+        builder: (context, state) {
+          return Scaffold(
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: GestureDetector(
+                  onTap: () {
+                    cubit.goToNextPage();
+                  },
+                  child: Container(
+                    width: 140.w,
+                    height: 50.h,
+                    decoration: BoxDecoration(
+                      color: AppColor.black1,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Center(
+                      child: Text("Get Started",
+                          style: Styles.semiBoldStyle(
+                            fontSize: 20.sp,
+                            color: AppColor.white,
+                          )),
+                    ),
+                  )),
+            ),
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    40.verticalSpace,
+                    Center(
+                      child: Icon(
+                        Icons.help_outline_sharp,
+                        size: 100.w,
+                        color: AppColor.black1,
+                      ),
+                    ),
+                    20.verticalSpace,
+                    Center(
+                      child: Text(
+                        "Welcome to Masla Bolo!",
+                        style: Styles.boldStyle(
+                          fontSize: 36.sp,
+                          color: AppColor.black1,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    20.verticalSpace,
+                    Center(
+                      child: Text(
+                        "Report local issues & drive real change.",
+                        style: Styles.semiBoldStyle(
+                          fontSize: 18.sp,
+                          color: AppColor.black1,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    30.verticalSpace,
+                    const InfoCard(
+                      title: "🚧 Why Masla Bolo?",
+                      subTitle:
+                          "Easily report infrastructure issues like potholes, broken lights, and illegal dumping. Help us improve your city!",
+                    ),
+                    20.verticalSpace,
+                    const InfoCard(
+                      title: "🎯 Our Mission",
+                      subTitle:
+                          "We connect you directly with city officials to fix problems faster. No more delays, just results.",
+                    ),
+                    20.verticalSpace,
+                    const InfoCard(
+                      title: "🌍 Make a Difference",
+                      subTitle:
+                          "Together, we can create a cleaner, safer city. Your reports matter!",
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+}

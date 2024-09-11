@@ -7,6 +7,8 @@ import 'package:masla_bolo_app/features/auth/auth_cubit.dart';
 import 'package:masla_bolo_app/features/auth/auth_navigator.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_navigator.dart';
+import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
+import 'package:masla_bolo_app/features/get_started/get_started_navigator.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
@@ -24,13 +26,15 @@ import '../features/issue/issue_navigator.dart';
 
 class AppService {
   static Future<void> initialize(GetIt getIt) async {
+    getIt.registerSingleton<AppNavigation>(AppNavigation());
+    getIt.registerSingleton<GetStartedNavigator>(GetStartedNavigator(getIt()));
+    getIt.registerSingleton<GetStartedCubit>(GetStartedCubit(getIt()));
     getIt.registerSingleton<LocalStorageRepository>(
         PrimaryLocalStorageRepository());
-    getIt.registerSingleton<AppNavigation>(AppNavigation());
     getIt.registerSingleton<ApiService>(ApiService(getIt()));
     getIt.registerSingleton<SplashNavigator>(SplashNavigator(getIt()));
-    getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));
+    getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
     getIt.registerSingleton<HomeNavigator>(HomeNavigator(getIt()));
     getIt.registerSingleton<HomeCubit>(HomeCubit(getIt()));
     getIt.registerSingleton<ImageHelper>(ImageHelper());

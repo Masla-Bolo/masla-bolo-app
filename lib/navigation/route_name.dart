@@ -9,4 +9,5 @@ class RouteName {
   static const issueDetail = "/issue-detail";
   static const settings = '/settings';
   static const bottomBar = '/bottom-bar';
+  static const getStarted = '/get-started';
 }

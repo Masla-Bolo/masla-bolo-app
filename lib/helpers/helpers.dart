@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/indicator.dart';

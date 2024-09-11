@@ -17,55 +17,67 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late AuthCubit loginCubit;
+  @override
+  void initState() {
+    super.initState();
+    loginCubit = widget.cubit;
+    loginCubit.navigation.context = context;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final loginCubit = widget.cubit;
-    loginCubit.navigation.context = context;
     return Scaffold(
-      backgroundColor: AppColor.black5,
       body: BlocBuilder<AuthCubit, AuthState>(
           bloc: loginCubit,
           builder: (context, state) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InputField(
-                  onChanged: (val) {
-                    state.email = val;
-                  },
-                  hintText: 'Email',
-                ),
-                InputField(
-                  onChanged: (val) {
-                    state.password = val;
-                  },
-                  hintText: 'Password',
-                ),
-                const Gap(30),
-                GestureDetector(
-                  onTap: () => loginCubit.login(
-                    state.email,
-                    state.password,
-                    context,
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InputField(
+                    onChanged: (val) {
+                      state.email = val;
+                    },
+                    hintText: 'Email',
                   ),
-                  child: Container(
-                    color: AppColor.white,
-                    width: 170,
-                    padding: const EdgeInsets.all(10),
-                    child: state.isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : Center(
-                            child: Text(
-                            'GET IN!',
-                            style: Styles.boldStyle(
-                                fontSize: 20, color: AppColor.black3),
-                          )),
+                  const Gap(30),
+                  InputField(
+                    onChanged: (val) {
+                      state.password = val;
+                    },
+                    hintText: 'Password',
                   ),
-                ),
-              ],
+                  const Gap(30),
+                  GestureDetector(
+                    onTap: () => loginCubit.login(
+                      state.email,
+                      state.password,
+                      context,
+                    ),
+                    child: Container(
+                      width: 170,
+                      decoration: BoxDecoration(
+                        color: AppColor.black1,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: state.isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Center(
+                              child: Text(
+                              'GET IN!',
+                              style: Styles.boldStyle(
+                                  fontSize: 20, color: AppColor.white),
+                            )),
+                    ),
+                  ),
+                ],
+              ),
             );
           }),
     );

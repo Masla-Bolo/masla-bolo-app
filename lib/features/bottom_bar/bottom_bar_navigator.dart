@@ -14,7 +14,7 @@ class BottomBarNavigator with IssueRoute {
 
 mixin BottomBarRoute {
   void goToBottomBar() {
-    navigation.push(context, RouteName.bottomBar);
+    navigation.pushReplacement(context, RouteName.bottomBar);
   }
 
   AppNavigation get navigation;

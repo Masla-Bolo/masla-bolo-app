@@ -1,5 +1,6 @@
 import 'package:masla_bolo_app/features/auth/register/resgister_screen.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar.dart';
+import 'package:masla_bolo_app/features/get_started/get_started_screen.dart';
 import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail.dart';
 import 'package:masla_bolo_app/features/issue/issue_screen.dart';
 import 'package:masla_bolo_app/features/notification/notification_page.dart';
@@ -48,6 +49,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteName.issueDetail:
       return getRoute(IssueDetail(cubit: getIt()));
+
+    case RouteName.getStarted:
+      return getRoute(GetStartedScreen());
 
     case RouteName.settings:
       return getRoute(const ProfileScreen());
