@@ -5,7 +5,7 @@ import 'app_colors.dart';
 class Styles {
   static InputDecoration inputFieldDecoration(
       String hintText, BuildContext context,
-      {Widget? suffixIcon, TextStyle? hintStyle}) {
+      {Widget? suffixIcon}) {
     return InputDecoration(
       hintText: hintText,
       suffixIcon: suffixIcon,
@@ -15,7 +15,7 @@ class Styles {
       errorMaxLines: 1,
       contentPadding: const EdgeInsets.all(8),
       focusedErrorBorder: InputBorder.none,
-      hintStyle: hintStyle ?? mediumStyle(fontSize: 12, color: AppColor.black1),
+      hintStyle: mediumStyle(fontSize: 15, color: AppColor.grey),
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(
           color: AppColor.black1,

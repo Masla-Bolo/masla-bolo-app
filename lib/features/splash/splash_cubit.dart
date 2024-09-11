@@ -15,18 +15,25 @@ class SplashCubit extends Cubit<SplashState> {
     Future.delayed(
         const Duration(seconds: 2),
         () => {
-              localStorageRepository
-                  .getValue(tokenKey)
-                  .then((value) => value.fold(
-                        (error) {
-                          // navigator.goToBottomBar();
-                          navigator.goToGetStarted();
-                          // navigator.goToLogin();
-                        },
-                        (value) {
-                          navigator.goToBottomBar();
-                        },
-                      ))
+              localStorageRepository.getValue(getStartedKey).then((result) => {
+                    result.fold(
+                      (error) => {
+                        navigator.goToGetStarted(),
+                      },
+                      (success) => {
+                        localStorageRepository.getValue(tokenKey).then(
+                              (value) => value.fold(
+                                (error) {
+                                  navigator.goToLogin();
+                                },
+                                (value) {
+                                  navigator.goToBottomBar();
+                                },
+                              ),
+                            ),
+                      },
+                    ),
+                  }),
             });
   }
 }

@@ -18,9 +18,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   //     (settings.arguments ?? <String, dynamic>{}) as Map<String, dynamic>;
   switch (settings.name) {
     case RouteName.splash:
-      return getRoute(SplashScreen(
-        cubit: getIt(),
-      ));
+      return getRoute(const SplashScreen());
 
     case RouteName.login:
       return getRoute(LoginScreen(
@@ -33,7 +31,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       ));
 
     case RouteName.register:
-      return getRoute(const ResgisterScreen());
+      return getRoute(ResgisterScreen(cubit: getIt()));
 
     case RouteName.profile:
       return getRoute(const ProfileScreen());
@@ -51,7 +49,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(IssueDetail(cubit: getIt()));
 
     case RouteName.getStarted:
-      return getRoute(GetStartedScreen());
+      return getRoute(const GetStartedScreen());
 
     case RouteName.settings:
       return getRoute(const ProfileScreen());

@@ -1,18 +1,19 @@
 import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:masla_bolo_app/main.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key, required this.cubit});
-  final SplashCubit cubit;
+  const SplashScreen({super.key});
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late SplashCubit cubit;
   @override
   void initState() {
     super.initState();
-    final cubit = widget.cubit;
+    cubit = getIt<SplashCubit>();
     cubit.navigator.context = context;
     cubit.onInit();
   }

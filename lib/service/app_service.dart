@@ -26,11 +26,11 @@ import '../features/issue/issue_navigator.dart';
 
 class AppService {
   static Future<void> initialize(GetIt getIt) async {
-    getIt.registerSingleton<AppNavigation>(AppNavigation());
-    getIt.registerSingleton<GetStartedNavigator>(GetStartedNavigator(getIt()));
-    getIt.registerSingleton<GetStartedCubit>(GetStartedCubit(getIt()));
     getIt.registerSingleton<LocalStorageRepository>(
         PrimaryLocalStorageRepository());
+    getIt.registerSingleton<AppNavigation>(AppNavigation());
+    getIt.registerSingleton<GetStartedNavigator>(GetStartedNavigator(getIt()));
+    getIt.registerSingleton<GetStartedCubit>(GetStartedCubit(getIt(), getIt()));
     getIt.registerSingleton<ApiService>(ApiService(getIt()));
     getIt.registerSingleton<SplashNavigator>(SplashNavigator(getIt()));
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));

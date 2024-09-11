@@ -70,7 +70,7 @@ class _InputFieldState extends State<InputField> {
           },
           keyboardType: widget.keyboardType,
           controller: controller,
-          style: Styles.mediumStyle(fontSize: 12, color: AppColor.black1),
+          style: Styles.mediumStyle(fontSize: 15, color: AppColor.black1),
           inputFormatters: widget.inputFormatters,
           obscureText: widget.passwordField ? isObsecure : false,
           readOnly: widget.readOnly,

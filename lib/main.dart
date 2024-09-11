@@ -51,7 +51,7 @@ class MaslaBolo extends StatelessWidget {
                         darkTheme: AppTheme.theme(dark: true),
                         themeMode: ThemeMode.light,
                         debugShowCheckedModeBanner: false,
-                        home: SplashScreen(cubit: getIt()),
+                        home: const SplashScreen(),
                         onGenerateRoute: generateRoute,
                       );
                     }),
