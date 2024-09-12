@@ -56,6 +56,7 @@ class RoleCard extends StatelessWidget {
               style: Styles.boldStyle(
                 fontSize: 20.sp,
                 color: isSelected ? AppColor.white : AppColor.black1,
+                family: FontFamily.varela,
               ),
             ),
           ],

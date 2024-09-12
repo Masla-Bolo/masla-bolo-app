@@ -27,8 +27,13 @@ class IssueForm extends StatelessWidget {
                     hintText: "TITLE",
                     onChanged: (val) {},
                     validator: (val) {
-                      if (val!.isEmpty) {
+                      print(val);
+                      if (val?.isEmpty == true) {
                         return "Please enter title";
+                      }
+                      if ((val?.length ?? 0) > 15) {
+                        print("here");
+                        return "Try to brief it :))";
                       }
                       return null;
                     },
@@ -36,16 +41,18 @@ class IssueForm extends StatelessWidget {
                     hintStyle: Styles.semiBoldStyle(
                       fontSize: 40,
                       color: Colors.grey.shade600,
+                      family: FontFamily.varela,
                     ),
                     maxLength: 2,
                     textStyle: Styles.semiBoldStyle(
                       fontSize: 40,
                       color: AppColor.black1,
+                      family: FontFamily.varela,
                     ),
                   ),
                   10.verticalSpace,
                   IssueField(
-                    hintText: "Write about your issue...",
+                    hintText: "Explain about your issue...",
                     onChanged: (val) {},
                     validator: (val) {
                       if (val!.isEmpty) {
@@ -58,10 +65,12 @@ class IssueForm extends StatelessWidget {
                     hintStyle: Styles.mediumStyle(
                       fontSize: 15,
                       color: Colors.grey.shade600,
+                      family: FontFamily.varela,
                     ),
                     textStyle: Styles.semiBoldStyle(
                       fontSize: 15,
                       color: AppColor.black1,
+                      family: FontFamily.varela,
                     ),
                   ),
                 ],

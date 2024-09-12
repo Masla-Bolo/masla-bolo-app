@@ -70,7 +70,11 @@ class _InputFieldState extends State<IssueField> {
         border: InputBorder.none,
         hintText: widget.hintText,
         fillColor: AppColor.black1,
-        errorStyle: Styles.boldStyle(fontSize: 12, color: AppColor.red),
+        errorStyle: Styles.boldStyle(
+          fontSize: 12,
+          color: AppColor.red,
+          family: FontFamily.varela,
+        ),
         errorBorder: InputBorder.none,
         errorMaxLines: 1,
         contentPadding: const EdgeInsets.all(0),

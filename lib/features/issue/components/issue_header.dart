@@ -23,8 +23,12 @@ class IssueHeader extends StatelessWidget {
           ),
           20.horizontalSpace,
           Text(
-            "New Issue",
-            style: Styles.semiBoldStyle(fontSize: 30, color: AppColor.black1),
+            "Create Issue",
+            style: Styles.semiBoldStyle(
+              fontSize: 30,
+              color: AppColor.black1,
+              family: FontFamily.dmSans,
+            ),
           ),
           const Spacer(),
           GestureDetector(

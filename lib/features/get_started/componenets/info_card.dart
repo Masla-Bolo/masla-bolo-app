@@ -15,14 +15,6 @@ class InfoCard extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        // gradient: LinearGradient(
-        //   colors: [
-        //     AppColor.black1.withOpacity(0.9),
-        //     AppColor.navy.withOpacity(0.9),
-        //   ],
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        // ),
         color: AppColor.black3,
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
@@ -42,6 +34,7 @@ class InfoCard extends StatelessWidget {
             style: Styles.boldStyle(
               fontSize: 24.sp,
               color: AppColor.white,
+              family: FontFamily.dmSans,
             ),
           ),
           10.verticalSpace,
@@ -49,6 +42,7 @@ class InfoCard extends StatelessWidget {
             subTitle,
             style: Styles.mediumStyle(
               fontSize: 16.sp,
+              family: FontFamily.varela,
               color: AppColor.white.withOpacity(0.8),
             ),
           ),

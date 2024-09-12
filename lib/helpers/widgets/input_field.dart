@@ -15,6 +15,7 @@ class InputField extends StatefulWidget {
     this.readOnly = false,
     this.inputFormatters,
     this.isDateField = false,
+    this.focusNode,
     this.onSubmit,
     this.maxLength,
     this.textEditingController,
@@ -39,6 +40,7 @@ class InputField extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(String) onChanged;
   final void Function(String)? onSubmit;
+  final FocusNode? focusNode;
   @override
   State<InputField> createState() => _InputFieldState();
 }
@@ -61,16 +63,27 @@ class _InputFieldState extends State<InputField> {
   }
 
   @override
+  void dispose() {
+    widget.focusNode?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.width,
       child: TextFormField(
+          focusNode: widget.focusNode,
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
           keyboardType: widget.keyboardType,
           controller: controller,
-          style: Styles.mediumStyle(fontSize: 15, color: AppColor.black1),
+          style: Styles.mediumStyle(
+            fontSize: 15,
+            color: AppColor.black1,
+            family: FontFamily.varela,
+          ),
           inputFormatters: widget.inputFormatters,
           obscureText: widget.passwordField ? isObsecure : false,
           readOnly: widget.readOnly,

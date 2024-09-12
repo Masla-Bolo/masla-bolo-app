@@ -82,20 +82,28 @@ Future<bool> showConfirmationDialog(String title, BuildContext context) async {
             actionsPadding: const EdgeInsets.all(0),
             backgroundColor: AppColor.white,
             title: Text(title,
-                style:
-                    Styles.semiBoldStyle(fontSize: 16, color: AppColor.black1)),
+                style: Styles.semiBoldStyle(
+                  fontSize: 16,
+                  color: AppColor.black1,
+                  family: FontFamily.varela,
+                )),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
                 child: Text('No',
                     style: Styles.mediumStyle(
-                        fontSize: 14, color: AppColor.black1)),
+                      fontSize: 14,
+                      color: AppColor.black1,
+                      family: FontFamily.varela,
+                    )),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
                 child: Text('Yes',
                     style: Styles.mediumStyle(
-                        fontSize: 14, color: AppColor.black1)),
+                        family: FontFamily.varela,
+                        fontSize: 14,
+                        color: AppColor.black1)),
               ),
             ],
           );

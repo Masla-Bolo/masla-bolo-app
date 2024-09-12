@@ -1,5 +1,5 @@
 import 'package:masla_bolo_app/features/home/home_screen.dart';
-import 'package:masla_bolo_app/features/issue/issue_screen.dart';
+import 'package:masla_bolo_app/features/issue/create_issue_screen.dart';
 import 'package:masla_bolo_app/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
@@ -21,7 +21,7 @@ class BottomBarItem {
     ),
     BottomBarItem(
       icon: AppImages.writeGrey,
-      page: IssueScreen(cubit: getIt()),
+      page: CreateIssueScreen(cubit: getIt()),
     ),
     BottomBarItem(
       icon: AppImages.profileGrey,

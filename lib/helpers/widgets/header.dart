@@ -28,7 +28,11 @@ class Header extends StatelessWidget {
         20.horizontalSpace,
         Text(
           title,
-          style: Styles.semiBoldStyle(fontSize: 30, color: AppColor.black1),
+          style: Styles.semiBoldStyle(
+            fontSize: 30,
+            color: AppColor.black1,
+            family: FontFamily.dmSans,
+          ),
         ),
         if (suffix != null) ...[
           const Spacer(),

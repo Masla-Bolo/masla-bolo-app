@@ -44,9 +44,10 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                 ),
                 const Spacer(),
                 Text(
-                  "Are you a Citizen or Official?",
+                  "SELECT YOUR ROLE",
                   style: Styles.boldStyle(
                     fontSize: 32.sp,
+                    family: FontFamily.dmSans,
                     color: AppColor.black1,
                   ),
                 ),
@@ -93,6 +94,7 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                               style: Styles.semiBoldStyle(
                                 fontSize: 20.sp,
                                 color: AppColor.white,
+                                family: FontFamily.varela,
                               ),
                             ),
                           ),

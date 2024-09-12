@@ -20,6 +20,8 @@ class AppNavigation {
 
   popAll(String routeName) {
     Navigator.popUntil(
-        navigatorKey.currentState!.context, ModalRoute.withName(routeName));
+      navigatorKey.currentState!.context,
+      ModalRoute.withName(routeName),
+    );
   }
 }

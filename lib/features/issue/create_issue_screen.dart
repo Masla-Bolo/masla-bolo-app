@@ -4,8 +4,8 @@ import 'package:masla_bolo_app/features/issue/components/issue_form.dart';
 import 'package:masla_bolo_app/features/issue/components/issue_header.dart';
 import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
 
-class IssueScreen extends StatelessWidget {
-  const IssueScreen({super.key, required this.cubit});
+class CreateIssueScreen extends StatelessWidget {
+  const CreateIssueScreen({super.key, required this.cubit});
   final IssueCubit cubit;
 
   @override

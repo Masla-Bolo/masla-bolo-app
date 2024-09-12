@@ -45,21 +45,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     Center(
                       child: Text('MASLA BOLO!',
                           style: Styles.boldStyle(
-                              fontSize: 30, color: AppColor.black1)),
+                            fontSize: 30,
+                            color: AppColor.black1,
+                            family: FontFamily.dmSans,
+                          )),
                     ),
                     10.verticalSpace,
                     Center(
                       child: Text(
                         'Report local issues & drive real change!',
                         style: Styles.mediumStyle(
-                            fontSize: 16, color: AppColor.grey),
+                          fontSize: 16,
+                          color: AppColor.grey,
+                          family: FontFamily.varela,
+                        ),
                       ),
                     ),
                     80.verticalSpace,
                     Text(
                       'Your email address',
                       style: Styles.boldStyle(
-                          fontSize: 14, color: AppColor.black1),
+                          fontSize: 14,
+                          color: AppColor.black1,
+                          family: FontFamily.varela),
                     ),
                     10.verticalSpace,
                     InputField(
@@ -70,7 +78,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Choose a password',
                       style: Styles.boldStyle(
-                          fontSize: 14, color: AppColor.black1),
+                          fontSize: 14,
+                          color: AppColor.black1,
+                          family: FontFamily.varela),
                     ),
                     10.verticalSpace,
                     InputField(
@@ -98,7 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: TextSpan(
                           text: "  Don't have an account? ",
                           style: Styles.mediumStyle(
-                              fontSize: 12, color: AppColor.grey),
+                            fontSize: 12,
+                            color: AppColor.grey,
+                            family: FontFamily.varela,
+                          ),
                           children: [
                             TextSpan(
                               recognizer: TapGestureRecognizer()
@@ -135,7 +148,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: Text(
                         'Sign up with Google',
                         style: Styles.boldStyle(
-                            fontSize: 14, color: AppColor.black1),
+                          fontSize: 14,
+                          color: AppColor.black1,
+                          family: FontFamily.varela,
+                        ),
                       ),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 48),
@@ -156,7 +172,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'Sign up with Apple',
                           style: Styles.boldStyle(
-                              fontSize: 14, color: AppColor.black1),
+                            fontSize: 14,
+                            color: AppColor.black1,
+                            family: FontFamily.varela,
+                          ),
                         ),
                       ),
                       style: OutlinedButton.styleFrom(

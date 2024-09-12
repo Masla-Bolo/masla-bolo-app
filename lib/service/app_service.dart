@@ -42,8 +42,8 @@ class AppService {
     getIt.registerSingleton<ImageHelper>(ImageHelper());
     getIt
         .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));
-    getIt.registerSingleton<IssueDetailCubit>(
-        IssueDetailCubit(getIt(), getIt()));
+    getIt.registerLazySingleton<IssueDetailCubit>(
+        () => IssueDetailCubit(getIt(), getIt()));
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
     getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
     getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));

@@ -57,8 +57,9 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
                       child: Text(
                         "Welcome to Masla Bolo!",
                         style: Styles.boldStyle(
-                          fontSize: 36.sp,
+                          fontSize: 30,
                           color: AppColor.black1,
+                          family: FontFamily.dmSans,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -70,6 +71,7 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
                         style: Styles.semiBoldStyle(
                           fontSize: 18.sp,
                           color: AppColor.black1,
+                          family: FontFamily.varela,
                         ),
                         textAlign: TextAlign.center,
                       ),

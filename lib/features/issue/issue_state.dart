@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class IssueState {
-  IssueState();
+  final GlobalKey<FormState> key;
+  IssueState({required this.key});
 
-  final key = GlobalKey<FormState>();
+  copyWith({GlobalKey<FormState>? key}) => IssueState(key: key ?? this.key);
 
-  copyWith() => IssueState();
-
-  factory IssueState.empty() => IssueState();
+  factory IssueState.empty() => IssueState(key: GlobalKey<FormState>());
 }

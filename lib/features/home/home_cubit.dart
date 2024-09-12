@@ -5,8 +5,4 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeCubit extends Cubit<HomeState> {
   final HomeNavigator navigation;
   HomeCubit(this.navigation) : super(HomeState.empty());
-
-  void toggleSearch() {
-    emit(state.copyWith(isExpanded: !state.isExpanded));
-  }
 }

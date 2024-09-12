@@ -24,7 +24,7 @@ class IssuePost extends StatelessWidget {
               children: [
                 Center(
                   child: Image.asset(
-                    index.isEven ? AppImages.temp : AppImages.test,
+                    index.isEven ? AppImages.temp : AppImages.sewerage,
                   ),
                 ),
                 Positioned(
@@ -41,7 +41,10 @@ class IssuePost extends StatelessWidget {
                       Text(
                         "User Name",
                         style: Styles.boldStyle(
-                            fontSize: 12, color: AppColor.white),
+                          fontSize: 12,
+                          color: AppColor.white,
+                          family: FontFamily.varela,
+                        ),
                       ),
                     ],
                   ),
@@ -63,6 +66,7 @@ class IssuePost extends StatelessWidget {
                     "So what makes a good headline?",
                     style: Styles.boldStyle(
                       fontSize: 15,
+                      family: FontFamily.varela,
                       color: AppColor.black1,
                     ),
                   ),
@@ -72,10 +76,16 @@ class IssuePost extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Icon(
-                      Icons.favorite,
-                      color: AppColor.red,
+                      Icons.thumb_up_alt,
+                      color: AppColor.black1,
                     ),
-                    const Text("5.1M Likes"),
+                    Text(
+                      "5.1M Likes",
+                      style: Styles.mediumStyle(
+                          fontSize: 12,
+                          color: AppColor.black1,
+                          family: FontFamily.varela),
+                    ),
                     5.horizontalSpace,
                     const Text("•"),
                     5.horizontalSpace,
@@ -85,19 +95,31 @@ class IssuePost extends StatelessWidget {
                       },
                       child: const Icon(
                         Icons.comment_outlined,
-                        color: AppColor.lightGrey,
+                        color: AppColor.black1,
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
                         cubit.navigation.goToIssueDetail();
                       },
-                      child: const Text("1.5k comments"),
+                      child: Text(
+                        "1.5k comments",
+                        style: Styles.mediumStyle(
+                            fontSize: 12,
+                            color: AppColor.black1,
+                            family: FontFamily.varela),
+                      ),
                     ),
                     5.horizontalSpace,
                     const Text("•"),
                     5.horizontalSpace,
-                    const Text("1 Day ago"),
+                    Text(
+                      "1 Day ago",
+                      style: Styles.mediumStyle(
+                          fontSize: 12,
+                          color: AppColor.black1,
+                          family: FontFamily.varela),
+                    ),
                     5.horizontalSpace,
                   ],
                 ),

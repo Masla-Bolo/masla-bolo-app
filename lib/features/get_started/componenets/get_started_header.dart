@@ -18,40 +18,55 @@ class GetStartedHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment:
+          hideBack ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        if (!hideBack) ...[
-          10.horizontalSpace,
+        if (!hideBack)
           GestureDetector(
             onTap: onBackTap,
-            child: const Icon(
-              Icons.arrow_back_ios_rounded,
-              color: AppColor.black1,
-              size: 16,
+            child: Row(
+              children: [
+                10.horizontalSpace,
+                const Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: AppColor.black1,
+                  size: 16,
+                ),
+                5.horizontalSpace,
+                Text(
+                  "Back",
+                  style: Styles.semiBoldStyle(
+                    fontSize: 18,
+                    color: AppColor.black1,
+                    family: FontFamily.dmSans,
+                  ),
+                ),
+              ],
             ),
           ),
-          5.horizontalSpace,
-          Text(
-            "Back",
-            style: Styles.semiBoldStyle(fontSize: 18, color: AppColor.black1),
-          ),
-        ],
-        if (!hideNext) ...[
-          const Spacer(),
-          Text(
-            "Next",
-            style: Styles.semiBoldStyle(fontSize: 18, color: AppColor.black1),
-          ),
-          5.horizontalSpace,
+        if (!hideNext)
           GestureDetector(
             onTap: onNextTap,
-            child: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: AppColor.black1,
-              size: 16,
+            child: Row(
+              children: [
+                Text(
+                  "Next",
+                  style: Styles.semiBoldStyle(
+                    fontSize: 18,
+                    color: AppColor.black1,
+                    family: FontFamily.dmSans,
+                  ),
+                ),
+                5.horizontalSpace,
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: AppColor.black1,
+                  size: 16,
+                ),
+                10.horizontalSpace,
+              ],
             ),
           ),
-          10.horizontalSpace,
-        ],
       ],
     );
   }

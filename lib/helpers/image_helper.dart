@@ -23,6 +23,7 @@ class ImageHelper {
             child: Text(
               'Photo Gallery',
               style: Styles.semiBoldStyle(
+                  family: FontFamily.varela,
                   fontSize: 15,
                   color: Theme.of(context).colorScheme.onSecondary),
             ),
@@ -37,6 +38,7 @@ class ImageHelper {
             child: Text(
               'Camera',
               style: Styles.semiBoldStyle(
+                  family: FontFamily.varela,
                   fontSize: 15,
                   color: Theme.of(context).colorScheme.onSecondary),
             ),
