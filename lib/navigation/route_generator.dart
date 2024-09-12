@@ -29,13 +29,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(const SplashScreen(), TransitionType.fade);
 
     case RouteName.login:
-      return getRoute(LoginScreen(cubit: getIt()), TransitionType.slide);
+      return getRoute(LoginScreen(cubit: getIt()), TransitionType.fade);
 
     case RouteName.bottomBar:
       return getRoute(BottomBar(cubit: getIt()), TransitionType.fade);
 
     case RouteName.register:
-      return getRoute(ResgisterScreen(cubit: getIt()), TransitionType.slide);
+      return getRoute(ResgisterScreen(cubit: getIt()), TransitionType.fade);
 
     case RouteName.profile:
       return getRoute(ProfileScreen(cubit: getIt()), TransitionType.fade);

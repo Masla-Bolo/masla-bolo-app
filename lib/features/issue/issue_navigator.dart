@@ -6,7 +6,7 @@ class IssueNavigator {
   final AppNavigation navigation;
   late BuildContext context;
   pop() {
-    navigation.pop(context);
+    navigation.pop();
   }
 
   IssueNavigator(this.navigation);
@@ -14,7 +14,6 @@ class IssueNavigator {
 
 mixin IssueRoute {
   AppNavigation get navigation;
-  BuildContext get context;
 
-  void goToIssue() => navigation.push(context, RouteName.issue);
+  void goToIssue() => navigation.push(RouteName.issue);
 }

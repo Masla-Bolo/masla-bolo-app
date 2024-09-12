@@ -9,7 +9,7 @@ class IssueCubit extends Cubit<IssueState> {
   final ImageHelper imageHelper;
   IssueCubit(this.navigator, this.imageHelper) : super(IssueState.empty());
   void goBack() {
-    navigator.navigation.pop(navigator.context);
+    navigator.navigation.pop();
   }
 
   Future<void> showOptions(BuildContext context) async {

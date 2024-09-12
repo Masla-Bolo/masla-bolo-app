@@ -16,7 +16,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     cubit = widget.cubit;
-    cubit.navigation.context = context;
   }
 
   @override

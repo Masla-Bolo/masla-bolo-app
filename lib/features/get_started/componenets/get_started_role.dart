@@ -23,7 +23,6 @@ class _GetStartedRoleState extends State<GetStartedRole> {
   void initState() {
     super.initState();
     cubit = getIt<GetStartedCubit>();
-    cubit.navigator.context = context;
     cubit.onInit();
   }
 

@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 
 class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();
-  void push(BuildContext context, String routeName, {arguments}) {
-    Navigator.pushNamed(context, routeName, arguments: arguments);
+
+  void push(String routeName, {arguments}) {
+    Navigator.pushNamed(navigatorKey.currentState!.context, routeName,
+        arguments: arguments);
   }
 
-  pop(BuildContext context) {
-    Navigator.pop(context);
+  pop() {
+    Navigator.pop(navigatorKey.currentState!.context);
   }
 
-  pushReplacement(BuildContext context, String routeName, {arguments}) {
-    Navigator.pushReplacementNamed(context, routeName, arguments: arguments);
+  pushReplacement(String routeName, {arguments}) {
+    Navigator.pushReplacementNamed(
+        navigatorKey.currentState!.context, routeName,
+        arguments: arguments);
   }
 
-  popAll(BuildContext context, String routeName) {
-    Navigator.popUntil(context, ModalRoute.withName(routeName));
+  popAll(String routeName) {
+    Navigator.popUntil(
+        navigatorKey.currentState!.context, ModalRoute.withName(routeName));
   }
 }

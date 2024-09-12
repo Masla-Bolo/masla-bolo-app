@@ -6,9 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
+import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/service/app_service.dart';
 
-import 'features/splash/splash_screen.dart';
 import 'helpers/styles/app_theme.dart';
 import 'navigation/route_generator.dart';
 
@@ -51,7 +51,7 @@ class MaslaBolo extends StatelessWidget {
                         darkTheme: AppTheme.theme(dark: true),
                         themeMode: ThemeMode.light,
                         debugShowCheckedModeBanner: false,
-                        home: const SplashScreen(),
+                        navigatorKey: AppNavigation.navigatorKey,
                         onGenerateRoute: generateRoute,
                       );
                     }),

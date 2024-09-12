@@ -25,7 +25,6 @@ class _LoginScreenState extends State<ResgisterScreen> {
   void initState() {
     super.initState();
     authCubit = widget.cubit;
-    authCubit.navigation.context = context;
   }
 
   @override

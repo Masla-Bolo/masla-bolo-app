@@ -6,14 +6,13 @@ class ProfileNavigator {
   final AppNavigation navigation;
   late BuildContext context;
   pop() {
-    navigation.pop(context);
+    navigation.pop();
   }
 
   ProfileNavigator(this.navigation);
 }
 
 mixin ProfileRoute {
-  void goToProfile() => navigation.push(context, RouteName.profile);
+  void goToProfile() => navigation.push(RouteName.profile);
   AppNavigation get navigation;
-  BuildContext get context;
 }

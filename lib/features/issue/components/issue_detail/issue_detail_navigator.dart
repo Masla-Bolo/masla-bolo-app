@@ -6,7 +6,7 @@ class IssueDetailNavigator {
   final AppNavigation navigation;
   late BuildContext context;
   pop() {
-    navigation.pop(context);
+    navigation.pop();
   }
 
   IssueDetailNavigator(this.navigation);
@@ -14,7 +14,6 @@ class IssueDetailNavigator {
 
 mixin IssueDetailRoute {
   AppNavigation get navigation;
-  BuildContext get context;
 
-  void goToIssueDetail() => navigation.push(context, RouteName.issueDetail);
+  void goToIssueDetail() => navigation.push(RouteName.issueDetail);
 }

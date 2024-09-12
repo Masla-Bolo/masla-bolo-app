@@ -18,7 +18,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
   void initState() {
     super.initState();
     cubit = getIt<GetStartedCubit>();
-    cubit.navigator.context = context;
   }
 
   @override

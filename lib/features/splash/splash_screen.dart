@@ -14,7 +14,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     cubit = getIt<SplashCubit>();
-    cubit.navigator.context = context;
     cubit.onInit();
   }
 

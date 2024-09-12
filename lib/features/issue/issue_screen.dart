@@ -10,7 +10,6 @@ class IssueScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    cubit.navigator.context = context;
     return Scaffold(
       body: SafeArea(
         child: Column(

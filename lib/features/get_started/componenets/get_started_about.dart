@@ -23,12 +23,10 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
   void initState() {
     super.initState();
     cubit = getIt<GetStartedCubit>();
-    cubit.navigator.context = context;
   }
 
   @override
   Widget build(BuildContext context) {
-    cubit.navigator.context = context;
     return BlocBuilder<GetStartedCubit, GetStartedState>(
         bloc: cubit,
         builder: (context, state) {

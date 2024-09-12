@@ -22,7 +22,7 @@ class DeepLinking {
         if (queryParams!.first.key == "id") {
           String id = queryParams.first.value.first;
           // Navigate to the page using the extracted ID
-          navigation.push(context, RouteName.home, arguments: {
+          navigation.push(RouteName.home, arguments: {
             "id": id,
           });
         }
@@ -40,7 +40,7 @@ class DeepLinking {
           final queryParams = initialURI.queryParametersAll.entries.toList();
           if (queryParams.first.key == "id") {
             String id = queryParams.first.value.first;
-            navigation.push(context, RouteName.home, arguments: {
+            navigation.push(RouteName.home, arguments: {
               "id": id,
             });
           }
