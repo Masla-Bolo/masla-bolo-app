@@ -9,7 +9,6 @@ class InputField extends StatefulWidget {
     this.preFilledValue,
     this.passwordField = false,
     this.hintText,
-    this.width,
     this.validator,
     this.keyboardType,
     this.readOnly = false,
@@ -32,7 +31,6 @@ class InputField extends StatefulWidget {
   final bool readOnly;
   final String? hintText;
   final bool showCrossIcon;
-  final double? width;
   final TextEditingController? textEditingController;
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
@@ -70,54 +68,51 @@ class _InputFieldState extends State<InputField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.width,
-      child: TextFormField(
-          focusNode: widget.focusNode,
-          onTapOutside: (event) {
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          keyboardType: widget.keyboardType,
-          controller: controller,
-          style: Styles.mediumStyle(
-            fontSize: 15,
-            color: AppColor.black1,
-            family: FontFamily.varela,
-          ),
-          inputFormatters: widget.inputFormatters,
-          obscureText: widget.passwordField ? isObsecure : false,
-          readOnly: widget.readOnly,
-          cursorColor: AppColor.black1,
-          cursorErrorColor: AppColor.black1,
-          onChanged: widget.onChanged,
-          validator: widget.validator,
-          onTap: () {},
-          maxLength: widget.maxLength,
-          scrollPadding: const EdgeInsets.all(0),
-          onFieldSubmitted: widget.onSubmit,
-          decoration: Styles.inputFieldDecoration(
-            widget.hintText ?? '',
-            context,
-            suffixIcon: widget.passwordField
-                ? GestureDetector(
-                    onTap: () {
-                      isObsecure = !isObsecure;
-                      setState(() {});
-                    },
-                    child: Icon(
-                      isObsecure
-                          ? Icons.visibility_off
-                          : Icons.remove_red_eye_rounded,
-                      color: Theme.of(context).colorScheme.onSecondary,
-                    ))
-                : widget.showCrossIcon
-                    ? GestureDetector(
-                        onTap: () {
-                          widget.onCrossTap?.call();
-                        },
-                        child: const Icon(Icons.cancel))
-                    : null,
-          )),
-    );
+    return TextFormField(
+        focusNode: widget.focusNode,
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        keyboardType: widget.keyboardType,
+        controller: controller,
+        style: Styles.mediumStyle(
+          fontSize: 15,
+          color: AppColor.black1,
+          family: FontFamily.varela,
+        ),
+        inputFormatters: widget.inputFormatters,
+        obscureText: widget.passwordField ? isObsecure : false,
+        readOnly: widget.readOnly,
+        cursorColor: AppColor.black1,
+        cursorErrorColor: AppColor.black1,
+        onChanged: widget.onChanged,
+        validator: widget.validator,
+        onTap: () {},
+        maxLength: widget.maxLength,
+        scrollPadding: const EdgeInsets.all(0),
+        onFieldSubmitted: widget.onSubmit,
+        decoration: Styles.inputFieldDecoration(
+          widget.hintText ?? '',
+          context,
+          suffixIcon: widget.passwordField
+              ? GestureDetector(
+                  onTap: () {
+                    isObsecure = !isObsecure;
+                    setState(() {});
+                  },
+                  child: Icon(
+                    isObsecure
+                        ? Icons.visibility_off
+                        : Icons.remove_red_eye_rounded,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ))
+              : widget.showCrossIcon
+                  ? GestureDetector(
+                      onTap: () {
+                        widget.onCrossTap?.call();
+                      },
+                      child: const Icon(Icons.cancel))
+                  : null,
+        ));
   }
 }

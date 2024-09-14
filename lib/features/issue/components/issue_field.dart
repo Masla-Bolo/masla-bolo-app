@@ -30,10 +30,10 @@ class IssueField extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(String) onChanged;
   @override
-  State<IssueField> createState() => _InputFieldState();
+  State<IssueField> createState() => _IssueFieldState();
 }
 
-class _InputFieldState extends State<IssueField> {
+class _IssueFieldState extends State<IssueField> {
   late TextEditingController controller;
   bool isObsecure = true;
 

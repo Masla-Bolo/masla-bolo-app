@@ -13,7 +13,7 @@ class SplashCubit extends Cubit<SplashState> {
 
   onInit() {
     Future.delayed(
-        const Duration(seconds: 2),
+        const Duration(seconds: 3),
         () => {
               localStorageRepository.getValue(getStartedKey).then((result) => {
                     result.fold(

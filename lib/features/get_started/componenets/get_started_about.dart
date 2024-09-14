@@ -32,69 +32,71 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
         builder: (context, state) {
           return Scaffold(
             body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    15.verticalSpace,
-                    GetStartedHeader(
-                      hideBack: true,
-                      onNextTap: () {
-                        cubit.goToNextPage();
-                      },
-                    ),
-                    30.verticalSpace,
-                    Center(
-                      child: Icon(
-                        Icons.help_outline_sharp,
-                        size: 100.w,
-                        color: AppColor.black1,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      15.verticalSpace,
+                      GetStartedHeader(
+                        hideBack: true,
+                        onNextTap: () {
+                          cubit.goToNextPage();
+                        },
                       ),
-                    ),
-                    20.verticalSpace,
-                    Center(
-                      child: Text(
-                        "Welcome to Masla Bolo!",
-                        style: Styles.boldStyle(
-                          fontSize: 30,
+                      30.verticalSpace,
+                      Center(
+                        child: Icon(
+                          Icons.help_outline_sharp,
+                          size: 100.w,
                           color: AppColor.black1,
-                          family: FontFamily.dmSans,
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    20.verticalSpace,
-                    Center(
-                      child: Text(
-                        "Report local issues & drive real change.",
-                        style: Styles.semiBoldStyle(
-                          fontSize: 18.sp,
-                          color: AppColor.black1,
-                          family: FontFamily.varela,
+                      20.verticalSpace,
+                      Center(
+                        child: Text(
+                          "Welcome to Masla Bolo!",
+                          style: Styles.boldStyle(
+                            fontSize: 30,
+                            color: AppColor.black1,
+                            family: FontFamily.dmSans,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    30.verticalSpace,
-                    const InfoCard(
-                      title: "🚧 Why Masla Bolo?",
-                      subTitle:
-                          "Easily report infrastructure issues like potholes, broken lights, and illegal dumping. Help us improve your city!",
-                    ),
-                    20.verticalSpace,
-                    const InfoCard(
-                      title: "🎯 Our Mission",
-                      subTitle:
-                          "We connect you directly with city officials to fix problems faster. No more delays, just results.",
-                    ),
-                    20.verticalSpace,
-                    const InfoCard(
-                      title: "🌍 Make a Difference",
-                      subTitle:
-                          "Together, we can create a cleaner, safer city. Your reports matter!",
-                    ),
-                  ],
+                      20.verticalSpace,
+                      Center(
+                        child: Text(
+                          "Report local issues & drive real change.",
+                          style: Styles.semiBoldStyle(
+                            fontSize: 18.sp,
+                            color: AppColor.black1,
+                            family: FontFamily.varela,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      30.verticalSpace,
+                      const InfoCard(
+                        title: "🚧 Why Masla Bolo?",
+                        subTitle:
+                            "Easily report infrastructure issues like potholes, broken lights, and illegal dumping. Help us improve your city!",
+                      ),
+                      20.verticalSpace,
+                      const InfoCard(
+                        title: "🎯 Our Mission",
+                        subTitle:
+                            "We connect you directly with city officials to fix problems faster. No more delays, just results.",
+                      ),
+                      20.verticalSpace,
+                      const InfoCard(
+                        title: "🌍 Make a Difference",
+                        subTitle:
+                            "Together, we can create a cleaner, safer city. Your reports matter!",
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

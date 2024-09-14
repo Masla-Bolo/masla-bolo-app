@@ -27,19 +27,20 @@ class HomeSearch extends StatelessWidget {
           return Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  2.horizontalSpace,
-                  SizedBox(
-                    height: 35,
-                    child: InputField(
-                      width: 0.8.sw,
-                      focusNode: focusNode,
-                      textEditingController: controller,
-                      hintText: "find issues here..",
-                      onChanged: (val) {},
+                  Expanded(
+                    child: SizedBox(
+                      height: 35,
+                      child: InputField(
+                        focusNode: focusNode,
+                        textEditingController: controller,
+                        hintText: "find issues here..",
+                        onChanged: (val) {},
+                      ),
                     ),
                   ),
-                  const Spacer(),
+                  10.horizontalSpace,
                   GestureDetector(
                     onTap: () {
                       focusNode.requestFocus();
@@ -50,7 +51,7 @@ class HomeSearch extends StatelessWidget {
                       height: 30,
                     ),
                   ),
-                  20.horizontalSpace,
+                  10.horizontalSpace,
                 ],
               ));
         });

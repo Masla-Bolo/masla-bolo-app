@@ -47,38 +47,42 @@ class _IssueDetailState extends State<IssueDetail> {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          10.verticalSpace,
-                          IssueDetailSlider(
-                            onTap: () {},
+                    child: Column(
+                      children: [
+                        10.verticalSpace,
+                        IssueDetailSlider(
+                          onTap: () {},
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              10.verticalSpace,
+                              Text(
+                                "Severage Issue near Nazimabad".toUpperCase(),
+                                style: Styles.boldStyle(
+                                  fontSize: 20,
+                                  color: AppColor.black1,
+                                  family: FontFamily.dmSans,
+                                ),
+                              ),
+                              5.verticalSpace,
+                              Text(
+                                "There has been a severe drainage issue reported near Nazimabad, where overflowing sewage is causing significant inconvenience for residents and passersby. The stagnant water has not only led to foul odors but also poses health risks, especially with the spread of waterborne diseases. Local authorities have been notified, but the situation remains unresolved, leading to growing frustration among the community. Immediate attention is required to prevent further escalation of the problem.",
+                                style: Styles.mediumStyle(
+                                  fontSize: 18,
+                                  color: AppColor.grey,
+                                  family: FontFamily.varela,
+                                ),
+                              ),
+                              10.verticalSpace,
+                              const IssueDetailCategories(),
+                              IssueDetailDiscussion(focusNode: focusNode)
+                            ],
                           ),
-                          10.verticalSpace,
-                          Text(
-                            "Severage Issue near Nazimabad".toUpperCase(),
-                            style: Styles.boldStyle(
-                              fontSize: 20,
-                              color: AppColor.black1,
-                              family: FontFamily.dmSans,
-                            ),
-                          ),
-                          5.verticalSpace,
-                          Text(
-                            "There has been a severe drainage issue reported near Nazimabad, where overflowing sewage is causing significant inconvenience for residents and passersby. The stagnant water has not only led to foul odors but also poses health risks, especially with the spread of waterborne diseases. Local authorities have been notified, but the situation remains unresolved, leading to growing frustration among the community. Immediate attention is required to prevent further escalation of the problem.",
-                            style: Styles.mediumStyle(
-                              fontSize: 18,
-                              color: AppColor.grey,
-                              family: FontFamily.varela,
-                            ),
-                          ),
-                          10.verticalSpace,
-                          const IssueDetailCategories(),
-                          IssueDetailDiscussion(focusNode: focusNode)
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
