@@ -35,6 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: HomeFilterDrawer(cubit: homeCubit),
+      onEndDrawerChanged: (result) {
+        getIt<BottomBarCubit>().toggleVisibility();
+      },
       body: SafeArea(
         child: BlocBuilder<HomeCubit, HomeState>(
             bloc: homeCubit,
@@ -55,7 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         15.horizontalSpace,
                         GestureDetector(
                           onTap: () {
-                            getIt<BottomBarCubit>().toggleVisibility();
                             Scaffold.of(context).openEndDrawer();
                           },
                           child: Image.asset(AppImages.filter, height: 30),

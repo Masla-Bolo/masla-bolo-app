@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/header.dart';
-import '../../../main.dart';
-import '../../bottom_bar/bottom_bar_cubit.dart';
 import '../home_cubit.dart';
 
 class HomeFilterDrawer extends StatelessWidget {
@@ -25,7 +23,6 @@ class HomeFilterDrawer extends StatelessWidget {
               Header(
                 title: "Apply Filters",
                 onBackTap: () {
-                  getIt<BottomBarCubit>().toggleVisibility();
                   Scaffold.of(context).closeEndDrawer();
                 },
               ),
@@ -86,7 +83,6 @@ class HomeFilterDrawer extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    getIt<BottomBarCubit>().toggleVisibility();
                     Scaffold.of(context).closeEndDrawer();
                   },
                   child: const Padding(

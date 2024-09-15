@@ -21,10 +21,12 @@ class InputField extends StatefulWidget {
     this.suffixIcon,
     this.onCrossTap,
     this.showCrossIcon = false,
+    this.disableOnTapOutside = false,
     required this.onChanged,
   });
   final List<TextInputFormatter>? inputFormatters;
   final String? preFilledValue;
+  final bool disableOnTapOutside;
   final bool passwordField;
   final int? maxLength;
   final bool isDateField;
@@ -71,7 +73,9 @@ class _InputFieldState extends State<InputField> {
     return TextFormField(
         focusNode: widget.focusNode,
         onTapOutside: (event) {
-          FocusManager.instance.primaryFocus?.unfocus();
+          if (!widget.disableOnTapOutside) {
+            FocusManager.instance.primaryFocus?.unfocus();
+          }
         },
         keyboardType: widget.keyboardType,
         controller: controller,

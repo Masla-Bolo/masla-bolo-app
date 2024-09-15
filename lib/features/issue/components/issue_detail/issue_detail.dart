@@ -107,6 +107,7 @@ class _IssueDetailState extends State<IssueDetail> {
                         padding: const EdgeInsets.fromLTRB(12, 3, 12, 8),
                         child: InputField(
                           focusNode: focusNode,
+                          disableOnTapOutside: true,
                           textEditingController: controller,
                           onChanged: (val) {},
                           hintText: "write a comment...",
