@@ -12,6 +12,9 @@ import 'package:masla_bolo_app/features/get_started/get_started_navigator.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
+import 'package:masla_bolo_app/features/notification/notification_cubit.dart';
+import 'package:masla_bolo_app/features/profile/components/settings_cubit.dart';
+import 'package:masla_bolo_app/features/profile/components/settings_navigator.dart';
 import 'package:masla_bolo_app/features/profile/profile_navigator.dart';
 import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
@@ -25,6 +28,7 @@ import '../features/home/home_navigator.dart';
 import '../features/issue/components/issue_detail/issue_detail_cubit.dart';
 import '../features/issue/components/issue_detail/issue_detail_navigator.dart';
 import '../features/issue/issue_navigator.dart';
+import '../features/notification/notification_navigator.dart';
 import '../features/profile/profile_cubit.dart';
 
 class AppService {
@@ -62,6 +66,18 @@ class AppService {
       getIt(),
     ));
     getIt.registerSingleton<AuthCubit>(AuthCubit(getIt(), getIt()));
+    getIt.registerLazySingleton<NotificationNavigator>(
+      () => NotificationNavigator(getIt()),
+    );
+    getIt.registerLazySingleton<NotificationCubit>(
+      () => NotificationCubit(getIt()),
+    );
+    getIt.registerLazySingleton<SettingsNavigator>(
+      () => SettingsNavigator(getIt()),
+    );
+    getIt.registerLazySingleton<SettingsCubit>(
+      () => SettingsCubit(getIt()),
+    );
     getIt.registerSingleton<BottomBarNavigator>(BottomBarNavigator(getIt()));
     getIt.registerSingleton<BottomBarCubit>(BottomBarCubit(getIt()));
   }

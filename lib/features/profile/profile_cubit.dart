@@ -5,4 +5,8 @@ import 'package:masla_bolo_app/features/profile/profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileNavigator navigation;
   ProfileCubit(this.navigation) : super(ProfileState.empty());
+
+  goToSettings() {
+    navigation.goToSettings();
+  }
 }

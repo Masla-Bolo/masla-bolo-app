@@ -6,6 +6,7 @@ import 'package:masla_bolo_app/features/get_started/get_started_screen.dart';
 import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail.dart';
 import 'package:masla_bolo_app/features/issue/create_issue_screen.dart';
 import 'package:masla_bolo_app/features/notification/notification_page.dart';
+import 'package:masla_bolo_app/features/profile/components/settings_page.dart';
 import 'package:masla_bolo_app/features/profile/profile_screen.dart';
 import 'package:masla_bolo_app/main.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(HomeScreen(cubit: getIt()), TransitionType.slide);
 
     case RouteName.notification:
-      return getRoute(const NotificationPage(), TransitionType.fade);
+      return getRoute(
+          NotificationPage(
+            cubit: getIt(),
+          ),
+          TransitionType.fade);
 
     case RouteName.issue:
       return getRoute(CreateIssueScreen(cubit: getIt()), TransitionType.fade);
@@ -62,7 +67,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(const GetStartedScreen(), TransitionType.fade);
 
     case RouteName.settings:
-      return getRoute(const GetStartedScreen(), TransitionType.slide);
+      return getRoute(SettingsPage(cubit: getIt()), TransitionType.slide);
 
     default:
       return MaterialPageRoute(

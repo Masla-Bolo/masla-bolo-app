@@ -71,15 +71,21 @@ class _ProfileScreenState extends State<ProfileScreen>
                         const Spacer(),
                         Column(
                           children: [
-                            const Icon(
-                              Icons.settings,
-                              color: AppColor.black1,
-                              size: 30,
+                            GestureDetector(
+                              onTap: () {
+                                cubit.goToSettings();
+                              },
+                              child: const Icon(
+                                Icons.settings,
+                                color: AppColor.black1,
+                                size: 30,
+                              ),
                             ),
                             20.verticalSpace,
                             const CircleAvatar(
                               backgroundColor: AppColor.black1,
-                              child: Icon(Icons.person_2, color: AppColor.grey),
+                              child:
+                                  Icon(Icons.person_2, color: AppColor.white),
                             ),
                           ],
                         ),
@@ -130,6 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Center(
                         child: Text(
                       'Your Issues',
+                      textAlign: TextAlign.center,
                       style: Styles.boldStyle(
                         fontSize: 15,
                         color: AppColor.black1,
@@ -139,6 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Center(
                       child: Text(
                         'Pending Issues',
+                        textAlign: TextAlign.center,
                         style: Styles.boldStyle(
                           fontSize: 15,
                           color: AppColor.black1,
@@ -149,6 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Center(
                       child: Text(
                         'Completed Issues',
+                        textAlign: TextAlign.center,
                         style: Styles.boldStyle(
                           fontSize: 15,
                           color: AppColor.black1,
@@ -158,13 +167,35 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                   ]),
               Expanded(
-                child: TabBarView(controller: tabController, children: const [
-                  Center(child: Text("Approved ISSUES HERE")),
+                child: TabBarView(controller: tabController, children: [
                   Center(
-                    child: Text('PENDING ISSUES HERE'),
+                      child: Text(
+                    "APPROVED ISSUES HERE",
+                    style: Styles.boldStyle(
+                      fontSize: 20,
+                      color: AppColor.black1,
+                      family: FontFamily.varela,
+                    ),
+                  )),
+                  Center(
+                    child: Text(
+                      'PENDING ISSUES HERE',
+                      style: Styles.boldStyle(
+                        fontSize: 20,
+                        color: AppColor.black1,
+                        family: FontFamily.varela,
+                      ),
+                    ),
                   ),
                   Center(
-                    child: Text('COMPLETED ISSUES HERE'),
+                    child: Text(
+                      'COMPLETED ISSUES HERE',
+                      style: Styles.boldStyle(
+                        fontSize: 20,
+                        color: AppColor.black1,
+                        family: FontFamily.varela,
+                      ),
+                    ),
                   ),
                 ]),
               ),
