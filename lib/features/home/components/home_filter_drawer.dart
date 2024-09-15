@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:masla_bolo_app/helpers/helpers.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../helpers/styles/app_colors.dart';
+import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/header.dart';
+import '../../../main.dart';
+import '../../bottom_bar/bottom_bar_cubit.dart';
 import '../home_cubit.dart';
 
 class HomeFilterDrawer extends StatelessWidget {
@@ -13,41 +16,90 @@ class HomeFilterDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Header(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              20.verticalSpace,
+              Header(
                 title: "Apply Filters",
                 onBackTap: () {
+                  getIt<BottomBarCubit>().toggleVisibility();
                   Scaffold.of(context).closeEndDrawer();
                 },
-                suffix: ElevatedButton(
-                    onPressed: () {},
-                    child: const Center(
-                      child: Text("Apply"),
-                    )),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                  padding: scrollBottomPadding,
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: AppColor.black1),
-                        ),
-                        child: Center(child: Text("Filter ${index + 1}")),
+              30.verticalSpace,
+              Text("Categories",
+                  style: Styles.boldStyle(
+                    fontSize: 20,
+                    color: AppColor.black1,
+                    family: FontFamily.varela,
+                  )),
+              20.verticalSpace,
+              Wrap(
+                spacing: 10.w,
+                direction: Axis.horizontal,
+                children: [
+                  Chip(
+                      label: Text("Electric",
+                          style: Styles.boldStyle(
+                            fontSize: 15,
+                            color: AppColor.white,
+                            family: FontFamily.varela,
+                          ))),
+                  Chip(
+                    label: Text(
+                      "Sewerage",
+                      style: Styles.boldStyle(
+                        fontSize: 15,
+                        color: AppColor.white,
+                        family: FontFamily.varela,
                       ),
-                    );
-                  }),
-            ),
-          ],
+                    ),
+                  ),
+                  Chip(
+                      label: Text("Street",
+                          style: Styles.boldStyle(
+                            fontSize: 15,
+                            color: AppColor.white,
+                            family: FontFamily.varela,
+                          ))),
+                  Chip(
+                      label: Text("Broken",
+                          style: Styles.boldStyle(
+                            fontSize: 15,
+                            color: AppColor.white,
+                            family: FontFamily.varela,
+                          ))),
+                  Chip(
+                      label: Text("Other",
+                          style: Styles.boldStyle(
+                            fontSize: 15,
+                            color: AppColor.white,
+                            family: FontFamily.varela,
+                          ))),
+                ],
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    getIt<BottomBarCubit>().toggleVisibility();
+                    Scaffold.of(context).closeEndDrawer();
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 20),
+                    child: Center(
+                      child: Text("Apply"),
+                    ),
+                  ),
+                ),
+              ),
+              30.verticalSpace,
+            ],
+          ),
         ),
       ),
     );

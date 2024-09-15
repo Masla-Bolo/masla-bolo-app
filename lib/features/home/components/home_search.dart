@@ -47,7 +47,7 @@ class HomeSearch extends StatelessWidget {
                     },
                     child: Image.asset(
                       AppImages.search,
-                      color: AppColor.black1,
+                      color: AppColor.black3,
                       height: 30,
                     ),
                   ),

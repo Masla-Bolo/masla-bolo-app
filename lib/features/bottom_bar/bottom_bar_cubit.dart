@@ -14,4 +14,8 @@ class BottomBarCubit extends Cubit<BottomBarState> {
       emit(state.copyWith(currentIndex: index, page: state.items[index].page));
     }
   }
+
+  void toggleVisibility() {
+    emit(state.copyWith(hideBottomBar: !state.hideBottomBar));
+  }
 }

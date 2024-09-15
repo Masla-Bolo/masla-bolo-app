@@ -1,4 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/home_body.dart';
 import 'package:masla_bolo_app/features/home/components/home_filter_drawer.dart';
 import 'package:masla_bolo_app/features/home/components/home_search.dart';
@@ -54,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         15.horizontalSpace,
                         GestureDetector(
                           onTap: () {
+                            getIt<BottomBarCubit>().toggleVisibility();
                             Scaffold.of(context).openEndDrawer();
                           },
                           child: Image.asset(AppImages.filter, height: 30),

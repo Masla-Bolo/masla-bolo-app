@@ -8,6 +8,10 @@ class HomeNavigator with NotificationRoute, IssueDetailRoute {
   final AppNavigation navigation;
 
   HomeNavigator(this.navigation);
+
+  pop() {
+    navigation.pop();
+  }
 }
 
 mixin HomeRoute {

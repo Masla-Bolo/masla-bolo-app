@@ -34,7 +34,8 @@ class BottomBar extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 children: [
                   state.page,
-                  if (MediaQuery.of(context).viewInsets.bottom <= 100)
+                  if (MediaQuery.of(context).viewInsets.bottom <= 100 &&
+                      !state.hideBottomBar)
                     Positioned(
                         bottom: 10,
                         child: BottomBarContainer(

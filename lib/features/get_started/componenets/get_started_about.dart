@@ -95,6 +95,7 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
                         subTitle:
                             "Together, we can create a cleaner, safer city. Your reports matter!",
                       ),
+                      30.verticalSpace,
                     ],
                   ),
                 ),

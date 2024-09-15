@@ -10,6 +10,7 @@ import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_navigator.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_navigator.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
+import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/profile/profile_navigator.dart';
 import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
@@ -40,10 +41,16 @@ class AppService {
     getIt.registerSingleton<HomeNavigator>(HomeNavigator(getIt()));
     getIt.registerSingleton<HomeCubit>(HomeCubit(getIt()));
     getIt.registerSingleton<ImageHelper>(ImageHelper());
+    getIt.registerFactoryParam<IssueDetailCubit, IssueDetailInitialParams,
+        dynamic>(
+      (params, _) => IssueDetailCubit(
+        params,
+        getIt(),
+        getIt(),
+      ),
+    );
     getIt
         .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));
-    getIt.registerLazySingleton<IssueDetailCubit>(
-        () => IssueDetailCubit(getIt(), getIt()));
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
     getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
     getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));

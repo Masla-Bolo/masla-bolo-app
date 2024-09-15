@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/navigation/route_name.dart';
 
@@ -15,5 +16,6 @@ class IssueDetailNavigator {
 mixin IssueDetailRoute {
   AppNavigation get navigation;
 
-  void goToIssueDetail() => navigation.push(RouteName.issueDetail);
+  void goToIssueDetail(IssueDetailInitialParams params) =>
+      navigation.push(RouteName.issueDetail, arguments: {"params": params});
 }

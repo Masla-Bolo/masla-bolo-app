@@ -50,7 +50,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(CreateIssueScreen(cubit: getIt()), TransitionType.fade);
 
     case RouteName.issueDetail:
-      return getRoute(IssueDetail(cubit: getIt()), TransitionType.slide);
+      return getRoute(
+          IssueDetail(
+            cubit: getIt(
+              param1: args["params"],
+            ),
+          ),
+          TransitionType.slide);
 
     case RouteName.getStarted:
       return getRoute(const GetStartedScreen(), TransitionType.fade);

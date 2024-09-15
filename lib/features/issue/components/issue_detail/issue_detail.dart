@@ -21,14 +21,27 @@ class IssueDetail extends StatefulWidget {
 
 class _IssueDetailState extends State<IssueDetail> {
   late IssueDetailCubit cubit;
+  final focusNode = FocusNode();
+  final controller = TextEditingController();
+  final scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
     cubit = widget.cubit;
+    if (cubit.params.showComment) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        focusNode.requestFocus();
+        if (scrollController.hasClients) {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeIn,
+          );
+        }
+      });
+    }
   }
 
-  final focusNode = FocusNode();
-  final controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<IssueDetailCubit, IssueDetailState>(
@@ -47,6 +60,7 @@ class _IssueDetailState extends State<IssueDetail> {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
+                    controller: scrollController,
                     child: Column(
                       children: [
                         10.verticalSpace,

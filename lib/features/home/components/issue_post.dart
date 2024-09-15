@@ -18,7 +18,7 @@ class IssuePost extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              cubit.navigation.goToIssueDetail();
+              cubit.goToIssueDetail();
             },
             child: Stack(
               children: [
@@ -60,7 +60,7 @@ class IssuePost extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    cubit.navigation.goToIssueDetail();
+                    cubit.goToIssueDetail();
                   },
                   child: Text(
                     "So what makes a good headline?",
@@ -91,7 +91,7 @@ class IssuePost extends StatelessWidget {
                     5.horizontalSpace,
                     GestureDetector(
                       onTap: () {
-                        cubit.navigation.goToIssueDetail();
+                        cubit.goToIssueDetail(showComment: true);
                       },
                       child: const Icon(
                         Icons.comment_outlined,
@@ -100,7 +100,7 @@ class IssuePost extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        cubit.navigation.goToIssueDetail();
+                        cubit.goToIssueDetail(showComment: true);
                       },
                       child: Text(
                         "1.5k comments",
