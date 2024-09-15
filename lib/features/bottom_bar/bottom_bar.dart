@@ -18,7 +18,7 @@ class BottomBar extends StatelessWidget {
           return PopScope(
             canPop: false,
             onPopInvoked: (didPop) async {
-              if (didPop) return;
+              if (didPop || state.hideBottomBar) return;
               if (state.currentIndex != 0) {
                 return cubit.updateIndex(0);
               } else {

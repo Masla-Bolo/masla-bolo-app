@@ -4,8 +4,11 @@ class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();
 
   void push(String routeName, {arguments}) {
-    Navigator.pushNamed(navigatorKey.currentState!.context, routeName,
-        arguments: arguments);
+    Navigator.pushNamed(
+      navigatorKey.currentState!.context,
+      routeName,
+      arguments: arguments,
+    );
   }
 
   pop() {
@@ -14,8 +17,10 @@ class AppNavigation {
 
   pushReplacement(String routeName, {arguments}) {
     Navigator.pushReplacementNamed(
-        navigatorKey.currentState!.context, routeName,
-        arguments: arguments);
+      navigatorKey.currentState!.context,
+      routeName,
+      arguments: arguments,
+    );
   }
 
   popAll(String routeName) {
