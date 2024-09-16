@@ -1,7 +1,18 @@
+import 'package:masla_bolo_app/features/profile/components/app_settings.dart';
+
 class SettingsState {
-  SettingsState();
+  List<AppSettings> appSettings;
+  SettingsState({
+    required this.appSettings,
+  });
 
-  factory SettingsState.empty() => SettingsState();
+  factory SettingsState.empty() =>
+      SettingsState(appSettings: AppSettings.appSettings);
 
-  copyWith() => SettingsState();
+  copyWith({
+    List<AppSettings>? appSettings,
+  }) =>
+      SettingsState(
+        appSettings: appSettings ?? this.appSettings,
+      );
 }

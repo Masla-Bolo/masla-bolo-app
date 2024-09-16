@@ -34,6 +34,7 @@ class AuthCubit extends Cubit<AuthState> {
     //           },
     //         ));
     Future.delayed(const Duration(seconds: 2), () {
+      emit(state.copyWith(isLoading: false));
       navigation.goToBottomBar();
     });
   }

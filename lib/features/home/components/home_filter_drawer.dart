@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
 import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
@@ -36,7 +37,7 @@ class HomeFilterDrawer extends StatelessWidget {
                     ),
                     30.verticalSpace,
                     Expanded(
-                        child: SingleChildScrollView(
+                        child: ScrollShaderMask(
                       child: Column(
                         children: [
                           Padding(
@@ -111,7 +112,7 @@ class HomeFilterDrawer extends StatelessWidget {
                                   onTap: () {
                                     cubit.clearSortByFilter();
                                   },
-                                  child: Text("Clear All",
+                                  child: Text("Clear",
                                       style: Styles.mediumStyle(
                                         fontSize: 20,
                                         color: AppColor.grey,

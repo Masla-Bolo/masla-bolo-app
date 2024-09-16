@@ -6,6 +6,10 @@ import 'settings_navigator.dart';
 class SettingsCubit extends Cubit<SettingsState> {
   final SettingsNavigator navigator;
   SettingsCubit(this.navigator) : super(SettingsState.empty());
+  popAll() {
+    navigator.popAll();
+  }
+
   pop() {
     navigator.pop();
   }

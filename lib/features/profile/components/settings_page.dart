@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/profile/components/settings_cubit.dart';
 import 'package:masla_bolo_app/features/profile/components/settings_state.dart';
+import 'package:masla_bolo_app/features/profile/components/theme_switch.dart';
 
+import '../../../helpers/helpers.dart';
 import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/header.dart';
@@ -28,18 +30,91 @@ class SettingsPage extends StatelessWidget {
                       onBackTap: () {
                         cubit.pop();
                       },
+                      suffix: const ThemeSwitch(),
                     ),
                   ),
-                  const Spacer(),
-                  Text(
-                    'SETTINGS SCREEN',
-                    style: Styles.boldStyle(
-                      fontSize: 20,
-                      color: AppColor.black1,
-                      family: FontFamily.dmSans,
+                  20.verticalSpace,
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: state.appSettings.length,
+                      itemBuilder: (context, index) {
+                        final setting = state.appSettings[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: AppColor.lightGrey.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: ListTile(
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 8.h),
+                                leading: CircleAvatar(
+                                  radius: 24.w,
+                                  backgroundColor:
+                                      AppColor.lightGrey.withOpacity(0.1),
+                                  child: Icon(
+                                    setting.icon,
+                                    color: AppColor.black1,
+                                  ),
+                                ),
+                                title: Text(
+                                  setting.title,
+                                  style: Styles.boldStyle(
+                                    family: FontFamily.varela,
+                                    fontSize: 16,
+                                    color: AppColor.black1,
+                                  ),
+                                ),
+                                trailing: const Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: AppColor.black1,
+                                )),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (await showConfirmationDialog(
+                                'Are you sure you want to log Out?', context) &&
+                            context.mounted) {
+                          cubit.popAll();
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        decoration: BoxDecoration(
+                          color: AppColor.red.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.symmetric(vertical: 8.h),
+                          leading: CircleAvatar(
+                            radius: 24.w,
+                            backgroundColor: AppColor.red.withOpacity(0.1),
+                            child: const Icon(
+                              Icons.power_settings_new_outlined,
+                              color: AppColor.black1,
+                            ),
+                          ),
+                          trailing: Text(
+                            "Log Out",
+                            style: Styles.boldStyle(
+                              family: FontFamily.varela,
+                              fontSize: 16,
+                              color: AppColor.black1,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

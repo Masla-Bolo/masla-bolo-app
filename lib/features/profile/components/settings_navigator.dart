@@ -10,6 +10,10 @@ class SettingsNavigator {
   void pop() {
     navigation.pop();
   }
+
+  void popAll() {
+    navigation.popAll(RouteName.login);
+  }
 }
 
 mixin SettingsRoute {

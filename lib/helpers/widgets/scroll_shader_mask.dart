@@ -19,14 +19,14 @@ class ScrollShaderMask extends StatelessWidget {
             Theme.of(context).colorScheme.surface,
           ],
           stops: const [
-            0.8,
-            3.0,
-          ], // 80% transparent, 3 percent background color
+            0.98,
+            1,
+          ],
         ).createShader(rect);
       },
       blendMode: BlendMode.dstOut,
       child: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 30.h),
+        padding: EdgeInsets.only(top: 8.h),
         child: child,
       ),
     );

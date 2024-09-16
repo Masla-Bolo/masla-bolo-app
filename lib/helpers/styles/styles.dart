@@ -7,8 +7,10 @@ enum FontFamily { varela, dmSans }
 
 class Styles {
   static InputDecoration inputFieldDecoration(
-      String hintText, BuildContext context,
-      {Widget? suffixIcon}) {
+    String hintText,
+    BuildContext context, {
+    Widget? suffixIcon,
+  }) {
     return InputDecoration(
       hintText: hintText,
       suffixIcon: suffixIcon,

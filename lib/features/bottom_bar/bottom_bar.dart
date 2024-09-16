@@ -16,7 +16,7 @@ class BottomBar extends StatelessWidget {
         bloc: cubit,
         builder: (context, state) {
           return PopScope(
-            canPop: false,
+            canPop: state.canPop,
             onPopInvoked: (didPop) async {
               if (didPop || state.hideBottomBar) return;
               if (state.currentIndex != 0) {
@@ -25,7 +25,7 @@ class BottomBar extends StatelessWidget {
                 if (await showConfirmationDialog(
                         'Do you want to exit the app?', context) &&
                     context.mounted) {
-                  Navigator.pop(context);
+                  cubit.exitApp();
                 }
               }
             },

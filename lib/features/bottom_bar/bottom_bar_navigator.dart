@@ -6,6 +6,10 @@ class BottomBarNavigator with IssueRoute {
   @override
   final AppNavigation navigation;
 
+  void exitApp() {
+    navigation.exitApp();
+  }
+
   BottomBarNavigator(this.navigation);
 }
 

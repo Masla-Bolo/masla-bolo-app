@@ -48,5 +48,10 @@ class IssueFilters {
   static final sortBy = [
     IssueFilters(item: "latest"),
     IssueFilters(item: "oldest"),
+    IssueFilters(item: "Most Liked"),
+    IssueFilters(item: "Most Commented"),
+    IssueFilters(item: "A-Z"),
+    IssueFilters(item: "Z-A"),
+    IssueFilters(item: "All"),
   ];
 }

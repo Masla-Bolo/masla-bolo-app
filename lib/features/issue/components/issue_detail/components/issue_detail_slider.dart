@@ -21,11 +21,11 @@ class IssueDetailSlider extends StatelessWidget {
                   onTap: onTap,
                   child: Container(
                       height: 0.45.sh,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                      ),
+                      padding: const EdgeInsets.all(5),
                       child: Center(
-                        child: Image.asset(AppImages.sewerage),
+                        child: Image.asset(
+                          AppImages.sewerage,
+                        ),
                         // CachedNetworkImage(
                         //   imageUrl: image,
                         //   imageBuilder: (context, imageProvider) =>

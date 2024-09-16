@@ -44,8 +44,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "PROFILE SCREEN",
-                              style: Styles.semiBoldStyle(
+                              "Profile",
+                              style: Styles.boldStyle(
                                 fontSize: 30,
                                 color: AppColor.black1,
                                 family: FontFamily.dmSans,

@@ -33,6 +33,7 @@ class HomeSearch extends StatelessWidget {
                     child: SizedBox(
                       height: 35,
                       child: InputField(
+                        borderRadius: 20,
                         focusNode: focusNode,
                         textEditingController: controller,
                         hintText: "find issues here..",

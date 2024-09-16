@@ -20,6 +20,7 @@ class InputField extends StatefulWidget {
     this.textEditingController,
     this.suffixIcon,
     this.onCrossTap,
+    this.borderRadius,
     this.showCrossIcon = false,
     this.disableOnTapOutside = false,
     required this.onChanged,
@@ -35,6 +36,7 @@ class InputField extends StatefulWidget {
   final bool showCrossIcon;
   final TextEditingController? textEditingController;
   final TextInputType? keyboardType;
+  final double? borderRadius;
   final Widget? suffixIcon;
   final void Function()? onCrossTap;
   final String? Function(String?)? validator;
@@ -95,9 +97,8 @@ class _InputFieldState extends State<InputField> {
         maxLength: widget.maxLength,
         scrollPadding: const EdgeInsets.all(0),
         onFieldSubmitted: widget.onSubmit,
-        decoration: Styles.inputFieldDecoration(
-          widget.hintText ?? '',
-          context,
+        decoration: InputDecoration(
+          hintText: widget.hintText,
           suffixIcon: widget.passwordField
               ? GestureDetector(
                   onTap: () {
@@ -117,6 +118,51 @@ class _InputFieldState extends State<InputField> {
                       },
                       child: const Icon(Icons.cancel))
                   : null,
+          fillColor: AppColor.lightGrey,
+          errorStyle: Styles.boldStyle(
+              fontSize: 12, color: AppColor.red, family: FontFamily.varela),
+          errorBorder: InputBorder.none,
+          errorMaxLines: 1,
+          contentPadding: const EdgeInsets.all(8),
+          focusedErrorBorder: InputBorder.none,
+          hintStyle: Styles.mediumStyle(
+              fontSize: 15, color: AppColor.grey, family: FontFamily.varela),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.black1,
+            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.black1,
+            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+          ),
         ));
+
+    // Styles.inputFieldDecoration(
+    //   widget.hintText ?? '',
+    //   context,
+    //   suffixIcon: widget.passwordField
+    //       ? GestureDetector(
+    //           onTap: () {
+    //             isObsecure = !isObsecure;
+    //             setState(() {});
+    //           },
+    //           child: Icon(
+    //             isObsecure
+    //                 ? Icons.visibility_off
+    //                 : Icons.remove_red_eye_rounded,
+    //             color: Theme.of(context).colorScheme.onSecondary,
+    //           ))
+    //       : widget.showCrossIcon
+    //           ? GestureDetector(
+    //               onTap: () {
+    //                 widget.onCrossTap?.call();
+    //               },
+    //               child: const Icon(Icons.cancel))
+    //           : null,
+    // ));
   }
 }

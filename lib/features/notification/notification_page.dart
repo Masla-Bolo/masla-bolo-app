@@ -46,7 +46,8 @@ class NotificationPage extends StatelessWidget {
                           contentPadding: EdgeInsets.symmetric(vertical: 8.h),
                           leading: CircleAvatar(
                             radius: 24.w,
-                            backgroundColor: AppColor.skyBlue.withOpacity(0.1),
+                            backgroundColor:
+                                AppColor.lightGrey.withOpacity(0.1),
                             child: const Icon(
                               Icons.notifications,
                               color: AppColor.black1,

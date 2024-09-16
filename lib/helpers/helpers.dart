@@ -156,4 +156,4 @@ Future<DateTime?> getDateFromPicker(BuildContext context) async {
   return date;
 }
 
-get scrollBottomPadding => const EdgeInsets.only(bottom: 70, top: 10);
+get scrollBottomPadding => const EdgeInsets.only(bottom: 70);
