@@ -26,11 +26,11 @@ class ApiIssueRepository implements IssueRepository {
 
   @override
   Future<Either<IssueFailure, IssueEntity>> createIssue(
-    IssueEntity server,
+    IssueEntity issue,
   ) async {
     final response = await networkRepository.post(
       url: '/issues/',
-      data: server.toIssueJson(),
+      data: issue.toIssueJson(),
     );
     return response.fold((failure) {
       return left(IssueFailure(error: failure.error));
@@ -42,11 +42,11 @@ class ApiIssueRepository implements IssueRepository {
 
   @override
   Future<Either<IssueFailure, IssueEntity>> updateIssue(
-    IssueEntity server,
+    IssueEntity issue,
   ) async {
     final response = await networkRepository.put(
-      url: '/issues/${server.id}',
-      data: server.toIssueJson(),
+      url: '/issues/${issue.id}',
+      data: issue.toIssueJson(),
     );
     return response.fold((failure) {
       return left(IssueFailure(error: failure.error));
@@ -57,8 +57,8 @@ class ApiIssueRepository implements IssueRepository {
   }
 
   @override
-  Future<Either<IssueFailure, bool>> deleteIssue(String serverId) async {
-    final response = await networkRepository.delete(url: '/issues/$serverId');
+  Future<Either<IssueFailure, bool>> deleteIssue(String issueId) async {
+    final response = await networkRepository.delete(url: '/issues/$issueId');
     return response.fold((failure) {
       return left(IssueFailure(error: failure.error));
     }, (success) {
