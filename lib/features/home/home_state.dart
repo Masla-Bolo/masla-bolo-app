@@ -37,7 +37,7 @@ class HomeState {
 
   factory HomeState.empty() => HomeState(
         sortBy: IssueFilters.sortBy,
-        user: UserEntity(email: '', id: '', name: ''),
+        user: UserEntity(email: '', id: 0, username: ''),
         categories: IssueFilters.categories,
         isExpanded: true,
         issues: [],

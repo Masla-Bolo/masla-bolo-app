@@ -58,14 +58,14 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                     RoleCard(
                       role: "Citizen",
                       icon: Icons.person,
-                      isSelected: state.selectedRole == "User",
-                      onTap: () => cubit.selectRole("User"),
+                      isSelected: state.selectedRole == "user",
+                      onTap: () => cubit.selectRole("user"),
                     ),
                     RoleCard(
                       role: "Official",
                       icon: Icons.security,
-                      isSelected: state.selectedRole == "Official",
-                      onTap: () => cubit.selectRole("Official"),
+                      isSelected: state.selectedRole == "official",
+                      onTap: () => cubit.selectRole("official"),
                     ),
                   ],
                 ),
@@ -74,13 +74,11 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                   padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Center(
                     child: AnimatedOpacity(
-                      opacity: state.selectedRole.isEmpty ? 0.0 : 1.0,
+                      opacity: 1.0,
                       duration: const Duration(milliseconds: 300),
                       child: GestureDetector(
                         onTap: () {
-                          if (state.selectedRole.isNotEmpty) {
-                            cubit.goToLogin();
-                          }
+                          cubit.goToLogin();
                         },
                         child: Container(
                           padding: const EdgeInsets.all(15),

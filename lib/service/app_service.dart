@@ -65,7 +65,7 @@ class AppService {
       getIt(),
       getIt(),
     ));
-    getIt.registerSingleton<AuthCubit>(AuthCubit(getIt(), getIt()));
+    getIt.registerSingleton<AuthCubit>(AuthCubit(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<NotificationNavigator>(
       () => NotificationNavigator(getIt()),
     );
@@ -76,7 +76,10 @@ class AppService {
       () => SettingsNavigator(getIt()),
     );
     getIt.registerLazySingleton<SettingsCubit>(
-      () => SettingsCubit(getIt()),
+      () => SettingsCubit(
+        getIt(),
+        getIt(),
+      ),
     );
     getIt.registerSingleton<BottomBarNavigator>(BottomBarNavigator(getIt()));
     getIt.registerSingleton<BottomBarCubit>(BottomBarCubit(getIt()));

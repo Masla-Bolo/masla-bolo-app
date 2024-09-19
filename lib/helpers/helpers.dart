@@ -11,7 +11,6 @@ Future<void> loader(Future<void> func, BuildContext context) async {
     context.loaderOverlay.show(widgetBuilder: (_) => const Indicator());
     await func;
   } catch (error) {
-    print('CAUGHT ERROR: $error');
     showToast(error.toString(), context);
   } finally {
     if (context.mounted == true) {
@@ -58,12 +57,12 @@ Future<void> showToast(String message, BuildContext context) async {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
             decoration: BoxDecoration(
-              color: Colors.red,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               message,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(color: Colors.black, fontSize: 16),
               textAlign: TextAlign.center,
             ),
           ),

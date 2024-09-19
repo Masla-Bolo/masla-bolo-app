@@ -10,7 +10,7 @@ class ApiService {
   ApiService(this.localStorageRepository) {
     _initializeApiService();
   }
-  static const baseUrl = 'http://192.168.1.104:5000';
+  static const baseUrl = 'http://192.168.1.106:8000/api';
   String _tokenValue = '';
   bool listenerInitialized = false;
   Map<int, Future Function()> apiQueue = {};
@@ -21,7 +21,6 @@ class ApiService {
       BaseOptions(
         baseUrl: baseUrl,
         contentType: 'application/json',
-        responseType: ResponseType.json,
       ),
     );
     dio.interceptors.add(InterceptorsWrapper(
@@ -80,16 +79,19 @@ class ApiService {
 
   Either<NetworkFailure, Map<String, dynamic>> checkError(Response response) {
     final body = response.data;
-    if ((response.statusCode == 200 || response.statusCode == 201) ||
-        body['success'] == true) {
-      return right(body);
-    } else {
-      return left(
-        NetworkFailure(
-          error:
-              'Request ended with status code: ${response.statusCode}, with a Network error!',
-        ),
-      );
+    try {
+      if ((response.statusCode == 200 || response.statusCode == 201)) {
+        return right(body);
+      } else {
+        return left(
+            NetworkFailure(error: "Unable to process the request right now!"));
+      }
+    } on DioException catch (dioError) {
+      return left(NetworkFailure(error: 'Dio Error: ${dioError.message}'));
+    } catch (e) {
+      return left(NetworkFailure(
+        error: 'Unexpected error: $e',
+      ));
     }
   }
 }

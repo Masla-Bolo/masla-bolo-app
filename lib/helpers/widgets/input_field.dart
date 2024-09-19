@@ -81,7 +81,7 @@ class _InputFieldState extends State<InputField> {
         },
         keyboardType: widget.keyboardType,
         controller: controller,
-        style: Styles.mediumStyle(
+        style: Styles.semiMediumStyle(
           fontSize: 15,
           color: AppColor.black1,
           family: FontFamily.varela,
@@ -121,10 +121,20 @@ class _InputFieldState extends State<InputField> {
           fillColor: AppColor.lightGrey,
           errorStyle: Styles.boldStyle(
               fontSize: 12, color: AppColor.red, family: FontFamily.varela),
-          errorBorder: InputBorder.none,
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.red,
+            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+          ),
           errorMaxLines: 1,
           contentPadding: const EdgeInsets.all(8),
-          focusedErrorBorder: InputBorder.none,
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: AppColor.red,
+            ),
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
+          ),
           hintStyle: Styles.mediumStyle(
               fontSize: 15, color: AppColor.grey, family: FontFamily.varela),
           focusedBorder: OutlineInputBorder(
@@ -140,29 +150,5 @@ class _InputFieldState extends State<InputField> {
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
           ),
         ));
-
-    // Styles.inputFieldDecoration(
-    //   widget.hintText ?? '',
-    //   context,
-    //   suffixIcon: widget.passwordField
-    //       ? GestureDetector(
-    //           onTap: () {
-    //             isObsecure = !isObsecure;
-    //             setState(() {});
-    //           },
-    //           child: Icon(
-    //             isObsecure
-    //                 ? Icons.visibility_off
-    //                 : Icons.remove_red_eye_rounded,
-    //             color: Theme.of(context).colorScheme.onSecondary,
-    //           ))
-    //       : widget.showCrossIcon
-    //           ? GestureDetector(
-    //               onTap: () {
-    //                 widget.onCrossTap?.call();
-    //               },
-    //               child: const Icon(Icons.cancel))
-    //           : null,
-    // ));
   }
 }

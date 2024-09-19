@@ -1,6 +1,6 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:masla_bolo_app/features/auth/register/resgister_screen.dart';
+import 'package:masla_bolo_app/features/auth/sign_up/sign_up_screen.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_screen.dart';
 import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail.dart';
@@ -36,7 +36,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(BottomBar(cubit: getIt()), TransitionType.fade);
 
     case RouteName.register:
-      return getRoute(ResgisterScreen(cubit: getIt()), TransitionType.fade);
+      return getRoute(SignUpScreen(cubit: getIt()), TransitionType.fade);
 
     case RouteName.profile:
       return getRoute(ProfileScreen(cubit: getIt()), TransitionType.fade);

@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppProvider {
   static List<SingleChildWidget> providers = [
-    BlocProvider(create: (context) => AuthCubit(getIt(), getIt())),
+    BlocProvider(create: (context) => AuthCubit(getIt(), getIt(), getIt())),
     BlocProvider(create: (context) => SplashCubit(getIt(), getIt())..onInit()),
     BlocProvider(create: (context) => BottomBarCubit(getIt())),
   ];

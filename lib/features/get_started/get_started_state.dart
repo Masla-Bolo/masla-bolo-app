@@ -10,14 +10,14 @@ class GetStartedState {
 
   GetStartedState({
     required this.pages,
-    this.selectedRole = "",
+    this.selectedRole = "user",
     required this.currentPage,
     required this.pageController,
   });
 
   factory GetStartedState.empty() => GetStartedState(
         currentPage: 0,
-        selectedRole: "",
+        selectedRole: "user",
         pageController: PageController(
           initialPage: 0,
         ),

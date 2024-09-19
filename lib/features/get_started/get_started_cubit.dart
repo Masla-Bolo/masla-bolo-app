@@ -1,8 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
+import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_navigator.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_state.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
+import 'package:masla_bolo_app/main.dart';
 
 class GetStartedCubit extends Cubit<GetStartedState> {
   final GetStartedNavigator navigator;
@@ -33,5 +36,13 @@ class GetStartedCubit extends Cubit<GetStartedState> {
 
   goToLogin() => navigator.goToLogin();
 
-  selectRole(String role) => emit(state.copyWith(selectedRole: role));
+  selectRole(String role) {
+    emit(state.copyWith(selectedRole: role));
+    getIt<UserStore>().setUser(
+      UserEntity(
+        role: role,
+      ),
+    );
+    localStorageRepository.setValue(roleKey, role.toString());
+  }
 }

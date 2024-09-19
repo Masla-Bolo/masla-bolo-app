@@ -27,12 +27,10 @@ class IssueForm extends StatelessWidget {
                     hintText: "TITLE",
                     onChanged: (val) {},
                     validator: (val) {
-                      print(val);
                       if (val?.isEmpty == true) {
                         return "Please enter title";
                       }
                       if ((val?.length ?? 0) > 15) {
-                        print("here");
                         return "Try to brief it :))";
                       }
                       return null;

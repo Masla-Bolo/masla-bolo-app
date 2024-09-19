@@ -8,9 +8,9 @@ import 'package:masla_bolo_app/network/network_repository.dart';
 import '../../domain/stores/user_store.dart';
 
 class ApiAuthRepository implements AuthRepository {
-  final UserStore _userStore;
+  final UserStore userStore;
   final NetworkRepository networkRepository;
-  ApiAuthRepository(this._userStore, this.networkRepository);
+  ApiAuthRepository(this.userStore, this.networkRepository);
 
   @override
   Future<Either<AuthFailure, UserEntity>> login(
@@ -18,15 +18,15 @@ class ApiAuthRepository implements AuthRepository {
     String password,
   ) async {
     try {
-      final response = await networkRepository.post(url: '/auth/login', data: {
+      final response = await networkRepository.post(url: '/login/', data: {
         'email': email,
         'password': password,
       });
       return response.fold(
         (failure) => left(AuthFailure(error: failure.error)),
         (body) {
-          final user = UserJson.fromData(body['result']).toDomain();
-          _userStore.setUser(user);
+          final user = UserJson.fromData(body['user']).toDomain();
+          userStore.setUser(user);
           return right(user);
         },
       );
@@ -36,12 +36,22 @@ class ApiAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<Either<AuthFailure, bool>> logout() async {
-    return left(AuthFailure(error: 'error'));
-  }
-
-  @override
   Future<Either<AuthFailure, UserEntity>> register(UserEntity user) async {
-    return left(AuthFailure(error: 'error'));
+    try {
+      final response = await networkRepository.post(
+        url: '/register/',
+        data: user.toUserJson(),
+      );
+      return response.fold(
+        (failure) => left(AuthFailure(error: failure.error)),
+        (body) {
+          final user = UserJson.fromData(body['user']).toDomain();
+          userStore.setUser(user);
+          return right(user);
+        },
+      );
+    } catch (error) {
+      return left(AuthFailure(error: "Unable to Register, Error: $error"));
+    }
   }
 }

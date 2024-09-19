@@ -1,19 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:masla_bolo_app/domain/entities/user_entity.dart';
+import 'package:masla_bolo_app/domain/stores/user_store.dart';
+import 'package:masla_bolo_app/main.dart';
+
 class AuthState {
-  String email;
-  String password;
   bool isLoading;
+  final UserEntity user;
+  final GlobalKey<FormState> loginKey;
+  final GlobalKey<FormState> signUpKey;
   AuthState({
     this.isLoading = false,
-    required this.email,
-    required this.password,
+    required this.loginKey,
+    required this.user,
+    required this.signUpKey,
   });
 
-  AuthState copyWith({String? email, String? password, bool? isLoading}) =>
+  AuthState copyWith(
+          {bool? isLoading,
+          UserEntity? user,
+          GlobalKey<FormState>? loginKey,
+          GlobalKey<FormState>? signUpKey}) =>
       AuthState(
-        email: email ?? this.email,
-        password: password ?? this.password,
+        signUpKey: loginKey ?? this.loginKey,
+        loginKey: signUpKey ?? this.signUpKey,
         isLoading: isLoading ?? this.isLoading,
+        user: user ?? this.user,
       );
 
-  factory AuthState.initial() => AuthState(email: '', password: '');
+  factory AuthState.initial() => AuthState(
+        loginKey: GlobalKey<FormState>(),
+        signUpKey: GlobalKey<FormState>(),
+        user: getIt<UserStore>().state,
+      );
 }
