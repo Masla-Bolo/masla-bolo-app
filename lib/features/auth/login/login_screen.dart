@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
@@ -116,8 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       20.verticalSpace,
                       ElevatedButton(
-                        onPressed: () {
-                          authCubit.login(context);
+                        onPressed: () async {
+                          await loader(() => authCubit.login());
                         },
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 48),

@@ -1,24 +1,30 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/domain/failures/network_failure.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:masla_bolo_app/navigation/app_navigation.dart';
 
-Future<void> loader(Future<void> func, BuildContext context) async {
+Future loader(Future Function() func, {ToastParam? params}) async {
+  final context = AppNavigation.context;
+  context.loaderOverlay.show(widgetBuilder: (_) => const Indicator());
   try {
-    context.loaderOverlay.show(widgetBuilder: (_) => const Indicator());
-    await func;
-  } catch (error) {
-    showToast(error.toString(), context);
+    print("object");
+    final response = await func();
+    return response;
+  } on NetworkFailure catch (e) {
+    showToast(e.toString(), params: params);
+  } catch (e) {
+    showToast(e.toString(), params: params);
   } finally {
-    if (context.mounted == true) {
-      Future.delayed(const Duration(seconds: 1), () {
-        context.loaderOverlay.hide();
-      });
-    }
+    context.loaderOverlay.hide();
   }
+  return null;
 }
 
 List<T> parseResponse<T>(
@@ -40,9 +46,11 @@ List<T> parseList<T>(
   return parsedData?.map(fromJson).toList().cast<T>() ?? [];
 }
 
-Future<void> showToast(String message, BuildContext context) async {
+Future<void> showToast(String message, {ToastParam? params}) async {
+  final context = AppNavigation.context;
   showDialog(
     context: context,
+    barrierColor: AppColor.transparent,
     barrierDismissible: false,
     builder: (context) {
       Future.delayed(const Duration(seconds: 2), () {
@@ -50,20 +58,45 @@ Future<void> showToast(String message, BuildContext context) async {
       });
 
       return Dialog(
+        shadowColor: AppColor.transparent,
         backgroundColor: Colors.transparent,
+        surfaceTintColor: AppColor.transparent,
+        insetAnimationCurve: Curves.easeIn,
+        insetAnimationDuration: const Duration(milliseconds: 500),
         elevation: 0,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              color: params?.backgroundColor ?? Colors.black,
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Text(
-              message,
-              style: const TextStyle(color: Colors.black, fontSize: 16),
-              textAlign: TextAlign.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                10.horizontalSpace,
+                Image.asset(
+                  params?.image ?? AppImages.access,
+                  color: params?.textColor ?? AppColor.white,
+                  filterQuality: FilterQuality.high,
+                  height: 25,
+                ),
+                10.horizontalSpace,
+                Flexible(
+                  child: Text(
+                    message,
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      color: params?.textColor ?? AppColor.white,
+                      fontFamily: "Varela",
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -72,7 +105,8 @@ Future<void> showToast(String message, BuildContext context) async {
   );
 }
 
-Future<bool> showConfirmationDialog(String title, BuildContext context) async {
+Future<bool> showConfirmationDialog(String title) async {
+  final context = AppNavigation.context;
   return await showDialog<bool>(
         context: context,
         builder: (context) {
@@ -145,7 +179,8 @@ String formatDate(DateTime date) {
   }
 }
 
-Future<DateTime?> getDateFromPicker(BuildContext context) async {
+Future<DateTime?> getDateFromPicke() async {
+  final context = AppNavigation.context;
   final date = await showDatePicker(
     context: context,
     initialDate: DateTime.now(),
@@ -156,3 +191,9 @@ Future<DateTime?> getDateFromPicker(BuildContext context) async {
 }
 
 get scrollBottomPadding => const EdgeInsets.only(bottom: 70);
+
+mixin ToastParam {
+  Color? backgroundColor;
+  Color? textColor;
+  String? image;
+}

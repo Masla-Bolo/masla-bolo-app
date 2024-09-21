@@ -15,4 +15,7 @@ class AppImages {
   static const filter = "$_baseDir/filter.png";
   static const settings = "$_baseDir/settings.png";
   static const sewerage = "$_baseDir/sewerage.jpg";
+  static const successful = "$_baseDir/successful.jpg";
+  static const unsuccessful = "$_baseDir/unsuccessful.jpg";
+  static const access = "$_baseDir/access.png";
 }

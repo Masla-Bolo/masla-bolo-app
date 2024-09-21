@@ -4,7 +4,6 @@ import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/auth/auth_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
 
 import '../../main.dart';
@@ -24,20 +23,14 @@ class AuthCubit extends Cubit<AuthState> {
     ));
   }
 
-  Future<void> login(
-    BuildContext context,
-  ) async {
+  Future<void> login() async {
     final isValid = state.loginKey.currentState?.validate() ?? false;
     if (isValid) {
-      emit(state.copyWith(isLoading: true));
       authRepository
           .login(state.user.email!, state.user.password!)
           .then((result) => result.fold(
-                (failure) => {
-                  emit(state.copyWith(isLoading: false)),
-                },
+                (failure) => {},
                 (user) => {
-                  emit(state.copyWith(isLoading: false)),
                   navigation.goToBottomBar(),
                 },
               ));
@@ -85,6 +78,5 @@ class AuthCubit extends Cubit<AuthState> {
 
   void goToGetStated() {
     navigation.goToGetStarted();
-    getIt<GetStartedCubit>().state.pageController.jumpToPage(1);
   }
 }

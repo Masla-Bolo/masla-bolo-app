@@ -23,7 +23,7 @@ class BottomBar extends StatelessWidget {
                 return cubit.updateIndex(0);
               } else {
                 if (await showConfirmationDialog(
-                        'Do you want to exit the app?', context) &&
+                        'Do you want to exit the app?') &&
                     context.mounted) {
                   cubit.exitApp();
                 }

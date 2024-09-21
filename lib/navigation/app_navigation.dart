@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 
 class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();
-
+  static final context = navigatorKey.currentState!.context;
   void push(String routeName, {arguments}) {
     Navigator.pushNamed(
-      navigatorKey.currentState!.context,
+      context,
       routeName,
       arguments: arguments,
     );
@@ -22,7 +22,7 @@ class AppNavigation {
 
   pushReplacement(String routeName, {arguments}) {
     Navigator.pushReplacementNamed(
-      navigatorKey.currentState!.context,
+      context,
       routeName,
       arguments: arguments,
     );
@@ -30,7 +30,7 @@ class AppNavigation {
 
   popAll(String routeName) {
     Navigator.pushNamedAndRemoveUntil(
-      navigatorKey.currentState!.context,
+      context,
       routeName,
       ModalRoute.withName(routeName),
     );

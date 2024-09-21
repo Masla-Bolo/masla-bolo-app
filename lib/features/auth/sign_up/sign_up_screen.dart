@@ -6,7 +6,6 @@ import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/input_field.dart';
 
-import '../../../helpers/widgets/header.dart';
 import '../../../helpers/widgets/indicator.dart';
 import '../auth_cubit.dart';
 import '../auth_state.dart';
@@ -43,13 +42,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      10.verticalSpace,
-                      Header(
-                        title: "",
-                        onBackTap: () {
-                          authCubit.goToGetStated();
-                        },
-                      ),
                       60.verticalSpace,
                       Center(
                         child: Text('MASLA BOLO!',

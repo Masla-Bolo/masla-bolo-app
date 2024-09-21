@@ -82,7 +82,7 @@ class SettingsPage extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () async {
                         if (await showConfirmationDialog(
-                                'Are you sure you want to log Out?', context) &&
+                                'Are you sure you want to log Out?') &&
                             context.mounted) {
                           cubit.popAll();
                         }
