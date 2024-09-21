@@ -65,4 +65,18 @@ class ApiIssueRepository implements IssueRepository {
       return right(true);
     });
   }
+
+  @override
+  Future<Either<IssueFailure, IssueEntity>> likeUnlikeIssue(
+    String issueId,
+  ) async {
+    final response =
+        await networkRepository.get(url: '/comments/$issueId/like');
+    return response.fold((failure) {
+      return left(IssueFailure(error: failure.error));
+    }, (success) {
+      final data = IssueJson.fromJson(success).toDomain();
+      return right(data);
+    });
+  }
 }

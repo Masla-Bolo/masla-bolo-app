@@ -5,7 +5,8 @@ import '../entities/issue_entity.dart';
 
 abstract class IssueRepository {
   Future<Either<IssueFailure, List<IssueEntity>>> getIssues();
-  Future<Either<IssueFailure, IssueEntity>> createIssue(IssueEntity server);
-  Future<Either<IssueFailure, IssueEntity>> updateIssue(IssueEntity server);
-  Future<Either<IssueFailure, bool>> deleteIssue(String serverId);
+  Future<Either<IssueFailure, IssueEntity>> createIssue(IssueEntity issue);
+  Future<Either<IssueFailure, IssueEntity>> updateIssue(IssueEntity issue);
+  Future<Either<IssueFailure, IssueEntity>> likeUnlikeIssue(String issueId);
+  Future<Either<IssueFailure, bool>> deleteIssue(String issueId);
 }
