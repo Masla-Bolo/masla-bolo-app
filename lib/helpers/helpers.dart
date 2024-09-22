@@ -14,7 +14,6 @@ Future loader(Future Function() func, {ToastParam? params}) async {
   final context = AppNavigation.context;
   context.loaderOverlay.show(widgetBuilder: (_) => const Indicator());
   try {
-    print("object");
     final response = await func();
     return response;
   } on NetworkFailure catch (e) {

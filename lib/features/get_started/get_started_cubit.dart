@@ -34,7 +34,10 @@ class GetStartedCubit extends Cubit<GetStartedState> {
     }
   }
 
-  goToLogin() => navigator.goToLogin();
+  goToLogin() {
+    navigator.goToLoginReplacement();
+    state.currentPage = state.pageController.initialPage;
+  }
 
   selectRole(String role) {
     emit(state.copyWith(selectedRole: role));
@@ -44,5 +47,10 @@ class GetStartedCubit extends Cubit<GetStartedState> {
       ),
     );
     localStorageRepository.setValue(roleKey, role.toString());
+  }
+
+  void exitApp() {
+    emit(state.copyWith(canPop: true));
+    navigator.exitApp();
   }
 }

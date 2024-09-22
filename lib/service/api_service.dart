@@ -15,14 +15,15 @@ class ApiService {
   bool listenerInitialized = false;
   Map<int, Future Function()> apiQueue = {};
 
-  late Dio dio;
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: baseUrl,
+      contentType: 'application/json',
+      receiveDataWhenStatusError: true,
+      validateStatus: (val) => true,
+    ),
+  );
   void _initializeApiService() {
-    dio = Dio(
-      BaseOptions(
-        baseUrl: baseUrl,
-        contentType: 'application/json',
-      ),
-    );
     dio.interceptors.add(InterceptorsWrapper(
       onResponse: (response, handler) {
         final body = response.data;
@@ -83,15 +84,17 @@ class ApiService {
       if ((response.statusCode == 200 || response.statusCode == 201)) {
         return right(body);
       } else {
-        return left(
+        throw left(
             NetworkFailure(error: "Unable to process the request right now!"));
       }
     } on DioException catch (dioError) {
-      return left(NetworkFailure(error: 'Dio Error: ${dioError.message}'));
+      throw NetworkFailure(
+        error: '$dioError',
+      );
     } catch (e) {
-      return left(NetworkFailure(
+      throw NetworkFailure(
         error: 'Unexpected error: $e',
-      ));
+      );
     }
   }
 }

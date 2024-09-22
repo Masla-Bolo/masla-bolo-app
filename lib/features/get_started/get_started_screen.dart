@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_state.dart';
 import 'package:masla_bolo_app/main.dart';
 
+import '../../helpers/helpers.dart';
 import 'get_started_cubit.dart';
 
 class GetStartedScreen extends StatefulWidget {
@@ -25,13 +26,22 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     return BlocBuilder<GetStartedCubit, GetStartedState>(
       bloc: cubit,
       builder: (context, state) {
-        return PageView.builder(
-          controller: state.pageController,
-          itemCount: state.pages.length,
-          onPageChanged: cubit.updateIndex,
-          itemBuilder: (context, index) {
-            return state.pages[index];
+        return PopScope(
+          canPop: state.canPop,
+          onPopInvoked: (result) async {
+            if (await showConfirmationDialog('Do you want to exit the app?') &&
+                context.mounted) {
+              cubit.exitApp();
+            }
           },
+          child: PageView.builder(
+            controller: state.pageController,
+            itemCount: state.pages.length,
+            onPageChanged: cubit.updateIndex,
+            itemBuilder: (context, index) {
+              return state.pages[index];
+            },
+          ),
         );
       },
     );

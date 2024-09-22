@@ -7,8 +7,10 @@ class GetStartedState {
   int currentPage;
   String selectedRole;
   PageController pageController;
+  bool canPop;
 
   GetStartedState({
+    this.canPop = false,
     required this.pages,
     this.selectedRole = "user",
     required this.currentPage,
@@ -18,14 +20,13 @@ class GetStartedState {
   factory GetStartedState.empty() => GetStartedState(
         currentPage: 0,
         selectedRole: "user",
-        pageController: PageController(
-          initialPage: 0,
-        ),
+        pageController: PageController(),
         pages: [const GetStartedAbout(), const GetStartedRole()],
       );
 
   GetStartedState copyWith({
     List<Widget>? pages,
+    bool? canPop,
     int? currentPage,
     String? selectedRole,
     PageController? pageController,
@@ -33,6 +34,7 @@ class GetStartedState {
       GetStartedState(
         pages: pages ?? this.pages,
         currentPage: currentPage ?? this.currentPage,
+        canPop: canPop ?? this.canPop,
         selectedRole: selectedRole ?? this.selectedRole,
         pageController: pageController ?? this.pageController,
       );

@@ -17,41 +17,33 @@ class ApiAuthRepository implements AuthRepository {
     String email,
     String password,
   ) async {
-    try {
-      final response = await networkRepository.post(url: '/login/', data: {
-        'email': email,
-        'password': password,
-      });
-      return response.fold(
-        (failure) => left(AuthFailure(error: failure.error)),
-        (body) {
-          final user = UserJson.fromData(body['user']).toDomain();
-          userStore.setUser(user);
-          return right(user);
-        },
-      );
-    } catch (error) {
-      return left(AuthFailure(error: 'Unable to login, Error: $error'));
-    }
+    final response = await networkRepository.post(url: '/login/', data: {
+      'email': email,
+      'password': password,
+    });
+    return response.fold(
+      (failure) => left(AuthFailure(error: failure.error)),
+      (body) {
+        final user = UserJson.fromData(body['user']).toDomain();
+        userStore.setUser(user);
+        return right(user);
+      },
+    );
   }
 
   @override
   Future<Either<AuthFailure, UserEntity>> register(UserEntity user) async {
-    try {
-      final response = await networkRepository.post(
-        url: '/register/',
-        data: user.toUserJson(),
-      );
-      return response.fold(
-        (failure) => left(AuthFailure(error: failure.error)),
-        (body) {
-          final user = UserJson.fromData(body['user']).toDomain();
-          userStore.setUser(user);
-          return right(user);
-        },
-      );
-    } catch (error) {
-      return left(AuthFailure(error: "Unable to Register, Error: $error"));
-    }
+    final response = await networkRepository.post(
+      url: '/register/',
+      data: user.toUserJson(),
+    );
+    return response.fold(
+      (failure) => left(AuthFailure(error: failure.error)),
+      (body) {
+        final user = UserJson.fromData(body['user']).toDomain();
+        userStore.setUser(user);
+        return right(user);
+      },
+    );
   }
 }

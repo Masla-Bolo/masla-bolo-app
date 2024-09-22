@@ -26,13 +26,11 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login() async {
     final isValid = state.loginKey.currentState?.validate() ?? false;
     if (isValid) {
-      authRepository
+      return authRepository
           .login(state.user.email!, state.user.password!)
           .then((result) => result.fold(
                 (failure) => {},
-                (user) => {
-                  navigation.goToBottomBar(),
-                },
+                (user) => navigation.goToBottomBar(),
               ));
     }
   }
@@ -46,7 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
       final result = await localStorageRepository.getValue(roleKey);
       result.fold(
         (error) {
-          return;
+          return goToGetStated();
         },
         (value) => role = value,
       );
@@ -55,16 +53,12 @@ class AuthCubit extends Cubit<AuthState> {
     if (role != null) {
       state.user.role = role;
       emit(state.copyWith(isLoading: true));
-      final result = await authRepository.register(state.user);
-      result.fold(
-        (failure) {
-          emit(state.copyWith(isLoading: false));
-        },
-        (user) {
-          emit(state.copyWith(isLoading: false));
-          navigation.goToBottomBar();
-        },
-      );
+      return authRepository.register(state.user).then(
+            (result) => result.fold(
+              (failure) => {},
+              (user) => navigation.goToBottomBar(),
+            ),
+          );
     }
   }
 
@@ -72,8 +66,8 @@ class AuthCubit extends Cubit<AuthState> {
     navigation.goToRegister();
   }
 
-  void pop() {
-    navigation.goToLogin();
+  void goToLogin() {
+    navigation.goToLoginReplacement();
   }
 
   void goToGetStated() {

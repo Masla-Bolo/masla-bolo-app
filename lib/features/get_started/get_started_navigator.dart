@@ -8,6 +8,10 @@ class GetStartedNavigator with AuthRoute, BottomBarRoute {
   final AppNavigation navigation;
 
   GetStartedNavigator(this.navigation);
+
+  exitApp() {
+    navigation.exitApp();
+  }
 }
 
 mixin GetStartedRoute {
