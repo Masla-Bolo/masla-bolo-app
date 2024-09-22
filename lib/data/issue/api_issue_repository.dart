@@ -12,14 +12,34 @@ class ApiIssueRepository implements IssueRepository {
   ApiIssueRepository(this.networkRepository);
 
   @override
-  Future<Either<IssueFailure, List<IssueEntity>>> getIssues() async {
-    final response = await networkRepository.get(url: '/issues/');
+  Future<Either<IssueFailure, List<IssueEntity>>> getIssues({
+    Map<String, dynamic>? queryParams,
+  }) async {
+    final response =
+        await networkRepository.get(url: '/issues/', extraQuery: queryParams);
     return response.fold((failure) {
       return left(IssueFailure(error: failure.error));
     }, (success) {
-      final data = parseList(success, IssueJson.fromJson)
+      final data = parseList(success["results"], IssueJson.fromJson)
           .map((json) => json.toDomain())
           .toList();
+      return right(data);
+    });
+  }
+
+  @override
+  Future<Either<IssueFailure, IssueEntity>> getIssueyId({
+    required int issueId,
+    Map<String, dynamic>? queryParams,
+  }) async {
+    final response = await networkRepository.get(
+      url: '/issues/$issueId',
+      extraQuery: queryParams,
+    );
+    return response.fold((failure) {
+      return left(IssueFailure(error: failure.error));
+    }, (success) {
+      final data = IssueJson.fromJson(success).toDomain();
       return right(data);
     });
   }

@@ -12,27 +12,29 @@ class CreateIssueScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            10.verticalSpace,
-            IssueHeader(cubit: cubit),
-            10.verticalSpace,
-            IssueForm(cubit: cubit),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20),
-                  child: Center(
-                    child: Text("Create"),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              10.verticalSpace,
+              IssueHeader(cubit: cubit),
+              10.verticalSpace,
+              IssueForm(cubit: cubit),
+              20.verticalSpace,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 20),
+                    child: Center(
+                      child: Text("Create"),
+                    ),
                   ),
                 ),
               ),
-            ),
-            10.verticalSpace,
-          ],
+              10.verticalSpace,
+            ],
+          ),
         ),
       ),
     );

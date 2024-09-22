@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
+import 'package:masla_bolo_app/helpers/helpers.dart';
 
+import '../../../domain/entities/issue_entity.dart';
 import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/app_images.dart';
 import '../../../helpers/styles/styles.dart';
 
 class IssuePost extends StatelessWidget {
-  const IssuePost({super.key, required this.index, required this.cubit});
+  const IssuePost({
+    super.key,
+    required this.index,
+    required this.cubit,
+    required this.issue,
+  });
   final int index;
   final HomeCubit cubit;
+  final IssueEntity issue;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +26,7 @@ class IssuePost extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              cubit.goToIssueDetail();
+              cubit.goToIssueDetail(issue: issue);
             },
             child: Stack(
               children: [
@@ -39,7 +47,7 @@ class IssuePost extends StatelessWidget {
                       ),
                       7.horizontalSpace,
                       Text(
-                        "User Name",
+                        issue.user.username!,
                         style: Styles.boldStyle(
                           fontSize: 12,
                           color: AppColor.white,
@@ -60,10 +68,10 @@ class IssuePost extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    cubit.goToIssueDetail();
+                    cubit.goToIssueDetail(issue: issue);
                   },
                   child: Text(
-                    "So what makes a good headline?",
+                    issue.title,
                     style: Styles.boldStyle(
                       fontSize: 15,
                       family: FontFamily.varela,
@@ -76,11 +84,13 @@ class IssuePost extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Icon(
-                      Icons.thumb_up_alt,
+                      Icons.thumb_up_alt_outlined,
                       color: AppColor.black1,
                     ),
                     Text(
-                      "5.1M Likes",
+                      issue.likesCount < 1
+                          ? 'Likes'
+                          : "${issue.likesCount} Likes",
                       style: Styles.mediumStyle(
                           fontSize: 12,
                           color: AppColor.black1,
@@ -91,7 +101,10 @@ class IssuePost extends StatelessWidget {
                     5.horizontalSpace,
                     GestureDetector(
                       onTap: () {
-                        cubit.goToIssueDetail(showComment: true);
+                        cubit.goToIssueDetail(
+                          showComment: true,
+                          issue: issue,
+                        );
                       },
                       child: const Icon(
                         Icons.comment_outlined,
@@ -100,10 +113,15 @@ class IssuePost extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        cubit.goToIssueDetail(showComment: true);
+                        cubit.goToIssueDetail(
+                          showComment: true,
+                          issue: issue,
+                        );
                       },
                       child: Text(
-                        "1.5k comments",
+                        issue.commentsCount < 1
+                            ? 'comments'
+                            : "${issue.commentsCount} comments",
                         style: Styles.mediumStyle(
                             fontSize: 12,
                             color: AppColor.black1,
@@ -114,7 +132,7 @@ class IssuePost extends StatelessWidget {
                     const Text("•"),
                     5.horizontalSpace,
                     Text(
-                      "1 Day ago",
+                      formatDate(issue.createdAt),
                       style: Styles.mediumStyle(
                           fontSize: 12,
                           color: AppColor.black1,

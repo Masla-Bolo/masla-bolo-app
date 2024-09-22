@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_detail/components/issue_detail_categories.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_detail/components/issue_detail_discussion.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_detail/components/issue_detail_slider.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail_cubit.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail_state.dart';
+import 'package:masla_bolo_app/features/home/components/issue_detail/components/issue_detail_discussion.dart';
+import 'package:masla_bolo_app/features/home/components/issue_detail/components/issue_detail_slider.dart';
+import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_cubit.dart';
+import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_state.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/header.dart';
@@ -28,6 +27,7 @@ class _IssueDetailState extends State<IssueDetail> {
   void initState() {
     super.initState();
     cubit = widget.cubit;
+    // cubit.fetchIssueComments(cubit.params.issue.id);
     if (cubit.params.showComment) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         focusNode.requestFocus();
@@ -74,7 +74,7 @@ class _IssueDetailState extends State<IssueDetail> {
                             children: [
                               10.verticalSpace,
                               Text(
-                                "Severage Issue near Nazimabad".toUpperCase(),
+                                cubit.params.issue.title.toUpperCase(),
                                 style: Styles.boldStyle(
                                   fontSize: 20,
                                   color: AppColor.black1,
@@ -83,7 +83,7 @@ class _IssueDetailState extends State<IssueDetail> {
                               ),
                               5.verticalSpace,
                               Text(
-                                "There has been a severe drainage issue reported near Nazimabad, where overflowing sewage is causing significant inconvenience for residents and passersby. The stagnant water has not only led to foul odors but also poses health risks, especially with the spread of waterborne diseases. Local authorities have been notified, but the situation remains unresolved, leading to growing frustration among the community. Immediate attention is required to prevent further escalation of the problem.",
+                                cubit.params.issue.description,
                                 style: Styles.mediumStyle(
                                   fontSize: 18,
                                   color: AppColor.grey,
@@ -91,8 +91,24 @@ class _IssueDetailState extends State<IssueDetail> {
                                 ),
                               ),
                               10.verticalSpace,
-                              const IssueDetailCategories(),
-                              IssueDetailDiscussion(focusNode: focusNode)
+                              Wrap(
+                                spacing: 10.w,
+                                direction: Axis.horizontal,
+                                children: cubit.params.issue.categories
+                                    .map((category) {
+                                  return Chip(
+                                      label: Text(category,
+                                          style: Styles.boldStyle(
+                                            fontSize: 15,
+                                            color: AppColor.white,
+                                            family: FontFamily.varela,
+                                          )));
+                                }).toList(),
+                              ),
+                              IssueDetailDiscussion(
+                                focusNode: focusNode,
+                                cubit: cubit,
+                              )
                             ],
                           ),
                         ),

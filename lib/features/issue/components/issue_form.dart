@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/features/home/components/issue_helper.dart';
 import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/issue/issue_state.dart';
 
@@ -69,6 +70,35 @@ class IssueForm extends StatelessWidget {
                       fontSize: 15,
                       color: AppColor.black1,
                       family: FontFamily.varela,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Wrap(
+                      spacing: 10.w,
+                      direction: Axis.horizontal,
+                      children: IssueHelper.categories.map((value) {
+                        return GestureDetector(
+                          onTap: () {
+                            // cubit.updateCategorySelection(value);
+                          },
+                          child: Chip(
+                            backgroundColor: value.isSelected
+                                ? AppColor.black1
+                                : AppColor.white,
+                            label: Text(
+                              value.item,
+                              style: Styles.boldStyle(
+                                fontSize: 15,
+                                color: value.isSelected
+                                    ? AppColor.white
+                                    : AppColor.black1,
+                                family: FontFamily.varela,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
                     ),
                   ),
                 ],

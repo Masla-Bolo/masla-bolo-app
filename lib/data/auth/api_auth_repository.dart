@@ -33,17 +33,21 @@ class ApiAuthRepository implements AuthRepository {
 
   @override
   Future<Either<AuthFailure, UserEntity>> register(UserEntity user) async {
-    final response = await networkRepository.post(
-      url: '/register/',
-      data: user.toUserJson(),
-    );
-    return response.fold(
-      (failure) => left(AuthFailure(error: failure.error)),
-      (body) {
-        final user = UserJson.fromData(body['user']).toDomain();
-        userStore.setUser(user);
-        return right(user);
-      },
-    );
+    try {
+      final response = await networkRepository.post(
+        url: '/register/',
+        data: user.toUserJson(),
+      );
+      return response.fold(
+        (failure) => left(AuthFailure(error: failure.error)),
+        (body) {
+          final user = UserJson.fromData(body['user']).toDomain();
+          userStore.setUser(user);
+          return right(user);
+        },
+      );
+    } catch (error) {
+      return left(AuthFailure(error: "Unable to Register, Error: $error"));
+    }
   }
 }

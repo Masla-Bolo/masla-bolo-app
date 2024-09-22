@@ -3,7 +3,7 @@ import 'package:masla_bolo_app/model/comments_json.dart';
 import 'user_entity.dart';
 
 class CommentsEntity {
-  String id;
+  int id;
   String content;
   UserEntity user;
   UserEntity replyTo;
@@ -20,7 +20,7 @@ class CommentsEntity {
   });
 
   factory CommentsEntity.empty() => CommentsEntity(
-        id: '',
+        id: 0,
         content: '',
         user: UserEntity.empty(),
         replyTo: UserEntity.empty(),

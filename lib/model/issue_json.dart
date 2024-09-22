@@ -1,33 +1,61 @@
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
+import 'package:masla_bolo_app/features/home/components/issue_helper.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/model/user_json.dart';
 
 import '../domain/entities/issue_entity.dart';
 
 class IssueJson {
-  String id;
+  int id;
   String title;
-  String image;
+  List<String> images;
   String description;
-  List<UserEntity> members;
+  List<String> categories;
+  int likesCount;
+  int commentsCount;
+  bool isAnonymous;
+  double latitude;
+  double longitude;
+  String status;
+  DateTime createdAt;
+  DateTime updatedAt;
+  UserEntity user;
 
   IssueJson({
     required this.id,
     required this.description,
-    required this.image,
+    required this.images,
     required this.title,
-    required this.members,
+    required this.categories,
+    required this.likesCount,
+    required this.commentsCount,
+    required this.isAnonymous,
+    required this.latitude,
+    required this.longitude,
+    required this.status,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.user,
   });
 
   factory IssueJson.fromJson(Map<String, dynamic> json) {
     return IssueJson(
       id: json['id'],
       description: json['description'],
-      image: json['image'],
+      images: json['images'].isNotEmpty ? getStringList(json["images"]) : [],
       title: json['title'],
-      members: parseList(json['members'], UserJson.fromData)
-          .map((json) => json.toDomain())
-          .toList(),
+      categories: json['categories'].isNotEmpty
+          ? IssueHelper.getCategoryFromJson(getStringList(json["categories"]))
+          : [],
+      likesCount: json['likes_count'],
+      commentsCount: json['comments_count'],
+      isAnonymous: json['is_anonymous'],
+      latitude: double.tryParse(json['latitude']) ?? 0,
+      longitude: double.tryParse(json['longitude']) ?? 0,
+      status: json['issue_status'],
+      createdAt: DateTime.tryParse(json['created_at']) ?? DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updated_at']) ?? DateTime.now(),
+      user: UserJson.fromData(json['user']).toDomain(),
     );
   }
 
@@ -35,24 +63,43 @@ class IssueJson {
         id: serverEntity.id,
         title: serverEntity.title,
         description: serverEntity.description,
-        members: serverEntity.members,
-        image: serverEntity.image,
+        categories: serverEntity.categories,
+        images: serverEntity.images,
+        likesCount: serverEntity.likesCount,
+        commentsCount: serverEntity.commentsCount,
+        isAnonymous: serverEntity.isAnonymous,
+        latitude: serverEntity.latitude,
+        longitude: serverEntity.longitude,
+        status: serverEntity.status,
+        createdAt: serverEntity.createdAt,
+        updatedAt: serverEntity.updatedAt,
+        user: serverEntity.user,
       );
 
   IssueEntity toDomain() => IssueEntity(
         id: id,
         description: description,
-        image: image,
+        images: images,
         title: title,
-        members: members,
+        categories: categories,
+        likesCount: likesCount,
+        commentsCount: commentsCount,
+        isAnonymous: isAnonymous,
+        latitude: latitude,
+        longitude: longitude,
+        status: status,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        user: user,
       );
 
   Map<String, dynamic> toJson() {
     return {
       'title': title,
       'description': description,
-      'image': image,
-      'members': members.map((e) => e.id).toList(),
+      'image': images,
+      'categories': categories,
+      "is_anonymous": isAnonymous,
     };
   }
 }

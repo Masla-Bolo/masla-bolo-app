@@ -15,10 +15,6 @@ class AuthNavigator with BottomBarRoute, AuthRoute, GetStartedRoute {
 
 mixin AuthRoute {
   void goToLogin() {
-    navigation.push(RouteName.login);
-  }
-
-  void goToLoginReplacement() {
     navigation.pushReplacement(RouteName.login);
   }
 

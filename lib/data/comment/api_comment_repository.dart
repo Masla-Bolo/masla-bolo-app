@@ -35,8 +35,13 @@ class ApiCommentRepository implements CommentRepository {
   }
 
   @override
-  Future<Either<CommentFailure, List<CommentsEntity>>> getComments() async {
-    final response = await networkRepository.get(url: '/comments/');
+  Future<Either<CommentFailure, List<CommentsEntity>>> getComments({
+    Map<String, dynamic>? params,
+  }) async {
+    final response = await networkRepository.get(
+      url: '/comments/',
+      extraQuery: params,
+    );
     return response.fold((failure) {
       return left(CommentFailure(error: failure.error));
     }, (success) {

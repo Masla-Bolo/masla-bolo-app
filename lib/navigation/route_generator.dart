@@ -3,7 +3,7 @@
 import 'package:masla_bolo_app/features/auth/sign_up/sign_up_screen.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_screen.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail.dart';
+import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail.dart';
 import 'package:masla_bolo_app/features/issue/create_issue_screen.dart';
 import 'package:masla_bolo_app/features/notification/notification_page.dart';
 import 'package:masla_bolo_app/features/profile/components/settings_page.dart';

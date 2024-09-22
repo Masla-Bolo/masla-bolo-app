@@ -5,7 +5,7 @@ import 'package:masla_bolo_app/model/user_json.dart';
 import '../domain/entities/comments_entity.dart';
 
 class CommentsJson {
-  String id;
+  int id;
   String content;
   UserEntity user;
   UserEntity replyTo;

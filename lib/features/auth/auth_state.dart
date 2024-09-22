@@ -14,8 +14,7 @@ class AuthState {
   });
 
   AuthState copyWith(
-          {bool? isLoading,
-          UserEntity? user,
+          {UserEntity? user,
           GlobalKey<FormState>? loginKey,
           GlobalKey<FormState>? signUpKey}) =>
       AuthState(

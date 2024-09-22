@@ -162,6 +162,7 @@ class HomeFilterDrawer extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () {
                                 Scaffold.of(context).closeEndDrawer();
+                                cubit.applyFilters();
                               },
                               child: const Padding(
                                 padding: EdgeInsets.only(top: 20, bottom: 20),

@@ -17,7 +17,7 @@ Future loader(Future Function() func, {ToastParam? params}) async {
     final response = await func();
     return response;
   } on NetworkFailure catch (e) {
-    showToast(e.toString(), params: params);
+    showToast(e.error, params: params);
   } catch (e) {
     showToast(e.toString(), params: params);
   } finally {
@@ -35,6 +35,10 @@ List<T> parseResponse<T>(
     data = data['data'];
   }
   return parseList(data, fromJson);
+}
+
+List<String> getStringList(List<dynamic> data) {
+  return data.map((e) => e.toString()).cast<String>().toList();
 }
 
 List<T> parseList<T>(
@@ -90,8 +94,6 @@ Future<void> showToast(String message, {ToastParam? params}) async {
                       color: params?.textColor ?? AppColor.white,
                       fontFamily: "Varela",
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                   ),
                 ),

@@ -1,45 +1,55 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
-import 'package:masla_bolo_app/features/home/components/issue_filters.dart';
+import 'package:masla_bolo_app/features/home/components/issue_helper.dart';
 
 class HomeState {
   UserEntity? user;
-  bool isExpanded;
   List<IssueEntity> issues;
-  List<IssueFilters> categories;
-  List<IssueFilters> sortBy;
+  bool isLoading;
+  List<IssueHelper> categories;
+  List<IssueHelper> sortBy;
+  Map<String, dynamic> queryParams;
+  String search;
   HomeState({
     this.user,
+    this.search = "",
+    this.isLoading = false,
+    this.queryParams = const {},
     required this.sortBy,
     required this.categories,
-    this.isExpanded = true,
     required this.issues,
   });
 
   copyWith({
-    bool? isExpanded,
+    bool? isLoading,
     UserEntity? user,
+    String? search,
+    Map<String, dynamic>? queryParams,
     List<IssueEntity>? issues,
-    List<IssueFilters>? sortBy,
-    List<IssueFilters>? categories,
+    List<IssueHelper>? sortBy,
+    List<IssueHelper>? categories,
     IssueEntity? currentServer,
     double? panelOffsetX,
     double? bottomBarOffset,
     int? serverIndex,
   }) =>
       HomeState(
+        search: search ?? this.search,
+        isLoading: isLoading ?? this.isLoading,
         sortBy: sortBy ?? this.sortBy,
         categories: categories ?? this.categories,
-        isExpanded: isExpanded ?? this.isExpanded,
         issues: issues ?? this.issues,
         user: user ?? this.user,
+        queryParams: queryParams ?? this.queryParams,
       );
 
   factory HomeState.empty() => HomeState(
-        sortBy: IssueFilters.sortBy,
+        sortBy: IssueHelper.sortBy,
+        search: "",
         user: UserEntity(email: '', id: 0, username: ''),
-        categories: IssueFilters.categories,
-        isExpanded: true,
+        categories: IssueHelper.categories,
         issues: [],
+        isLoading: false,
+        queryParams: {},
       );
 }

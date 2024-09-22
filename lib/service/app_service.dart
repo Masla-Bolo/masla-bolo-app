@@ -1,6 +1,10 @@
 import 'package:masla_bolo_app/data/auth/api_auth_repository.dart';
+import 'package:masla_bolo_app/data/comment/api_comment_repository.dart';
+import 'package:masla_bolo_app/data/issue/api_issue_repository.dart';
 import 'package:masla_bolo_app/data/local_storage/primary_local_storage_repository.dart';
 import 'package:masla_bolo_app/domain/repositories/auth_repository.dart';
+import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
+import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/auth/auth_cubit.dart';
@@ -10,7 +14,7 @@ import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_navigator.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_navigator.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_detail/issue_detail_initial_params.dart';
+import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/notification/notification_cubit.dart';
 import 'package:masla_bolo_app/features/profile/components/settings_cubit.dart';
@@ -25,8 +29,8 @@ import 'package:masla_bolo_app/service/api_service.dart';
 import 'package:get_it/get_it.dart';
 
 import '../features/home/home_navigator.dart';
-import '../features/issue/components/issue_detail/issue_detail_cubit.dart';
-import '../features/issue/components/issue_detail/issue_detail_navigator.dart';
+import '../features/home/components/issue_detail/issue_detail_cubit.dart';
+import '../features/home/components/issue_detail/issue_detail_navigator.dart';
 import '../features/issue/issue_navigator.dart';
 import '../features/notification/notification_navigator.dart';
 import '../features/profile/profile_cubit.dart';
@@ -36,19 +40,22 @@ class AppService {
     getIt.registerSingleton<LocalStorageRepository>(
         PrimaryLocalStorageRepository());
     getIt.registerSingleton<ApiService>(ApiService(getIt()));
+    getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
     getIt.registerSingleton<AppNavigation>(AppNavigation());
+    getIt.registerSingleton<IssueRepository>(ApiIssueRepository(getIt()));
+    getIt.registerSingleton<CommentRepository>(ApiCommentRepository(getIt()));
     getIt.registerSingleton<GetStartedNavigator>(GetStartedNavigator(getIt()));
     getIt.registerSingleton<GetStartedCubit>(GetStartedCubit(getIt(), getIt()));
     getIt.registerSingleton<SplashNavigator>(SplashNavigator(getIt()));
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));
-    getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
     getIt.registerSingleton<HomeNavigator>(HomeNavigator(getIt()));
-    getIt.registerSingleton<HomeCubit>(HomeCubit(getIt()));
+    getIt.registerSingleton<HomeCubit>(HomeCubit(getIt(), getIt()));
     getIt.registerSingleton<ImageHelper>(ImageHelper());
     getIt.registerFactoryParam<IssueDetailCubit, IssueDetailInitialParams,
         dynamic>(
       (params, _) => IssueDetailCubit(
         params,
+        getIt(),
         getIt(),
         getIt(),
       ),

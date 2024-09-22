@@ -35,7 +35,7 @@ class GetStartedCubit extends Cubit<GetStartedState> {
   }
 
   goToLogin() {
-    navigator.goToLoginReplacement();
+    navigator.goToLogin();
     state.currentPage = state.pageController.initialPage;
   }
 
