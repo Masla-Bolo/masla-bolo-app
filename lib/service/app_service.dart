@@ -63,7 +63,7 @@ class AppService {
     getIt
         .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
-    getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
+    getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt(), getIt()));
     getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));
     getIt.registerSingleton<ProfileCubit>(ProfileCubit(getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));

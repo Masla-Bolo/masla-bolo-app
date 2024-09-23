@@ -13,6 +13,7 @@ class IssueField extends StatefulWidget {
     this.validator,
     this.inputFormatters,
     this.maxLength,
+    this.focusNode,
     this.textEditingController,
     required this.onChanged,
     required this.cursorSize,
@@ -25,6 +26,7 @@ class IssueField extends StatefulWidget {
   final Size cursorSize;
   final double? width;
   final TextStyle hintStyle;
+  final FocusNode? focusNode;
   final TextStyle textStyle;
   final TextEditingController? textEditingController;
   final String? Function(String?)? validator;
@@ -55,7 +57,7 @@ class _IssueFieldState extends State<IssueField> {
       },
       style: widget.textStyle,
       controller: controller,
-      textCapitalization: TextCapitalization.words,
+      focusNode: widget.focusNode,
       inputFormatters: widget.inputFormatters,
       cursorColor: AppColor.black1,
       cursorHeight: widget.cursorSize.height,

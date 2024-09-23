@@ -60,6 +60,14 @@ class IssueHelper {
     IssueHelper(item: "All"),
   ];
 
+  static List<IssueHelper> cloneCategories() {
+    final categories = IssueHelper.categories
+        .map((category) => category.copyWith(isSelected: false))
+        .toList()
+        .cast<IssueHelper>();
+    return categories;
+  }
+
   static List<String> getCategoryFromJson(List<String> jsonCategories) {
     final matchedCategories = categories.map((category) {
       if (jsonCategories.contains(category.key)) {

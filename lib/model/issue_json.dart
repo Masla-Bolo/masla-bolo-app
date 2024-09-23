@@ -97,9 +97,11 @@ class IssueJson {
     return {
       'title': title,
       'description': description,
-      'image': images,
+      'image': ["images"],
       'categories': categories,
       "is_anonymous": isAnonymous,
+      "latitude": 123.42,
+      "longitude": 134.53,
     };
   }
 }

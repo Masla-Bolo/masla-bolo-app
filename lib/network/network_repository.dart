@@ -30,7 +30,7 @@ class NetworkRepository {
     required String url,
     required Map<String, dynamic> data,
   }) async {
-    final response = await apiService.dio.post("/login/", data: data);
+    final response = await apiService.dio.post(url, data: data);
     final result = apiService.checkError(response);
     return result.fold((failure) => left(failure), (body) => right(body));
   }

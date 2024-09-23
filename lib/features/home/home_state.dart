@@ -47,7 +47,7 @@ class HomeState {
         sortBy: IssueHelper.sortBy,
         search: "",
         user: UserEntity(email: '', id: 0, username: ''),
-        categories: IssueHelper.categories,
+        categories: IssueHelper.cloneCategories(),
         issues: [],
         isLoading: false,
         queryParams: {},
