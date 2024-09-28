@@ -1,8 +1,8 @@
 import 'package:masla_bolo_app/features/bottom_bar/components/bottom_bar_item.dart';
-import 'package:masla_bolo_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../service/app_service.dart';
 import '../home/home_screen.dart';
 
 class BottomBarState {

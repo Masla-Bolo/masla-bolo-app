@@ -5,7 +5,8 @@ import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_navigator.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_state.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
-import 'package:masla_bolo_app/main.dart';
+
+import '../../service/app_service.dart';
 
 class GetStartedCubit extends Cubit<GetStartedState> {
   final GetStartedNavigator navigator;

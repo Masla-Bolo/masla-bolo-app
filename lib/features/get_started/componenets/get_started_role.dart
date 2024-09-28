@@ -5,7 +5,7 @@ import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
-import '../../../main.dart';
+import '../../../service/app_service.dart';
 import '../get_started_state.dart';
 import 'get_started_header.dart';
 import 'role_card.dart';

@@ -4,7 +4,7 @@ import 'package:masla_bolo_app/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
-import '../../../main.dart';
+import '../../../service/app_service.dart';
 
 class BottomBarItem {
   Widget page;

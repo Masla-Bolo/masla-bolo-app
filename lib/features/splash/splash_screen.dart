@@ -3,7 +3,8 @@ import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/jumping_dots.dart';
-import 'package:masla_bolo_app/main.dart';
+
+import '../../service/app_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

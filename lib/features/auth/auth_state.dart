@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
-import 'package:masla_bolo_app/main.dart';
+
+import '../../service/app_service.dart';
 
 class AuthState {
   final UserEntity user;

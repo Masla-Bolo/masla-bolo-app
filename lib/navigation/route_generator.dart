@@ -8,13 +8,13 @@ import 'package:masla_bolo_app/features/issue/create_issue_screen.dart';
 import 'package:masla_bolo_app/features/notification/notification_page.dart';
 import 'package:masla_bolo_app/features/profile/components/settings_page.dart';
 import 'package:masla_bolo_app/features/profile/profile_screen.dart';
-import 'package:masla_bolo_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/navigation/route_name.dart';
 
 import '../features/auth/login/login_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/splash/splash_screen.dart';
+import '../service/app_service.dart';
 
 enum TransitionType {
   fade,

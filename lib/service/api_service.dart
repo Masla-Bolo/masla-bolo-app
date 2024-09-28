@@ -97,7 +97,6 @@ class ApiService {
   }
 
   Either<NetworkFailure, Map<String, dynamic>> checkError(Response response) {
-    print("TOKEN IS: $_tokenValue");
     final body = response.data;
     try {
       if ((response.statusCode == 200 || response.statusCode == 201)) {

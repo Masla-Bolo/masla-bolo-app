@@ -3,7 +3,6 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
@@ -12,12 +11,10 @@ import 'package:masla_bolo_app/service/app_service.dart';
 import 'helpers/styles/app_theme.dart';
 import 'navigation/route_generator.dart';
 
-final getIt = GetIt.instance;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final themeMode = await AdaptiveTheme.getThemeMode();
-  await AppService.initialize(getIt);
+  await AppService.initialize();
   runApp(MaslaBolo(themMode: themeMode));
 }
 

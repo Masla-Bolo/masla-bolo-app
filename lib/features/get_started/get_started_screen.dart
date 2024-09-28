@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_state.dart';
-import 'package:masla_bolo_app/main.dart';
 
 import '../../helpers/helpers.dart';
+import '../../service/app_service.dart';
 import 'get_started_cubit.dart';
 
 class GetStartedScreen extends StatefulWidget {

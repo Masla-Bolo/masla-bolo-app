@@ -11,7 +11,7 @@ import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
 import '../../domain/stores/user_store.dart';
 import '../../helpers/widgets/header.dart';
-import '../../main.dart';
+import '../../service/app_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.cubit});

@@ -4,10 +4,10 @@ import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_state.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
-import 'package:masla_bolo_app/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../service/app_service.dart';
 import 'components/bottom_bar_icon.dart';
 
 class BottomBarContainer extends StatelessWidget {

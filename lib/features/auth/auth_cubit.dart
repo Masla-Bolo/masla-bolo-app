@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
 
-import '../../main.dart';
+import '../../service/app_service.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {

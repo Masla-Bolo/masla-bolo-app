@@ -35,8 +35,10 @@ import '../features/issue/issue_navigator.dart';
 import '../features/notification/notification_navigator.dart';
 import '../features/profile/profile_cubit.dart';
 
+final getIt = GetIt.instance;
+
 class AppService {
-  static Future<void> initialize(GetIt getIt) async {
+  static Future<void> initialize() async {
     getIt.registerSingleton<LocalStorageRepository>(
         PrimaryLocalStorageRepository());
     getIt.registerSingleton<ApiService>(ApiService(getIt()));
