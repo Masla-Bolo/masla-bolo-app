@@ -101,17 +101,27 @@ class ApiService {
   }
 
   NetworkResponse checkError(Response response) {
-    final body = response.data;
     try {
-      if ((response.statusCode == 200 || response.statusCode == 201)) {
-        return NetworkResponse(data: body["data"]);
+      final body = response.data;
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return NetworkResponse(
+          code: body["code"] ?? "",
+          message: body["message"] ?? "",
+          success: body["success"] ?? "",
+          data: body["data"],
+        );
       } else {
-        throw NetworkResponse(message: "${response.data["message"]}");
+        throw NetworkResponse(
+          code: body["code"] ?? "",
+          message: body["message"] ?? "Unknown error occurred",
+          success: body["success"] ?? "false",
+        );
       }
     } on DioException catch (dioError) {
       print("DIO ERROR: $dioError");
       throw NetworkResponse(
-        message: 'Check your network Connectivity!',
+        message: 'Check your network connectivity!',
       );
     }
   }

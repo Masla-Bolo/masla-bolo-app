@@ -21,7 +21,7 @@ Future loader(Future Function() func, {ToastParam? params}) async {
     showToast(e.message, params: params);
   } catch (e) {
     print("ERROR IN CATCH: ${e.toString()}");
-    showToast(e.toString(), params: params);
+    showToast("An Internal Error Occured!", params: params);
   } finally {
     context.loaderOverlay.hide();
   }

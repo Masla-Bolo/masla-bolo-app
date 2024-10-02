@@ -11,8 +11,14 @@ class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit(this.navigator, this.localStorageRepository)
       : super(SettingsState.empty());
   void popAll() {
-    localStorageRepository.deleteValue(tokenKey);
-    navigator.popAll();
+    emit(state.copyWith(isLoggingOut: true));
+    Future.delayed(
+        const Duration(seconds: 2),
+        () => {
+              localStorageRepository.deleteValue(tokenKey),
+              navigator.popAll(),
+              emit(state.copyWith(isLoggingOut: false)),
+            });
   }
 
   void pop() {

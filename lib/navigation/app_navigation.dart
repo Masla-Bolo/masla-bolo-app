@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:masla_bolo_app/service/app_service.dart';
 
 class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();
@@ -18,6 +19,7 @@ class AppNavigation {
 
   exitApp() {
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+    getIt.popScope();
   }
 
   pushReplacement(String routeName, {arguments}) {

@@ -2,7 +2,9 @@ import 'package:masla_bolo_app/features/profile/components/app_settings.dart';
 
 class SettingsState {
   List<AppSettings> appSettings;
+  final bool isLoggingOut;
   SettingsState({
+    this.isLoggingOut = false,
     required this.appSettings,
   });
 
@@ -11,8 +13,10 @@ class SettingsState {
 
   copyWith({
     List<AppSettings>? appSettings,
+    bool? isLoggingOut,
   }) =>
       SettingsState(
+        isLoggingOut: isLoggingOut ?? this.isLoggingOut,
         appSettings: appSettings ?? this.appSettings,
       );
 }

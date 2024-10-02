@@ -1,10 +1,10 @@
 class NetworkResponse {
   String success;
   String message;
-  String code;
+  int code;
   dynamic data;
   NetworkResponse({
-    this.code = "",
+    this.code = 200,
     this.data,
     this.message = "",
     this.success = "",
