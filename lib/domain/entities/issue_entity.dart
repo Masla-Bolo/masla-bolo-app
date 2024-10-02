@@ -1,4 +1,4 @@
-import '../../model/issue_json.dart';
+import '../model/issue_json.dart';
 import 'user_entity.dart';
 
 class IssueEntity {

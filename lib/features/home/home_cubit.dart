@@ -14,15 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
   getIssues() {
     emit(state.copyWith(isLoading: true));
     issueRepository.getIssues(queryParams: state.queryParams).then(
-          (result) => result.fold(
-            (error) {
-              emit(state.copyWith(isLoading: false));
-            },
-            (issues) {
-              emit(state.copyWith(issues: issues, isLoading: false));
-            },
-          ),
-        );
+        (issues) => emit(state.copyWith(issues: issues, isLoading: false)));
   }
 
   debounce(String value) {
@@ -114,5 +106,9 @@ class HomeCubit extends Cubit<HomeState> {
         sortBy: sortBy,
       ),
     );
+  }
+
+  goToNotification() {
+    navigation.goToNotification();
   }
 }

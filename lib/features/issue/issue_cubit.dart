@@ -24,16 +24,13 @@ class IssueCubit extends Cubit<IssueState> {
   Future<void> createIssue() async {
     final isValid = state.key.currentState?.validate() ?? false;
     if (isValid && state.categories.any((value) => value.isSelected)) {
-      state.issue.categories = IssueHelper.getKeysFromCategories(
-        state.categories.map((value) => value.item).toList(),
-      );
+      final categories = state.categories
+          .where((val) => val.isSelected)
+          .map((value) => value.item)
+          .toList();
+      state.issue.categories = categories;
       return issueRepository.createIssue(state.issue).then(
-            (result) => result.fold(
-              (error) {},
-              (issue) {
-                goBack();
-              },
-            ),
+            (result) => goBack(),
           );
     }
   }

@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/model/comments_json.dart';
+import 'package:masla_bolo_app/domain/model/comments_json.dart';
 
 import 'user_entity.dart';
 

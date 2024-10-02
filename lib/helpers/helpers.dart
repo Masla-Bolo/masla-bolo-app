@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/domain/failures/network_failure.dart';
+import 'package:masla_bolo_app/network/network_response.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
@@ -16,9 +16,11 @@ Future loader(Future Function() func, {ToastParam? params}) async {
   try {
     final response = await func();
     return response;
-  } on NetworkFailure catch (e) {
-    showToast(e.error, params: params);
+  } on NetworkResponse catch (e) {
+    print("ERROR IN NETWORK: ${e.message}");
+    showToast(e.message, params: params);
   } catch (e) {
+    print("ERROR IN CATCH: ${e.toString()}");
     showToast(e.toString(), params: params);
   } finally {
     context.loaderOverlay.hide();

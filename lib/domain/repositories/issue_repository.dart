@@ -1,18 +1,15 @@
-import 'package:dartz/dartz.dart';
-import 'package:masla_bolo_app/domain/failures/issue_failure.dart';
-
 import '../entities/issue_entity.dart';
 
 abstract class IssueRepository {
-  Future<Either<IssueFailure, List<IssueEntity>>> getIssues({
+  Future<List<IssueEntity>> getIssues({
     Map<String, dynamic>? queryParams,
   });
-  Future<Either<IssueFailure, IssueEntity>> getIssueyId({
+  Future<IssueEntity> getIssueyId({
     required int issueId,
     Map<String, dynamic>? queryParams,
   });
-  Future<Either<IssueFailure, IssueEntity>> createIssue(IssueEntity issue);
-  Future<Either<IssueFailure, IssueEntity>> updateIssue(IssueEntity issue);
-  Future<Either<IssueFailure, IssueEntity>> likeUnlikeIssue(String issueId);
-  Future<Either<IssueFailure, bool>> deleteIssue(String issueId);
+  Future<IssueEntity> createIssue(IssueEntity issue);
+  Future<IssueEntity> updateIssue(IssueEntity issue);
+  Future<IssueEntity> likeUnlikeIssue(String issueId);
+  Future<bool> deleteIssue(String issueId);
 }

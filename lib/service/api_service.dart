@@ -1,7 +1,6 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:masla_bolo_app/domain/failures/network_failure.dart';
+import 'package:masla_bolo_app/network/network_response.dart';
 import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -13,7 +12,7 @@ class ApiService {
     _initializeApiService();
   }
   static const baseUrl = 'http://192.168.1.106:8000/api';
-  String _tokenValue = '';
+  String tokenValue = '';
   bool listenerInitialized = false;
   Map<int, Future Function()> apiQueue = {};
 
@@ -27,24 +26,27 @@ class ApiService {
     dio.interceptors.addAll([
       InterceptorsWrapper(
         onResponse: (response, handler) {
-          final body = response.data;
+          var body = response.data;
           if (body != null) {
-            if (body['token'] != null) {
-              _tokenValue = body['token'];
-              localStorageRepository.setValue(tokenKey, _tokenValue);
+            if (body["data"] != null) {
+              body["data"]["token"];
+              if (body["data"]['token'] != null) {
+                tokenValue = body['data']['token'];
+                localStorageRepository.setValue(tokenKey, tokenValue);
+              }
             }
           }
           return handler.next(response);
         },
         onRequest: (options, handler) {
-          if (_tokenValue.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $_tokenValue';
+          if (tokenValue.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $tokenValue';
           }
           return handler.next(options);
         },
         onError: (error, handler) {
           if (error.type == DioExceptionType.connectionError) {
-            throw NetworkFailure(error: "Check your internet connection");
+            throw NetworkResponse(message: "Check your internet connection");
           }
           return handler.next(error);
         },
@@ -96,17 +98,17 @@ class ApiService {
     apiQueue.removeWhere((key, value) => key == removeKey);
   }
 
-  Either<NetworkFailure, Map<String, dynamic>> checkError(Response response) {
+  NetworkResponse checkError(Response response) {
     final body = response.data;
     try {
       if ((response.statusCode == 200 || response.statusCode == 201)) {
-        return right(body);
+        return NetworkResponse(data: body["data"]);
       } else {
-        throw NetworkFailure(error: "${response.statusMessage}");
+        throw NetworkResponse(message: "${response.statusMessage}");
       }
     } on DioException catch (dioError) {
-      throw NetworkFailure(
-        error: '${dioError.error}',
+      throw NetworkResponse(
+        message: '${dioError.error}',
       );
     } catch (e) {
       rethrow;

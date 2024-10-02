@@ -28,12 +28,9 @@ class AuthCubit extends Cubit<AuthState> {
     if (isValid) {
       return authRepository
           .login(state.user.email!, state.user.password!)
-          .then((result) => result.fold(
-                (failure) => {},
-                (user) {
-                  navigation.goToBottomBar();
-                },
-              ));
+          .then((user) {
+        navigation.goToBottomBar();
+      });
     }
   }
 
@@ -55,10 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (role != null) {
       state.user.role = role;
       return authRepository.register(state.user).then(
-            (result) => result.fold(
-              (failure) => {},
-              (user) => navigation.goToBottomBar(),
-            ),
+            (result) => navigation.goToBottomBar(),
           );
     }
   }

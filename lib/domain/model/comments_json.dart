@@ -1,8 +1,8 @@
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
-import 'package:masla_bolo_app/model/user_json.dart';
+import 'package:masla_bolo_app/domain/model/user_json.dart';
 
-import '../domain/entities/comments_entity.dart';
+import '../entities/comments_entity.dart';
 
 class CommentsJson {
   int id;

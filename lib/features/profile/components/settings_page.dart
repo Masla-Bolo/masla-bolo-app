@@ -84,7 +84,12 @@ class SettingsPage extends StatelessWidget {
                         if (await showConfirmationDialog(
                                 'Are you sure you want to log Out?') &&
                             context.mounted) {
-                          cubit.popAll();
+                          Future.delayed(
+                            const Duration(seconds: 2),
+                            () => {
+                              cubit.popAll(),
+                            },
+                          );
                         }
                       },
                       child: Container(

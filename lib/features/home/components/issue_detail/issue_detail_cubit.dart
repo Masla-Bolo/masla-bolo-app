@@ -26,14 +26,11 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     commentRepository.getComments(params: {
       'issue_id': id,
     }).then(
-      (result) => result.fold(
-        (error) {},
-        (comments) {
-          emit(state.copyWith(
-            comments: comments,
-          ));
-        },
-      ),
+      (comments) => {
+        emit(state.copyWith(
+          comments: comments,
+        ))
+      },
     );
   }
 

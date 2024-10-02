@@ -1,4 +1,4 @@
-import '../../model/likes_json.dart';
+import '../model/likes_json.dart';
 import 'comments_entity.dart';
 import 'issue_entity.dart';
 import 'user_entity.dart';

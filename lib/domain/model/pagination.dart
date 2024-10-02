@@ -1,4 +1,4 @@
-import '../helpers/helpers.dart';
+import '../../helpers/helpers.dart';
 
 class ApiPagination<T> {
   String? previous;

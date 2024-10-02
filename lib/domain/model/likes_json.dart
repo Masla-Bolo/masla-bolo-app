@@ -2,9 +2,9 @@ import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/likes_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
-import 'package:masla_bolo_app/model/comments_json.dart';
-import 'package:masla_bolo_app/model/issue_json.dart';
-import 'package:masla_bolo_app/model/user_json.dart';
+import 'package:masla_bolo_app/domain/model/comments_json.dart';
+import 'package:masla_bolo_app/domain/model/issue_json.dart';
+import 'package:masla_bolo_app/domain/model/user_json.dart';
 
 class LikesJson {
   UserEntity user;

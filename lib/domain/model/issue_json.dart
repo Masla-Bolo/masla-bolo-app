@@ -1,9 +1,8 @@
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
-import 'package:masla_bolo_app/features/home/components/issue_helper.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
-import 'package:masla_bolo_app/model/user_json.dart';
+import 'package:masla_bolo_app/domain/model/user_json.dart';
 
-import '../domain/entities/issue_entity.dart';
+import '../entities/issue_entity.dart';
 
 class IssueJson {
   int id;
@@ -45,7 +44,7 @@ class IssueJson {
       images: json['images'].isNotEmpty ? getStringList(json["images"]) : [],
       title: json['title'],
       categories: json['categories'].isNotEmpty
-          ? IssueHelper.getCategoryFromJson(getStringList(json["categories"]))
+          ? getStringList(json["categories"])
           : [],
       likesCount: json['likes_count'],
       commentsCount: json['comments_count'],
@@ -97,11 +96,13 @@ class IssueJson {
     return {
       'title': title,
       'description': description,
-      'image': ["images"],
+      'images': [
+        "http://pakistanhouse.net/wp-content/uploads/2022/07/a-flooded-flooded-road-in-karachi-1657258177-8149.jpg"
+      ],
       'categories': categories,
       "is_anonymous": isAnonymous,
-      "latitude": 123.42,
-      "longitude": 134.53,
+      "latitude": 40.712776,
+      "longitude": -74.005974,
     };
   }
 }

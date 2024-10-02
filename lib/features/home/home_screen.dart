@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     suffix: Row(
                       children: [
                         GestureDetector(
-                          onTap: () => homeCubit.navigation.goToNotification(),
+                          onTap: () => homeCubit.goToNotification(),
                           child: Image.asset(AppImages.bell, height: 20),
                         ),
                         15.horizontalSpace,

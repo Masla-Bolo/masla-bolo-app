@@ -33,9 +33,6 @@ class IssueForm extends StatelessWidget {
                       if (val?.isEmpty == true) {
                         return "Please enter title";
                       }
-                      if ((val?.length ?? 0) > 15) {
-                        return "Try to brief it :))";
-                      }
                       return null;
                     },
                     cursorSize: const Size(2, 40),
