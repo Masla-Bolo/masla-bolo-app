@@ -15,6 +15,7 @@ class IssueState {
   copyWith({
     GlobalKey<FormState>? key,
     IssueEntity? issue,
+    bool? commentLoading,
     List<IssueHelper>? categories,
   }) =>
       IssueState(

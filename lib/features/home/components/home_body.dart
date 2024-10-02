@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masla_bolo_app/features/home/components/issue_post.dart';
+import 'package:masla_bolo_app/features/home/components/issue_post/issue_post.dart';
+import 'package:masla_bolo_app/features/home/components/issue_post/issue_post_shimmer.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/features/home/home_state.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
-import 'package:masla_bolo_app/helpers/widgets/indicator.dart';
 import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
 import '../../../helpers/styles/app_colors.dart';
@@ -18,7 +18,7 @@ class HomeBody extends StatelessWidget {
         bloc: cubit,
         builder: (context, state) {
           return state.isLoading
-              ? const Indicator()
+              ? const IssuePostShimmer()
               : Expanded(
                   child: ScrollShaderMask(
                     child: RefreshIndicator(

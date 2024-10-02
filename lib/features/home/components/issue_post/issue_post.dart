@@ -4,9 +4,9 @@ import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/widgets/cached_image.dart';
 
-import '../../../domain/entities/issue_entity.dart';
-import '../../../helpers/styles/app_colors.dart';
-import '../../../helpers/styles/styles.dart';
+import '../../../../domain/entities/issue_entity.dart';
+import '../../../../helpers/styles/app_colors.dart';
+import '../../../../helpers/styles/styles.dart';
 
 class IssuePost extends StatelessWidget {
   const IssuePost({

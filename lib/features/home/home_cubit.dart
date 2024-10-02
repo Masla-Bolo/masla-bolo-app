@@ -53,10 +53,10 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void clearAllCategoryFilters() {
-    final categories = state.categories;
-    categories.map((category) {
+    final categories = state.categories.map((category) {
       category.isSelected = false;
-    });
+      return category;
+    }).toList();
     emit(
       state.copyWith(
         categories: categories,

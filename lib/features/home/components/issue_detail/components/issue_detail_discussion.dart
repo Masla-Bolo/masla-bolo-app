@@ -91,7 +91,10 @@ class IssueDetailDiscussion extends StatelessWidget {
                 ),
               ),
               10.verticalSpace,
-              IssueComments(comments: state.comments),
+              IssueComments(
+                comments: state.comments,
+                cubit: cubit,
+              ),
             ],
           );
         });

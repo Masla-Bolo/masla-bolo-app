@@ -24,13 +24,15 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   }
 
   void fetchIssueComments(int id) {
+    emit(state.copyWith(commentLoading: true));
     commentRepository.getComments(params: {
       'issue_id': id,
     }).then(
       (comments) => {
         emit(state.copyWith(
           comments: comments,
-        ))
+        )),
+        emit(state.copyWith(commentLoading: false))
       },
     );
   }

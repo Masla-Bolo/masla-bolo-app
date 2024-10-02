@@ -4,11 +4,13 @@ import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 
 import '../../../../../../helpers/styles/app_colors.dart';
 import '../../../../../../helpers/styles/styles.dart';
+import '../../issue_detail_cubit.dart';
 import 'issue_comments.dart';
 
 class Comment extends StatelessWidget {
-  const Comment({super.key, required this.comment});
+  const Comment({super.key, required this.comment, required this.cubit});
   final CommentsEntity comment;
+  final IssueDetailCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,10 @@ class Comment extends StatelessWidget {
         if (comment.replies.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(left: 20),
-            child: IssueComments(comments: comment.replies),
+            child: IssueComments(
+              comments: comment.replies,
+              cubit: cubit,
+            ),
           ),
       ],
     );
