@@ -28,15 +28,19 @@ Future loader(Future Function() func, {ToastParam? params}) async {
   return null;
 }
 
-List<T> parseResponse<T>(
+T? parseResponse<T>(
   response,
   T Function(Map<String, dynamic>) fromJson,
 ) {
-  var data = (response)['result'];
-  if (data is! List) {
-    data = data['data'];
+  var data = response;
+  if (data == null) {
+    return null;
   }
-  return parseList(data, fromJson);
+  if (data is! List) {
+    data = data;
+    return fromJson(data);
+  }
+  return null;
 }
 
 List<String> getStringList(List<dynamic> data) {

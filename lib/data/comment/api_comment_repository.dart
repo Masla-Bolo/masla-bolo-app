@@ -32,7 +32,7 @@ class ApiCommentRepository implements CommentRepository {
       url: '/comments/',
       extraQuery: params,
     );
-    final data = parseList(response.data, CommentsJson.fromJson)
+    final data = parseList(response.data["results"], CommentsJson.fromJson)
         .map((json) => json.toDomain())
         .toList();
     return data;

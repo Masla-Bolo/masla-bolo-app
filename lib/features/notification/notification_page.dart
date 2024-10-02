@@ -23,13 +23,11 @@ class NotificationPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   10.verticalSpace,
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
                     child: Header(
                       title: "Notifications",
-                      onBackTap: () {
-                        cubit.pop();
-                      },
+                      hideBackIcon: true,
                     ),
                   ),
                   20.verticalSpace,

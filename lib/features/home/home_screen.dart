@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
-import '../../domain/stores/user_store.dart';
 import '../../helpers/widgets/header.dart';
 import '../../service/app_service.dart';
 
@@ -23,13 +22,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late HomeCubit homeCubit;
-  final user = getIt<UserStore>().state;
 
   @override
   void initState() {
     super.initState();
     homeCubit = widget.cubit;
-    homeCubit.getIssues();
   }
 
   @override
@@ -50,20 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   Header(
                     hideBackIcon: true,
                     title: "Masla Bolo",
-                    suffix: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => homeCubit.goToNotification(),
-                          child: Image.asset(AppImages.bell, height: 20),
-                        ),
-                        15.horizontalSpace,
-                        GestureDetector(
-                          onTap: () {
-                            Scaffold.of(context).openEndDrawer();
-                          },
-                          child: Image.asset(AppImages.filter, height: 30),
-                        ),
-                      ],
+                    suffix: GestureDetector(
+                      onTap: () {
+                        Scaffold.of(context).openEndDrawer();
+                      },
+                      child: Image.asset(AppImages.filter, height: 30),
                     ),
                   ),
                   20.verticalSpace,

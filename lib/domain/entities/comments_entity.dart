@@ -3,27 +3,27 @@ import 'package:masla_bolo_app/domain/model/comments_json.dart';
 import 'user_entity.dart';
 
 class CommentsEntity {
-  int id;
+  int? id;
   String content;
-  UserEntity user;
-  UserEntity replyTo;
+  UserEntity? user;
+  int? replyTo;
   int issueId;
   List<CommentsEntity> replies;
 
   CommentsEntity({
-    required this.id,
+    this.id,
     required this.content,
-    required this.user,
-    required this.replyTo,
+    this.user,
+    this.replyTo,
     required this.issueId,
-    required this.replies,
+    this.replies = const [],
   });
 
   factory CommentsEntity.empty() => CommentsEntity(
         id: 0,
         content: '',
         user: UserEntity.empty(),
-        replyTo: UserEntity.empty(),
+        replyTo: 0,
         issueId: 0,
         replies: [],
       );

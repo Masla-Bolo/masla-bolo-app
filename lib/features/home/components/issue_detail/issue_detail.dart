@@ -27,7 +27,7 @@ class _IssueDetailState extends State<IssueDetail> {
   void initState() {
     super.initState();
     cubit = widget.cubit;
-    // cubit.fetchIssueComments(cubit.params.issue.id);
+    cubit.fetchIssueComments(cubit.params.issue.id);
     if (cubit.params.showComment) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         focusNode.requestFocus();
@@ -126,7 +126,11 @@ class _IssueDetailState extends State<IssueDetail> {
                           focusNode: focusNode,
                           disableOnTapOutside: true,
                           textEditingController: controller,
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            if (val.isNotEmpty) {
+                              cubit.addComment(val);
+                            }
+                          },
                           hintText: "write a comment...",
                         ),
                       ),

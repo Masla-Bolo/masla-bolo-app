@@ -8,7 +8,7 @@ class CommentsJson {
   int id;
   String content;
   UserEntity user;
-  UserEntity replyTo;
+  int? replyTo;
   int issueId;
   List<CommentsEntity> replies;
 
@@ -22,9 +22,9 @@ class CommentsJson {
   });
 
   factory CommentsJson.copyWith(CommentsEntity entity) => CommentsJson(
-        id: entity.id,
+        id: entity.id ?? 0,
         content: entity.content,
-        user: entity.user,
+        user: entity.user ?? UserEntity.empty(),
         replyTo: entity.replyTo,
         issueId: entity.issueId,
         replies: entity.replies,
@@ -34,8 +34,8 @@ class CommentsJson {
         id: json['id'],
         content: json['content'],
         user: UserJson.fromData(json['user']).toDomain(),
-        replyTo: UserJson.fromData(json['replyTo']).toDomain(),
-        issueId: json['issueId'],
+        replyTo: json['replyTo'],
+        issueId: json['issue'],
         replies: parseList(json["replies"], CommentsJson.fromJson)
             .map((json) => json.toDomain())
             .toList(),
@@ -55,7 +55,7 @@ class CommentsJson {
       'id': id,
       'content': content,
       'user': user.id,
-      'replyTo': replyTo.id,
+      'replyTo': replyTo,
       'issueId': issueId,
     };
   }

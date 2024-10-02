@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
 import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
@@ -37,5 +38,19 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   Future<void> showOptions(BuildContext context) async {
     final image = await imageHelper.showOptions(context);
     if (image != null) {}
+  }
+
+  void addComment(String val, {int? replyTo}) {
+    final comment = CommentsEntity(
+      content: val,
+      issueId: params.issue.id,
+    );
+    if (replyTo != null) {
+      comment.replyTo = replyTo;
+    }
+    commentRepository.createComment(comment).then((comment) => {
+          state.comments.add(comment),
+          emit(state.copyWith(comments: state.comments))
+        });
   }
 }
