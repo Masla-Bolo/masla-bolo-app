@@ -67,24 +67,4 @@ class IssueHelper {
         .cast<IssueHelper>();
     return categories;
   }
-
-  // static List<String> getCategoryFromJson(List<String> jsonCategories) {
-  //   final matchedCategories = categories.map((category) {
-  //     if (jsonCategories.contains(category.key)) {
-  //       return category.item;
-  //     }
-  //     return "";
-  //   }).toList();
-  //   return matchedCategories.where((category) => category != "").toList();
-  // }
-
-  // static List<String> getKeysFromCategories(List<String> categoryValues) {
-  //   final matchedCategories = categories.map((category) {
-  //     if (categoryValues.contains(category.item)) {
-  //       return category.key!;
-  //     }
-  //     return "";
-  //   }).toList();
-  //   return matchedCategories.where((category) => category != "").toList();
-  // }
 }

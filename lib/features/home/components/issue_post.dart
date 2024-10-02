@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/home/home_cubit.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
+import 'package:masla_bolo_app/helpers/widgets/cached_image.dart';
 
 import '../../../domain/entities/issue_entity.dart';
 import '../../../helpers/styles/app_colors.dart';
-import '../../../helpers/styles/app_images.dart';
 import '../../../helpers/styles/styles.dart';
 
 class IssuePost extends StatelessWidget {
@@ -31,9 +31,9 @@ class IssuePost extends StatelessWidget {
             child: Stack(
               children: [
                 Center(
-                  child: Image.asset(
-                    index.isEven ? AppImages.temp : AppImages.sewerage,
-                  ),
+                  child: SizedBox(
+                      height: 200,
+                      child: CachedImage(image: issue.images.first)),
                 ),
                 Positioned(
                   top: 10,

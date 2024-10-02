@@ -66,6 +66,7 @@ class _IssueDetailState extends State<IssueDetail> {
                         10.verticalSpace,
                         IssueDetailSlider(
                           onTap: () {},
+                          issue: cubit.params.issue,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8),

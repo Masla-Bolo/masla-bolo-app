@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:masla_bolo_app/network/network_response.dart';
@@ -104,14 +106,13 @@ class ApiService {
       if ((response.statusCode == 200 || response.statusCode == 201)) {
         return NetworkResponse(data: body["data"]);
       } else {
-        throw NetworkResponse(message: "${response.statusMessage}");
+        throw NetworkResponse(message: "${response.data["message"]}");
       }
     } on DioException catch (dioError) {
+      print("DIO ERROR: $dioError");
       throw NetworkResponse(
-        message: '${dioError.error}',
+        message: 'Check your network Connectivity!',
       );
-    } catch (e) {
-      rethrow;
     }
   }
 }
