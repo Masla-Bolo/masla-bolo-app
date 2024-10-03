@@ -11,10 +11,10 @@ abstract class CommentRepository {
     CommentsEntity comment,
   );
 
-  Future<CommentsEntity> likeUnlikeComment(
-    String commentId,
+  Future<void> likeUnlikeComment(
+    int commentId,
   );
   Future<bool> deleteComment(
-    String commentId,
+    int commentId,
   );
 }

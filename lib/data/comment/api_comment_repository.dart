@@ -1,13 +1,15 @@
 import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
 import 'package:masla_bolo_app/domain/model/comments_json.dart';
+import 'package:masla_bolo_app/service/utility_service.dart';
 
 import '../../helpers/helpers.dart';
 import '../../network/network_repository.dart';
 
 class ApiCommentRepository implements CommentRepository {
   final NetworkRepository networkRepository;
-  ApiCommentRepository(this.networkRepository);
+  final UtilityService utilityService;
+  ApiCommentRepository(this.networkRepository, this.utilityService);
 
   @override
   Future<CommentsEntity> createComment(
@@ -19,7 +21,7 @@ class ApiCommentRepository implements CommentRepository {
   }
 
   @override
-  Future<bool> deleteComment(String commentId) async {
+  Future<bool> deleteComment(int commentId) async {
     await networkRepository.get(url: '/comments/$commentId');
     return true;
   }
@@ -39,11 +41,12 @@ class ApiCommentRepository implements CommentRepository {
   }
 
   @override
-  Future<CommentsEntity> likeUnlikeComment(String commentId) async {
-    final response =
-        await networkRepository.get(url: '/comments/$commentId/like');
-    final data = CommentsJson.fromJson(response.data).toDomain();
-    return data;
+  Future<void> likeUnlikeComment(int commentId) async {
+    final function = networkRepository.get(url: '/comments/$commentId/like');
+    utilityService.addToQueue(
+      commentId,
+      () => function,
+    );
   }
 
   @override

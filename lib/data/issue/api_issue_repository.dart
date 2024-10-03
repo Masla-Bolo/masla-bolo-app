@@ -58,14 +58,14 @@ class ApiIssueRepository implements IssueRepository {
   }
 
   @override
-  Future<bool> deleteIssue(String issueId) async {
+  Future<bool> deleteIssue(int issueId) async {
     await networkRepository.delete(url: '/issues/$issueId');
     return true;
   }
 
   @override
   Future<IssueEntity> likeUnlikeIssue(
-    String issueId,
+    int issueId,
   ) async {
     final response =
         await networkRepository.get(url: '/comments/$issueId/like');

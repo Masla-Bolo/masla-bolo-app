@@ -94,7 +94,9 @@ class Comment extends StatelessWidget {
                             const Text("•"),
                             10.horizontalSpace,
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                cubit.makeReply(comment.user?.username ?? "");
+                              },
                               child: Text(
                                 "Reply",
                                 style: Styles.mediumStyle(

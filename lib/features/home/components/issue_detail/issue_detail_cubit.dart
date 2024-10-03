@@ -71,4 +71,22 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     emit(state.copyWith(comments: state.comments));
     commentRepository.createComment(comment);
   }
+
+  void makeReply(String username) {
+    emit(
+      state.copyWith(
+        commentController: state.commentController,
+      ),
+    );
+    state.commentController.text = "$username ";
+    state.focusNode.requestFocus();
+  }
+
+  void likeUnlikeComment(int commentId) {
+    commentRepository.likeUnlikeComment(commentId);
+  }
+
+  void onChanged(String value) {
+    state.commentController.text = value;
+  }
 }

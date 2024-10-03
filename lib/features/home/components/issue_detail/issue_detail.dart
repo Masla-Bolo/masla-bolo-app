@@ -20,7 +20,6 @@ class IssueDetail extends StatefulWidget {
 
 class _IssueDetailState extends State<IssueDetail> {
   late IssueDetailCubit cubit;
-  final controller = TextEditingController();
   final scrollController = ScrollController();
   @override
   void initState() {
@@ -123,11 +122,11 @@ class _IssueDetailState extends State<IssueDetail> {
                         padding: const EdgeInsets.fromLTRB(12, 3, 12, 8),
                         child: InputField(
                           focusNode: state.focusNode,
+                          textEditingController: state.commentController,
                           disableOnTapOutside: true,
-                          textEditingController: controller,
                           onChanged: (val) {
                             if (val.isNotEmpty) {
-                              cubit.addComment(val);
+                              cubit.onChanged(val);
                             }
                           },
                           hintText: "write a comment...",

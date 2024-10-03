@@ -27,6 +27,7 @@ import 'package:masla_bolo_app/features/splash/splash_navigator.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
 import 'package:masla_bolo_app/service/api_service.dart';
 import 'package:get_it/get_it.dart';
+import 'package:masla_bolo_app/service/utility_service.dart';
 
 import '../features/home/home_navigator.dart';
 import '../features/home/components/issue_detail/issue_detail_cubit.dart';
@@ -42,10 +43,14 @@ class AppService {
     getIt.registerSingleton<LocalStorageRepository>(
         PrimaryLocalStorageRepository());
     getIt.registerSingleton<ApiService>(ApiService(getIt()));
+    getIt.registerLazySingleton<UtilityService>(() => UtilityService());
     getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
     getIt.registerSingleton<AppNavigation>(AppNavigation());
     getIt.registerSingleton<IssueRepository>(ApiIssueRepository(getIt()));
-    getIt.registerSingleton<CommentRepository>(ApiCommentRepository(getIt()));
+    getIt.registerSingleton<CommentRepository>(ApiCommentRepository(
+      getIt(),
+      getIt(),
+    ));
     getIt.registerSingleton<GetStartedNavigator>(GetStartedNavigator(getIt()));
     getIt.registerSingleton<GetStartedCubit>(GetStartedCubit(getIt(), getIt()));
     getIt.registerSingleton<SplashNavigator>(SplashNavigator(getIt()));
@@ -55,12 +60,7 @@ class AppService {
     getIt.registerSingleton<ImageHelper>(ImageHelper());
     getIt.registerFactoryParam<IssueDetailCubit, IssueDetailInitialParams,
         dynamic>(
-      (params, _) => IssueDetailCubit(
-        params,
-        getIt(),
-        getIt(),
-        getIt(),
-      ),
+      (params, _) => IssueDetailCubit(params, getIt(), getIt(), getIt()),
     );
     getIt
         .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));
