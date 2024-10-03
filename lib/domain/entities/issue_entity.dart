@@ -4,6 +4,7 @@ import 'user_entity.dart';
 class IssueEntity {
   int id;
   String title;
+  bool isLiked;
   List<String> images;
   String description;
   List<String> categories;
@@ -20,6 +21,7 @@ class IssueEntity {
   IssueEntity({
     required this.id,
     required this.description,
+    required this.isLiked,
     required this.images,
     required this.title,
     required this.categories,
@@ -38,6 +40,7 @@ class IssueEntity {
         id: 0,
         description: '',
         images: [],
+        isLiked: false,
         title: '',
         categories: [],
         likesCount: 0,

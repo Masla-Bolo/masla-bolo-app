@@ -30,9 +30,13 @@ class IssueDetailDiscussion extends StatelessWidget {
                   children: [
                     Expanded(
                       child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.thumb_up_alt_outlined,
+                        onPressed: () {
+                          cubit.likeUnlikeIssue();
+                        },
+                        icon: Icon(
+                          cubit.params.issue.isLiked
+                              ? Icons.thumb_up
+                              : Icons.thumb_up_alt_outlined,
                           color: AppColor.black1,
                         ),
                         label: Text(

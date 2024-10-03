@@ -27,6 +27,6 @@ class IssueDetailState {
 
   factory IssueDetailState.empty() => IssueDetailState(
         commentController: TextEditingController(),
-        comments: List<CommentsEntity>.empty(),
+        comments: List<CommentsEntity>.empty(growable: true),
       );
 }

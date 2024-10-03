@@ -10,6 +10,6 @@ abstract class IssueRepository {
   });
   Future<IssueEntity> createIssue(IssueEntity issue);
   Future<IssueEntity> updateIssue(IssueEntity issue);
-  Future<IssueEntity> likeUnlikeIssue(int issueId);
+  Future<void> likeUnlikeIssue(int issueId);
   Future<bool> deleteIssue(int issueId);
 }

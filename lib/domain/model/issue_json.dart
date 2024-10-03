@@ -9,6 +9,7 @@ class IssueJson {
   String title;
   List<String> images;
   String description;
+  bool isLiked;
   List<String> categories;
   int likesCount;
   int commentsCount;
@@ -22,6 +23,7 @@ class IssueJson {
 
   IssueJson({
     required this.id,
+    required this.isLiked,
     required this.description,
     required this.images,
     required this.title,
@@ -40,6 +42,7 @@ class IssueJson {
   factory IssueJson.fromJson(Map<String, dynamic> json) {
     return IssueJson(
       id: json['id'],
+      isLiked: json["is_liked"],
       description: json['description'],
       images: json['images'].isNotEmpty ? getStringList(json["images"]) : [],
       title: json['title'],
@@ -60,6 +63,7 @@ class IssueJson {
 
   factory IssueJson.copyWith(IssueEntity serverEntity) => IssueJson(
         id: serverEntity.id,
+        isLiked: serverEntity.isLiked,
         title: serverEntity.title,
         description: serverEntity.description,
         categories: serverEntity.categories,
@@ -76,6 +80,7 @@ class IssueJson {
       );
 
   IssueEntity toDomain() => IssueEntity(
+        isLiked: isLiked,
         id: id,
         description: description,
         images: images,

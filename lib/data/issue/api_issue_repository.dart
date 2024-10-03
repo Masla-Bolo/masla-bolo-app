@@ -3,10 +3,12 @@ import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
+import 'package:masla_bolo_app/service/utility_service.dart';
 
 class ApiIssueRepository implements IssueRepository {
   final NetworkRepository networkRepository;
-  ApiIssueRepository(this.networkRepository);
+  final UtilityService utilityService;
+  ApiIssueRepository(this.networkRepository, this.utilityService);
 
   @override
   Future<List<IssueEntity>> getIssues({
@@ -26,7 +28,7 @@ class ApiIssueRepository implements IssueRepository {
     Map<String, dynamic>? queryParams,
   }) async {
     final response = await networkRepository.get(
-      url: '/issues/$issueId',
+      url: '/issues/$issueId/',
       extraQuery: queryParams,
     );
     final data = IssueJson.fromJson(response.data).toDomain();
@@ -50,7 +52,7 @@ class ApiIssueRepository implements IssueRepository {
     IssueEntity issue,
   ) async {
     final response = await networkRepository.put(
-      url: '/issues/${issue.id}',
+      url: '/issues/${issue.id}/',
       data: issue.toIssueJson(),
     );
     final data = IssueJson.fromJson(response.data).toDomain();
@@ -59,17 +61,17 @@ class ApiIssueRepository implements IssueRepository {
 
   @override
   Future<bool> deleteIssue(int issueId) async {
-    await networkRepository.delete(url: '/issues/$issueId');
+    await networkRepository.delete(url: '/issues/$issueId/');
     return true;
   }
 
   @override
-  Future<IssueEntity> likeUnlikeIssue(
+  Future<void> likeUnlikeIssue(
     int issueId,
   ) async {
-    final response =
-        await networkRepository.get(url: '/comments/$issueId/like');
-    final data = IssueJson.fromJson(response.data).toDomain();
-    return data;
+    utilityService.addOrRemoveFromQueue(
+      issueId,
+      () => networkRepository.get(url: '/issues/$issueId/like/'),
+    );
   }
 }

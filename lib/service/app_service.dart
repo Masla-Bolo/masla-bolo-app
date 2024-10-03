@@ -46,7 +46,10 @@ class AppService {
     getIt.registerLazySingleton<UtilityService>(() => UtilityService());
     getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
     getIt.registerSingleton<AppNavigation>(AppNavigation());
-    getIt.registerSingleton<IssueRepository>(ApiIssueRepository(getIt()));
+    getIt.registerSingleton<IssueRepository>(ApiIssueRepository(
+      getIt(),
+      getIt(),
+    ));
     getIt.registerSingleton<CommentRepository>(ApiCommentRepository(
       getIt(),
       getIt(),
@@ -60,7 +63,14 @@ class AppService {
     getIt.registerSingleton<ImageHelper>(ImageHelper());
     getIt.registerFactoryParam<IssueDetailCubit, IssueDetailInitialParams,
         dynamic>(
-      (params, _) => IssueDetailCubit(params, getIt(), getIt(), getIt()),
+      (params, _) => IssueDetailCubit(
+        params,
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
     );
     getIt
         .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));
@@ -69,7 +79,7 @@ class AppService {
     getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));
     getIt.registerSingleton<ProfileCubit>(ProfileCubit(getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
-    getIt.registerSingleton<UserStore>(UserStore());
+    getIt.registerSingleton<UserStore>(UserStore(getIt()));
     getIt.registerSingleton<AuthRepository>(ApiAuthRepository(
       getIt(),
       getIt(),

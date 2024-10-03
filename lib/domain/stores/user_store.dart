@@ -1,8 +1,17 @@
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
+import 'package:masla_bolo_app/helpers/strings.dart';
 
 class UserStore extends Cubit<UserEntity> {
-  UserStore() : super(UserEntity.empty());
+  final LocalStorageRepository localStorageRepository;
+  UserEntity _user = UserEntity.empty();
+  UserEntity get appUser => _user;
+  UserStore(this.localStorageRepository) : super(UserEntity.empty());
 
-  setUser(UserEntity user) => emit(user);
+  setUser(UserEntity user) {
+    localStorageRepository.setUser(userKey, user);
+    _user = user;
+    emit(user);
+  }
 }

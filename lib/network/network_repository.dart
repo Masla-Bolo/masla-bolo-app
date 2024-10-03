@@ -18,7 +18,7 @@ class NetworkRepository {
 
   Future<NetworkResponse> put({
     required String url,
-    required Map<String, dynamic> data,
+    Map<String, dynamic>? data,
   }) async {
     final response = await apiService.dio.put(url, data: data);
     final result = apiService.checkError(response);
@@ -27,7 +27,7 @@ class NetworkRepository {
 
   Future<NetworkResponse> post({
     required String url,
-    required Map<String, dynamic> data,
+    Map<String, dynamic>? data,
   }) async {
     final response = await apiService.dio.post(url, data: data);
     final result = apiService.checkError(response);

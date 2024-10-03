@@ -12,7 +12,6 @@ class UtilityService {
       } catch (e) {
         apiQueue.remove(key);
         await Future.delayed(const Duration(seconds: 1));
-        executeAll();
       }
       await Future.delayed(const Duration(seconds: 1));
     }
@@ -20,19 +19,20 @@ class UtilityService {
 
   void initializeListener() {
     listenerInitialized = true;
-    Future.delayed(const Duration(minutes: 1), () {
+    Future.delayed(const Duration(seconds: 10), () {
       executeAll().then((_) => listenerInitialized = false);
     });
   }
 
-  void addToQueue(int key, Future Function() value) {
-    apiQueue.addAll({key: value});
-    if (!listenerInitialized) {
-      initializeListener();
+  void addOrRemoveFromQueue(int key, Future Function() value) {
+    if (apiQueue.containsKey(key)) {
+      apiQueue.removeWhere((matchKey, _) => matchKey == key);
+    } else {
+      apiQueue.addAll({key: value});
+      if (!listenerInitialized) {
+        initializeListener();
+      }
     }
-  }
-
-  void removeFromQueue(int removeKey) {
-    apiQueue.removeWhere((key, value) => key == removeKey);
+    print("QUEUE: ${apiQueue.keys.length}");
   }
 }

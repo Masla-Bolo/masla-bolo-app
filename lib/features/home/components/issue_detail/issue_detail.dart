@@ -133,9 +133,16 @@ class _IssueDetailState extends State<IssueDetail> {
                         ),
                       ),
                     ),
-                    const Icon(
-                      Icons.send,
-                      color: AppColor.black1,
+                    GestureDetector(
+                      onTap: () {
+                        if (state.commentController.text.isNotEmpty) {
+                          cubit.addComment();
+                        }
+                      },
+                      child: const Icon(
+                        Icons.send,
+                        color: AppColor.black1,
+                      ),
                     ),
                     15.horizontalSpace,
                   ],

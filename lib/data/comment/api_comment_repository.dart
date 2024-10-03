@@ -15,14 +15,17 @@ class ApiCommentRepository implements CommentRepository {
   Future<CommentsEntity> createComment(
     CommentsEntity comment,
   ) async {
-    final response = await networkRepository.get(url: '/comments/');
+    final response = await networkRepository.post(
+      url: '/comments/',
+      data: comment.toCommentJson(),
+    );
     final data = CommentsJson.fromJson(response.data).toDomain();
     return data;
   }
 
   @override
   Future<bool> deleteComment(int commentId) async {
-    await networkRepository.get(url: '/comments/$commentId');
+    await networkRepository.get(url: '/comments/$commentId/');
     return true;
   }
 
@@ -42,17 +45,18 @@ class ApiCommentRepository implements CommentRepository {
 
   @override
   Future<void> likeUnlikeComment(int commentId) async {
-    final function = networkRepository.get(url: '/comments/$commentId/like');
-    utilityService.addToQueue(
+    utilityService.addOrRemoveFromQueue(
       commentId,
-      () => function,
+      () => networkRepository.post(url: '/comments/$commentId/like/'),
     );
   }
 
   @override
   Future<CommentsEntity> updateComment(CommentsEntity comment) async {
-    final response =
-        await networkRepository.get(url: '/comments/${comment.id}');
+    final response = await networkRepository.put(
+      url: '/comments/${comment.id}/',
+      data: comment.toCommentJson(),
+    );
     final data = CommentsJson.fromJson(response.data).toDomain();
     return data;
   }

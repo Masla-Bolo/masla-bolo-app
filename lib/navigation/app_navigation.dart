@@ -36,6 +36,5 @@ class AppNavigation {
       routeName,
       ModalRoute.withName(routeName),
     );
-    await getIt.reset(dispose: false);
   }
 }

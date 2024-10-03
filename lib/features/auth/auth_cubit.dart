@@ -34,11 +34,13 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  // register karte waqt role assign karna hai, agar user pehle se hi role choose karlia toh woh local mein save hojata hai, phir app band karke
+  // ayga toh woh save rahega, baad mein role save rahe isiliye ham local mein save karwarahe.
   Future<void> register() async {
     final isValid = state.signUpKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    var role = getIt<UserStore>().state.role;
+    var role = getIt<UserStore>().appUser.role;
     if (role == null) {
       final result = await localStorageRepository.getValue(roleKey);
       result.fold(

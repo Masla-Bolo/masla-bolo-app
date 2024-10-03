@@ -9,12 +9,14 @@ class CommentsJson {
   CommentsEntity? parentId;
   String content;
   UserEntity user;
+  bool isLiked;
   UserEntity? replyTo;
   int issueId;
   List<CommentsEntity> replies;
 
   CommentsJson({
     this.parentId,
+    this.isLiked = false,
     required this.id,
     required this.content,
     required this.user,
@@ -26,6 +28,7 @@ class CommentsJson {
   factory CommentsJson.copyWith(CommentsEntity entity) => CommentsJson(
         id: entity.id ?? 0,
         content: entity.content,
+        isLiked: entity.isLiked,
         parentId: entity.parent,
         user: entity.user ?? UserEntity.empty(),
         replyTo: entity.replyTo,
@@ -35,6 +38,7 @@ class CommentsJson {
 
   factory CommentsJson.fromJson(Map<String, dynamic> json) => CommentsJson(
         id: json['id'],
+        isLiked: json["is_liked"],
         // parentId: CommentsJson.fromJson(json["parent"]).toDomain(),
         content: json['content'],
         user: UserJson.fromData(json['user']).toDomain(),
@@ -50,6 +54,7 @@ class CommentsJson {
         content: content,
         user: user,
         parent: parentId,
+        isLiked: isLiked,
         replyTo: replyTo,
         issueId: issueId,
         replies: replies,

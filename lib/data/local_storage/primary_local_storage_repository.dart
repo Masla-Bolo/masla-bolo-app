@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
+import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/failures/local_storage_failure.dart';
+import 'package:masla_bolo_app/domain/model/user_json.dart';
 import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,6 +42,34 @@ class PrimaryLocalStorageRepository implements LocalStorageRepository {
     try {
       final prefs = await SharedPreferences.getInstance();
       prefs.remove(key);
+      return right(true);
+    } catch (error) {
+      return left(LocalStorageFailure(error: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<LocalStorageFailure, UserEntity>> getUser(String key) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final value = prefs.getString(key);
+      if (value?.isNotEmpty == true) {
+        final user = UserJson.fromData(jsonDecode(value!)).toDomain();
+        return right(user);
+      } else {
+        return left(LocalStorageFailure(error: ''));
+      }
+    } catch (error) {
+      return left(LocalStorageFailure(error: error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<LocalStorageFailure, bool>> setUser(
+      String key, UserEntity user) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString(key, jsonEncode(user.toUserJson()));
       return right(true);
     } catch (error) {
       return left(LocalStorageFailure(error: error.toString()));

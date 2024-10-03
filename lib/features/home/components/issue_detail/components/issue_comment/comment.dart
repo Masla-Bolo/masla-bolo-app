@@ -80,12 +80,16 @@ class Comment extends StatelessWidget {
                           children: [
                             10.horizontalSpace,
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                cubit.likeUnlikeComment(comment.id!);
+                              },
                               child: Text(
                                 "Like",
                                 style: Styles.boldStyle(
                                   fontSize: 14,
-                                  color: AppColor.black1,
+                                  color: comment.isLiked
+                                      ? AppColor.black6
+                                      : AppColor.black1.withOpacity(0.3),
                                   family: FontFamily.varela,
                                 ),
                               ),

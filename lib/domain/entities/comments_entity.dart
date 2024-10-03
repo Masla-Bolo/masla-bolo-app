@@ -4,6 +4,7 @@ import 'user_entity.dart';
 
 class CommentsEntity {
   int? id;
+  bool isLiked;
   CommentsEntity? parent;
   String content;
   UserEntity? user;
@@ -14,6 +15,7 @@ class CommentsEntity {
   CommentsEntity({
     this.id,
     this.parent,
+    this.isLiked = false,
     required this.content,
     this.user,
     this.replyTo,
@@ -26,6 +28,7 @@ class CommentsEntity {
         content: '',
         user: UserEntity.empty(),
         replyTo: UserEntity.empty(),
+        isLiked: false,
         issueId: 0,
         replies: [],
       );

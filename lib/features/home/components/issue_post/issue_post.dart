@@ -83,8 +83,10 @@ class IssuePost extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const Icon(
-                      Icons.thumb_up_alt_outlined,
+                    Icon(
+                      issue.isLiked
+                          ? Icons.thumb_up
+                          : Icons.thumb_up_alt_outlined,
                       color: AppColor.black1,
                     ),
                     Text(
