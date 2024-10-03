@@ -5,7 +5,7 @@ import 'package:masla_bolo_app/features/home/components/issue_helper.dart';
 class HomeState {
   UserEntity? user;
   List<IssueEntity> issues;
-  bool isLoading;
+  bool isLoaded;
   List<IssueHelper> categories;
   List<IssueHelper> sortBy;
   Map<String, dynamic> queryParams;
@@ -13,7 +13,7 @@ class HomeState {
   HomeState({
     this.user,
     this.search = "",
-    this.isLoading = false,
+    this.isLoaded = false,
     this.queryParams = const {},
     required this.sortBy,
     required this.categories,
@@ -21,7 +21,7 @@ class HomeState {
   });
 
   copyWith({
-    bool? isLoading,
+    bool? isLoaded,
     UserEntity? user,
     String? search,
     Map<String, dynamic>? queryParams,
@@ -35,7 +35,7 @@ class HomeState {
   }) =>
       HomeState(
         search: search ?? this.search,
-        isLoading: isLoading ?? this.isLoading,
+        isLoaded: isLoaded ?? this.isLoaded,
         sortBy: sortBy ?? this.sortBy,
         categories: categories ?? this.categories,
         issues: issues ?? this.issues,
@@ -49,7 +49,7 @@ class HomeState {
         user: UserEntity(email: '', id: 0, username: ''),
         categories: IssueHelper.cloneCategories(),
         issues: [],
-        isLoading: false,
+        isLoaded: false,
         queryParams: {},
       );
 }

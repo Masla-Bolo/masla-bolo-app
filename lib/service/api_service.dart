@@ -14,7 +14,7 @@ class ApiService {
     _initializeApiService();
   }
   static const baseUrl = 'http://192.168.1.106:8000/api';
-  String tokenValue = '';
+  String _tokenValue = '';
   bool listenerInitialized = false;
   Map<int, Future Function()> apiQueue = {};
 
@@ -33,16 +33,16 @@ class ApiService {
             if (body["data"] != null) {
               body["data"]["token"];
               if (body["data"]['token'] != null) {
-                tokenValue = body['data']['token'];
-                localStorageRepository.setValue(tokenKey, tokenValue);
+                _tokenValue = body['data']['token'];
+                localStorageRepository.setValue(tokenKey, _tokenValue);
               }
             }
           }
           return handler.next(response);
         },
         onRequest: (options, handler) {
-          if (tokenValue.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $tokenValue';
+          if (_tokenValue.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $_tokenValue';
           }
           return handler.next(options);
         },

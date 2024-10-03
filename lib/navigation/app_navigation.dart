@@ -17,9 +17,9 @@ class AppNavigation {
     Navigator.pop(navigatorKey.currentState!.context);
   }
 
-  exitApp() {
+  exitApp() async {
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-    getIt.popScope();
+    await getIt.reset();
   }
 
   pushReplacement(String routeName, {arguments}) {
@@ -30,11 +30,12 @@ class AppNavigation {
     );
   }
 
-  popAll(String routeName) {
+  popAll(String routeName) async {
     Navigator.pushNamedAndRemoveUntil(
       context,
       routeName,
       ModalRoute.withName(routeName),
     );
+    await getIt.reset(dispose: false);
   }
 }

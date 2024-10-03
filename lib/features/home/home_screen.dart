@@ -27,6 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     homeCubit = widget.cubit;
+    if (!homeCubit.state.isLoaded) {
+      homeCubit.getIssues();
+    }
   }
 
   @override

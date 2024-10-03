@@ -17,7 +17,7 @@ class HomeBody extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
         bloc: cubit,
         builder: (context, state) {
-          return state.isLoading
+          return !state.isLoaded
               ? const IssuePostShimmer()
               : Expanded(
                   child: ScrollShaderMask(

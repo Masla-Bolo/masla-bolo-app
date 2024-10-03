@@ -51,8 +51,7 @@ class AppService {
     getIt.registerSingleton<SplashNavigator>(SplashNavigator(getIt()));
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));
     getIt.registerSingleton<HomeNavigator>(HomeNavigator(getIt()));
-    getIt
-        .registerSingleton<HomeCubit>(HomeCubit(getIt(), getIt())..getIssues());
+    getIt.registerSingleton<HomeCubit>(HomeCubit(getIt(), getIt()));
     getIt.registerSingleton<ImageHelper>(ImageHelper());
     getIt.registerFactoryParam<IssueDetailCubit, IssueDetailInitialParams,
         dynamic>(
