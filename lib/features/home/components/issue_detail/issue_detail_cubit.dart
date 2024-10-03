@@ -57,7 +57,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     if (image != null) {}
   }
 
-  Future<void> addComment({CommentsEntity? replyTo}) async {
+  Future<void> addComment() async {
     final user = await localStorageRepository.getUser(userKey).then(
           (response) => response.fold(
             (_) {},
@@ -69,35 +69,48 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
       issueId: params.issue.id,
       user: user,
     );
-    onChanged("");
-    if (replyTo != null) {
-      comment.replyTo = replyTo.user;
-      if (replyTo.parent == null) {
-        comment.parent = replyTo;
+    if (state.replyTo != null) {
+      comment.replyTo = state.replyTo?.user;
+      if (state.replyTo?.parent == null) {
+        comment.parent = state.replyTo;
       } else {
-        comment.parent = replyTo.parent;
+        comment.parent = state.replyTo?.parent;
       }
-      final parent = replyTo.parent ?? replyTo;
-      state.comments
-          .where((comment) => comment.id == parent.id)
-          .map((parentComment) => {
-                parentComment.replies.add(comment),
-              });
+      final parent = state.replyTo?.parent ?? state.replyTo;
+      final parentComment = state.comments.firstWhereOrNull((comment) {
+        return comment.id == parent?.id;
+      });
+      parentComment?.replies.insert(0, comment);
     } else {
-      state.comments.add(comment);
+      state.comments.insert(0, comment);
     }
     emit(state.copyWith(comments: state.comments));
+    onChanged("");
     commentRepository.createComment(comment);
   }
 
-  void makeReply(String username) {
+  void makeReply(CommentsEntity replyTo) {
+    state.commentController.removeListener(textControllerListener);
     emit(
       state.copyWith(
         commentController: state.commentController,
+        replyTo: replyTo,
       ),
     );
-    state.commentController.text = "$username ";
+    state.commentController.text = "${replyTo.user?.username} ";
     state.focusNode.requestFocus();
+    state.commentController.addListener(textControllerListener);
+  }
+
+  textControllerListener() {
+    if (state.commentController.text.isEmpty) {
+      emit(
+        state.copyWith(
+          replyTo: null,
+        ),
+      );
+      state.commentController.removeListener(textControllerListener);
+    }
   }
 
   void likeUnlikeComment(int commentId) {
@@ -123,7 +136,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
 
   void likeUnlikeIssue() {
     params.issue.isLiked = !params.issue.isLiked;
-    // issueRepository.likeUnlikeIssue(params.issue.id);
+    issueRepository.likeUnlikeIssue(params.issue.id);
   }
 
   void onChanged(String value) {
