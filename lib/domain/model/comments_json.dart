@@ -6,13 +6,15 @@ import '../entities/comments_entity.dart';
 
 class CommentsJson {
   int id;
+  CommentsEntity? parentId;
   String content;
   UserEntity user;
-  int? replyTo;
+  UserEntity? replyTo;
   int issueId;
   List<CommentsEntity> replies;
 
   CommentsJson({
+    this.parentId,
     required this.id,
     required this.content,
     required this.user,
@@ -24,6 +26,7 @@ class CommentsJson {
   factory CommentsJson.copyWith(CommentsEntity entity) => CommentsJson(
         id: entity.id ?? 0,
         content: entity.content,
+        parentId: entity.parent,
         user: entity.user ?? UserEntity.empty(),
         replyTo: entity.replyTo,
         issueId: entity.issueId,
@@ -32,9 +35,10 @@ class CommentsJson {
 
   factory CommentsJson.fromJson(Map<String, dynamic> json) => CommentsJson(
         id: json['id'],
+        // parentId: CommentsJson.fromJson(json["parent"]).toDomain(),
         content: json['content'],
         user: UserJson.fromData(json['user']).toDomain(),
-        replyTo: json['replyTo'],
+        replyTo: json['reply_to'],
         issueId: json['issue'],
         replies: parseList(json["replies"], CommentsJson.fromJson)
             .map((json) => json.toDomain())
@@ -45,6 +49,7 @@ class CommentsJson {
         id: id,
         content: content,
         user: user,
+        parent: parentId,
         replyTo: replyTo,
         issueId: issueId,
         replies: replies,
@@ -56,6 +61,7 @@ class CommentsJson {
       'content': content,
       'user': user.id,
       'replyTo': replyTo,
+      "paren_id": parentId,
       'issueId': issueId,
     };
   }

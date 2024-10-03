@@ -26,13 +26,18 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   void fetchIssueComments(int id) {
     emit(state.copyWith(commentLoading: true));
     commentRepository.getComments(params: {
-      'issue_id': id,
+      'issueId': id,
     }).then(
       (comments) => {
+        if (comments.isNotEmpty)
+          {
+            emit(state.copyWith(
+              comments: comments,
+            )),
+          },
         emit(state.copyWith(
-          comments: comments,
+          commentLoading: false,
         )),
-        emit(state.copyWith(commentLoading: false))
       },
     );
   }
@@ -42,17 +47,28 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     if (image != null) {}
   }
 
-  void addComment(String val, {int? replyTo}) {
+  void addComment(String val, {CommentsEntity? replyTo}) {
     final comment = CommentsEntity(
       content: val,
       issueId: params.issue.id,
     );
     if (replyTo != null) {
-      comment.replyTo = replyTo;
+      comment.replyTo = replyTo.user;
+      if (replyTo.parent == null) {
+        comment.parent = replyTo;
+      } else {
+        comment.parent = replyTo.parent;
+      }
+      final parent = replyTo.parent ?? replyTo;
+      state.comments
+          .where((comment) => comment.id == parent.id)
+          .map((parentComment) => {
+                parentComment.replies.add(comment),
+              });
+    } else {
+      state.comments.add(comment);
     }
-    commentRepository.createComment(comment).then((comment) => {
-          state.comments.add(comment),
-          emit(state.copyWith(comments: state.comments))
-        });
+    emit(state.copyWith(comments: state.comments));
+    commentRepository.createComment(comment);
   }
 }

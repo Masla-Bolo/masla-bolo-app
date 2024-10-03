@@ -4,6 +4,7 @@ import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 class IssueDetailState {
   List<CommentsEntity> comments;
   final bool commentLoading;
+  final focusNode = FocusNode();
   IssueDetailState({
     required this.comments,
     this.commentLoading = false,

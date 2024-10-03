@@ -20,7 +20,6 @@ class IssueDetail extends StatefulWidget {
 
 class _IssueDetailState extends State<IssueDetail> {
   late IssueDetailCubit cubit;
-  final focusNode = FocusNode();
   final controller = TextEditingController();
   final scrollController = ScrollController();
   @override
@@ -30,7 +29,7 @@ class _IssueDetailState extends State<IssueDetail> {
     cubit.fetchIssueComments(cubit.params.issue.id);
     if (cubit.params.showComment) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        focusNode.requestFocus();
+        cubit.state.focusNode.requestFocus();
         if (scrollController.hasClients) {
           scrollController.animateTo(
             scrollController.position.maxScrollExtent,
@@ -107,7 +106,7 @@ class _IssueDetailState extends State<IssueDetail> {
                                 }).toList(),
                               ),
                               IssueDetailDiscussion(
-                                focusNode: focusNode,
+                                focusNode: state.focusNode,
                                 cubit: cubit,
                               )
                             ],
@@ -123,7 +122,7 @@ class _IssueDetailState extends State<IssueDetail> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(12, 3, 12, 8),
                         child: InputField(
-                          focusNode: focusNode,
+                          focusNode: state.focusNode,
                           disableOnTapOutside: true,
                           textEditingController: controller,
                           onChanged: (val) {

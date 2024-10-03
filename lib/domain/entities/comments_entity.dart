@@ -4,14 +4,16 @@ import 'user_entity.dart';
 
 class CommentsEntity {
   int? id;
+  CommentsEntity? parent;
   String content;
   UserEntity? user;
-  int? replyTo;
+  UserEntity? replyTo;
   int issueId;
   List<CommentsEntity> replies;
 
   CommentsEntity({
     this.id,
+    this.parent,
     required this.content,
     this.user,
     this.replyTo,
@@ -23,7 +25,7 @@ class CommentsEntity {
         id: 0,
         content: '',
         user: UserEntity.empty(),
-        replyTo: 0,
+        replyTo: UserEntity.empty(),
         issueId: 0,
         replies: [],
       );
