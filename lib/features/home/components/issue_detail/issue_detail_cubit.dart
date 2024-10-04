@@ -4,11 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
 import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
+import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
-import 'package:masla_bolo_app/helpers/strings.dart';
 
 import '../../../../domain/repositories/issue_repository.dart';
+import '../../../../service/app_service.dart';
 import 'issue_detail_navigator.dart';
 import 'issue_detail_state.dart';
 
@@ -59,12 +60,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   }
 
   Future<void> addComment() async {
-    final user = await localStorageRepository.getUser(userKey).then(
-          (response) => response.fold(
-            (_) {},
-            (user) => user,
-          ),
-        );
+    final user = await getIt<UserStore>().getUser();
     final comment = CommentsEntity(
       content: state.commentController.text,
       issueId: params.issue.id,

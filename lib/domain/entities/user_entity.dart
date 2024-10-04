@@ -18,7 +18,7 @@ class UserEntity {
   factory UserEntity.empty() => UserEntity(
         email: '',
         username: '',
-        id: 0,
+        id: null,
         password: "",
       );
 

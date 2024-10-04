@@ -14,4 +14,18 @@ class UserStore extends Cubit<UserEntity> {
     _user = user;
     emit(user);
   }
+
+  Future<UserEntity?> getUser() async {
+    if (appUser.id != null) {
+      return appUser;
+    }
+    return await localStorageRepository.getUser(userKey).then(
+          (result) => result.fold(
+            (left) {
+              return null;
+            },
+            (user) => user,
+          ),
+        );
+  }
 }
