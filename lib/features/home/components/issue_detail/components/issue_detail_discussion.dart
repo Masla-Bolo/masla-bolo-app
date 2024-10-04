@@ -34,15 +34,15 @@ class IssueDetailDiscussion extends StatelessWidget {
                           cubit.likeUnlikeIssue();
                         },
                         icon: Icon(
-                          cubit.params.issue.isLiked
+                          state.currentIssue.isLiked
                               ? Icons.thumb_up
                               : Icons.thumb_up_alt_outlined,
                           color: AppColor.black1,
                         ),
                         label: Text(
-                          cubit.params.issue.likesCount < 1
+                          state.currentIssue.likesCount < 1
                               ? 'Likes'
-                              : "${cubit.params.issue.likesCount} Likes",
+                              : "${state.currentIssue.likesCount} Likes",
                           style: Styles.boldStyle(
                             fontSize: 12,
                             color: AppColor.black1,
@@ -74,9 +74,9 @@ class IssueDetailDiscussion extends StatelessWidget {
                           color: AppColor.black1,
                         ),
                         label: Text(
-                          cubit.params.issue.commentsCount < 1
+                          state.currentIssue.commentsCount < 1
                               ? 'comments'
-                              : "${cubit.params.issue.commentsCount} comments",
+                              : "${state.currentIssue.commentsCount} comments",
                           style: Styles.boldStyle(
                             fontSize: 14,
                             color: AppColor.black1,

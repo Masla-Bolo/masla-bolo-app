@@ -33,10 +33,10 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     navigator.pop();
   }
 
-  void fetchIssueComments(int id) {
+  void fetchIssueComments() {
     emit(state.copyWith(commentLoading: true));
     commentRepository.getComments(params: {
-      'issueId': id,
+      'issueId': params.issue.id,
     }).then(
       (comments) => {
         if (comments.isNotEmpty)
@@ -47,6 +47,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
           },
         emit(state.copyWith(
           commentLoading: false,
+          currentIssue: params.issue,
         )),
       },
     );
@@ -135,8 +136,8 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   }
 
   void likeUnlikeIssue() {
-    params.issue.isLiked = !params.issue.isLiked;
-    issueRepository.likeUnlikeIssue(params.issue.id);
+    state.currentIssue.isLiked = !state.currentIssue.isLiked;
+    issueRepository.likeUnlikeIssue(state.currentIssue.id);
   }
 
   void onChanged(String value) {

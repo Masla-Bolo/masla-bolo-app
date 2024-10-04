@@ -33,6 +33,5 @@ class UtilityService {
         initializeListener();
       }
     }
-    print("QUEUE: ${apiQueue.keys.length}");
   }
 }

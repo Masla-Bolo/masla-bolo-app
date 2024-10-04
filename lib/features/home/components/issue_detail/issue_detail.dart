@@ -25,7 +25,7 @@ class _IssueDetailState extends State<IssueDetail> {
   void initState() {
     super.initState();
     cubit = widget.cubit;
-    cubit.fetchIssueComments(cubit.params.issue.id);
+    cubit.fetchIssueComments();
     if (cubit.params.showComment) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         cubit.state.focusNode.requestFocus();
@@ -73,7 +73,7 @@ class _IssueDetailState extends State<IssueDetail> {
                             children: [
                               10.verticalSpace,
                               Text(
-                                cubit.params.issue.title.toUpperCase(),
+                                state.currentIssue.title.toUpperCase(),
                                 style: Styles.boldStyle(
                                   fontSize: 20,
                                   color: AppColor.black1,
@@ -82,7 +82,7 @@ class _IssueDetailState extends State<IssueDetail> {
                               ),
                               5.verticalSpace,
                               Text(
-                                cubit.params.issue.description,
+                                state.currentIssue.description,
                                 style: Styles.mediumStyle(
                                   fontSize: 18,
                                   color: AppColor.grey,
@@ -93,7 +93,7 @@ class _IssueDetailState extends State<IssueDetail> {
                               Wrap(
                                 spacing: 10.w,
                                 direction: Axis.horizontal,
-                                children: cubit.params.issue.categories
+                                children: state.currentIssue.categories
                                     .map((category) {
                                   return Chip(
                                       label: Text(category,
