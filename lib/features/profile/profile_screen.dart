@@ -25,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     super.initState();
     cubit = widget.cubit;
     tabController = TabController(length: 4, vsync: this);
+    cubit.getUser();
     if (!cubit.state.isLoaded) {
       cubit.getMyIssues();
     }
@@ -62,14 +63,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   ),
                                 ),
                                 20.verticalSpace,
-                                Text("aou49i",
+                                Text(state.user.username ?? "",
                                     style: Styles.boldStyle(
                                       fontSize: 15,
                                       color: AppColor.black1,
                                       family: FontFamily.dmSans,
                                     )),
                                 Text(
-                                  "useremail@gmail.com",
+                                  state.user.email ?? "",
                                   style: Styles.boldStyle(
                                     fontSize: 15,
                                     color: AppColor.black1,

@@ -42,6 +42,7 @@ class AppService {
   static Future<void> initialize() async {
     getIt.registerSingleton<LocalStorageRepository>(
         PrimaryLocalStorageRepository());
+    getIt.registerSingleton<UserStore>(UserStore(getIt()));
     getIt.registerSingleton<ApiService>(ApiService(getIt()));
     getIt.registerLazySingleton<UtilityService>(() => UtilityService());
     getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
@@ -81,7 +82,6 @@ class AppService {
     getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));
     getIt.registerSingleton<ProfileCubit>(ProfileCubit(getIt(), getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
-    getIt.registerSingleton<UserStore>(UserStore(getIt()));
     getIt.registerSingleton<AuthRepository>(ApiAuthRepository(
       getIt(),
       getIt(),
