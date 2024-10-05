@@ -3,14 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/features/profile/components/settings_cubit.dart';
-import 'package:masla_bolo_app/features/profile/components/settings_state.dart';
-import 'package:masla_bolo_app/features/profile/components/theme_switch.dart';
+import 'package:masla_bolo_app/features/profile/components/settings/settings_cubit.dart';
+import 'package:masla_bolo_app/features/profile/components/settings/settings_state.dart';
+import 'package:masla_bolo_app/features/profile/components/settings/theme_switch.dart';
 
-import '../../../helpers/helpers.dart';
-import '../../../helpers/styles/app_colors.dart';
-import '../../../helpers/styles/styles.dart';
-import '../../../helpers/widgets/header.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../../helpers/styles/app_colors.dart';
+import '../../../../helpers/styles/styles.dart';
+import '../../../../helpers/widgets/header.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key, required this.cubit});

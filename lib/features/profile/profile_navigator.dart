@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/features/profile/components/settings_navigator.dart';
+import 'package:masla_bolo_app/features/profile/components/settings/settings_navigator.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/navigation/route_name.dart';
 

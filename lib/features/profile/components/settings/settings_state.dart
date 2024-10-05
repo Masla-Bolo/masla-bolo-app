@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/features/profile/components/app_settings.dart';
+import 'package:masla_bolo_app/features/profile/components/settings/app_settings.dart';
 
 class SettingsState {
   List<AppSettings> appSettings;
