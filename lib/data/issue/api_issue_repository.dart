@@ -83,7 +83,7 @@ class ApiIssueRepository implements IssueRepository {
   ) async {
     utilityService.addOrRemoveFromQueue(
       issueId,
-      () => networkRepository.get(url: '/issues/$issueId/like/'),
+      () => networkRepository.post(url: '/issues/$issueId/like/'),
     );
   }
 }

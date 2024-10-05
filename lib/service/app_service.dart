@@ -7,6 +7,7 @@ import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_cubit.dart';
 import 'package:masla_bolo_app/features/auth/auth_cubit.dart';
 import 'package:masla_bolo_app/features/auth/auth_navigator.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
@@ -75,7 +76,8 @@ class AppService {
         .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));
     getIt
         .registerSingleton<CreateIssueNavigator>(CreateIssueNavigator(getIt()));
-    getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
+    getIt.registerSingleton<CreateIssueCubit>(
+        CreateIssueCubit(getIt(), getIt(), getIt()));
     getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));
     getIt.registerSingleton<ProfileCubit>(ProfileCubit(getIt(), getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));

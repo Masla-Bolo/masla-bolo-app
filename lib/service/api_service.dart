@@ -29,7 +29,6 @@ class ApiService {
           var body = response.data;
           if (body != null) {
             if (body["data"] != null) {
-              body["data"]["token"];
               if (body["data"]['token'] != null) {
                 _tokenValue = body['data']['token'];
                 localStorageRepository.setValue(tokenKey, _tokenValue);

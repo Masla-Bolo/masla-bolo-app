@@ -6,7 +6,7 @@ import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
 import '../../../helpers/widgets/input_field.dart';
 import 'issue/issue_cubit.dart';
-import '../home_state.dart';
+import 'issue/issue_state.dart';
 
 class HomeSearch extends StatelessWidget {
   final IssueCubit cubit;

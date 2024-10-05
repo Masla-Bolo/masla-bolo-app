@@ -5,6 +5,7 @@ import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
 import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
 
@@ -132,8 +133,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   }
 
   void likeUnlikeIssue() {
-    state.currentIssue.isLiked = !state.currentIssue.isLiked;
-    // issueRepository.likeUnlikeIssue(state.currentIssue.id);
+    getIt<IssueCubit>().likeUnlikeIssue(state.currentIssue);
     emit(state.copyWith(currentIssue: state.currentIssue));
   }
 
