@@ -1,15 +1,15 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
-import 'package:masla_bolo_app/features/home/components/issue_helper.dart';
-import 'package:masla_bolo_app/features/home/home_navigator.dart';
-import 'package:masla_bolo_app/features/home/home_state.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_navigator.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_initial_params.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
 
-class HomeCubit extends Cubit<HomeState> {
-  final HomeNavigator navigation;
+class IssueCubit extends Cubit<IssueState> {
+  final IssueNavigator navigation;
   final IssueRepository issueRepository;
-  HomeCubit(this.navigation, this.issueRepository) : super(HomeState.empty());
+  IssueCubit(this.navigation, this.issueRepository) : super(IssueState.empty());
 
   getIssues() {
     emit(state.copyWith(isLoaded: false));
@@ -21,6 +21,12 @@ class HomeCubit extends Cubit<HomeState> {
             ),
           ),
         );
+  }
+
+  void likeUnlikeIssue(IssueEntity issue) {
+    issue.isLiked = !issue.isLiked;
+    emit(state.copyWith(issues: state.issues));
+    issueRepository.likeUnlikeIssue(issue.id);
   }
 
   debounce(String value) {

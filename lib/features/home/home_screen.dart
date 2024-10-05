@@ -3,8 +3,8 @@ import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/home_body.dart';
 import 'package:masla_bolo_app/features/home/components/home_filter_drawer.dart';
 import 'package:masla_bolo_app/features/home/components/home_search.dart';
-import 'package:masla_bolo_app/features/home/home_cubit.dart';
-import 'package:masla_bolo_app/features/home/home_state.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
@@ -14,14 +14,14 @@ import '../../service/app_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.cubit});
-  final HomeCubit cubit;
+  final IssueCubit cubit;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late HomeCubit homeCubit;
+  late IssueCubit homeCubit;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         getIt<BottomBarCubit>().toggleVisibility();
       },
       body: SafeArea(
-        child: BlocBuilder<HomeCubit, HomeState>(
+        child: BlocBuilder<IssueCubit, IssueState>(
             bloc: homeCubit,
             builder: (context, state) {
               return Column(

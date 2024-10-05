@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/helpers/widgets/shimmer_effect.dart';
 
-import '../../../../helpers/helpers.dart';
-import '../../../../helpers/styles/app_colors.dart';
-import '../../../../helpers/widgets/scroll_shader_mask.dart';
+import '../../../../../helpers/helpers.dart';
+import '../../../../../helpers/styles/app_colors.dart';
+import '../../../../../helpers/widgets/scroll_shader_mask.dart';
 
 class IssuePostShimmer extends StatelessWidget {
   const IssuePostShimmer({super.key});

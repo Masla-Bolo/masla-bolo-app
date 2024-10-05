@@ -5,11 +5,11 @@ import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
 import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
-import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_initial_params.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
 
-import '../../../../domain/repositories/issue_repository.dart';
-import '../../../../service/app_service.dart';
+import '../../../../../domain/repositories/issue_repository.dart';
+import '../../../../../service/app_service.dart';
 import 'issue_detail_navigator.dart';
 import 'issue_detail_state.dart';
 
@@ -133,7 +133,8 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
 
   void likeUnlikeIssue() {
     state.currentIssue.isLiked = !state.currentIssue.isLiked;
-    issueRepository.likeUnlikeIssue(state.currentIssue.id);
+    // issueRepository.likeUnlikeIssue(state.currentIssue.id);
+    emit(state.copyWith(currentIssue: state.currentIssue));
   }
 
   void onChanged(String value) {

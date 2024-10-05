@@ -5,11 +5,11 @@ import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
 import '../../../helpers/widgets/input_field.dart';
-import '../home_cubit.dart';
+import 'issue/issue_cubit.dart';
 import '../home_state.dart';
 
 class HomeSearch extends StatelessWidget {
-  final HomeCubit cubit;
+  final IssueCubit cubit;
 
   HomeSearch({
     super.key,
@@ -21,7 +21,7 @@ class HomeSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<IssueCubit, IssueState>(
         bloc: cubit,
         builder: (context, state) {
           return Padding(

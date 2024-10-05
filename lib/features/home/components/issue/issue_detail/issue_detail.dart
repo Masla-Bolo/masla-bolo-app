@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/features/home/components/issue_detail/components/issue_detail_body.dart';
-import 'package:masla_bolo_app/features/home/components/issue_detail/components/issue_detail_footer.dart';
-import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_cubit.dart';
-import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_state.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/components/issue_detail_body.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/components/issue_detail_footer.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_cubit.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_state.dart';
 import 'package:masla_bolo_app/helpers/widgets/header.dart';
 
 class IssueDetail extends StatefulWidget {

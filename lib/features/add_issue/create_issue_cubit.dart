@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
-import 'package:masla_bolo_app/features/home/components/issue_helper.dart';
-import 'package:masla_bolo_app/features/issue/issue_navigator.dart';
-import 'package:masla_bolo_app/features/issue/issue_state.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_navigator.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
 
-class IssueCubit extends Cubit<IssueState> {
-  final IssueNavigator navigator;
+class CreateIssueCubit extends Cubit<CreateIssueState> {
+  final CreateIssueNavigator navigator;
   final ImageHelper imageHelper;
   final IssueRepository issueRepository;
-  IssueCubit(this.navigator, this.imageHelper, this.issueRepository)
-      : super(IssueState.empty());
+  CreateIssueCubit(this.navigator, this.imageHelper, this.issueRepository)
+      : super(CreateIssueState.empty());
   void goBack() {
     navigator.navigation.pop();
   }

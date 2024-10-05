@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
-import 'package:masla_bolo_app/features/home/components/issue_helper.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
 
-class IssueState {
+class CreateIssueState {
   final GlobalKey<FormState> key;
   final IssueEntity issue;
   final List<IssueHelper> categories;
-  IssueState({
+  CreateIssueState({
     required this.key,
     required this.issue,
     required this.categories,
@@ -18,13 +18,13 @@ class IssueState {
     bool? commentLoading,
     List<IssueHelper>? categories,
   }) =>
-      IssueState(
+      CreateIssueState(
         key: key ?? this.key,
         issue: issue ?? this.issue,
         categories: categories ?? this.categories,
       );
 
-  factory IssueState.empty() => IssueState(
+  factory CreateIssueState.empty() => CreateIssueState(
         key: GlobalKey<FormState>(),
         issue: IssueEntity.empty(),
         categories: IssueHelper.cloneCategories(),

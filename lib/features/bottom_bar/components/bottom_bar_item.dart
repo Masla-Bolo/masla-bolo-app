@@ -1,5 +1,5 @@
 import 'package:masla_bolo_app/features/home/home_screen.dart';
-import 'package:masla_bolo_app/features/issue/create_issue_screen.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_screen.dart';
 import 'package:masla_bolo_app/features/notification/notification_page.dart';
 import 'package:masla_bolo_app/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';

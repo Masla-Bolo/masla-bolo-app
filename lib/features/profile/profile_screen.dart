@@ -193,12 +193,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ]),
                   ),
                   Expanded(
-                    child: TabBarView(controller: tabController, children: [
-                      ProfileTabView(issues: state.issues + state.issues),
-                      ProfileTabView(issues: state.issues + state.issues),
-                      ProfileTabView(issues: state.issues + state.issues),
-                      ProfileTabView(issues: state.issues + state.issues),
-                    ]),
+                    child: TabBarView(
+                      controller: tabController,
+                      children: [
+                        ProfileTabView(issues: state.issues + state.issues),
+                        ProfileTabView(issues: state.issues + state.issues),
+                        ProfileTabView(issues: state.issues + state.issues),
+                        ProfileTabView(issues: state.issues + state.issues),
+                      ],
+                    ),
                   ),
                 ],
               ),

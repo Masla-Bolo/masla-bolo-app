@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_cubit.dart';
 
 import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/app_images.dart';
@@ -8,7 +8,7 @@ import '../../../helpers/styles/styles.dart';
 
 class IssueHeader extends StatelessWidget {
   const IssueHeader({super.key, required this.cubit});
-  final IssueCubit cubit;
+  final CreateIssueCubit cubit;
   @override
   Widget build(BuildContext context) {
     return Padding(

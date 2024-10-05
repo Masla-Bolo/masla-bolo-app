@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
-import 'package:masla_bolo_app/features/home/components/issue_detail/issue_detail_state.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_state.dart';
 
-import '../../../../../../helpers/styles/app_colors.dart';
-import '../../../../../../helpers/styles/styles.dart';
+import '../../../../../../../helpers/styles/app_colors.dart';
+import '../../../../../../../helpers/styles/styles.dart';
 import '../../issue_detail_cubit.dart';
 import 'issue_comments.dart';
 

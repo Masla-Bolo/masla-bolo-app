@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
-import 'package:masla_bolo_app/features/issue/issue_state.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_cubit.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
 
 import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
-import 'issue_field.dart';
+import 'create_issue_field.dart';
 
 class IssueForm extends StatelessWidget {
   const IssueForm({super.key, required this.cubit});
-  final IssueCubit cubit;
+  final CreateIssueCubit cubit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<IssueCubit, IssueState>(
+    return BlocBuilder<CreateIssueCubit, CreateIssueState>(
         bloc: cubit,
         builder: (context, state) {
           return Padding(

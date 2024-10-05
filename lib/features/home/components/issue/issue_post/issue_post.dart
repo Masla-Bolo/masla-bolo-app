@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/features/home/home_cubit.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/widgets/cached_image.dart';
 
-import '../../../../domain/entities/issue_entity.dart';
-import '../../../../helpers/styles/app_colors.dart';
-import '../../../../helpers/styles/styles.dart';
+import '../../../../../domain/entities/issue_entity.dart';
+import '../../../../../helpers/styles/app_colors.dart';
+import '../../../../../helpers/styles/styles.dart';
 
 class IssuePost extends StatelessWidget {
   const IssuePost({
@@ -16,7 +16,7 @@ class IssuePost extends StatelessWidget {
     required this.issue,
   });
   final int index;
-  final HomeCubit cubit;
+  final IssueCubit cubit;
   final IssueEntity issue;
   @override
   Widget build(BuildContext context) {

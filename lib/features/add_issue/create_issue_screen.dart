@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_form.dart';
-import 'package:masla_bolo_app/features/issue/components/issue_header.dart';
-import 'package:masla_bolo_app/features/issue/issue_cubit.dart';
-import 'package:masla_bolo_app/features/issue/issue_state.dart';
+import 'package:masla_bolo_app/features/add_issue/components/create_issue_form.dart';
+import 'package:masla_bolo_app/features/add_issue/components/create_issue_header.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_cubit.dart';
+import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 
 import '../../helpers/styles/app_colors.dart';
@@ -14,11 +14,11 @@ import '../../helpers/styles/styles.dart';
 
 class CreateIssueScreen extends StatelessWidget {
   const CreateIssueScreen({super.key, required this.cubit});
-  final IssueCubit cubit;
+  final CreateIssueCubit cubit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<IssueCubit, IssueState>(
+    return BlocBuilder<CreateIssueCubit, CreateIssueState>(
         bloc: cubit,
         builder: (context, state) {
           return Scaffold(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 
-import '../../../../../helpers/widgets/cached_image.dart';
+import '../../../../../../helpers/widgets/cached_image.dart';
 
 class IssueDetailSlider extends StatelessWidget {
   const IssueDetailSlider(

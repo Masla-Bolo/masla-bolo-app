@@ -6,16 +6,16 @@ import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/header.dart';
-import '../home_cubit.dart';
-import '../home_state.dart';
+import 'issue/issue_cubit.dart';
+import 'issue/issue_state.dart';
 
 class HomeFilterDrawer extends StatelessWidget {
   const HomeFilterDrawer({super.key, required this.cubit});
-  final HomeCubit cubit;
+  final IssueCubit cubit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<IssueCubit, IssueState>(
         bloc: cubit,
         builder: (context, state) {
           return Scaffold(
