@@ -25,6 +25,11 @@ class IssueCubit extends Cubit<IssueState> {
 
   void likeUnlikeIssue(IssueEntity issue) {
     issue.isLiked = !issue.isLiked;
+    if (issue.isLiked) {
+      issue.likesCount += 1;
+    } else {
+      issue.likesCount -= 1;
+    }
     emit(state.copyWith(issues: state.issues));
     issueRepository.likeUnlikeIssue(issue.id);
   }

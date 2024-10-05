@@ -11,10 +11,16 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this.navigation, this.issueRepository)
       : super(ProfileState.empty());
 
-  getUser() async {
+  getUser() {
     if (state.user.id == null) {
-      final user = await getIt<UserStore>().getUser();
-      emit(state.copyWith(user: user));
+      getIt<UserStore>().getUser().then((user) => {
+            if (user == null)
+              {
+                // fetch profile api here
+              }
+            else
+              {emit(state.copyWith(user: user))}
+          });
     }
   }
 

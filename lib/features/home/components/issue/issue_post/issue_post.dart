@@ -83,20 +83,30 @@ class IssuePost extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Icon(
-                      issue.isLiked
-                          ? Icons.thumb_up
-                          : Icons.thumb_up_alt_outlined,
-                      color: AppColor.black1,
+                    GestureDetector(
+                      onTap: () {
+                        cubit.likeUnlikeIssue(issue);
+                      },
+                      child: Icon(
+                        issue.isLiked
+                            ? Icons.thumb_up
+                            : Icons.thumb_up_alt_outlined,
+                        color: AppColor.black1,
+                      ),
                     ),
-                    Text(
-                      issue.likesCount < 1
-                          ? 'Likes'
-                          : "${issue.likesCount} Likes",
-                      style: Styles.mediumStyle(
-                          fontSize: 12,
-                          color: AppColor.black1,
-                          family: FontFamily.varela),
+                    GestureDetector(
+                      onTap: () {
+                        cubit.likeUnlikeIssue(issue);
+                      },
+                      child: Text(
+                        issue.likesCount < 1
+                            ? 'Likes'
+                            : "${issue.likesCount} Likes",
+                        style: Styles.mediumStyle(
+                            fontSize: 12,
+                            color: AppColor.black1,
+                            family: FontFamily.varela),
+                      ),
                     ),
                     5.horizontalSpace,
                     const Text("•"),
