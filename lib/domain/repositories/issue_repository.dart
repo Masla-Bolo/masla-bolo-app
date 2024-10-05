@@ -4,6 +4,9 @@ abstract class IssueRepository {
   Future<List<IssueEntity>> getIssues({
     Map<String, dynamic>? queryParams,
   });
+  Future<List<IssueEntity>> myIssues({
+    Map<String, dynamic>? queryParams,
+  });
   Future<IssueEntity> getIssueyId({
     required int issueId,
     Map<String, dynamic>? queryParams,

@@ -39,9 +39,14 @@ class ApiService {
           return handler.next(response);
         },
         onRequest: (options, handler) {
-          if (_tokenValue.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $_tokenValue';
-          }
+          localStorageRepository.getValue(tokenKey).then(
+                (result) => result.fold(
+                  (error) {},
+                  (token) {
+                    options.headers['Authorization'] = 'Bearer $token';
+                  },
+                ),
+              );
           return handler.next(options);
         },
         onError: (error, handler) {

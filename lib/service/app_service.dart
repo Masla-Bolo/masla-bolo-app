@@ -77,7 +77,7 @@ class AppService {
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
     getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt(), getIt()));
     getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));
-    getIt.registerSingleton<ProfileCubit>(ProfileCubit(getIt()));
+    getIt.registerSingleton<ProfileCubit>(ProfileCubit(getIt(), getIt()));
     getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
     getIt.registerSingleton<UserStore>(UserStore(getIt()));
     getIt.registerSingleton<AuthRepository>(ApiAuthRepository(
