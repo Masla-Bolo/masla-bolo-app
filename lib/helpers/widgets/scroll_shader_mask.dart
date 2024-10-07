@@ -20,7 +20,7 @@ class _ScrollShaderMaskState extends State<ScrollShaderMask> {
     super.initState();
     if (widget.scrollController != null && widget.callback != null) {
       widget.scrollController!.addListener(() {
-        if (widget.scrollController?.hasClients ?? false) {
+        if (widget.scrollController!.hasClients) {
           if (widget.scrollController!.position.pixels >=
               widget.scrollController!.position.maxScrollExtent - 100) {
             widget.callback!();

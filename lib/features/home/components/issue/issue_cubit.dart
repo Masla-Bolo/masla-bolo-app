@@ -11,21 +11,24 @@ class IssueCubit extends Cubit<IssueState> {
   final IssueRepository issueRepository;
   IssueCubit(this.navigation, this.issueRepository) : super(IssueState.empty());
 
-  getIssues({String url = '/issues/'}) {
-    emit(state.copyWith(isScroll: false));
+  getIssues({String url = '/issues/', bool clearAll = false}) {
+    emit(state.copyWith(isScrolled: false));
     issueRepository.getIssues(url: url, queryParams: state.queryParams).then(
       (pagination) {
-        if (state.issuesPagination.results.isEmpty) {
-          state.issuesPagination.results = pagination.results;
+        var results = state.issuesPagination.results;
+        if (clearAll) {
+          results = [];
+        }
+        if (results.isNotEmpty) {
+          results.addAll(pagination.results);
         } else {
-          state.issuesPagination.results.addAll(pagination.results);
+          results = pagination.results;
         }
         emit(
           state.copyWith(
-            issuesPagination:
-                pagination.copyWith(results: state.issuesPagination.results),
+            issuesPagination: pagination.copyWith(results: results),
             isLoaded: true,
-            isScroll: true,
+            isScrolled: true,
           ),
         );
       },
@@ -34,11 +37,11 @@ class IssueCubit extends Cubit<IssueState> {
 
   refreshIssues() {
     emit(state.copyWith(isLoaded: false));
-    getIssues();
+    getIssues(clearAll: true);
   }
 
   scrollAndCall() {
-    if (state.issuesPagination.next != null) {
+    if (state.issuesPagination.next != null && state.isScrolled) {
       getIssues(url: state.issuesPagination.next!);
     }
   }

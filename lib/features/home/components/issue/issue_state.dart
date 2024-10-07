@@ -6,7 +6,7 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart'
 class IssueState {
   ApiPagination<IssueEntity> issuesPagination;
   bool isLoaded;
-  bool isScroll;
+  bool isScrolled;
   List<IssueHelper> categories;
   List<IssueHelper> sortBy;
   Map<String, dynamic> queryParams;
@@ -14,7 +14,7 @@ class IssueState {
   IssueState({
     this.search = "",
     this.isLoaded = false,
-    this.isScroll = false,
+    this.isScrolled = false,
     this.queryParams = const {},
     required this.sortBy,
     required this.categories,
@@ -23,7 +23,7 @@ class IssueState {
 
   copyWith({
     bool? isLoaded,
-    bool? isScroll,
+    bool? isScrolled,
     UserEntity? user,
     String? search,
     Map<String, dynamic>? queryParams,
@@ -36,7 +36,7 @@ class IssueState {
     int? serverIndex,
   }) =>
       IssueState(
-        isScroll: isScroll ?? this.isScroll,
+        isScrolled: isScrolled ?? this.isScrolled,
         search: search ?? this.search,
         isLoaded: isLoaded ?? this.isLoaded,
         sortBy: sortBy ?? this.sortBy,
