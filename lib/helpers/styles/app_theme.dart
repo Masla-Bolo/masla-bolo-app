@@ -7,28 +7,28 @@ class AppTheme {
     primary: AppColor.white,
     onPrimary: AppColor.black1,
     secondary: AppColor.black1,
-    onSecondary: AppColor.black1,
-    error: AppColor.black1,
-    onError: AppColor.black1,
-    surface: AppColor.black1,
+    onSecondary: AppColor.white,
+    error: AppColor.red,
+    onError: AppColor.white,
+    surface: AppColor.white,
     onSurface: AppColor.black1,
   );
 
   static const darkColortheme = ColorScheme(
     brightness: Brightness.dark,
     primary: AppColor.black1,
-    onPrimary: AppColor.black1,
+    onPrimary: AppColor.white,
     secondary: AppColor.white,
-    onSecondary: AppColor.white,
+    onSecondary: AppColor.black1,
     error: AppColor.red,
-    onError: AppColor.red,
-    surface: AppColor.white,
+    onError: AppColor.white,
+    surface: AppColor.black2,
     onSurface: AppColor.lightGrey,
   );
 
   static ThemeData theme({bool dark = false}) {
     return ThemeData(
-      scaffoldBackgroundColor: dark ? AppColor.black6 : AppColor.white,
+      scaffoldBackgroundColor: dark ? AppColor.black1 : AppColor.white,
       useMaterial3: true,
       colorScheme: dark ? darkColortheme : lightColortheme,
       fontFamily: 'SFPro',

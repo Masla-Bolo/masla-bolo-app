@@ -33,76 +33,98 @@ class _GetStartedRoleState extends State<GetStartedRole> {
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: Column(
-              children: [
-                15.verticalSpace,
-                GetStartedHeader(
-                  hideNext: true,
-                  onBackTap: () {
-                    cubit.goToPreviousPage();
-                  },
-                ),
-                const Spacer(),
-                Text(
-                  "SELECT YOUR ROLE",
-                  style: Styles.boldStyle(
-                    fontSize: 32.sp,
-                    family: FontFamily.dmSans,
-                    color: AppColor.black1,
-                  ),
-                ),
-                50.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
                   children: [
+                    15.verticalSpace,
+                    GetStartedHeader(
+                      hideNext: true,
+                      onBackTap: () {
+                        cubit.goToPreviousPage();
+                      },
+                    ),
+                    30.verticalSpace,
+                    Center(
+                      child: Text(
+                        "Choose your role below",
+                        style: Styles.boldStyle(
+                          fontSize: 40,
+                          family: FontFamily.dmSans,
+                          color: AppColor.black1,
+                        ),
+                      ),
+                    ),
+                    50.verticalSpace,
                     RoleCard(
-                      role: "Citizen",
+                      title: "Citizen",
+                      tagLine: "Your Voice, Your Power",
                       icon: Icons.person,
                       isSelected: state.selectedRole == "user",
                       onTap: () => cubit.selectRole("user"),
                     ),
+                    20.verticalSpace,
+                    Text(
+                      "or",
+                      style: Styles.lightStyle(
+                        fontSize: 20,
+                        color: AppColor.black4,
+                        family: FontFamily.varela,
+                      ),
+                    ),
+                    20.verticalSpace,
                     RoleCard(
-                      role: "Official",
+                      title: "Official",
+                      left: false,
+                      tagLine: "Serving the People, Upholding Justice",
                       icon: Icons.security,
                       isSelected: state.selectedRole == "official",
                       onTap: () => cubit.selectRole("official"),
                     ),
-                  ],
-                ),
-                50.verticalSpace,
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Center(
-                    child: AnimatedOpacity(
-                      opacity: 1.0,
-                      duration: const Duration(milliseconds: 300),
-                      child: GestureDetector(
-                        onTap: () {
-                          cubit.goToLogin();
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            color: AppColor.black1,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Continue",
-                              style: Styles.semiBoldStyle(
-                                fontSize: 20.sp,
-                                color: AppColor.white,
-                                family: FontFamily.varela,
+                    80.verticalSpace,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Center(
+                        child: AnimatedOpacity(
+                          opacity: 1.0,
+                          duration: const Duration(milliseconds: 300),
+                          child: GestureDetector(
+                            onTap: () {
+                              cubit.goToLogin();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: AppColor.black1,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Get Started",
+                                    style: Styles.semiBoldStyle(
+                                      fontSize: 20.sp,
+                                      color: AppColor.white,
+                                      family: FontFamily.varela,
+                                    ),
+                                  ),
+                                  10.horizontalSpace,
+                                  const Icon(
+                                    Icons.arrow_forward,
+                                    color: AppColor.white,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                const Spacer(),
-              ],
+              ),
             ),
           ),
         );

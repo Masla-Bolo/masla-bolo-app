@@ -39,14 +39,12 @@ class MaslaBolo extends StatelessWidget {
                       SystemChrome.setSystemUIOverlayStyle(
                         SystemUiOverlayStyle(
                           statusBarColor: Colors.transparent,
-                          systemNavigationBarColor:
-                              Theme.of(context).colorScheme.surface,
+                          systemNavigationBarColor: context.colorScheme.surface,
                         ),
                       );
                       return MaterialApp(
-                        theme: AppTheme.theme(),
-                        darkTheme: AppTheme.theme(dark: true),
-                        themeMode: ThemeMode.light,
+                        theme: light,
+                        darkTheme: dark,
                         debugShowCheckedModeBanner: false,
                         navigatorKey: AppNavigation.navigatorKey,
                         onGenerateRoute: generateRoute,

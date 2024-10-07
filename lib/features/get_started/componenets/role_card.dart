@@ -10,11 +10,15 @@ class RoleCard extends StatelessWidget {
     required this.icon,
     required this.isSelected,
     required this.onTap,
-    required this.role,
+    required this.title,
+    required this.tagLine,
+    this.left = true,
   });
   final void Function() onTap;
+  final bool left;
   final bool isSelected;
-  final String role;
+  final String title;
+  final String tagLine;
   final IconData icon;
   @override
   Widget build(BuildContext context) {
@@ -22,8 +26,8 @@ class RoleCard extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        width: 140.w,
-        height: 180.h,
+        width: 0.8.sw,
+        height: 0.2.sh,
         decoration: BoxDecoration(
           color: isSelected ? AppColor.black1 : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
@@ -42,23 +46,74 @@ class RoleCard extends StatelessWidget {
                 ]
               : [],
         ),
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 50.w,
-              color: isSelected ? AppColor.white : AppColor.black1,
-            ),
-            20.verticalSpace,
-            Text(
-              role,
-              style: Styles.boldStyle(
-                fontSize: 20.sp,
+            if (left) ...[
+              Icon(
+                icon,
+                size: 50.w,
                 color: isSelected ? AppColor.white : AppColor.black1,
-                family: FontFamily.varela,
               ),
-            ),
+              20.horizontalSpace,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      style: Styles.boldStyle(
+                        fontSize: 20,
+                        color: isSelected ? AppColor.white : AppColor.black1,
+                        family: FontFamily.varela,
+                      ),
+                    ),
+                    Text(
+                      tagLine,
+                      style: Styles.boldStyle(
+                        fontSize: 12,
+                        color: isSelected ? AppColor.white : AppColor.black1,
+                        family: FontFamily.varela,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            if (!left) ...[
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      style: Styles.boldStyle(
+                        fontSize: 20,
+                        color: isSelected ? AppColor.white : AppColor.black1,
+                        family: FontFamily.varela,
+                      ),
+                    ),
+                    Text(
+                      tagLine,
+                      style: Styles.boldStyle(
+                        fontSize: 12,
+                        color: isSelected ? AppColor.white : AppColor.black1,
+                        family: FontFamily.varela,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              20.horizontalSpace,
+              Icon(
+                icon,
+                size: 50.w,
+                color: isSelected ? AppColor.white : AppColor.black1,
+              ),
+            ]
           ],
         ),
       ),

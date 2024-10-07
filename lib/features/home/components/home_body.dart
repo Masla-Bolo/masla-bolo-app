@@ -4,7 +4,6 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_post/issue_p
 import 'package:masla_bolo_app/features/home/components/issue/issue_post/issue_post_shimmer.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
-import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
 import '../../../helpers/styles/app_colors.dart';
@@ -35,7 +34,6 @@ class HomeBody extends StatelessWidget {
                         cubit.scrollAndCall();
                       },
                       child: ListView.separated(
-                        padding: scrollBottomPadding,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: state.issuesPagination.results.length,

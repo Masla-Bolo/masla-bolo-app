@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
@@ -126,12 +127,12 @@ class IssueCubit extends Cubit<IssueState> {
       });
     }
 
-    final sortBy = state.sortBy.firstWhere((value) => value.isSelected);
-    if (sortBy.key != null) {
-      queryParams.addAll({"ordering": sortBy.key});
+    final sortBy = state.sortBy.firstWhereOrNull((value) => value.isSelected);
+    if (sortBy?.key != null) {
+      queryParams.addAll({"ordering": sortBy!.key});
     }
 
-    if (sortBy.key == null && addFilters.isNotEmpty) {
+    if (sortBy?.key == null && addFilters.isNotEmpty) {
       showToast("Select a filter to apply");
     } else {
       emit(state.copyWith(isLoaded: false));

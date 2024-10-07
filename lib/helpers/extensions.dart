@@ -7,6 +7,7 @@ extension GetHeight on BuildContext {
   bool get keyBoardVisible => MediaQuery.of(this).viewInsets.bottom >= 0;
   bool get isDark => AdaptiveTheme.of(this).mode.isDark;
   bool get isLight => AdaptiveTheme.of(this).mode.isLight;
+  ColorScheme get colorScheme => Theme.of(this).colorScheme;
 }
 
 extension StringConvert on String {

@@ -2,7 +2,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/home_body.dart';
 import 'package:masla_bolo_app/features/home/components/home_filter_drawer.dart';
-import 'package:masla_bolo_app/features/home/components/home_search.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late IssueCubit homeCubit;
-
   @override
   void initState() {
     super.initState();
@@ -57,9 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Image.asset(AppImages.filter, height: 30),
                     ),
                   ),
-                  20.verticalSpace,
+                  5.verticalSpace,
                   //search
-                  HomeSearch(cubit: homeCubit),
+                  // HomeSearch(cubit: homeCubit),
                   10.verticalSpace,
                   //list of issues
                   HomeBody(cubit: homeCubit),

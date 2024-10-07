@@ -20,16 +20,15 @@ class BottomBarContainer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       width: 0.8.sw,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        boxShadow: const [BoxShadow(color: AppColor.black1, blurRadius: 0.25)],
-        borderRadius: BorderRadius.circular(30),
+        boxShadow: [BoxShadow(color: AppColor.black1, blurRadius: 0.25)],
       ),
       child: BlocBuilder<BottomBarCubit, BottomBarState>(
           bloc: cubit,
           builder: (context, bottomBarState) {
             return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: bottomBarState.items.mapIndexed((index, item) {
                 return BottomBarIcon(
                   item: item,

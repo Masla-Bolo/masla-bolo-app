@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
 import 'package:masla_bolo_app/features/profile/profile_state.dart';
-import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/widgets/shimmer_effect.dart';
 import 'package:masla_bolo_app/service/app_service.dart';
 
@@ -59,7 +58,6 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                     )
                   : ListView.builder(
                       itemCount: issues.length,
-                      padding: scrollBottomPadding,
                       itemBuilder: (context, index) {
                         final issue = issues[index];
                         return Padding(

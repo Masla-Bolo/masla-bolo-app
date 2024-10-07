@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/helpers/widgets/shimmer_effect.dart';
 
-import '../../../../../helpers/helpers.dart';
 import '../../../../../helpers/styles/app_colors.dart';
 import '../../../../../helpers/widgets/scroll_shader_mask.dart';
 
@@ -14,7 +13,6 @@ class IssuePostShimmer extends StatelessWidget {
     return Expanded(
       child: ScrollShaderMask(
         child: ListView.separated(
-          padding: scrollBottomPadding,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 7,
