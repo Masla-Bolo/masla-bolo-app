@@ -37,7 +37,9 @@ class HomeSearch extends StatelessWidget {
                         focusNode: focusNode,
                         textEditingController: controller,
                         hintText: "find issues here..",
-                        onChanged: (val) {},
+                        onChanged: (val) {
+                          cubit.debounce(val);
+                        },
                       ),
                     ),
                   ),

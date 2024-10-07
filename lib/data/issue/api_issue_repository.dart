@@ -15,13 +15,19 @@ class ApiIssueRepository implements IssueRepository {
   Future<ApiPagination<IssueEntity>> getIssues({
     String url = '/issues/',
     Map<String, dynamic>? queryParams,
+    List<IssueEntity> previousIssues = const [],
   }) async {
     final response =
         await networkRepository.get(url: url, extraQuery: queryParams);
 
     final pagination =
         ApiPagination<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
-    return pagination;
+    if (previousIssues.isNotEmpty) {
+      previousIssues.addAll(pagination.results);
+    } else {
+      previousIssues = pagination.results;
+    }
+    return pagination.copyWith(results: previousIssues);
   }
 
   @override

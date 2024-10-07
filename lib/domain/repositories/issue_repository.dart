@@ -5,6 +5,7 @@ abstract class IssueRepository {
   Future<ApiPagination<IssueEntity>> getIssues({
     String url = '/issues/',
     Map<String, dynamic>? queryParams,
+    List<IssueEntity> previousIssues,
   });
   Future<List<IssueEntity>> myIssues({
     Map<String, dynamic>? queryParams,

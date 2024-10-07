@@ -12,10 +12,10 @@ class CachedImage extends StatelessWidget {
       imageUrl: image,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onPrimary,
           image: DecorationImage(
             image: imageProvider,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.high,
             colorFilter: ColorFilter.mode(
               Theme.of(context).colorScheme.onPrimary,
               BlendMode.dst,

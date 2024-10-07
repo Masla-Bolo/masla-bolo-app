@@ -19,15 +19,16 @@ class IssueDetailSlider extends StatelessWidget {
             itemBuilder: (context, index) {
               final image = issue.images[index];
               return Padding(
-                padding: const EdgeInsets.fromLTRB(0, 2, 2, 2),
+                padding: const EdgeInsets.all(8),
                 child: GestureDetector(
                   onTap: onTap,
-                  child: Container(
+                  child: SizedBox(
                       height: 0.45.sh,
-                      width: 1.sw,
-                      padding: const EdgeInsets.all(5),
+                      width: 0.85.sw,
                       child: Center(
-                        child: CachedImage(image: image),
+                        child: CachedImage(
+                          image: image,
+                        ),
                       )),
                 ),
               );

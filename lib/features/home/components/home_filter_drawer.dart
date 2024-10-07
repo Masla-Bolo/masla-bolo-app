@@ -21,8 +21,8 @@ class HomeFilterDrawer extends StatelessWidget {
           return Scaffold(
             body: PopScope(
               canPop: true,
-              onPopInvoked: (didPop) {
-                Scaffold.of(context).closeEndDrawer();
+              onPopInvoked: (didPop) async {
+                cubit.closeDrawer(context);
               },
               child: SafeArea(
                 child: Column(
@@ -32,7 +32,7 @@ class HomeFilterDrawer extends StatelessWidget {
                     Header(
                       title: "Apply Filters",
                       onBackTap: () {
-                        Scaffold.of(context).closeEndDrawer();
+                        cubit.closeDrawer(context);
                       },
                     ),
                     30.verticalSpace,
@@ -161,8 +161,8 @@ class HomeFilterDrawer extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: ElevatedButton(
                               onPressed: () {
-                                Scaffold.of(context).closeEndDrawer();
                                 cubit.applyFilters();
+                                Scaffold.of(context).closeEndDrawer();
                               },
                               child: const Padding(
                                 padding: EdgeInsets.only(top: 20, bottom: 20),

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
@@ -5,34 +6,38 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_navigator.da
 import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
+import 'package:masla_bolo_app/helpers/helpers.dart';
+
+import '../../../../helpers/debouncer.dart';
 
 class IssueCubit extends Cubit<IssueState> {
+  final debouncer = Debouncer(delay: const Duration(seconds: 2));
   final IssueNavigator navigation;
   final IssueRepository issueRepository;
   IssueCubit(this.navigation, this.issueRepository) : super(IssueState.empty());
+  Map<String, dynamic> queryParams = {};
 
-  getIssues({String url = '/issues/', bool clearAll = false}) {
+  getIssues({bool clearAll = false}) async {
     emit(state.copyWith(isScrolled: false));
-    issueRepository.getIssues(url: url, queryParams: state.queryParams).then(
-      (pagination) {
-        var results = state.issuesPagination.results;
-        if (clearAll) {
-          results = [];
-        }
-        if (results.isNotEmpty) {
-          results.addAll(pagination.results);
-        } else {
-          results = pagination.results;
-        }
-        emit(
-          state.copyWith(
-            issuesPagination: pagination.copyWith(results: results),
-            isLoaded: true,
-            isScrolled: true,
-          ),
-        );
-      },
+    if (clearAll) {
+      state.issuesPagination.results.clear();
+    }
+
+    final url = state.issuesPagination.next != null && !clearAll
+        ? state.issuesPagination.next.toString()
+        : "/issues/";
+
+    final issuesPagination = await issueRepository.getIssues(
+      url: url,
+      queryParams: queryParams,
+      previousIssues: state.issuesPagination.results,
     );
+
+    emit(state.copyWith(
+      issuesPagination: issuesPagination,
+      isLoaded: true,
+      isScrolled: true,
+    ));
   }
 
   refreshIssues() {
@@ -42,7 +47,7 @@ class IssueCubit extends Cubit<IssueState> {
 
   scrollAndCall() {
     if (state.issuesPagination.next != null && state.isScrolled) {
-      getIssues(url: state.issuesPagination.next!);
+      getIssues();
     }
   }
 
@@ -59,11 +64,14 @@ class IssueCubit extends Cubit<IssueState> {
 
   debounce(String value) {
     if (value.isEmpty) {
-      return;
+      queryParams.remove("search");
+      emit(state.copyWith(isLoaded: false));
+      getIssues(clearAll: true);
     } else {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        state.queryParams.addAll({"search": value});
-        getIssues();
+      debouncer.call(() {
+        emit(state.copyWith(isLoaded: false));
+        queryParams["search"] = value;
+        getIssues(clearAll: true);
       });
     }
   }
@@ -97,6 +105,7 @@ class IssueCubit extends Cubit<IssueState> {
       category.isSelected = false;
       return category;
     }).toList();
+    queryParams.remove("categories");
     emit(
       state.copyWith(
         categories: categories,
@@ -111,10 +120,21 @@ class IssueCubit extends Cubit<IssueState> {
         .toList();
 
     if (addFilters.isNotEmpty) {
-      state.queryParams.addAll({
+      queryParams.addAll({
         'categories': addFilters.join(','),
       });
-      getIssues();
+    }
+
+    final sortBy = state.sortBy.firstWhere((value) => value.isSelected);
+    if (sortBy.key != null) {
+      queryParams.addAll({"ordering": sortBy.key});
+    }
+
+    if (sortBy.key == null && addFilters.isNotEmpty) {
+      showToast("Select a filter to apply");
+    } else {
+      emit(state.copyWith(isLoaded: false));
+      getIssues(clearAll: true);
     }
   }
 
@@ -135,12 +155,28 @@ class IssueCubit extends Cubit<IssueState> {
     );
   }
 
+  void closeDrawer(BuildContext context) async {
+    if (state.categories.any((value) => value.isSelected == true) ||
+        state.sortBy.any((value) => value.isSelected == true)) {
+      if (await showConfirmationDialog(
+          "Are you sure you want to discard your changes")) {
+        if (context.mounted) {
+          Scaffold.of(context).closeEndDrawer();
+        }
+        clearAllCategoryFilters();
+        clearSortByFilter();
+      }
+    } else {
+      Scaffold.of(context).closeEndDrawer();
+    }
+  }
+
   void clearSortByFilter() {
     final sortBy = state.sortBy.map((sortValue) {
       sortValue.isSelected = false;
       return sortValue;
     }).toList();
-
+    queryParams.remove("ordering");
     emit(
       state.copyWith(
         sortBy: sortBy,
