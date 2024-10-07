@@ -49,10 +49,6 @@ class IssuePostShimmer extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Icon(
-                              Icons.thumb_up_alt_outlined,
-                              color: AppColor.black1,
-                            ),
                             SizedBox(
                               height: 0.015.sh,
                               width: 0.2.sw,
@@ -61,10 +57,6 @@ class IssuePostShimmer extends StatelessWidget {
                             5.horizontalSpace,
                             const Text("•"),
                             5.horizontalSpace,
-                            const Icon(
-                              Icons.comment_outlined,
-                              color: AppColor.black1,
-                            ),
                             SizedBox(
                               width: 0.2.sw,
                               height: 0.015.sh,

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
+import 'dart:developer';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/network/network_response.dart';
@@ -17,28 +17,19 @@ Future loader(Future Function() func, {ToastParam? params}) async {
     final response = await func();
     return response;
   } on NetworkResponse catch (e) {
-    print("ERROR IN NETWORK: ${e.message}");
-    showToast(e.message, params: params);
+    log("ERROR IN NETWORK: ${e.message}");
+    if (params?.showToast ?? true) {
+      showToast(e.message, params: params);
+    }
   } catch (e) {
-    print("ERROR IN CATCH: ${e.toString()}");
-    showToast("An Internal Error Occured!", params: params);
+    log("ERROR IN CATCH: ${e.toString()}");
+    if (params?.showToast ?? true) {
+      showToast("An Internal Error Occured!", params: params);
+    }
   } finally {
-    context.loaderOverlay.hide();
-  }
-  return null;
-}
-
-T? parseResponse<T>(
-  response,
-  T Function(Map<String, dynamic>) fromJson,
-) {
-  var data = response;
-  if (data == null) {
-    return null;
-  }
-  if (data is! List) {
-    data = data;
-    return fromJson(data);
+    if (context.mounted) {
+      context.loaderOverlay.hide();
+    }
   }
   return null;
 }
@@ -74,7 +65,7 @@ Future<void> showToast(String message, {ToastParam? params}) async {
         insetAnimationDuration: const Duration(milliseconds: 500),
         elevation: 0,
         child: Align(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.topCenter,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
             decoration: BoxDecoration(
@@ -203,4 +194,5 @@ mixin ToastParam {
   Color? backgroundColor;
   Color? textColor;
   String? image;
+  bool showToast = true;
 }

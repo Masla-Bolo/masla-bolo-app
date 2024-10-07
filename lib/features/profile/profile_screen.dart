@@ -24,11 +24,9 @@ class _ProfileScreenState extends State<ProfileScreen>
   void initState() {
     super.initState();
     cubit = widget.cubit;
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     cubit.getUser();
-    if (!cubit.state.isLoaded) {
-      cubit.getMyIssues();
-    }
+    cubit.getMyIssues();
   }
 
   @override
@@ -149,16 +147,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                         controller: tabController,
                         tabs: [
                           Center(
-                              child: Text(
-                            'Approved Issues',
-                            textAlign: TextAlign.center,
-                            style: Styles.boldStyle(
-                              fontSize: 15,
-                              color: AppColor.black1,
-                              family: FontFamily.varela,
-                            ),
-                          )),
-                          Center(
                             child: Text(
                               'Pending Issues',
                               textAlign: TextAlign.center,
@@ -170,19 +158,18 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ),
                           ),
                           Center(
-                            child: Text(
-                              'Completed Issues',
-                              textAlign: TextAlign.center,
-                              style: Styles.boldStyle(
-                                fontSize: 15,
-                                color: AppColor.black1,
-                                family: FontFamily.varela,
-                              ),
+                              child: Text(
+                            'Approved Issues',
+                            textAlign: TextAlign.center,
+                            style: Styles.boldStyle(
+                              fontSize: 15,
+                              color: AppColor.black1,
+                              family: FontFamily.varela,
                             ),
-                          ),
+                          )),
                           Center(
                             child: Text(
-                              'Liked Issues',
+                              'Completed Issues',
                               textAlign: TextAlign.center,
                               style: Styles.boldStyle(
                                 fontSize: 15,
@@ -196,11 +183,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                   Expanded(
                     child: TabBarView(
                       controller: tabController,
-                      children: [
-                        ProfileTabView(issues: state.issues + state.issues),
-                        ProfileTabView(issues: state.issues + state.issues),
-                        ProfileTabView(issues: state.issues + state.issues),
-                        ProfileTabView(issues: state.issues + state.issues),
+                      children: const [
+                        ProfileTabView(
+                          status: "not_approved",
+                        ),
+                        ProfileTabView(
+                          status: "approved",
+                        ),
+                        ProfileTabView(
+                          status: "completed",
+                        ),
                       ],
                     ),
                   ),

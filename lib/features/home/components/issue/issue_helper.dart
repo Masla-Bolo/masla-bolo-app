@@ -1,3 +1,5 @@
+import 'package:masla_bolo_app/domain/model/issue_json.dart';
+
 class IssueHelper {
   bool isSelected;
   String item;
@@ -51,13 +53,12 @@ class IssueHelper {
   ];
 
   static final sortBy = [
-    IssueHelper(item: "latest"),
-    IssueHelper(item: "oldest"),
-    IssueHelper(item: "Most Liked"),
-    IssueHelper(item: "Most Commented"),
-    IssueHelper(item: "A-Z"),
-    IssueHelper(item: "Z-A"),
-    IssueHelper(item: "All"),
+    IssueHelper(item: "latest", key: "-created_at"),
+    IssueHelper(item: "oldest", key: "created_at"),
+    IssueHelper(item: "Most Liked", key: "-likes_count"),
+    IssueHelper(item: "Most Commented", key: "-comments_count"),
+    IssueHelper(item: "A-Z", key: "title"),
+    IssueHelper(item: "Z-A", key: "-title"),
   ];
 
   static List<IssueHelper> cloneCategories() {
@@ -66,5 +67,22 @@ class IssueHelper {
         .toList()
         .cast<IssueHelper>();
     return categories;
+  }
+
+  static String getIssueStatus(IssueStatus status) {
+    switch (status) {
+      case IssueStatus.notApproved:
+        return "not_approved";
+      case IssueStatus.approved:
+        return "approved";
+      case IssueStatus.solving:
+        return "solving";
+      case IssueStatus.officialSolved:
+        return "official_solved";
+      case IssueStatus.completed:
+        return "completed";
+      default:
+        return "not_approved";
+    }
   }
 }

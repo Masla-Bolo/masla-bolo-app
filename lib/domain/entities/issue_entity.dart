@@ -13,7 +13,7 @@ class IssueEntity {
   bool isAnonymous;
   double latitude;
   double longitude;
-  String status;
+  IssueStatus status;
   DateTime createdAt;
   DateTime updatedAt;
   UserEntity user;
@@ -49,7 +49,7 @@ class IssueEntity {
         updatedAt: DateTime.now(),
         latitude: 0,
         longitude: 0,
-        status: '',
+        status: IssueStatus.notApproved,
         isAnonymous: false,
         user: UserEntity.empty(),
       );

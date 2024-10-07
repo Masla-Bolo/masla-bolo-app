@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:flutter/services.dart';
 import '../styles/app_colors.dart';
@@ -55,7 +53,6 @@ class _InputFieldState extends State<InputField> {
 
   @override
   void initState() {
-    log("${widget.preFilledValue}");
     super.initState();
     if (widget.textEditingController != null) {
       controller = widget.textEditingController!;

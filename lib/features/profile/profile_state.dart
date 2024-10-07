@@ -5,9 +5,9 @@ import '../../domain/stores/user_store.dart';
 import '../../service/app_service.dart';
 
 class ProfileState {
-  final List<IssueEntity> issues;
   final bool isLoaded;
   final UserEntity user;
+  Map<String, List<IssueEntity>> issues;
   ProfileState({
     required this.user,
     required this.issues,
@@ -15,11 +15,18 @@ class ProfileState {
   });
 
   factory ProfileState.empty() => ProfileState(
-        issues: [],
+        issues: {
+          "approved": [],
+          "not_approved": [],
+          "completed": [],
+        },
         user: getIt<UserStore>().appUser,
       );
 
-  copyWith({List<IssueEntity>? issues, bool? isLoaded, UserEntity? user}) =>
+  copyWith(
+          {Map<String, List<IssueEntity>>? issues,
+          bool? isLoaded,
+          UserEntity? user}) =>
       ProfileState(
         issues: issues ?? this.issues,
         isLoaded: isLoaded ?? this.isLoaded,

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -87,7 +87,7 @@ class ApiService {
         );
       }
     } on DioException catch (dioError) {
-      print("DIO ERROR: $dioError");
+      log("DIO ERROR: $dioError");
       throw NetworkResponse(
         message: 'Check your network connectivity!',
       );
