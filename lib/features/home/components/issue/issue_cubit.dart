@@ -11,16 +11,36 @@ class IssueCubit extends Cubit<IssueState> {
   final IssueRepository issueRepository;
   IssueCubit(this.navigation, this.issueRepository) : super(IssueState.empty());
 
-  getIssues() {
-    emit(state.copyWith(isLoaded: false));
-    issueRepository.getIssues(queryParams: state.queryParams).then(
-          (issues) => emit(
-            state.copyWith(
-              issues: issues,
-              isLoaded: true,
-            ),
+  getIssues({String url = '/issues/'}) {
+    emit(state.copyWith(isScroll: false));
+    issueRepository.getIssues(url: url, queryParams: state.queryParams).then(
+      (pagination) {
+        if (state.issuesPagination.results.isEmpty) {
+          state.issuesPagination.results = pagination.results;
+        } else {
+          state.issuesPagination.results.addAll(pagination.results);
+        }
+        emit(
+          state.copyWith(
+            issuesPagination:
+                pagination.copyWith(results: state.issuesPagination.results),
+            isLoaded: true,
+            isScroll: true,
           ),
         );
+      },
+    );
+  }
+
+  refreshIssues() {
+    emit(state.copyWith(isLoaded: false));
+    getIssues();
+  }
+
+  scrollAndCall() {
+    if (state.issuesPagination.next != null) {
+      getIssues(url: state.issuesPagination.next!);
+    }
   }
 
   void likeUnlikeIssue(IssueEntity issue) {
@@ -30,7 +50,7 @@ class IssueCubit extends Cubit<IssueState> {
     } else {
       issue.likesCount -= 1;
     }
-    emit(state.copyWith(issues: state.issues));
+    emit(state.copyWith(issuesPagination: state.issuesPagination));
     issueRepository.likeUnlikeIssue(issue.id);
   }
 

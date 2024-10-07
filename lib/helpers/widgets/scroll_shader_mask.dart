@@ -3,9 +3,32 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../styles/app_colors.dart';
 
-class ScrollShaderMask extends StatelessWidget {
+class ScrollShaderMask extends StatefulWidget {
   final Widget? child;
-  const ScrollShaderMask({required this.child, super.key});
+  final ScrollController? scrollController;
+  final VoidCallback? callback;
+  const ScrollShaderMask(
+      {required this.child, super.key, this.scrollController, this.callback});
+
+  @override
+  State<ScrollShaderMask> createState() => _ScrollShaderMaskState();
+}
+
+class _ScrollShaderMaskState extends State<ScrollShaderMask> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.scrollController != null && widget.callback != null) {
+      widget.scrollController!.addListener(() {
+        if (widget.scrollController?.hasClients ?? false) {
+          if (widget.scrollController!.position.pixels >=
+              widget.scrollController!.position.maxScrollExtent - 100) {
+            widget.callback!();
+          }
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +49,9 @@ class ScrollShaderMask extends StatelessWidget {
       },
       blendMode: BlendMode.dstOut,
       child: SingleChildScrollView(
+        controller: widget.scrollController,
         padding: EdgeInsets.only(top: 8.h),
-        child: child,
+        child: widget.child,
       ),
     );
   }

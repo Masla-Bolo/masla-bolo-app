@@ -1,4 +1,5 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
+import 'package:masla_bolo_app/domain/model/pagination.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
@@ -11,15 +12,16 @@ class ApiIssueRepository implements IssueRepository {
   ApiIssueRepository(this.networkRepository, this.utilityService);
 
   @override
-  Future<List<IssueEntity>> getIssues({
+  Future<ApiPagination<IssueEntity>> getIssues({
+    String url = '/issues/',
     Map<String, dynamic>? queryParams,
   }) async {
     final response =
-        await networkRepository.get(url: '/issues/', extraQuery: queryParams);
-    final data = parseList(response.data["results"], IssueJson.fromJson)
-        .map((json) => json.toDomain())
-        .toList();
-    return data;
+        await networkRepository.get(url: url, extraQuery: queryParams);
+
+    final pagination =
+        ApiPagination<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
+    return pagination;
   }
 
   @override

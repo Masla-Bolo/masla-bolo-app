@@ -12,6 +12,9 @@ import '../../../helpers/styles/app_colors.dart';
 class HomeBody extends StatelessWidget {
   const HomeBody({super.key, required this.cubit});
   final IssueCubit cubit;
+
+  static final scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<IssueCubit, IssueState>(
@@ -24,14 +27,18 @@ class HomeBody extends StatelessWidget {
                     color: AppColor.black1,
                     backgroundColor: AppColor.white,
                     onRefresh: () async {
-                      await cubit.getIssues();
+                      await cubit.refreshIssues();
                     },
                     child: ScrollShaderMask(
+                      scrollController: scrollController,
+                      callback: () {
+                        cubit.scrollAndCall();
+                      },
                       child: ListView.separated(
                         padding: scrollBottomPadding,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.issues.length,
+                        itemCount: state.issuesPagination.results.length,
                         separatorBuilder: (contex, index) {
                           return Divider(
                             color: Colors.grey.shade300,
@@ -40,7 +47,7 @@ class HomeBody extends StatelessWidget {
                           );
                         },
                         itemBuilder: (context, index) {
-                          final issue = state.issues[index];
+                          final issue = state.issuesPagination.results[index];
                           return IssuePost(
                             index: index,
                             cubit: cubit,

@@ -1,10 +1,12 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
+import 'package:masla_bolo_app/domain/model/pagination.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
 
 class IssueState {
-  List<IssueEntity> issues;
+  ApiPagination<IssueEntity> issuesPagination;
   bool isLoaded;
+  bool isScroll;
   List<IssueHelper> categories;
   List<IssueHelper> sortBy;
   Map<String, dynamic> queryParams;
@@ -12,18 +14,20 @@ class IssueState {
   IssueState({
     this.search = "",
     this.isLoaded = false,
+    this.isScroll = false,
     this.queryParams = const {},
     required this.sortBy,
     required this.categories,
-    required this.issues,
+    required this.issuesPagination,
   });
 
   copyWith({
     bool? isLoaded,
+    bool? isScroll,
     UserEntity? user,
     String? search,
     Map<String, dynamic>? queryParams,
-    List<IssueEntity>? issues,
+    ApiPagination<IssueEntity>? issuesPagination,
     List<IssueHelper>? sortBy,
     List<IssueHelper>? categories,
     IssueEntity? currentServer,
@@ -32,11 +36,12 @@ class IssueState {
     int? serverIndex,
   }) =>
       IssueState(
+        isScroll: isScroll ?? this.isScroll,
         search: search ?? this.search,
         isLoaded: isLoaded ?? this.isLoaded,
         sortBy: sortBy ?? this.sortBy,
         categories: categories ?? this.categories,
-        issues: issues ?? this.issues,
+        issuesPagination: issuesPagination ?? this.issuesPagination,
         queryParams: queryParams ?? this.queryParams,
       );
 
@@ -44,7 +49,7 @@ class IssueState {
         sortBy: IssueHelper.sortBy,
         search: "",
         categories: IssueHelper.cloneCategories(),
-        issues: [],
+        issuesPagination: ApiPagination.empty(),
         isLoaded: false,
         queryParams: {},
       );

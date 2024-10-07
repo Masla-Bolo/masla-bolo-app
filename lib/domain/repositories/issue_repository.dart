@@ -1,7 +1,9 @@
 import '../entities/issue_entity.dart';
+import '../model/pagination.dart';
 
 abstract class IssueRepository {
-  Future<List<IssueEntity>> getIssues({
+  Future<ApiPagination<IssueEntity>> getIssues({
+    String url = '/issues/',
     Map<String, dynamic>? queryParams,
   });
   Future<List<IssueEntity>> myIssues({

@@ -13,9 +13,25 @@ class ApiPagination<T> {
     this.results = const [],
   });
 
+  factory ApiPagination.empty() => ApiPagination();
+
+  ApiPagination<T> copyWith({
+    String? previous,
+    String? next,
+    int? count,
+    List<T>? results,
+  }) {
+    return ApiPagination<T>(
+      previous: previous ?? this.previous,
+      next: next ?? this.next,
+      count: count ?? this.count,
+      results: results ?? this.results,
+    );
+  }
+
   factory ApiPagination.fromJson(
     Map<String, dynamic> json,
-    T Function(Map<String, dynamic>) dataFromJson,
+    Function(Map<String, dynamic>) dataFromJson,
   ) {
     return ApiPagination<T>(
       count: json['count'],
@@ -23,6 +39,9 @@ class ApiPagination<T> {
       next: json['next'],
       results: json['results'] is List && json['results'] != null
           ? parseList(json['results'], dataFromJson)
+              .map((json) => json.toDomain())
+              .toList()
+              .cast<T>()
           : [],
     );
   }
