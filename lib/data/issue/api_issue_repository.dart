@@ -1,5 +1,5 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
-import 'package:masla_bolo_app/domain/model/pagination.dart';
+import 'package:masla_bolo_app/domain/model/paginate.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
@@ -12,7 +12,7 @@ class ApiIssueRepository implements IssueRepository {
   ApiIssueRepository(this.networkRepository, this.utilityService);
 
   @override
-  Future<ApiPagination<IssueEntity>> getIssues({
+  Future<Paginate<IssueEntity>> getIssues({
     String url = '/issues/',
     Map<String, dynamic>? queryParams,
     List<IssueEntity> previousIssues = const [],
@@ -21,7 +21,7 @@ class ApiIssueRepository implements IssueRepository {
         await networkRepository.get(url: url, extraQuery: queryParams);
 
     final pagination =
-        ApiPagination<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
+        Paginate<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
     if (previousIssues.isNotEmpty) {
       previousIssues.addAll(pagination.results);
     } else {

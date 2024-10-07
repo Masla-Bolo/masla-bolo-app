@@ -1,10 +1,10 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
-import 'package:masla_bolo_app/domain/model/pagination.dart';
+import 'package:masla_bolo_app/domain/model/paginate.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
 
 class IssueState {
-  ApiPagination<IssueEntity> issuesPagination;
+  Paginate<IssueEntity> issuesPagination;
   bool isLoaded;
   bool isScrolled;
   List<IssueHelper> categories;
@@ -21,7 +21,7 @@ class IssueState {
     bool? isLoaded,
     bool? isScrolled,
     UserEntity? user,
-    ApiPagination<IssueEntity>? issuesPagination,
+    Paginate<IssueEntity>? issuesPagination,
     List<IssueHelper>? sortBy,
     List<IssueHelper>? categories,
     IssueEntity? currentServer,
@@ -40,7 +40,7 @@ class IssueState {
   factory IssueState.empty() => IssueState(
         sortBy: IssueHelper.sortBy,
         categories: IssueHelper.cloneCategories(),
-        issuesPagination: ApiPagination.empty(),
+        issuesPagination: Paginate.empty(),
         isLoaded: false,
       );
 }

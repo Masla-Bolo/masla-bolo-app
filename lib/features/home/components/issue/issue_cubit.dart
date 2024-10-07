@@ -11,10 +11,11 @@ import 'package:masla_bolo_app/helpers/helpers.dart';
 import '../../../../helpers/debouncer.dart';
 
 class IssueCubit extends Cubit<IssueState> {
-  final debouncer = Debouncer(delay: const Duration(seconds: 2));
   final IssueNavigator navigation;
   final IssueRepository issueRepository;
   IssueCubit(this.navigation, this.issueRepository) : super(IssueState.empty());
+
+  final debouncer = Debouncer(delay: const Duration(seconds: 2));
   Map<String, dynamic> queryParams = {};
 
   getIssues({bool clearAll = false}) async {

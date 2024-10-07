@@ -1,27 +1,27 @@
 import '../../helpers/helpers.dart';
 
-class ApiPagination<T> {
+class Paginate<T> {
   String? previous;
   String? next;
   int count;
   List<T> results;
 
-  ApiPagination({
+  Paginate({
     this.previous,
     this.next,
     this.count = 0,
     this.results = const [],
   });
 
-  factory ApiPagination.empty() => ApiPagination();
+  factory Paginate.empty() => Paginate();
 
-  ApiPagination<T> copyWith({
+  Paginate<T> copyWith({
     String? previous,
     String? next,
     int? count,
     List<T>? results,
   }) {
-    return ApiPagination<T>(
+    return Paginate<T>(
       previous: previous ?? this.previous,
       next: next ?? this.next,
       count: count ?? this.count,
@@ -29,11 +29,11 @@ class ApiPagination<T> {
     );
   }
 
-  factory ApiPagination.fromJson(
+  factory Paginate.fromJson(
     Map<String, dynamic> json,
     Function(Map<String, dynamic>) dataFromJson,
   ) {
-    return ApiPagination<T>(
+    return Paginate<T>(
       count: json['count'],
       previous: json['previous'],
       next: json['next'],
