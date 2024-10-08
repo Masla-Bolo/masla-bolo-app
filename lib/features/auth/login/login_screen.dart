@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/header.dart';
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text('MASLA BOLO!',
                               style: Styles.boldStyle(
                                 fontSize: 30,
-                                color: AppColor.black1,
+                                color: context.colorScheme.onPrimary,
                                 family: FontFamily.dmSans,
                               )),
                         ),
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'Report local issues & drive real change!',
                             style: Styles.mediumStyle(
                               fontSize: 16,
-                              color: AppColor.grey,
+                              color: context.colorScheme.secondary,
                               family: FontFamily.varela,
                             ),
                           ),
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Your email address',
                           style: Styles.boldStyle(
                               fontSize: 14,
-                              color: AppColor.black1,
+                              color: context.colorScheme.onPrimary,
                               family: FontFamily.varela),
                         ),
                         10.verticalSpace,
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Choose a password',
                           style: Styles.boldStyle(
                               fontSize: 14,
-                              color: AppColor.black1,
+                              color: context.colorScheme.onPrimary,
                               family: FontFamily.varela),
                         ),
                         10.verticalSpace,
@@ -125,12 +125,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             loader(() => authCubit.login());
                           },
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: context.colorScheme.onPrimary,
                             minimumSize: const Size(double.infinity, 48),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: const Text('Continue'),
+                          child: Text(
+                            'Continue',
+                            style: Styles.mediumStyle(
+                              fontSize: 15,
+                              color: context.colorScheme.primary,
+                              family: FontFamily.varela,
+                            ),
+                          ),
                         ),
                         10.verticalSpace,
                         RichText(
@@ -138,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: "  Don't have an account? ",
                               style: Styles.mediumStyle(
                                 fontSize: 12,
-                                color: AppColor.grey,
+                                color: context.colorScheme.secondary,
                                 family: FontFamily.varela,
                               ),
                               children: [
@@ -148,23 +156,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                       authCubit.goToRegister();
                                     },
                                   text: "Create one",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 13,
-                                    color: AppColor.black1,
+                                    color: context.colorScheme.onPrimary,
                                     decoration: TextDecoration.underline,
                                   ),
                                 )
                               ]),
                         ),
                         15.verticalSpace,
-                        const Row(
+                        Row(
                           children: [
-                            Expanded(child: Divider()),
+                            const Expanded(child: Divider()),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text('or'),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text(
+                                'or',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: context.colorScheme.onPrimary,
+                                ),
+                              ),
                             ),
-                            Expanded(child: Divider()),
+                            const Expanded(child: Divider()),
                           ],
                         ),
                         15.verticalSpace,
@@ -178,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'Sign up with Google',
                             style: Styles.boldStyle(
                               fontSize: 14,
-                              color: AppColor.black1,
+                              color: context.colorScheme.onPrimary,
                               family: FontFamily.varela,
                             ),
                           ),
@@ -190,30 +206,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         15.verticalSpace,
-                        OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: Image.asset(
-                            AppImages.apple,
-                            height: 25,
-                          ),
-                          label: Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: Text(
-                              'Sign up with Apple',
-                              style: Styles.boldStyle(
-                                fontSize: 14,
-                                color: AppColor.black1,
-                                family: FontFamily.varela,
-                              ),
-                            ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 48),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
+                        // OutlinedButton.icon(
+                        //   onPressed: () {},
+                        //   icon: Image.asset(
+                        //     AppImages.apple,
+                        //     height: 25,
+                        //   ),
+                        //   label: Padding(
+                        //     padding: const EdgeInsets.only(right: 8),
+                        //     child: Text(
+                        //       'Sign up with Apple',
+                        //       style: Styles.boldStyle(
+                        //         fontSize: 14,
+                        //         color: context.colorScheme.onPrimary,
+                        //         family: FontFamily.varela,
+                        //       ),
+                        //     ),
+                        //   ),
+                        //   style: OutlinedButton.styleFrom(
+                        //     minimumSize: const Size(double.infinity, 48),
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/widgets/cached_image.dart';
 
 import '../../../../../domain/entities/issue_entity.dart';
-import '../../../../../helpers/styles/app_colors.dart';
 import '../../../../../helpers/styles/styles.dart';
 
 class IssuePost extends StatelessWidget {
@@ -21,7 +21,7 @@ class IssuePost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColor.white,
+      color: context.colorScheme.primary,
       child: Column(
         children: [
           GestureDetector(
@@ -40,17 +40,18 @@ class IssuePost extends StatelessWidget {
                   child: Row(
                     children: [
                       5.horizontalSpace,
-                      const CircleAvatar(
-                        backgroundColor: AppColor.white,
+                      CircleAvatar(
+                        backgroundColor: context.colorScheme.secondary,
                         radius: 15,
-                        child: Icon(Icons.person, color: AppColor.white),
+                        child: Icon(Icons.person,
+                            color: context.colorScheme.primary),
                       ),
                       7.horizontalSpace,
                       Text(
                         issue.user.username!,
                         style: Styles.boldStyle(
                           fontSize: 12,
-                          color: AppColor.white,
+                          color: context.colorScheme.onPrimary,
                           family: FontFamily.varela,
                         ),
                       ),
@@ -63,6 +64,7 @@ class IssuePost extends StatelessWidget {
           10.verticalSpace,
           Container(
             padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+            color: context.colorScheme.primary,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -75,7 +77,7 @@ class IssuePost extends StatelessWidget {
                     style: Styles.boldStyle(
                       fontSize: 15,
                       family: FontFamily.varela,
-                      color: AppColor.black1,
+                      color: context.colorScheme.onPrimary,
                     ),
                   ),
                 ),
@@ -91,7 +93,7 @@ class IssuePost extends StatelessWidget {
                         issue.isLiked
                             ? Icons.thumb_up
                             : Icons.thumb_up_alt_outlined,
-                        color: AppColor.black1,
+                        color: context.colorScheme.onPrimary,
                       ),
                     ),
                     GestureDetector(
@@ -104,7 +106,7 @@ class IssuePost extends StatelessWidget {
                             : "${issue.likesCount} Likes",
                         style: Styles.mediumStyle(
                             fontSize: 12,
-                            color: AppColor.black1,
+                            color: context.colorScheme.onPrimary,
                             family: FontFamily.varela),
                       ),
                     ),
@@ -118,9 +120,9 @@ class IssuePost extends StatelessWidget {
                           issue: issue,
                         );
                       },
-                      child: const Icon(
+                      child: Icon(
                         Icons.comment_outlined,
-                        color: AppColor.black1,
+                        color: context.colorScheme.onPrimary,
                       ),
                     ),
                     GestureDetector(
@@ -136,18 +138,24 @@ class IssuePost extends StatelessWidget {
                             : "${issue.commentsCount} comments",
                         style: Styles.mediumStyle(
                             fontSize: 12,
-                            color: AppColor.black1,
+                            color: context.colorScheme.onPrimary,
                             family: FontFamily.varela),
                       ),
                     ),
                     5.horizontalSpace,
-                    const Text("•"),
+                    Text(
+                      "•",
+                      style: Styles.mediumStyle(
+                          fontSize: 12,
+                          color: context.colorScheme.onPrimary,
+                          family: FontFamily.varela),
+                    ),
                     5.horizontalSpace,
                     Text(
                       formatDate(issue.createdAt),
                       style: Styles.mediumStyle(
                           fontSize: 12,
-                          color: AppColor.black1,
+                          color: context.colorScheme.onPrimary,
                           family: FontFamily.varela),
                     ),
                     5.horizontalSpace,

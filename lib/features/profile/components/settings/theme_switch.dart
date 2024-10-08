@@ -2,6 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
 import '../../../../helpers/styles/app_colors.dart';
 
@@ -24,11 +25,12 @@ class ThemeSwitch extends StatelessWidget {
                 child: FlutterSwitch(
                   value: adaptiveTheme.mode.isDark,
                   padding: 4.0,
-                  activeColor: AppColor.black1,
+                  toggleColor: context.colorScheme.primary,
+                  activeColor: context.colorScheme.secondary.withOpacity(0.1),
                   inactiveColor: AppColor.grey.withOpacity(0.15),
-                  activeIcon: const Icon(
+                  activeIcon: Icon(
                     Icons.dark_mode,
-                    color: AppColor.black3,
+                    color: context.colorScheme.onPrimary,
                   ),
                   inactiveIcon: const Icon(
                     Icons.light_mode,

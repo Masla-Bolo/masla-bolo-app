@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/widgets/shimmer_effect.dart';
 
-import '../../../../../helpers/styles/app_colors.dart';
 import '../../../../../helpers/widgets/scroll_shader_mask.dart';
 
 class IssuePostShimmer extends StatelessWidget {
@@ -18,14 +18,14 @@ class IssuePostShimmer extends StatelessWidget {
           itemCount: 7,
           separatorBuilder: (contex, index) {
             return Divider(
-              color: Colors.grey.shade300,
+              color: context.colorScheme.secondary,
               thickness: 7,
               height: 7,
             );
           },
           itemBuilder: (context, index) {
             return Container(
-              color: AppColor.white,
+              color: context.colorScheme.primary,
               child: Column(
                 children: [
                   Center(
@@ -53,7 +53,12 @@ class IssuePostShimmer extends StatelessWidget {
                               child: const ShimmerEffect(),
                             ),
                             5.horizontalSpace,
-                            const Text("•"),
+                            Text(
+                              "•",
+                              style: TextStyle(
+                                color: context.colorScheme.onPrimary,
+                              ),
+                            ),
                             5.horizontalSpace,
                             SizedBox(
                               width: 0.2.sw,
@@ -61,7 +66,12 @@ class IssuePostShimmer extends StatelessWidget {
                               child: const ShimmerEffect(),
                             ),
                             5.horizontalSpace,
-                            const Text("•"),
+                            Text(
+                              "•",
+                              style: TextStyle(
+                                color: context.colorScheme.onPrimary,
+                              ),
+                            ),
                             5.horizontalSpace,
                             SizedBox(
                               width: 0.2.sw,

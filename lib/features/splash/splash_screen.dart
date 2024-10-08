@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/jumping_dots.dart';
 
@@ -46,11 +46,14 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppColor.lightWhite, AppColor.white],
+            colors: [
+              context.colorScheme.secondary,
+              context.colorScheme.primary
+            ],
           ),
         ),
         child: Center(
@@ -63,10 +66,10 @@ class _SplashScreenState extends State<SplashScreen>
                 builder: (context, child) {
                   return Transform.scale(
                     scale: 1.0 + (_animation.value * 0.1),
-                    child: const Icon(
+                    child: Icon(
                       Icons.report_problem_outlined,
                       size: 100,
-                      color: AppColor.black1,
+                      color: context.colorScheme.onPrimary,
                     ),
                   );
                 },
@@ -77,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen>
                 style: Styles.boldStyle(
                   family: FontFamily.dmSans,
                   fontSize: 30,
-                  color: AppColor.black1,
+                  color: context.colorScheme.onPrimary,
                 ),
               ),
               const SizedBox(height: 10),
@@ -87,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen>
                 style: Styles.boldStyle(
                   family: FontFamily.varela,
                   fontSize: 18,
-                  color: AppColor.black1,
+                  color: context.colorScheme.onPrimary,
                 ),
               ),
               const SizedBox(height: 40),
@@ -96,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen>
                   const Spacer(),
                   JumpingDots(
                     numberOfDots: 3,
-                    color: AppColor.black1,
+                    color: context.colorScheme.onPrimary,
                   ),
                   const Spacer(),
                 ],

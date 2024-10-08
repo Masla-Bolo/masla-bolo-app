@@ -8,11 +8,7 @@ class BottomBarCubit extends Cubit<BottomBarState> {
   BottomBarCubit(this.navigation) : super(BottomBarState.empty());
 
   void updateIndex(int index) {
-    if (index == 1) {
-      navigation.goToIssue();
-    } else {
-      emit(state.copyWith(currentIndex: index, page: state.items[index].page));
-    }
+    emit(state.copyWith(currentIndex: index, page: state.items[index].page));
   }
 
   void toggleVisibility() {

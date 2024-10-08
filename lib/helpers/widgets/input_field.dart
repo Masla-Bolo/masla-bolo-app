@@ -1,3 +1,4 @@
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:flutter/services.dart';
 import '../styles/app_colors.dart';
@@ -66,7 +67,9 @@ class _InputFieldState extends State<InputField> {
 
   @override
   void dispose() {
-    widget.focusNode?.dispose();
+    if (widget.focusNode != null) {
+      widget.focusNode!.dispose();
+    }
     super.dispose();
   }
 
@@ -83,14 +86,14 @@ class _InputFieldState extends State<InputField> {
         controller: controller,
         style: Styles.semiMediumStyle(
           fontSize: 15,
-          color: AppColor.black1,
+          color: context.colorScheme.onPrimary,
           family: FontFamily.varela,
         ),
         inputFormatters: widget.inputFormatters,
         obscureText: widget.passwordField ? isObsecure : false,
         readOnly: widget.readOnly,
-        cursorColor: AppColor.black1,
-        cursorErrorColor: AppColor.black1,
+        cursorColor: context.colorScheme.onPrimary,
+        cursorErrorColor: context.colorScheme.onPrimary,
         onChanged: widget.onChanged,
         validator: widget.validator,
         onTap: () {},
@@ -118,7 +121,7 @@ class _InputFieldState extends State<InputField> {
                       },
                       child: const Icon(Icons.cancel))
                   : null,
-          fillColor: AppColor.lightGrey,
+          fillColor: context.colorScheme.secondary,
           errorStyle: Styles.boldStyle(
               fontSize: 12, color: AppColor.red, family: FontFamily.varela),
           errorBorder: OutlineInputBorder(
@@ -138,14 +141,14 @@ class _InputFieldState extends State<InputField> {
           hintStyle: Styles.mediumStyle(
               fontSize: 15, color: AppColor.grey, family: FontFamily.varela),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: AppColor.black1,
+            borderSide: BorderSide(
+              color: context.colorScheme.onPrimary,
             ),
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: AppColor.black1,
+            borderSide: BorderSide(
+              color: context.colorScheme.onPrimary,
             ),
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
           ),

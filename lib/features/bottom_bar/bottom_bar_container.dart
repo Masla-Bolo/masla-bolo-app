@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_state.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,11 +18,13 @@ class BottomBarContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(15),
       width: 0.8.sw,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [BoxShadow(color: AppColor.black1, blurRadius: 0.25)],
+      decoration: BoxDecoration(
+        color: context.colorScheme.primary,
+        boxShadow: [
+          BoxShadow(color: context.colorScheme.onPrimary, blurRadius: 0.25)
+        ],
       ),
       child: BlocBuilder<BottomBarCubit, BottomBarState>(
           bloc: cubit,

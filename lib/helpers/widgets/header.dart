@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
-import '../styles/app_colors.dart';
 import '../styles/styles.dart';
 
 class Header extends StatelessWidget {
@@ -23,14 +23,15 @@ class Header extends StatelessWidget {
         if (!hideBackIcon)
           GestureDetector(
             onTap: onBackTap,
-            child: const Icon(Icons.arrow_back_ios_new, color: AppColor.black1),
+            child: Icon(Icons.arrow_back_ios_new,
+                color: context.colorScheme.onPrimary),
           ),
         20.horizontalSpace,
         Text(
           title,
           style: Styles.semiBoldStyle(
             fontSize: 30,
-            color: AppColor.black1,
+            color: context.colorScheme.onPrimary,
             family: FontFamily.dmSans,
           ),
         ),

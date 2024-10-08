@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
-import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
 
 class InfoCard extends StatelessWidget {
@@ -15,7 +15,7 @@ class InfoCard extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: AppColor.black3,
+        color: context.colorScheme.onPrimary,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -25,7 +25,7 @@ class InfoCard extends StatelessWidget {
             title,
             style: Styles.boldStyle(
               fontSize: 24.sp,
-              color: AppColor.white,
+              color: context.colorScheme.primary,
               family: FontFamily.dmSans,
             ),
           ),
@@ -35,7 +35,7 @@ class InfoCard extends StatelessWidget {
             style: Styles.mediumStyle(
               fontSize: 16.sp,
               family: FontFamily.varela,
-              color: AppColor.white.withOpacity(0.8),
+              color: context.colorScheme.primary.withOpacity(0.8),
             ),
           ),
         ],

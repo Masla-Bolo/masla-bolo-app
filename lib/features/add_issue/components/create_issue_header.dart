@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_cubit.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
-import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/app_images.dart';
 import '../../../helpers/styles/styles.dart';
 
@@ -19,14 +19,17 @@ class IssueHeader extends StatelessWidget {
             onTap: () {
               cubit.goBack();
             },
-            child: const Icon(Icons.arrow_back_ios_new, color: AppColor.black1),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: context.colorScheme.onPrimary,
+            ),
           ),
           20.horizontalSpace,
           Text(
             "Create Issue",
             style: Styles.semiBoldStyle(
               fontSize: 30,
-              color: AppColor.black1,
+              color: context.colorScheme.onPrimary,
               family: FontFamily.dmSans,
             ),
           ),
@@ -35,7 +38,10 @@ class IssueHeader extends StatelessWidget {
               onTap: () {
                 cubit.showOptions(context);
               },
-              child: Image.asset(AppImages.link)),
+              child: Image.asset(
+                AppImages.link,
+                color: context.colorScheme.onPrimary,
+              )),
           5.horizontalSpace,
         ],
       ),

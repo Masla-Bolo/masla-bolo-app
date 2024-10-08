@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/profile/components/settings/settings_cubit.dart';
 import 'package:masla_bolo_app/features/profile/components/settings/settings_state.dart';
 import 'package:masla_bolo_app/features/profile/components/settings/theme_switch.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
 import '../../../../helpers/helpers.dart';
 import '../../../../helpers/styles/app_colors.dart';
@@ -50,7 +51,8 @@ class SettingsPage extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 decoration: BoxDecoration(
-                                  color: AppColor.lightGrey.withOpacity(0.1),
+                                  color: context.colorScheme.secondary
+                                      .withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: ListTile(
@@ -58,11 +60,12 @@ class SettingsPage extends StatelessWidget {
                                         EdgeInsets.symmetric(vertical: 8.h),
                                     leading: CircleAvatar(
                                       radius: 24.w,
-                                      backgroundColor:
-                                          AppColor.lightGrey.withOpacity(0.1),
+                                      backgroundColor: context
+                                          .colorScheme.secondary
+                                          .withOpacity(0.1),
                                       child: Icon(
                                         setting.icon,
-                                        color: AppColor.black1,
+                                        color: context.colorScheme.onPrimary,
                                       ),
                                     ),
                                     title: Text(
@@ -70,12 +73,12 @@ class SettingsPage extends StatelessWidget {
                                       style: Styles.boldStyle(
                                         family: FontFamily.varela,
                                         fontSize: 16,
-                                        color: AppColor.black1,
+                                        color: context.colorScheme.onPrimary,
                                       ),
                                     ),
-                                    trailing: const Icon(
+                                    trailing: Icon(
                                       Icons.arrow_forward_ios_rounded,
-                                      color: AppColor.black1,
+                                      color: context.colorScheme.onPrimary,
                                     )),
                               ),
                             );
@@ -104,9 +107,9 @@ class SettingsPage extends StatelessWidget {
                               leading: CircleAvatar(
                                 radius: 24.w,
                                 backgroundColor: AppColor.red.withOpacity(0.1),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.power_settings_new_outlined,
-                                  color: AppColor.black1,
+                                  color: context.colorScheme.onPrimary,
                                 ),
                               ),
                               trailing: Text(
@@ -114,7 +117,7 @@ class SettingsPage extends StatelessWidget {
                                 style: Styles.boldStyle(
                                   family: FontFamily.varela,
                                   fontSize: 16,
-                                  color: AppColor.black1,
+                                  color: context.colorScheme.onPrimary,
                                 ),
                               ),
                             ),

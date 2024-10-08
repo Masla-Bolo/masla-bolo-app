@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
 import 'package:masla_bolo_app/features/profile/profile_state.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/widgets/shimmer_effect.dart';
 import 'package:masla_bolo_app/service/app_service.dart';
 
-import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
 
 class ProfileTabView extends StatefulWidget {
@@ -52,7 +52,7 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                         style: Styles.boldStyle(
                           family: FontFamily.varela,
                           fontSize: 16,
-                          color: AppColor.black1,
+                          color: context.colorScheme.onPrimary,
                         ),
                       ),
                     )
@@ -66,8 +66,8 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
-                              color: AppColor.lightGrey.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(30),
+                              color: context.colorScheme.onPrimary,
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             child: ListTile(
                               contentPadding:
@@ -77,7 +77,7 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                                 style: Styles.boldStyle(
                                   family: FontFamily.varela,
                                   fontSize: 16,
-                                  color: AppColor.black1,
+                                  color: context.colorScheme.primary,
                                 ),
                               ),
                               subtitle: Text(
@@ -85,7 +85,7 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                                 style: Styles.boldStyle(
                                   family: FontFamily.varela,
                                   fontSize: 16,
-                                  color: AppColor.black1,
+                                  color: context.colorScheme.primary,
                                 ),
                               ),
                             ),

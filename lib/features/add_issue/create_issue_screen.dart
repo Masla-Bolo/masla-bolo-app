@@ -7,9 +7,9 @@ import 'package:masla_bolo_app/features/add_issue/components/create_issue_form.d
 import 'package:masla_bolo_app/features/add_issue/components/create_issue_header.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_cubit.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 
-import '../../helpers/styles/app_colors.dart';
 import '../../helpers/styles/styles.dart';
 
 class CreateIssueScreen extends StatelessWidget {
@@ -47,15 +47,15 @@ class CreateIssueScreen extends StatelessWidget {
                                   },
                                   child: Chip(
                                     backgroundColor: value.isSelected
-                                        ? AppColor.black1
-                                        : AppColor.white,
+                                        ? context.colorScheme.onPrimary
+                                        : context.colorScheme.primary,
                                     label: Text(
                                       value.item,
                                       style: Styles.boldStyle(
                                         fontSize: 15,
                                         color: value.isSelected
-                                            ? AppColor.white
-                                            : AppColor.black1,
+                                            ? context.colorScheme.primary
+                                            : context.colorScheme.onPrimary,
                                         family: FontFamily.varela,
                                       ),
                                     ),
@@ -75,7 +75,7 @@ class CreateIssueScreen extends StatelessWidget {
                           "Post as anonymous",
                           style: Styles.boldStyle(
                             fontSize: 15,
-                            color: AppColor.black1,
+                            color: context.colorScheme.onPrimary,
                             family: FontFamily.dmSans,
                           ),
                         ),
@@ -85,8 +85,8 @@ class CreateIssueScreen extends StatelessWidget {
                           onChanged: (val) {
                             cubit.changeAnonymous(val);
                           },
-                          activeColor: AppColor.black1,
-                          onLabelColor: AppColor.black1,
+                          activeColor: context.colorScheme.onPrimary,
+                          thumbColor: context.colorScheme.primary,
                         ),
                         10.horizontalSpace,
                       ],
@@ -98,10 +98,25 @@ class CreateIssueScreen extends StatelessWidget {
                         onPressed: () {
                           loader(() => cubit.createIssue());
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.only(top: 20, bottom: 20),
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 48),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          backgroundColor:
+                              context.colorScheme.primary.withOpacity(0.2),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 20),
                           child: Center(
-                            child: Text("Create"),
+                            child: Text(
+                              "Create",
+                              style: Styles.boldStyle(
+                                fontSize: 15,
+                                color: context.colorScheme.onPrimary,
+                                family: FontFamily.dmSans,
+                              ),
+                            ),
                           ),
                         ),
                       ),

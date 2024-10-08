@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/get_started/componenets/get_started_header.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_state.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
 import '../../../service/app_service.dart';
@@ -50,7 +50,7 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
                         child: Icon(
                           Icons.help_outline_sharp,
                           size: 100.w,
-                          color: AppColor.black1,
+                          color: context.colorScheme.onPrimary,
                         ),
                       ),
                       20.verticalSpace,
@@ -59,7 +59,7 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
                           "Welcome to Masla Bolo!",
                           style: Styles.boldStyle(
                             fontSize: 30,
-                            color: AppColor.black1,
+                            color: context.colorScheme.onPrimary,
                             family: FontFamily.dmSans,
                           ),
                           textAlign: TextAlign.center,
@@ -71,7 +71,7 @@ class _GetStartedAboutState extends State<GetStartedAbout> {
                           "Report local issues & drive real change.",
                           style: Styles.semiBoldStyle(
                             fontSize: 18.sp,
-                            color: AppColor.black1,
+                            color: context.colorScheme.onPrimary,
                             family: FontFamily.varela,
                           ),
                           textAlign: TextAlign.center,

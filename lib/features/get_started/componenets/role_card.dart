@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
-import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
 
 class RoleCard extends StatelessWidget {
@@ -29,16 +29,19 @@ class RoleCard extends StatelessWidget {
         width: 0.8.sw,
         height: 0.2.sh,
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.black1 : Colors.transparent,
+          color:
+              isSelected ? context.colorScheme.onPrimary : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? AppColor.white : AppColor.black1,
+            color: isSelected
+                ? context.colorScheme.primary
+                : context.colorScheme.onPrimary,
             width: isSelected ? 3 : 1,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColor.black1.withOpacity(0.5),
+                    color: context.colorScheme.onPrimary.withOpacity(0.5),
                     spreadRadius: 3,
                     blurRadius: 10,
                     offset: const Offset(0, 5),
@@ -54,7 +57,9 @@ class RoleCard extends StatelessWidget {
               Icon(
                 icon,
                 size: 50.w,
-                color: isSelected ? AppColor.white : AppColor.black1,
+                color: isSelected
+                    ? context.colorScheme.primary
+                    : context.colorScheme.onPrimary,
               ),
               20.horizontalSpace,
               Flexible(
@@ -66,7 +71,9 @@ class RoleCard extends StatelessWidget {
                       title,
                       style: Styles.boldStyle(
                         fontSize: 20,
-                        color: isSelected ? AppColor.white : AppColor.black1,
+                        color: isSelected
+                            ? context.colorScheme.primary
+                            : context.colorScheme.onPrimary,
                         family: FontFamily.varela,
                       ),
                     ),
@@ -74,7 +81,9 @@ class RoleCard extends StatelessWidget {
                       tagLine,
                       style: Styles.boldStyle(
                         fontSize: 12,
-                        color: isSelected ? AppColor.white : AppColor.black1,
+                        color: isSelected
+                            ? context.colorScheme.primary
+                            : context.colorScheme.onPrimary,
                         family: FontFamily.varela,
                       ),
                     ),
@@ -92,7 +101,9 @@ class RoleCard extends StatelessWidget {
                       title,
                       style: Styles.boldStyle(
                         fontSize: 20,
-                        color: isSelected ? AppColor.white : AppColor.black1,
+                        color: isSelected
+                            ? context.colorScheme.primary
+                            : context.colorScheme.onPrimary,
                         family: FontFamily.varela,
                       ),
                     ),
@@ -100,7 +111,9 @@ class RoleCard extends StatelessWidget {
                       tagLine,
                       style: Styles.boldStyle(
                         fontSize: 12,
-                        color: isSelected ? AppColor.white : AppColor.black1,
+                        color: isSelected
+                            ? context.colorScheme.primary
+                            : context.colorScheme.onPrimary,
                         family: FontFamily.varela,
                       ),
                     ),
@@ -111,7 +124,9 @@ class RoleCard extends StatelessWidget {
               Icon(
                 icon,
                 size: 50.w,
-                color: isSelected ? AppColor.white : AppColor.black1,
+                color: isSelected
+                    ? context.colorScheme.primary
+                    : context.colorScheme.onPrimary,
               ),
             ]
           ],

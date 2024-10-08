@@ -1,5 +1,5 @@
 import 'package:masla_bolo_app/features/bottom_bar/components/bottom_bar_item.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,7 +40,9 @@ class _BottomBarIconState extends State<BottomBarIcon> {
             child: Image.asset(
               widget.item.icon,
               height: 25,
-              color: isSelected ? AppColor.black1 : Colors.grey,
+              color: isSelected
+                  ? context.colorScheme.onPrimary
+                  : context.colorScheme.secondary,
             ),
           );
         });

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/profile/components/profile_tab_view.dart';
 import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
@@ -56,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   "Profile",
                                   style: Styles.boldStyle(
                                     fontSize: 30,
-                                    color: AppColor.black1,
+                                    color: context.colorScheme.onPrimary,
                                     family: FontFamily.dmSans,
                                   ),
                                 ),
@@ -64,14 +65,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 Text(state.user.username ?? "",
                                     style: Styles.boldStyle(
                                       fontSize: 15,
-                                      color: AppColor.black1,
+                                      color: context.colorScheme.onPrimary,
                                       family: FontFamily.dmSans,
                                     )),
                                 Text(
                                   state.user.email ?? "",
                                   style: Styles.boldStyle(
                                     fontSize: 15,
-                                    color: AppColor.black1,
+                                    color: context.colorScheme.onPrimary,
                                     family: FontFamily.dmSans,
                                   ),
                                 ),
@@ -84,17 +85,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   onTap: () {
                                     cubit.goToSettings();
                                   },
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.settings,
-                                    color: AppColor.black1,
+                                    color: context.colorScheme.onPrimary,
                                     size: 30,
                                   ),
                                 ),
                                 20.verticalSpace,
-                                const CircleAvatar(
+                                CircleAvatar(
                                   backgroundColor: AppColor.black1,
                                   child: Icon(Icons.person_2,
-                                      color: AppColor.white),
+                                      color: context.colorScheme.primary),
                                 ),
                               ],
                             ),
@@ -109,12 +110,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                             'Edit Profile',
                             style: Styles.boldStyle(
                               fontSize: 14,
-                              color: AppColor.white,
+                              color: context.colorScheme.primary,
                               family: FontFamily.varela,
                             ),
                           ),
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: AppColor.black1,
+                            backgroundColor: context.colorScheme.onPrimary,
                             minimumSize: const Size(double.infinity, 35),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -131,12 +132,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                         indicatorSize: TabBarIndicatorSize.tab,
                         unselectedLabelStyle: Styles.boldStyle(
                           fontSize: 12,
-                          color: AppColor.black1,
+                          color: context.colorScheme.onPrimary,
                           family: FontFamily.dmSans,
                         ),
                         labelStyle: Styles.boldStyle(
                           fontSize: 12,
-                          color: AppColor.black1,
+                          color: context.colorScheme.onPrimary,
                           family: FontFamily.dmSans,
                         ),
                         labelPadding: const EdgeInsets.only(
@@ -152,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               textAlign: TextAlign.center,
                               style: Styles.boldStyle(
                                 fontSize: 15,
-                                color: AppColor.black1,
+                                color: context.colorScheme.onPrimary,
                                 family: FontFamily.varela,
                               ),
                             ),
@@ -163,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             textAlign: TextAlign.center,
                             style: Styles.boldStyle(
                               fontSize: 15,
-                              color: AppColor.black1,
+                              color: context.colorScheme.onPrimary,
                               family: FontFamily.varela,
                             ),
                           )),
@@ -173,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                               textAlign: TextAlign.center,
                               style: Styles.boldStyle(
                                 fontSize: 15,
-                                color: AppColor.black1,
+                                color: context.colorScheme.onPrimary,
                                 family: FontFamily.varela,
                               ),
                             ),

@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/input_field.dart';
 
@@ -52,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text('MASLA BOLO!',
                               style: Styles.boldStyle(
                                 fontSize: 30,
-                                color: AppColor.black1,
+                                color: context.colorScheme.onPrimary,
                                 family: FontFamily.dmSans,
                               )),
                         ),
@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'Report local issues & drive real change!',
                             style: Styles.mediumStyle(
                               fontSize: 16,
-                              color: AppColor.grey,
+                              color: context.colorScheme.secondary,
                               family: FontFamily.varela,
                             ),
                           ),
@@ -72,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           'Your user name',
                           style: Styles.boldStyle(
                             fontSize: 14,
-                            color: AppColor.black1,
+                            color: context.colorScheme.onPrimary,
                             family: FontFamily.varela,
                           ),
                         ),
@@ -95,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           'Your email address',
                           style: Styles.boldStyle(
                             fontSize: 14,
-                            color: AppColor.black1,
+                            color: context.colorScheme.onPrimary,
                             family: FontFamily.varela,
                           ),
                         ),
@@ -118,7 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           'Choose a password',
                           style: Styles.boldStyle(
                             fontSize: 14,
-                            color: AppColor.black1,
+                            color: context.colorScheme.onPrimary,
                             family: FontFamily.varela,
                           ),
                         ),
@@ -143,12 +143,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             loader(() => authCubit.register());
                           },
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: context.colorScheme.onPrimary,
                             minimumSize: const Size(double.infinity, 48),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: const Text('Register'),
+                          child: Text(
+                            'Register',
+                            style: Styles.mediumStyle(
+                              fontSize: 12,
+                              color: context.colorScheme.primary,
+                              family: FontFamily.varela,
+                            ),
+                          ),
                         ),
                         10.verticalSpace,
                         RichText(
@@ -156,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               text: "  Already have an account? ",
                               style: Styles.mediumStyle(
                                 fontSize: 12,
-                                color: AppColor.grey,
+                                color: context.colorScheme.secondary,
                                 family: FontFamily.varela,
                               ),
                               children: [
@@ -166,9 +174,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       authCubit.goToLogin();
                                     },
                                   text: "Login",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 13,
-                                    color: AppColor.black1,
+                                    color: context.colorScheme.onPrimary,
                                     decoration: TextDecoration.underline,
                                   ),
                                 )

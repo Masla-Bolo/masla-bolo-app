@@ -4,9 +4,8 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_post/issue_p
 import 'package:masla_bolo_app/features/home/components/issue/issue_post/issue_post_shimmer.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
-
-import '../../../helpers/styles/app_colors.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({super.key, required this.cubit});
@@ -23,8 +22,8 @@ class HomeBody extends StatelessWidget {
               ? const IssuePostShimmer()
               : Expanded(
                   child: RefreshIndicator(
-                    color: AppColor.black1,
-                    backgroundColor: AppColor.white,
+                    color: context.colorScheme.onPrimary,
+                    backgroundColor: context.colorScheme.primary,
                     onRefresh: () async {
                       await cubit.refreshIssues();
                     },
@@ -39,7 +38,7 @@ class HomeBody extends StatelessWidget {
                         itemCount: state.issuesPagination.results.length,
                         separatorBuilder: (contex, index) {
                           return Divider(
-                            color: Colors.grey.shade300,
+                            color: context.colorScheme.secondary,
                             thickness: 7,
                             height: 7,
                           );

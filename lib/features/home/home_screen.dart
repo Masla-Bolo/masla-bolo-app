@@ -6,6 +6,7 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
 import '../../helpers/widgets/header.dart';
@@ -52,12 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         Scaffold.of(context).openEndDrawer();
                       },
-                      child: Image.asset(AppImages.filter, height: 30),
+                      child: Image.asset(
+                        AppImages.filter,
+                        height: 30,
+                        color: context.colorScheme.onPrimary,
+                      ),
                     ),
                   ),
-                  5.verticalSpace,
-                  //search
-                  // HomeSearch(cubit: homeCubit),
                   10.verticalSpace,
                   //list of issues
                   HomeBody(cubit: homeCubit),

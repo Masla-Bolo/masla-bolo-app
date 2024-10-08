@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
 import '../../../service/app_service.dart';
@@ -52,7 +52,7 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                         style: Styles.boldStyle(
                           fontSize: 40,
                           family: FontFamily.dmSans,
-                          color: AppColor.black1,
+                          color: context.colorScheme.onPrimary,
                         ),
                       ),
                     ),
@@ -69,7 +69,7 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                       "or",
                       style: Styles.lightStyle(
                         fontSize: 20,
-                        color: AppColor.black4,
+                        color: context.colorScheme.onPrimary,
                         family: FontFamily.varela,
                       ),
                     ),
@@ -96,7 +96,7 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                             child: Container(
                               padding: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
-                                color: AppColor.black1,
+                                color: context.colorScheme.onPrimary,
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: Row(
@@ -106,14 +106,14 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                                     "Get Started",
                                     style: Styles.semiBoldStyle(
                                       fontSize: 20.sp,
-                                      color: AppColor.white,
+                                      color: context.colorScheme.primary,
                                       family: FontFamily.varela,
                                     ),
                                   ),
                                   10.horizontalSpace,
-                                  const Icon(
+                                  Icon(
                                     Icons.arrow_forward,
-                                    color: AppColor.white,
+                                    color: context.colorScheme.primary,
                                   ),
                                 ],
                               ),

@@ -1,3 +1,4 @@
+import 'package:masla_bolo_app/features/explore/explore_page.dart';
 import 'package:masla_bolo_app/features/home/home_screen.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_screen.dart';
 import 'package:masla_bolo_app/features/notification/notification_page.dart';
@@ -19,6 +20,10 @@ class BottomBarItem {
     BottomBarItem(
       icon: AppImages.homeGrey,
       page: HomeScreen(cubit: getIt()),
+    ),
+    BottomBarItem(
+      icon: AppImages.searchGrey,
+      page: ExplorePage(cubit: getIt()),
     ),
     BottomBarItem(
       icon: AppImages.writeGrey,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/notification/notification_cubit.dart';
 import 'package:masla_bolo_app/features/notification/notification_state.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
@@ -46,9 +47,9 @@ class NotificationPage extends StatelessWidget {
                             radius: 24.w,
                             backgroundColor:
                                 AppColor.lightGrey.withOpacity(0.1),
-                            child: const Icon(
+                            child: Icon(
                               Icons.notifications,
-                              color: AppColor.black1,
+                              color: context.colorScheme.onPrimary,
                             ),
                           ),
                           title: Text(
@@ -56,7 +57,7 @@ class NotificationPage extends StatelessWidget {
                             style: Styles.boldStyle(
                               family: FontFamily.varela,
                               fontSize: 16,
-                              color: AppColor.black1,
+                              color: context.colorScheme.onPrimary,
                             ),
                           ),
                           subtitle: Text(
@@ -64,7 +65,8 @@ class NotificationPage extends StatelessWidget {
                             style: Styles.mediumStyle(
                               family: FontFamily.varela,
                               fontSize: 14,
-                              color: AppColor.black2.withOpacity(0.7),
+                              color: context.colorScheme.onPrimary
+                                  .withOpacity(0.7),
                             ),
                           ),
                           trailing: Text(
@@ -72,7 +74,8 @@ class NotificationPage extends StatelessWidget {
                             style: Styles.mediumStyle(
                               family: FontFamily.varela,
                               fontSize: 12,
-                              color: AppColor.black3.withOpacity(0.6),
+                              color: context.colorScheme.onPrimary
+                                  .withOpacity(0.8),
                             ),
                           ),
                         );
