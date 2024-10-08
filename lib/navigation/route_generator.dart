@@ -2,6 +2,7 @@
 
 import 'package:masla_bolo_app/features/auth/sign_up/sign_up_screen.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar.dart';
+import 'package:masla_bolo_app/features/explore/explore_page.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_screen.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_screen.dart';
@@ -47,6 +48,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteName.notification:
       return getRoute(
           NotificationPage(
+            cubit: getIt(),
+          ),
+          TransitionType.fade);
+
+    case RouteName.explore:
+      return getRoute(
+          ExplorePage(
             cubit: getIt(),
           ),
           TransitionType.fade);

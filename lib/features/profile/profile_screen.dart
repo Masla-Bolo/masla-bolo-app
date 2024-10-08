@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/profile/components/profile_tab_view.dart';
 import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
 import 'profile_state.dart';
@@ -27,7 +26,9 @@ class _ProfileScreenState extends State<ProfileScreen>
     cubit = widget.cubit;
     tabController = TabController(length: 3, vsync: this);
     cubit.getUser();
-    cubit.getMyIssues();
+    if (!cubit.state.isLoaded) {
+      cubit.getMyIssues();
+    }
   }
 
   @override
@@ -93,7 +94,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                                 ),
                                 20.verticalSpace,
                                 CircleAvatar(
-                                  backgroundColor: AppColor.black1,
+                                  backgroundColor: context.colorScheme.onPrimary
+                                      .withOpacity(0.3),
                                   child: Icon(Icons.person_2,
                                       color: context.colorScheme.primary),
                                 ),
@@ -128,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   20.verticalSpace,
                   Center(
                     child: TabBar(
-                        indicatorColor: AppColor.black1,
+                        indicatorColor: context.colorScheme.onPrimary,
                         indicatorSize: TabBarIndicatorSize.tab,
                         unselectedLabelStyle: Styles.boldStyle(
                           fontSize: 12,

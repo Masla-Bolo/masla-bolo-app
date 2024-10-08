@@ -38,7 +38,8 @@ class HomeBody extends StatelessWidget {
                         itemCount: state.issuesPagination.results.length,
                         separatorBuilder: (contex, index) {
                           return Divider(
-                            color: context.colorScheme.secondary,
+                            color:
+                                context.colorScheme.secondary.withOpacity(0.1),
                             thickness: 7,
                             height: 7,
                           );

@@ -12,6 +12,8 @@ import 'package:masla_bolo_app/features/auth/auth_cubit.dart';
 import 'package:masla_bolo_app/features/auth/auth_navigator.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_navigator.dart';
+import 'package:masla_bolo_app/features/explore/explore_cubit.dart';
+import 'package:masla_bolo_app/features/explore/explore_navigator.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_cubit.dart';
 import 'package:masla_bolo_app/features/get_started/get_started_navigator.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
@@ -61,6 +63,8 @@ class AppService {
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
     getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
+    getIt.registerSingleton<ExploreNavigator>(ExploreNavigator(getIt()));
+    getIt.registerSingleton<ExploreCubit>(ExploreCubit(getIt(), getIt()));
     getIt.registerSingleton<ImageHelper>(ImageHelper());
     getIt.registerFactoryParam<IssueDetailCubit, IssueDetailInitialParams,
         dynamic>(

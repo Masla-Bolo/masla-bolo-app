@@ -1,3 +1,4 @@
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:flutter/services.dart';
 
@@ -59,10 +60,10 @@ class _IssueFieldState extends State<IssueField> {
       controller: controller,
       focusNode: widget.focusNode,
       inputFormatters: widget.inputFormatters,
-      cursorColor: AppColor.black1,
+      cursorColor: context.colorScheme.onPrimary,
       cursorHeight: widget.cursorSize.height,
       cursorWidth: widget.cursorSize.width,
-      cursorErrorColor: AppColor.black1,
+      cursorErrorColor: context.colorScheme.onPrimary,
       onChanged: widget.onChanged,
       validator: widget.validator,
       minLines: 1,
@@ -71,7 +72,7 @@ class _IssueFieldState extends State<IssueField> {
       decoration: InputDecoration(
         border: InputBorder.none,
         hintText: widget.hintText,
-        fillColor: AppColor.black1,
+        fillColor: context.colorScheme.onPrimary,
         errorStyle: Styles.boldStyle(
           fontSize: 12,
           color: AppColor.red,

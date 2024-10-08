@@ -61,6 +61,7 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                       itemBuilder: (context, index) {
                         final issue = issues[index];
                         return Padding(
+                          key: Key("$index"),
                           padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           child: Container(

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_state.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
-import '../../../../../../../helpers/styles/app_colors.dart';
 import '../../../../../../../helpers/styles/styles.dart';
 import '../../issue_detail_cubit.dart';
 import 'issue_comments.dart';
@@ -23,15 +23,15 @@ class Comment extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: CircleAvatar(
                       radius: 15,
-                      backgroundColor: AppColor.black1,
+                      backgroundColor: context.colorScheme.onPrimary,
                       child: Icon(
                         Icons.person_2,
                         size: 15,
-                        color: AppColor.white,
+                        color: context.colorScheme.primary,
                       ),
                     ),
                   ),
@@ -47,7 +47,7 @@ class Comment extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
+                                color: context.colorScheme.onPrimary,
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Column(
@@ -57,7 +57,7 @@ class Comment extends StatelessWidget {
                                     comment.user?.username ?? "",
                                     style: Styles.boldStyle(
                                       fontSize: 14,
-                                      color: AppColor.black1,
+                                      color: context.colorScheme.primary,
                                       family: FontFamily.varela,
                                     ),
                                   ),
@@ -66,7 +66,7 @@ class Comment extends StatelessWidget {
                                     comment.content,
                                     style: Styles.mediumStyle(
                                       fontSize: 12,
-                                      color: AppColor.black1,
+                                      color: context.colorScheme.primary,
                                       family: FontFamily.varela,
                                     ),
                                   ),
@@ -84,18 +84,25 @@ class Comment extends StatelessWidget {
                                 cubit.likeUnlikeComment(comment.id!);
                               },
                               child: Text(
-                                "Like",
+                                comment.isLiked ? "Liked" : "Like",
                                 style: Styles.boldStyle(
                                   fontSize: 14,
                                   color: comment.isLiked
-                                      ? AppColor.black6
-                                      : AppColor.black1.withOpacity(0.3),
+                                      ? context.colorScheme.onPrimary
+                                      : context.colorScheme.secondary,
                                   family: FontFamily.varela,
                                 ),
                               ),
                             ),
                             10.horizontalSpace,
-                            const Text("•"),
+                            Text(
+                              "•",
+                              style: Styles.boldStyle(
+                                fontSize: 14,
+                                color: context.colorScheme.onPrimary,
+                                family: FontFamily.varela,
+                              ),
+                            ),
                             10.horizontalSpace,
                             GestureDetector(
                               onTap: () {
@@ -105,7 +112,7 @@ class Comment extends StatelessWidget {
                                 "Reply",
                                 style: Styles.mediumStyle(
                                   fontSize: 12,
-                                  color: AppColor.black1,
+                                  color: context.colorScheme.onPrimary,
                                   family: FontFamily.varela,
                                 ),
                               ),

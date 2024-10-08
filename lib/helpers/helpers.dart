@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/network/network_response.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
@@ -69,7 +70,7 @@ Future<void> showToast(String message, {ToastParam? params}) async {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
             decoration: BoxDecoration(
-              color: params?.backgroundColor ?? Colors.black,
+              color: params?.backgroundColor ?? context.colorScheme.onPrimary,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -78,7 +79,7 @@ Future<void> showToast(String message, {ToastParam? params}) async {
                 10.horizontalSpace,
                 Image.asset(
                   params?.image ?? AppImages.access,
-                  color: params?.textColor ?? AppColor.white,
+                  color: params?.textColor ?? context.colorScheme.primary,
                   filterQuality: FilterQuality.high,
                   height: 25,
                 ),
@@ -88,7 +89,7 @@ Future<void> showToast(String message, {ToastParam? params}) async {
                     message,
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: params?.textColor ?? AppColor.white,
+                      color: params?.textColor ?? context.colorScheme.primary,
                       fontFamily: "Varela",
                     ),
                     textAlign: TextAlign.center,
@@ -111,11 +112,11 @@ Future<bool> showConfirmationDialog(String title) async {
           return AlertDialog(
             contentPadding: const EdgeInsets.all(0),
             actionsPadding: const EdgeInsets.all(0),
-            backgroundColor: AppColor.white,
+            backgroundColor: context.colorScheme.primary,
             title: Text(title,
                 style: Styles.semiBoldStyle(
                   fontSize: 16,
-                  color: AppColor.black1,
+                  color: context.colorScheme.onPrimary,
                   family: FontFamily.varela,
                 )),
             actions: [
@@ -124,7 +125,7 @@ Future<bool> showConfirmationDialog(String title) async {
                 child: Text('No',
                     style: Styles.mediumStyle(
                       fontSize: 14,
-                      color: AppColor.black1,
+                      color: context.colorScheme.onPrimary,
                       family: FontFamily.varela,
                     )),
               ),
@@ -134,7 +135,7 @@ Future<bool> showConfirmationDialog(String title) async {
                     style: Styles.mediumStyle(
                         family: FontFamily.varela,
                         fontSize: 14,
-                        color: AppColor.black1)),
+                        color: context.colorScheme.onPrimary)),
               ),
             ],
           );

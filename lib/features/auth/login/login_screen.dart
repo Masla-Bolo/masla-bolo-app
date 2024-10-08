@@ -6,7 +6,6 @@ import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
-import 'package:masla_bolo_app/helpers/widgets/header.dart';
 import 'package:masla_bolo_app/helpers/widgets/input_field.dart';
 
 import '../auth_cubit.dart';
@@ -50,11 +49,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         10.verticalSpace,
-                        Header(
-                          title: "",
-                          onBackTap: () {
+                        GestureDetector(
+                          onTap: () {
                             authCubit.goToGetStated();
                           },
+                          child: Icon(Icons.arrow_back_ios_new,
+                              size: 20, color: context.colorScheme.onPrimary),
                         ),
                         60.verticalSpace,
                         Center(

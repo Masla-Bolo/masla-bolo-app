@@ -7,8 +7,6 @@ import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
-import '../../helpers/widgets/header.dart';
-
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key, required this.cubit});
   final NotificationCubit cubit;
@@ -24,11 +22,16 @@ class NotificationPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   10.verticalSpace,
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8.0),
-                    child: Header(
-                      title: "Notifications",
-                      hideBackIcon: true,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Text(
+                      "Notifications",
+                      maxLines: 1,
+                      style: Styles.boldStyle(
+                        fontSize: 20,
+                        color: context.colorScheme.onPrimary,
+                        family: FontFamily.dmSans,
+                      ),
                     ),
                   ),
                   20.verticalSpace,

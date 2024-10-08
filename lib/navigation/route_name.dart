@@ -10,4 +10,5 @@ class RouteName {
   static const settings = '/settings';
   static const bottomBar = '/bottom-bar';
   static const getStarted = '/get-started';
+  static const explore = "/explore";
 }

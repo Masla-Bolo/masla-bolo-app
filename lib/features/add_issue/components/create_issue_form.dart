@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_cubit.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
-import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
 import 'create_issue_field.dart';
 
@@ -38,13 +38,13 @@ class IssueForm extends StatelessWidget {
                     cursorSize: const Size(2, 40),
                     hintStyle: Styles.semiBoldStyle(
                       fontSize: 40,
-                      color: Colors.grey.shade600,
+                      color: context.colorScheme.secondary.withOpacity(0.6),
                       family: FontFamily.varela,
                     ),
                     maxLength: 2,
                     textStyle: Styles.semiBoldStyle(
                       fontSize: 40,
-                      color: AppColor.black1,
+                      color: context.colorScheme.onPrimary,
                       family: FontFamily.varela,
                     ),
                   ),
@@ -66,12 +66,12 @@ class IssueForm extends StatelessWidget {
                       cursorSize: const Size(2, 15),
                       hintStyle: Styles.mediumStyle(
                         fontSize: 15,
-                        color: Colors.grey.shade600,
+                        color: context.colorScheme.secondary.withOpacity(0.6),
                         family: FontFamily.varela,
                       ),
                       textStyle: Styles.semiBoldStyle(
                         fontSize: 15,
-                        color: AppColor.black1,
+                        color: context.colorScheme.onPrimary,
                         family: FontFamily.varela,
                       ),
                     ),

@@ -25,7 +25,7 @@ class ImageHelper {
               style: Styles.semiBoldStyle(
                   family: FontFamily.varela,
                   fontSize: 15,
-                  color: Theme.of(context).colorScheme.onSecondary),
+                  color: Theme.of(context).colorScheme.onPrimary),
             ),
             onPressed: () async {
               final file = await getImage(ImageSource.gallery);
@@ -40,7 +40,7 @@ class ImageHelper {
               style: Styles.semiBoldStyle(
                   family: FontFamily.varela,
                   fontSize: 15,
-                  color: Theme.of(context).colorScheme.onSecondary),
+                  color: Theme.of(context).colorScheme.onPrimary),
             ),
             onPressed: () async {
               Navigator.of(context).pop();

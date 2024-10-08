@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
-import '../../../../../../helpers/styles/app_colors.dart';
 import '../../../../../../helpers/styles/styles.dart';
 import '../issue_detail_cubit.dart';
 import '../issue_detail_state.dart';
@@ -37,7 +37,7 @@ class IssueDetailBody extends StatelessWidget {
                       state.currentIssue.title.toUpperCase(),
                       style: Styles.boldStyle(
                         fontSize: 20,
-                        color: AppColor.black1,
+                        color: context.colorScheme.onPrimary,
                         family: FontFamily.dmSans,
                       ),
                     ),
@@ -46,7 +46,7 @@ class IssueDetailBody extends StatelessWidget {
                       state.currentIssue.description,
                       style: Styles.mediumStyle(
                         fontSize: 18,
-                        color: AppColor.grey,
+                        color: context.colorScheme.secondary,
                         family: FontFamily.varela,
                       ),
                     ),
@@ -56,10 +56,11 @@ class IssueDetailBody extends StatelessWidget {
                       direction: Axis.horizontal,
                       children: state.currentIssue.categories.map((category) {
                         return Chip(
+                            backgroundColor: context.colorScheme.onPrimary,
                             label: Text(category,
                                 style: Styles.boldStyle(
                                   fontSize: 15,
-                                  color: AppColor.white,
+                                  color: context.colorScheme.primary,
                                   family: FontFamily.varela,
                                 )));
                       }).toList(),

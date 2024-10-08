@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
-import '../../../helpers/styles/app_colors.dart';
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/header.dart';
 import 'issue/issue_cubit.dart';
@@ -47,7 +47,7 @@ class HomeFilterDrawer extends StatelessWidget {
                                 Text("Categories",
                                     style: Styles.boldStyle(
                                       fontSize: 20,
-                                      color: AppColor.black1,
+                                      color: context.colorScheme.onPrimary,
                                       family: FontFamily.varela,
                                     )),
                                 const Spacer(),
@@ -58,7 +58,8 @@ class HomeFilterDrawer extends StatelessWidget {
                                   child: Text("Clear All",
                                       style: Styles.mediumStyle(
                                         fontSize: 20,
-                                        color: AppColor.grey,
+                                        color: context.colorScheme.secondary
+                                            .withOpacity(0.6),
                                         family: FontFamily.varela,
                                       )),
                                 ),
@@ -79,15 +80,15 @@ class HomeFilterDrawer extends StatelessWidget {
                                   },
                                   child: Chip(
                                     backgroundColor: value.isSelected
-                                        ? AppColor.black1
-                                        : AppColor.white,
+                                        ? context.colorScheme.onPrimary
+                                        : context.colorScheme.primary,
                                     label: Text(
                                       value.item,
                                       style: Styles.boldStyle(
                                         fontSize: 15,
                                         color: value.isSelected
-                                            ? AppColor.white
-                                            : AppColor.black1,
+                                            ? context.colorScheme.primary
+                                            : context.colorScheme.onPrimary,
                                         family: FontFamily.varela,
                                       ),
                                     ),
@@ -104,7 +105,7 @@ class HomeFilterDrawer extends StatelessWidget {
                                 Text("Sort By",
                                     style: Styles.boldStyle(
                                       fontSize: 20,
-                                      color: AppColor.black1,
+                                      color: context.colorScheme.onPrimary,
                                       family: FontFamily.varela,
                                     )),
                                 const Spacer(),
@@ -115,7 +116,8 @@ class HomeFilterDrawer extends StatelessWidget {
                                   child: Text("Clear",
                                       style: Styles.mediumStyle(
                                         fontSize: 20,
-                                        color: AppColor.grey,
+                                        color: context.colorScheme.secondary
+                                            .withOpacity(0.6),
                                         family: FontFamily.varela,
                                       )),
                                 ),
@@ -138,15 +140,15 @@ class HomeFilterDrawer extends StatelessWidget {
                                     },
                                     child: Chip(
                                       backgroundColor: value.isSelected
-                                          ? AppColor.black1
-                                          : AppColor.white,
+                                          ? context.colorScheme.onPrimary
+                                          : context.colorScheme.primary,
                                       label: Text(
                                         value.item,
                                         style: Styles.boldStyle(
                                           fontSize: 15,
                                           color: value.isSelected
-                                              ? AppColor.white
-                                              : AppColor.black1,
+                                              ? context.colorScheme.primary
+                                              : context.colorScheme.onPrimary,
                                           family: FontFamily.varela,
                                         ),
                                       ),
@@ -164,10 +166,21 @@ class HomeFilterDrawer extends StatelessWidget {
                                 cubit.applyFilters();
                                 Scaffold.of(context).closeEndDrawer();
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.only(top: 20, bottom: 20),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: context.colorScheme.onPrimary,
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 20),
                                 child: Center(
-                                  child: Text("Apply"),
+                                  child: Text(
+                                    "Apply",
+                                    style: Styles.boldStyle(
+                                      fontSize: 15,
+                                      color: context.colorScheme.primary,
+                                      family: FontFamily.varela,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

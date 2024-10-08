@@ -15,16 +15,6 @@ class IssueHeader extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () {
-              cubit.goBack();
-            },
-            child: Icon(
-              Icons.arrow_back_ios_new,
-              color: context.colorScheme.onPrimary,
-            ),
-          ),
-          20.horizontalSpace,
           Text(
             "Create Issue",
             style: Styles.semiBoldStyle(

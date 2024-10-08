@@ -45,68 +45,54 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              context.colorScheme.secondary,
-              context.colorScheme.primary
-            ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return Transform.scale(
+                scale: 1.0 + (_animation.value * 0.1),
+                child: Icon(
+                  Icons.report_problem_outlined,
+                  size: 100,
+                  color: context.colorScheme.onPrimary,
+                ),
+              );
+            },
           ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          const SizedBox(height: 20),
+          Text(
+            'Masla Bolo',
+            style: Styles.boldStyle(
+              family: FontFamily.dmSans,
+              fontSize: 30,
+              color: context.colorScheme.onPrimary,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            'Empowering Communities, Solving Problems',
+            textAlign: TextAlign.center,
+            style: Styles.boldStyle(
+              family: FontFamily.varela,
+              fontSize: 18,
+              color: context.colorScheme.onPrimary,
+            ),
+          ),
+          const SizedBox(height: 40),
+          Row(
             children: [
-              AnimatedBuilder(
-                animation: _animation,
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: 1.0 + (_animation.value * 0.1),
-                    child: Icon(
-                      Icons.report_problem_outlined,
-                      size: 100,
-                      color: context.colorScheme.onPrimary,
-                    ),
-                  );
-                },
+              const Spacer(),
+              JumpingDots(
+                numberOfDots: 3,
+                color: context.colorScheme.onPrimary,
               ),
-              const SizedBox(height: 20),
-              Text(
-                'Masla Bolo',
-                style: Styles.boldStyle(
-                  family: FontFamily.dmSans,
-                  fontSize: 30,
-                  color: context.colorScheme.onPrimary,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Empowering Communities, Solving Problems',
-                textAlign: TextAlign.center,
-                style: Styles.boldStyle(
-                  family: FontFamily.varela,
-                  fontSize: 18,
-                  color: context.colorScheme.onPrimary,
-                ),
-              ),
-              const SizedBox(height: 40),
-              Row(
-                children: [
-                  const Spacer(),
-                  JumpingDots(
-                    numberOfDots: 3,
-                    color: context.colorScheme.onPrimary,
-                  ),
-                  const Spacer(),
-                ],
-              ),
+              const Spacer(),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerEffect extends StatelessWidget {
-  const ShimmerEffect({super.key});
+  const ShimmerEffect({super.key, this.borderRadius});
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class ShimmerEffect extends StatelessWidget {
         height: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: borderRadius ?? BorderRadius.circular(10),
         ),
       ),
     );

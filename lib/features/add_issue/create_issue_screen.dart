@@ -101,10 +101,9 @@ class CreateIssueScreen extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 48),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          backgroundColor:
-                              context.colorScheme.primary.withOpacity(0.2),
+                          backgroundColor: context.colorScheme.onPrimary,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 20, bottom: 20),
@@ -113,7 +112,7 @@ class CreateIssueScreen extends StatelessWidget {
                               "Create",
                               style: Styles.boldStyle(
                                 fontSize: 15,
-                                color: context.colorScheme.onPrimary,
+                                color: context.colorScheme.primary,
                                 family: FontFamily.dmSans,
                               ),
                             ),

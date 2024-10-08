@@ -18,7 +18,7 @@ class IssuePostShimmer extends StatelessWidget {
           itemCount: 7,
           separatorBuilder: (contex, index) {
             return Divider(
-              color: context.colorScheme.secondary,
+              color: context.colorScheme.secondary.withOpacity(0.1),
               thickness: 7,
               height: 7,
             );
@@ -30,7 +30,11 @@ class IssuePostShimmer extends StatelessWidget {
                 children: [
                   Center(
                     child: SizedBox(
-                        height: 200, width: 1.sw, child: const ShimmerEffect()),
+                        height: 200,
+                        width: 1.sw,
+                        child: const ShimmerEffect(
+                          borderRadius: BorderRadius.zero,
+                        )),
                   ),
                   10.verticalSpace,
                   Container(

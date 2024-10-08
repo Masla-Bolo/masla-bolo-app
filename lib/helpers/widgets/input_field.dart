@@ -112,7 +112,7 @@ class _InputFieldState extends State<InputField> {
                     isObsecure
                         ? Icons.visibility_off
                         : Icons.remove_red_eye_rounded,
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: context.colorScheme.onPrimary,
                   ))
               : widget.showCrossIcon
                   ? GestureDetector(

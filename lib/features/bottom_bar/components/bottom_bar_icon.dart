@@ -42,7 +42,7 @@ class _BottomBarIconState extends State<BottomBarIcon> {
               height: 25,
               color: isSelected
                   ? context.colorScheme.onPrimary
-                  : context.colorScheme.secondary,
+                  : context.colorScheme.secondary.withOpacity(0.6),
             ),
           );
         });

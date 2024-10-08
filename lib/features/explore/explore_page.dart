@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/features/explore/explore_cubit.dart';
+import 'package:masla_bolo_app/features/explore/explore_state.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
 import '../../helpers/styles/styles.dart';
 import '../../helpers/widgets/input_field.dart';
-import '../home/components/issue/issue_cubit.dart';
-import '../home/components/issue/issue_state.dart';
 
 class ExplorePage extends StatefulWidget {
-  final IssueCubit cubit;
+  final ExploreCubit cubit;
 
   const ExplorePage({
     super.key,
@@ -34,7 +34,7 @@ class _ExplorePageState extends State<ExplorePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<IssueCubit, IssueState>(
+    return BlocBuilder<ExploreCubit, ExploreState>(
         bloc: widget.cubit,
         builder: (context, state) {
           return Scaffold(

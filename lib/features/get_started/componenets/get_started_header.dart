@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
-import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
 class GetStartedHeader extends StatelessWidget {
   const GetStartedHeader({
@@ -24,47 +22,19 @@ class GetStartedHeader extends StatelessWidget {
         if (!hideBack)
           GestureDetector(
             onTap: onBackTap,
-            child: Row(
-              children: [
-                10.horizontalSpace,
-                Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: context.colorScheme.onPrimary,
-                  size: 16,
-                ),
-                5.horizontalSpace,
-                Text(
-                  "Back",
-                  style: Styles.semiBoldStyle(
-                    fontSize: 18,
-                    color: context.colorScheme.onPrimary,
-                    family: FontFamily.dmSans,
-                  ),
-                ),
-              ],
+            child: Icon(
+              Icons.arrow_back_ios_rounded,
+              color: context.colorScheme.onPrimary,
+              size: 20,
             ),
           ),
         if (!hideNext)
           GestureDetector(
             onTap: onNextTap,
-            child: Row(
-              children: [
-                Text(
-                  "Next",
-                  style: Styles.semiBoldStyle(
-                    fontSize: 18,
-                    color: context.colorScheme.onPrimary,
-                    family: FontFamily.dmSans,
-                  ),
-                ),
-                5.horizontalSpace,
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: context.colorScheme.onPrimary,
-                  size: 16,
-                ),
-                10.horizontalSpace,
-              ],
+            child: Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: context.colorScheme.onPrimary,
+              size: 20,
             ),
           ),
       ],

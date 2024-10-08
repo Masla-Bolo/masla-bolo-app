@@ -21,7 +21,7 @@ class BottomBar extends StatelessWidget {
             onPopInvoked: (didPop) async {
               if (didPop || state.hideBottomBar) return;
               if (state.currentIndex != 0) {
-                return cubit.updateIndex(0);
+                return cubit.updateIndex(state.currentIndex - 1);
               } else {
                 if (await showConfirmationDialog(
                         'Do you want to exit the app?') &&

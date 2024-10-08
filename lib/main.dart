@@ -13,14 +13,12 @@ import 'navigation/route_generator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final themeMode = await AdaptiveTheme.getThemeMode();
   await AppService.initialize();
-  runApp(MaslaBolo(themMode: themeMode));
+  runApp(const MaslaBolo());
 }
 
 class MaslaBolo extends StatelessWidget {
-  final AdaptiveThemeMode? themMode;
-  const MaslaBolo({super.key, required this.themMode});
+  const MaslaBolo({super.key});
   @override
   Widget build(BuildContext context) {
     return DevicePreview(
@@ -28,7 +26,7 @@ class MaslaBolo extends StatelessWidget {
         builder: (context) {
           return AdaptiveTheme(
             light: AppTheme.theme(),
-            initial: themMode ?? AdaptiveThemeMode.dark,
+            initial: AdaptiveThemeMode.light,
             dark: AppTheme.theme(dark: true),
             builder: (light, dark) {
               return GlobalLoaderOverlay(
