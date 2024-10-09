@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
+import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_navigator.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
+import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
+import 'package:masla_bolo_app/service/app_service.dart';
 
 class CreateIssueCubit extends Cubit<CreateIssueState> {
   final CreateIssueNavigator navigator;
@@ -12,9 +15,6 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
   final IssueRepository issueRepository;
   CreateIssueCubit(this.navigator, this.imageHelper, this.issueRepository)
       : super(CreateIssueState.empty());
-  void goBack() {
-    navigator.navigation.pop();
-  }
 
   Future<void> showOptions(BuildContext context) async {
     final image = await imageHelper.showOptions(context);
@@ -30,8 +30,12 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
           .toList();
       state.issue.categories = categories;
       return issueRepository.createIssue(state.issue).then(
-            (result) => goBack(),
-          );
+        (result) {
+          getIt<ProfileCubit>().appendToPendingIssues(state.issue);
+          final bottomarCubit = getIt<BottomBarCubit>();
+          bottomarCubit.updateIndex(4);
+        },
+      );
     }
   }
 

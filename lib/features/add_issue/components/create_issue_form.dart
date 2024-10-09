@@ -38,7 +38,7 @@ class IssueForm extends StatelessWidget {
                     cursorSize: const Size(2, 40),
                     hintStyle: Styles.semiBoldStyle(
                       fontSize: 40,
-                      color: context.colorScheme.secondary.withOpacity(0.6),
+                      color: context.colorScheme.secondary.withOpacity(0.9),
                       family: FontFamily.varela,
                     ),
                     maxLength: 2,
@@ -66,10 +66,10 @@ class IssueForm extends StatelessWidget {
                       cursorSize: const Size(2, 15),
                       hintStyle: Styles.mediumStyle(
                         fontSize: 15,
-                        color: context.colorScheme.secondary.withOpacity(0.6),
+                        color: context.colorScheme.secondary.withOpacity(0.9),
                         family: FontFamily.varela,
                       ),
-                      textStyle: Styles.semiBoldStyle(
+                      textStyle: Styles.mediumStyle(
                         fontSize: 15,
                         color: context.colorScheme.onPrimary,
                         family: FontFamily.varela,

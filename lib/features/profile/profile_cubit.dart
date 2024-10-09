@@ -31,6 +31,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     navigation.goToSettings();
   }
 
+  appendToPendingIssues(IssueEntity issue) {
+    state.issues["not_approved"]?.insert(0, issue);
+    emit(state.copyWith(issues: state.issues));
+  }
+
   getMyIssues({String? status}) {
     emit(
       state.copyWith(isLoaded: false),

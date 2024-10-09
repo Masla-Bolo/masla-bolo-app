@@ -38,7 +38,7 @@ class IssueDetailBody extends StatelessWidget {
                       state.currentIssue.description,
                       style: Styles.mediumStyle(
                         fontSize: 15,
-                        color: context.colorScheme.secondary,
+                        color: context.colorScheme.onPrimary,
                         family: FontFamily.varela,
                       ),
                     ),
@@ -57,7 +57,6 @@ class IssueDetailBody extends StatelessWidget {
                                 )));
                       }).toList(),
                     ),
-                    10.verticalSpace,
                     IssueBlinker(status: state.currentIssue.status),
                     IssueDetailDiscussion(
                       focusNode: state.focusNode,

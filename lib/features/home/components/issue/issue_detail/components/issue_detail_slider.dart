@@ -18,18 +18,19 @@ class IssueDetailSlider extends StatelessWidget {
             itemCount: issue.images.length,
             itemBuilder: (context, index) {
               final image = issue.images[index];
-              return Padding(
-                padding: const EdgeInsets.all(8),
-                child: GestureDetector(
-                  onTap: onTap,
-                  child: SizedBox(
-                      height: 0.45.sh,
-                      width: 0.85.sw,
-                      child: Center(
-                        child: CachedImage(
-                          image: image,
-                        ),
-                      )),
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: GestureDetector(
+                    onTap: onTap,
+                    child: SizedBox(
+                        width: 0.85.sw,
+                        child: Center(
+                          child: CachedImage(
+                            image: image,
+                          ),
+                        )),
+                  ),
                 ),
               );
             }));
