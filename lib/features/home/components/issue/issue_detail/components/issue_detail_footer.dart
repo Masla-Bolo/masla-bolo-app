@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_cubit.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
-import '../../../../../../helpers/styles/app_colors.dart';
 import '../../../../../../helpers/widgets/input_field.dart';
 import '../issue_detail_state.dart';
 
@@ -39,9 +39,9 @@ class IssueDetailFooter extends StatelessWidget {
                   cubit.addComment();
                 }
               },
-              child: const Icon(
+              child: Icon(
                 Icons.send,
-                color: AppColor.black1,
+                color: context.colorScheme.onPrimary,
               ),
             ),
             15.horizontalSpace,

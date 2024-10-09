@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/components/issue_blinker.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 
 import '../../../../../../helpers/styles/styles.dart';
@@ -32,20 +33,11 @@ class IssueDetailBody extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    10.verticalSpace,
-                    Text(
-                      state.currentIssue.title.toUpperCase(),
-                      style: Styles.boldStyle(
-                        fontSize: 20,
-                        color: context.colorScheme.onPrimary,
-                        family: FontFamily.dmSans,
-                      ),
-                    ),
                     5.verticalSpace,
                     Text(
                       state.currentIssue.description,
                       style: Styles.mediumStyle(
-                        fontSize: 18,
+                        fontSize: 15,
                         color: context.colorScheme.secondary,
                         family: FontFamily.varela,
                       ),
@@ -65,6 +57,8 @@ class IssueDetailBody extends StatelessWidget {
                                 )));
                       }).toList(),
                     ),
+                    10.verticalSpace,
+                    IssueBlinker(status: state.currentIssue.status),
                     IssueDetailDiscussion(
                       focusNode: state.focusNode,
                       cubit: cubit,

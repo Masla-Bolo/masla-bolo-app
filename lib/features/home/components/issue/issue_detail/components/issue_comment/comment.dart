@@ -96,7 +96,7 @@ class Comment extends StatelessWidget {
                             ),
                             10.horizontalSpace,
                             Text(
-                              "•",
+                              "|",
                               style: Styles.boldStyle(
                                 fontSize: 14,
                                 color: context.colorScheme.onPrimary,

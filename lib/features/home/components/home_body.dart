@@ -5,18 +5,34 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_post/issue_p
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
-import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
-class HomeBody extends StatelessWidget {
+class HomeBody extends StatefulWidget {
   const HomeBody({super.key, required this.cubit});
   final IssueCubit cubit;
 
-  static final scrollController = ScrollController();
+  @override
+  State<HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
+  final scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.hasClients) {
+        final threshold = scrollController.position.maxScrollExtent * 0.2;
+        if (scrollController.position.pixels >= threshold) {
+          widget.cubit.scrollAndCall();
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<IssueCubit, IssueState>(
-        bloc: cubit,
+        bloc: widget.cubit,
         builder: (context, state) {
           return !state.isLoaded
               ? const IssuePostShimmer()
@@ -25,34 +41,26 @@ class HomeBody extends StatelessWidget {
                     color: context.colorScheme.onPrimary,
                     backgroundColor: context.colorScheme.primary,
                     onRefresh: () async {
-                      await cubit.refreshIssues();
+                      await widget.cubit.refreshIssues();
                     },
-                    child: ScrollShaderMask(
-                      scrollController: scrollController,
-                      callback: () {
-                        cubit.scrollAndCall();
+                    child: ListView.separated(
+                      controller: scrollController,
+                      itemCount: state.issuesPagination.results.length,
+                      separatorBuilder: (contex, index) {
+                        return Divider(
+                          color: context.colorScheme.secondary.withOpacity(0.1),
+                          thickness: 7,
+                          height: 7,
+                        );
                       },
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.issuesPagination.results.length,
-                        separatorBuilder: (contex, index) {
-                          return Divider(
-                            color:
-                                context.colorScheme.secondary.withOpacity(0.1),
-                            thickness: 7,
-                            height: 7,
-                          );
-                        },
-                        itemBuilder: (context, index) {
-                          final issue = state.issuesPagination.results[index];
-                          return IssuePost(
-                            index: index,
-                            cubit: cubit,
-                            issue: issue,
-                          );
-                        },
-                      ),
+                      itemBuilder: (context, index) {
+                        final issue = state.issuesPagination.results[index];
+                        return IssuePost(
+                          index: index,
+                          cubit: widget.cubit,
+                          issue: issue,
+                        );
+                      },
                     ),
                   ),
                 );

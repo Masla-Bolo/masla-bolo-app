@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
+
+import '../../../../helpers/styles/app_colors.dart';
 
 class IssueHelper {
   bool isSelected;
@@ -84,5 +87,14 @@ class IssueHelper {
       default:
         return "not_approved";
     }
+  }
+
+  static Color getIssueStatusColor(IssueStatus status) {
+    final color = status == IssueStatus.approved
+        ? AppColor.green
+        : status == IssueStatus.notApproved
+            ? AppColor.red
+            : AppColor.skyBlue;
+    return color;
   }
 }

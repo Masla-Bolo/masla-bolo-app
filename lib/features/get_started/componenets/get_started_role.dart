@@ -49,6 +49,7 @@ class _GetStartedRoleState extends State<GetStartedRole> {
                     Center(
                       child: Text(
                         "Choose your role below",
+                        textAlign: TextAlign.center,
                         style: Styles.boldStyle(
                           fontSize: 40,
                           family: FontFamily.dmSans,

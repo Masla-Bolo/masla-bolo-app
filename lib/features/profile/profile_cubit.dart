@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/features/profile/profile_navigator.dart';
 import 'package:masla_bolo_app/features/profile/profile_state.dart';
 import 'package:masla_bolo_app/service/app_service.dart';
@@ -54,5 +56,9 @@ class ProfileCubit extends Cubit<ProfileState> {
         issues: state.issues,
       ));
     });
+  }
+
+  goToIssueDetail(IssueEntity issue) {
+    navigation.goToIssueDetail(IssueDetailInitialParams(issue: issue));
   }
 }

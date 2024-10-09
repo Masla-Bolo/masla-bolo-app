@@ -8,8 +8,10 @@ class Header extends StatelessWidget {
     this.onBackTap,
     required this.title,
     this.suffix,
+    this.fontSize,
     this.hideBackIcon = false,
   });
+  final double? fontSize;
   final String title;
   final Widget? suffix;
   final bool hideBackIcon;
@@ -23,20 +25,18 @@ class Header extends StatelessWidget {
           GestureDetector(
             onTap: onBackTap,
             child: Icon(Icons.arrow_back_ios_new,
-                size: 15, color: context.colorScheme.onPrimary),
+                size: fontSize ?? 15, color: context.colorScheme.onPrimary),
           ),
         ],
         20.horizontalSpace,
         Expanded(
           child: Text(
             title,
-            maxLines: 1,
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: 15,
+              fontSize: fontSize ?? 15,
               color: context.colorScheme.onPrimary,
               fontFamily: "dmSans",
-              overflow: TextOverflow.ellipsis,
             ),
           ),
         ),

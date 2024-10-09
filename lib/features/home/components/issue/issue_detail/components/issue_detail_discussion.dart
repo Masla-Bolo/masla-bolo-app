@@ -30,62 +30,57 @@ class IssueDetailDiscussion extends StatelessWidget {
                   children: [
                     Expanded(
                       child: OutlinedButton.icon(
-                        onPressed: () {
-                          cubit.likeUnlikeIssue();
-                        },
-                        icon: Icon(
-                          state.currentIssue.isLiked
-                              ? Icons.thumb_up
-                              : Icons.thumb_up_alt_outlined,
-                          color: context.colorScheme.onPrimary,
+                        onPressed: () {},
+                        icon: GestureDetector(
+                          onTap: () {
+                            cubit.likeUnlikeIssue();
+                          },
+                          child: Icon(
+                            state.currentIssue.isLiked
+                                ? Icons.thumb_up
+                                : Icons.thumb_up_alt_outlined,
+                            color: context.colorScheme.onPrimary,
+                            size: 22,
+                          ),
                         ),
-                        label: Text(
-                          state.currentIssue.likesCount < 1
-                              ? 'Like'
-                              : state.currentIssue.likesCount == 1
+                        label: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                cubit.likeUnlikeIssue();
+                              },
+                              child: Text(
+                                state.currentIssue.isLiked ? "Liked" : "Like",
+                                style: Styles.boldStyle(
+                                  fontSize: 15,
+                                  color: context.colorScheme.onPrimary,
+                                  family: FontFamily.varela,
+                                ),
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              state.currentIssue.likesCount == 1
                                   ? "1 Like"
                                   : "${state.currentIssue.likesCount} Likes",
-                          style: Styles.boldStyle(
-                            fontSize: 12,
-                            color: context.colorScheme.onPrimary,
-                            family: FontFamily.varela,
-                          ),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 48),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: VerticalDivider(
-                        color: context.colorScheme.secondary,
-                        thickness: 1,
-                      ),
-                    ),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          focusNode.requestFocus();
-                        },
-                        icon: Icon(
-                          Icons.comment,
-                          color: context.colorScheme.onPrimary,
-                        ),
-                        label: Text(
-                          state.currentIssue.commentsCount < 1
-                              ? 'comment'
-                              : state.currentIssue.commentsCount == 1
+                              style: Styles.mediumStyle(
+                                fontSize: 12,
+                                color: context.colorScheme.onPrimary,
+                                family: FontFamily.varela,
+                              ),
+                            ),
+                            10.horizontalSpace,
+                            Text(
+                              state.currentIssue.commentsCount == 1
                                   ? "1 comment"
                                   : "${state.currentIssue.commentsCount} comments",
-                          style: Styles.boldStyle(
-                            fontSize: 14,
-                            color: context.colorScheme.onPrimary,
-                            family: FontFamily.varela,
-                          ),
+                              style: Styles.mediumStyle(
+                                fontSize: 12,
+                                color: context.colorScheme.onPrimary,
+                                family: FontFamily.varela,
+                              ),
+                            ),
+                          ],
                         ),
                         style: OutlinedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 48),
@@ -97,6 +92,12 @@ class IssueDetailDiscussion extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              10.verticalSpace,
+              Divider(
+                color: context.colorScheme.onPrimary,
+                endIndent: 10,
+                thickness: 0.2,
               ),
               10.verticalSpace,
               IssueComments(

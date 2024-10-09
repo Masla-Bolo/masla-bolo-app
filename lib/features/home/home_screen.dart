@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
-import '../../helpers/widgets/header.dart';
 import '../../service/app_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,19 +45,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   10.verticalSpace,
                   // header
-                  Header(
-                    hideBackIcon: true,
-                    title: "Masla Bolo",
-                    suffix: GestureDetector(
-                      onTap: () {
-                        Scaffold.of(context).openEndDrawer();
-                      },
-                      child: Image.asset(
-                        AppImages.filter,
-                        height: 30,
-                        color: context.colorScheme.onPrimary,
+                  Row(
+                    children: [
+                      20.horizontalSpace,
+                      Expanded(
+                        child: Text(
+                          "MASLA BOLO",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: context.colorScheme.onPrimary,
+                            fontFamily: "dmSans",
+                          ),
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          Scaffold.of(context).openEndDrawer();
+                        },
+                        child: Image.asset(
+                          AppImages.filter,
+                          height: 30,
+                          color: context.colorScheme.onPrimary,
+                        ),
+                      ),
+                      10.horizontalSpace,
+                    ],
                   ),
                   10.verticalSpace,
                   //list of issues

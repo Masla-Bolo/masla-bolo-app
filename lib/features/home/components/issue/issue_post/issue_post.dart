@@ -47,7 +47,7 @@ class IssuePost extends StatelessWidget {
                   Text(
                     issue.isAnonymous ? "Anonymous user" : issue.user.username!,
                     style: Styles.boldStyle(
-                      fontSize: 12,
+                      fontSize: 15,
                       color: context.colorScheme.onPrimary,
                       family: FontFamily.varela,
                     ),
@@ -62,7 +62,7 @@ class IssuePost extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   issue.title,
-                  style: Styles.mediumStyle(
+                  style: Styles.semiMediumStyle(
                     fontSize: 12,
                     family: FontFamily.varela,
                     color: context.colorScheme.onPrimary,

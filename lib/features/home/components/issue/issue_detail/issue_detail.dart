@@ -49,6 +49,7 @@ class _IssueDetailState extends State<IssueDetail> {
                 10.verticalSpace,
                 Header(
                   title: state.currentIssue.title,
+                  fontSize: 20,
                   onBackTap: () {
                     widget.cubit.goBack();
                   },

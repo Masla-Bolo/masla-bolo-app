@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     cubit.goToSettings();
                                   },
                                   child: Icon(
-                                    Icons.settings,
+                                    Icons.more_horiz_rounded,
                                     color: context.colorScheme.onPrimary,
                                     size: 30,
                                   ),
