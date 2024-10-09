@@ -37,10 +37,12 @@ class IssuePost extends StatelessWidget {
                 children: [
                   5.horizontalSpace,
                   CircleAvatar(
-                    radius: 15,
+                    radius: 12,
+                    backgroundColor: context.colorScheme.onPrimary,
                     child: Icon(
                       Icons.person,
-                      color: context.colorScheme.onPrimary,
+                      size: 12,
+                      color: context.colorScheme.primary,
                     ),
                   ),
                   7.horizontalSpace,
@@ -57,12 +59,12 @@ class IssuePost extends StatelessWidget {
             ),
             10.verticalSpace,
             Padding(
-              padding: const EdgeInsets.only(left: 5),
+              padding: const EdgeInsets.only(left: 8),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   issue.title,
-                  style: Styles.semiMediumStyle(
+                  style: Styles.boldStyle(
                     fontSize: 12,
                     family: FontFamily.varela,
                     color: context.colorScheme.onPrimary,

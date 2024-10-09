@@ -1,15 +1,16 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
-import 'package:masla_bolo_app/features/home/components/home_body.dart';
 import 'package:masla_bolo_app/features/home/components/home_filter_drawer.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
-import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
+import '../../helpers/styles/styles.dart';
 import '../../service/app_service.dart';
+import 'components/issue/issue_post/issue_post.dart';
+import 'components/issue/issue_post/issue_post_shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.cubit});
@@ -21,6 +22,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late IssueCubit homeCubit;
+  final scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +31,14 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!homeCubit.state.isLoaded) {
       homeCubit.getIssues();
     }
+    scrollController.addListener(() {
+      if (scrollController.hasClients) {
+        final threshold = scrollController.position.maxScrollExtent * 0.2;
+        if (scrollController.position.pixels >= threshold) {
+          homeCubit.scrollAndCall();
+        }
+      }
+    });
   }
 
   @override
@@ -41,45 +52,69 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BlocBuilder<IssueCubit, IssueState>(
             bloc: homeCubit,
             builder: (context, state) {
-              return Column(
-                children: [
-                  10.verticalSpace,
-                  // header
-                  Row(
-                    children: [
-                      20.horizontalSpace,
-                      Expanded(
-                        child: Text(
-                          "MASLA BOLO",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: context.colorScheme.onPrimary,
-                            fontFamily: "dmSans",
+              return RefreshIndicator(
+                color: context.colorScheme.onPrimary,
+                backgroundColor: context.colorScheme.primary,
+                onRefresh: () async {
+                  await widget.cubit.refreshIssues();
+                },
+                child: CustomScrollView(
+                  controller: scrollController,
+                  slivers: [
+                    SliverAppBar(
+                      floating: true,
+                      expandedHeight: 0.05.sh,
+                      title: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "MASLA BOLO",
+                            style: Styles.boldStyle(
+                              fontSize: 20,
+                              color: context.colorScheme.onPrimary,
+                              family: FontFamily.dmSans,
+                            ),
                           ),
-                        ),
+                          2.verticalSpace,
+                          Text(
+                            "Report local issues & drive real change.",
+                            style: Styles.semiBoldStyle(
+                              fontSize: 14,
+                              color: context.colorScheme.onPrimary,
+                              family: FontFamily.varela,
+                            ),
+                          ),
+                        ],
                       ),
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          Scaffold.of(context).openEndDrawer();
-                        },
-                        child: Image.asset(
-                          AppImages.filter,
-                          height: 30,
-                          color: context.colorScheme.onPrimary,
-                        ),
-                      ),
-                      10.horizontalSpace,
-                    ],
-                  ),
-                  10.verticalSpace,
-                  //list of issues
-                  HomeBody(cubit: homeCubit),
-                ],
+                    ),
+                    SliverList(delegate: getDelegate(state)),
+                  ],
+                ),
               );
             }),
       ),
     );
+  }
+
+  SliverChildBuilderDelegate getDelegate(IssueState state) {
+    return !state.isLoaded
+        ? SliverChildBuilderDelegate(
+            (context, index) {
+              return const IssuePostShimmer();
+            },
+            childCount: 5,
+          )
+        : SliverChildBuilderDelegate(
+            (context, index) {
+              final issue = state.issuesPagination.results[index];
+              return IssuePost(
+                index: index,
+                cubit: widget.cubit,
+                issue: issue,
+              );
+            },
+            childCount: state.issuesPagination.results.length,
+          );
   }
 }
