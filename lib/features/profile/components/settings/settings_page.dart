@@ -31,6 +31,7 @@ class SettingsPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Header(
+                          fontSize: 20,
                           title: "Settings",
                           onBackTap: () {
                             cubit.pop();

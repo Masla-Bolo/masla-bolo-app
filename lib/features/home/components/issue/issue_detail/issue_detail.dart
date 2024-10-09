@@ -54,6 +54,7 @@ class _IssueDetailState extends State<IssueDetail> {
                     widget.cubit.goBack();
                   },
                 ),
+                10.verticalSpace,
                 Expanded(
                   child: SingleChildScrollView(
                     controller: scrollController,

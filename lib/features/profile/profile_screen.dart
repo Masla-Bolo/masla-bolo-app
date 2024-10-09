@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     cubit.goToSettings();
                                   },
                                   child: Icon(
-                                    Icons.more_horiz_rounded,
+                                    Icons.settings,
                                     color: context.colorScheme.onPrimary,
                                     size: 30,
                                   ),
@@ -105,9 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                         30.verticalSpace,
                         OutlinedButton.icon(
-                          onPressed: () {
-                            //go to edit profile page
-                          },
+                          onPressed: () {},
                           label: Text(
                             'Edit Profile',
                             style: Styles.boldStyle(

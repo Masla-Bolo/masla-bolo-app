@@ -32,6 +32,11 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: dark ? darkColortheme : lightColortheme,
       fontFamily: "Varela",
+      textSelectionTheme: TextSelectionThemeData(
+        selectionColor: AppColor.lightGrey,
+        cursorColor: dark ? AppColor.white : AppColor.darkBlue,
+        selectionHandleColor: dark ? AppColor.white : AppColor.darkBlue,
+      ),
       textTheme: dark ? Typography.whiteCupertino : Typography.blackCupertino,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
 import '../../../../../../helpers/widgets/blinking_widget.dart';
@@ -50,7 +51,7 @@ class _IssueBlinkerState extends State<IssueBlinker> {
           5.horizontalSpace,
           BlinkingWidget(
             child: Text(
-              widget.status.name.toLowerCase(),
+              widget.status.name.capitalized(),
               style: Styles.boldStyle(
                 fontSize: 15,
                 color: color,

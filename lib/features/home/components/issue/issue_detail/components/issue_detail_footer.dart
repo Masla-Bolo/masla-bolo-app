@@ -22,6 +22,7 @@ class IssueDetailFooter extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(12, 3, 12, 8),
                 child: InputField(
                   focusNode: state.focusNode,
+                  borderRadius: 30,
                   textEditingController: state.commentController,
                   disableOnTapOutside: true,
                   onChanged: (val) {

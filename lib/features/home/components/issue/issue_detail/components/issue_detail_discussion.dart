@@ -50,7 +50,7 @@ class IssueDetailDiscussion extends StatelessWidget {
                                 cubit.likeUnlikeIssue();
                               },
                               child: Text(
-                                state.currentIssue.isLiked ? "Liked" : "Like",
+                                "Like",
                                 style: Styles.boldStyle(
                                   fontSize: 15,
                                   color: context.colorScheme.onPrimary,
@@ -85,7 +85,12 @@ class IssueDetailDiscussion extends StatelessWidget {
                         style: OutlinedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 48),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            side: BorderSide(
+                              color: context.colorScheme.secondary
+                                  .withOpacity(0.5),
+                              width: 0.05,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                       ),

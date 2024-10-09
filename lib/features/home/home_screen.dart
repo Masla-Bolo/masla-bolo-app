@@ -6,6 +6,7 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
+import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
 import '../../helpers/styles/styles.dart';
 import '../../service/app_service.dart';
@@ -87,6 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
+                      actions: [
+                        GestureDetector(
+                          onTap: () => Scaffold.of(context).openEndDrawer(),
+                          child: Image.asset(
+                            AppImages.filter,
+                            color: context.colorScheme.onPrimary,
+                          ),
+                        ),
+                      ],
                     ),
                     SliverList(delegate: getDelegate(state)),
                   ],

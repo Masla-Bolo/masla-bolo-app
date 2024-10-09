@@ -106,7 +106,7 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                                               ),
                                             ),
                                             Text(
-                                              issue.status.name.toLowerCase(),
+                                              issue.status.name.capitalized(),
                                               style: Styles.boldStyle(
                                                 fontSize: 12,
                                                 family: FontFamily.dmSans,

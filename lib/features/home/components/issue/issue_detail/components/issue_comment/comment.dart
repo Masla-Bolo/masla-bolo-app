@@ -84,7 +84,7 @@ class Comment extends StatelessWidget {
                                 cubit.likeUnlikeComment(comment.id!);
                               },
                               child: Text(
-                                comment.isLiked ? "Liked" : "Like",
+                                "Like",
                                 style: Styles.boldStyle(
                                   fontSize: 14,
                                   color: comment.isLiked
@@ -112,7 +112,7 @@ class Comment extends StatelessWidget {
                                 "Reply",
                                 style: Styles.mediumStyle(
                                   fontSize: 12,
-                                  color: context.colorScheme.onPrimary,
+                                  color: context.colorScheme.secondary,
                                   family: FontFamily.varela,
                                 ),
                               ),
