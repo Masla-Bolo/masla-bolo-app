@@ -123,7 +123,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     SliverList(delegate: getDelegate(state)),
                     if (!state.isScrolled && state.isLoaded)
                       const SliverToBoxAdapter(
-                        child: Indicator(),
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Indicator(),
+                        ),
                       ),
                   ],
                 ),

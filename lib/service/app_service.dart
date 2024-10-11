@@ -29,6 +29,7 @@ import 'package:masla_bolo_app/features/splash/splash_navigator.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
 import 'package:masla_bolo_app/service/api_service.dart';
 import 'package:get_it/get_it.dart';
+import 'package:masla_bolo_app/service/music_service.dart';
 import 'package:masla_bolo_app/service/utility_service.dart';
 
 import '../features/home/components/issue/issue_navigator.dart';
@@ -46,6 +47,7 @@ class AppService {
         PrimaryLocalStorageRepository());
     getIt.registerSingleton<UserStore>(UserStore(getIt()));
     getIt.registerSingleton<ApiService>(ApiService(getIt()));
+    getIt.registerSingleton<MusicService>(MusicService());
     getIt.registerLazySingleton<UtilityService>(() => UtilityService());
     getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));
     getIt.registerSingleton<AppNavigation>(AppNavigation());
@@ -62,7 +64,7 @@ class AppService {
     getIt.registerSingleton<SplashNavigator>(SplashNavigator(getIt()));
     getIt.registerSingleton<SplashCubit>(SplashCubit(getIt(), getIt()));
     getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
-    getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt()));
+    getIt.registerSingleton<IssueCubit>(IssueCubit(getIt(), getIt(), getIt()));
     getIt.registerSingleton<LikeIssueNavigator>(LikeIssueNavigator(getIt()));
     getIt.registerSingleton<LikeIssueCubit>(LikeIssueCubit(getIt(), getIt()));
     getIt.registerSingleton<ImageHelper>(ImageHelper());
@@ -70,6 +72,7 @@ class AppService {
         dynamic>(
       (params, _) => IssueDetailCubit(
         params,
+        getIt(),
         getIt(),
         getIt(),
         getIt(),

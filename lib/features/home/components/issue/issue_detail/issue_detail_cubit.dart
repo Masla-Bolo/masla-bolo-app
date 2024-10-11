@@ -8,6 +8,7 @@ import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
+import 'package:masla_bolo_app/service/music_service.dart';
 
 import '../../../../../domain/repositories/issue_repository.dart';
 import '../../../../../service/app_service.dart';
@@ -21,6 +22,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   final CommentRepository commentRepository;
   final IssueRepository issueRepository;
   final LocalStorageRepository localStorageRepository;
+  final MusicService musicService;
 
   IssueDetailCubit(
     this.params,
@@ -29,6 +31,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     this.navigator,
     this.imageHelper,
     this.commentRepository,
+    this.musicService,
   ) : super(IssueDetailState.empty());
 
   void goBack() {
@@ -126,6 +129,11 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
 
       if (comment != null) {
         comment.isLiked = !comment.isLiked;
+        if (comment.isLiked) {
+          musicService.play(musicService.likeUnlikeMusic);
+        } else {
+          musicService.play(musicService.likeUnlikeMusic);
+        }
         emit(state.copyWith(comments: state.comments));
         commentRepository.likeUnlikeComment(commentId);
       }

@@ -34,52 +34,46 @@ class IssuePost extends StatelessWidget {
               onTap: () {
                 cubit.goToIssueDetail(issue: issue);
               },
-              child: Row(
-                children: [
-                  5.horizontalSpace,
-                  CircleAvatar(
-                    radius: 12,
-                    backgroundColor: context.colorScheme.onPrimary,
-                    child: Icon(
-                      Icons.person,
-                      size: 12,
-                      color: context.colorScheme.primary,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          issue.isAnonymous
+                              ? "by Anonymous user"
+                              : "by ${issue.user.username}",
+                          style: Styles.mediumStyle(
+                            fontSize: 12,
+                            family: FontFamily.dmSans,
+                            color: context.colorScheme.onPrimary,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          issue.status.name.capitalized(),
+                          style: Styles.mediumStyle(
+                            fontSize: 12,
+                            color:
+                                IssueHelper.getIssueStatusColor(issue.status),
+                            family: FontFamily.varela,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  7.horizontalSpace,
-                  Text(
-                    issue.isAnonymous ? "Anonymous user" : issue.user.username!,
-                    style: Styles.boldStyle(
-                      fontSize: 15,
-                      color: context.colorScheme.onPrimary,
-                      family: FontFamily.varela,
+                    5.verticalSpace,
+                    Text(
+                      issue.title,
+                      style: Styles.boldStyle(
+                        fontSize: 20,
+                        family: FontFamily.varela,
+                        color: context.colorScheme.onPrimary,
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    issue.status.name.capitalized(),
-                    style: Styles.boldStyle(
-                      fontSize: 12,
-                      family: FontFamily.dmSans,
-                      color: IssueHelper.getIssueStatusColor(issue.status),
-                    ),
-                  ),
-                  10.horizontalSpace,
-                ],
-              ),
-            ),
-            10.verticalSpace,
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  issue.title,
-                  style: Styles.boldStyle(
-                    fontSize: 12,
-                    family: FontFamily.varela,
-                    color: context.colorScheme.onPrimary,
-                  ),
+                  ],
                 ),
               ),
             ),

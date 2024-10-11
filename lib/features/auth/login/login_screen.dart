@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         15.verticalSpace,
                         Text(
-                          'Choose a password',
+                          'Enter a password',
                           style: Styles.boldStyle(
                               fontSize: 14,
                               color: context.colorScheme.onPrimary,

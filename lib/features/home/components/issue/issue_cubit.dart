@@ -8,13 +8,16 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
+import 'package:masla_bolo_app/service/music_service.dart';
 
 import '../../../../helpers/debouncer.dart';
 
 class IssueCubit extends Cubit<IssueState> {
   final IssueNavigator navigation;
   final IssueRepository issueRepository;
-  IssueCubit(this.navigation, this.issueRepository) : super(IssueState.empty());
+  final MusicService musicService;
+  IssueCubit(this.navigation, this.issueRepository, this.musicService)
+      : super(IssueState.empty());
 
   final debouncer = Debouncer(delay: const Duration(milliseconds: 800));
 
@@ -63,8 +66,10 @@ class IssueCubit extends Cubit<IssueState> {
     issue.isLiked = !issue.isLiked;
     if (issue.isLiked) {
       issue.likesCount += 1;
+      musicService.play(musicService.likeUnlikeMusic);
     } else {
       issue.likesCount -= 1;
+      musicService.play(musicService.likeUnlikeMusic);
     }
     emit(state.copyWith(issuesPagination: state.issuesPagination));
     issueRepository.likeUnlikeIssue(issue.id);
