@@ -1,7 +1,6 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/model/paginate.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
-import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
 import 'package:masla_bolo_app/service/utility_service.dart';
@@ -31,27 +30,41 @@ class ApiIssueRepository implements IssueRepository {
   }
 
   @override
-  Future<List<IssueEntity>> myIssues({
+  Future<Paginate<IssueEntity>> myIssues({
+    String url = '/issues/my/',
     Map<String, dynamic>? queryParams,
+    List<IssueEntity> previousIssues = const [],
   }) async {
-    final response = await networkRepository.get(
-        url: '/issues/my/', extraQuery: queryParams);
-    final data = parseList(response.data["results"], IssueJson.fromJson)
-        .map((json) => json.toDomain())
-        .toList();
-    return data;
+    final response =
+        await networkRepository.get(url: url, extraQuery: queryParams);
+
+    final pagination =
+        Paginate<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
+    if (previousIssues.isNotEmpty) {
+      previousIssues.addAll(pagination.results);
+    } else {
+      previousIssues = pagination.results;
+    }
+    return pagination.copyWith(results: previousIssues);
   }
 
   @override
-  Future<List<IssueEntity>> likedIssues({
+  Future<Paginate<IssueEntity>> likedIssues({
+    String url = '/issues/liked_issues/',
     Map<String, dynamic>? queryParams,
+    List<IssueEntity> previousIssues = const [],
   }) async {
-    final response = await networkRepository.get(
-        url: '/issues/liked_issues/', extraQuery: queryParams);
-    final data = parseList(response.data["results"], IssueJson.fromJson)
-        .map((json) => json.toDomain())
-        .toList();
-    return data;
+    final response =
+        await networkRepository.get(url: url, extraQuery: queryParams);
+
+    final pagination =
+        Paginate<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
+    if (previousIssues.isNotEmpty) {
+      previousIssues.addAll(pagination.results);
+    } else {
+      previousIssues = pagination.results;
+    }
+    return pagination.copyWith(results: previousIssues);
   }
 
   @override

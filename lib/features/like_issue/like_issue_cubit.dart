@@ -13,13 +13,45 @@ class LikeIssueCubit extends Cubit<LikeIssueState> {
   LikeIssueCubit(this.navigation, this.issueRepository)
       : super(LikeIssueState.empty());
 
-  getLikedIssues() {
-    issueRepository.likedIssues().then((issues) {
-      emit(state.copyWith(
-        issues: issues,
-        isLoaded: true,
-      ));
-    });
+  getLikedIssues({
+    bool clearAll = false,
+    String url = "/issues/liked_issues/",
+  }) async {
+    emit(state.copyWith(isScrolled: false));
+    if (clearAll) {
+      state.issuesPagination.results.clear();
+    }
+    final apiUrl = state.issuesPagination.next != null && !clearAll
+        ? state.issuesPagination.next.toString()
+        : url;
+
+    final issuesPagination = await issueRepository.getIssues(
+      url: apiUrl,
+      queryParams: state.queryParams,
+      previousIssues: state.issuesPagination.results,
+    );
+
+    emit(state.copyWith(
+      issuesPagination: issuesPagination,
+      isLoaded: true,
+      isScrolled: true,
+    ));
+
+    emit(state.copyWith(
+      issuesPagination: issuesPagination,
+      isLoaded: true,
+    ));
+  }
+
+  refreshIssues() {
+    emit(state.copyWith(isLoaded: false));
+    getLikedIssues(clearAll: true);
+  }
+
+  scrollAndCall() {
+    if (state.issuesPagination.next != null && state.isScrolled) {
+      getLikedIssues();
+    }
   }
 
   void goToIssueDetail(IssueEntity issue) {

@@ -1,20 +1,32 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
+import 'package:masla_bolo_app/domain/model/paginate.dart';
 
 class LikeIssueState {
-  final List<IssueEntity> issues;
+  final Paginate<IssueEntity> issuesPagination;
   final bool isLoaded;
+  final bool isScrolled;
+  Map<String, dynamic> queryParams;
   LikeIssueState({
-    required this.issues,
+    this.isScrolled = false,
+    required this.queryParams,
+    required this.issuesPagination,
     this.isLoaded = false,
   });
 
-  factory LikeIssueState.empty() => LikeIssueState(issues: []);
+  factory LikeIssueState.empty() => LikeIssueState(
+        issuesPagination: Paginate.empty(),
+        queryParams: {},
+      );
 
   LikeIssueState copyWith({
-    List<IssueEntity>? issues,
+    Paginate<IssueEntity>? issuesPagination,
     bool? isLoaded,
+    bool? isScrolled,
   }) {
     return LikeIssueState(
-        issues: issues ?? this.issues, isLoaded: isLoaded ?? this.isLoaded);
+        isScrolled: isScrolled ?? this.isScrolled,
+        queryParams: {},
+        issuesPagination: issuesPagination ?? this.issuesPagination,
+        isLoaded: isLoaded ?? this.isLoaded);
   }
 }

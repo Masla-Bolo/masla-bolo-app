@@ -8,6 +8,7 @@ import 'package:masla_bolo_app/helpers/widgets/issue_container.dart';
 import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
 import '../../helpers/styles/styles.dart';
+import '../../helpers/widgets/indicator.dart';
 import '../../helpers/widgets/shimmer_effect.dart';
 
 class LikeIssuePage extends StatefulWidget {
@@ -23,17 +24,23 @@ class LikeIssuePage extends StatefulWidget {
 }
 
 class _LikeIssuePageState extends State<LikeIssuePage> {
-  late final FocusNode focusNode;
-  final controller = TextEditingController();
   late LikeIssueCubit cubit;
+  final scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
-    focusNode = FocusNode();
     cubit = widget.cubit;
     if (!cubit.state.isLoaded) {
       cubit.getLikedIssues();
     }
+    scrollController.addListener(() {
+      if (scrollController.hasClients) {
+        final threshold = scrollController.position.maxScrollExtent * 0.2;
+        if (scrollController.position.pixels >= threshold) {
+          cubit.scrollAndCall();
+        }
+      }
+    });
   }
 
   @override
@@ -41,7 +48,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
     return BlocBuilder<LikeIssueCubit, LikeIssueState>(
         bloc: cubit,
         builder: (context, state) {
-          final issues = state.issues;
+          final issues = state.issuesPagination.results;
           return Scaffold(
             body: SafeArea(
               child: Column(
@@ -89,25 +96,37 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                                 ),
                               )
                             : Expanded(
-                                child: ScrollShaderMask(
-                                  child: ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: issues.length,
-                                    itemBuilder: (context, index) {
-                                      final issue = issues[index];
-                                      return IssueContainer(
-                                        issue: issue,
-                                        onTap: () {
-                                          cubit.goToIssueDetail(issue);
-                                        },
-                                      );
-                                    },
+                                child: RefreshIndicator(
+                                  color: context.colorScheme.onPrimary,
+                                  onRefresh: () async {
+                                    await cubit.refreshIssues();
+                                  },
+                                  child: ScrollShaderMask(
+                                    scrollController: scrollController,
+                                    child: ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: issues.length,
+                                      itemBuilder: (context, index) {
+                                        final issue = issues[index];
+                                        return IssueContainer(
+                                          issue: issue,
+                                          onTap: () {
+                                            cubit.goToIssueDetail(issue);
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               );
                   }),
+                  if (!state.isScrolled && state.isLoaded)
+                    const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Indicator(),
+                    ),
                 ],
               ),
             ),

@@ -7,11 +7,15 @@ abstract class IssueRepository {
     Map<String, dynamic>? queryParams,
     List<IssueEntity> previousIssues,
   });
-  Future<List<IssueEntity>> myIssues({
+  Future<Paginate<IssueEntity>> myIssues({
+    String url = '/issues/my/',
     Map<String, dynamic>? queryParams,
+    List<IssueEntity> previousIssues,
   });
-  Future<List<IssueEntity>> likedIssues({
+  Future<Paginate<IssueEntity>> likedIssues({
+    String url = '/issues/liked_issues/',
     Map<String, dynamic>? queryParams,
+    List<IssueEntity> previousIssues,
   });
   Future<IssueEntity> getIssueyId({
     required int issueId,

@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
-import 'package:masla_bolo_app/domain/model/issue_json.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
@@ -43,19 +42,19 @@ class ProfileCubit extends Cubit<ProfileState> {
     return issueRepository.myIssues(queryParams: {
       "issue_status": status,
     }).then((issues) {
-      state.issues["approved"] = issues.where((issue) {
-        return issue.status == IssueStatus.approved;
-      }).toList();
-      state.issues["not_approved"] = issues.where((issue) {
-        return issue.status == IssueStatus.notApproved;
-      }).toList();
-      state.issues["completed"] = issues
-          .where((issue) => issue.status == IssueStatus.completed)
-          .toList();
-      if (status == null) {
-      } else {
-        state.issues[status] = issues;
-      }
+      // state.issues["approved"] = issues.where((issue) {
+      //   return issue.status == IssueStatus.approved;
+      // }).toList();
+      // state.issues["not_approved"] = issues.where((issue) {
+      //   return issue.status == IssueStatus.notApproved;
+      // }).toList();
+      // state.issues["completed"] = issues
+      //     .where((issue) => issue.status == IssueStatus.completed)
+      //     .toList();
+      // if (status == null) {
+      // } else {
+      //   state.issues[status] = issues;
+      // }
       emit(state.copyWith(
         isLoaded: true,
         issues: state.issues,
