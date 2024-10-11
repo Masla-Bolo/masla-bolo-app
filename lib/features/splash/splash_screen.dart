@@ -70,16 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
         builder: (context, state) {
           return Center(
             child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    context.colorScheme.primary.withOpacity(0.8),
-                    context.colorScheme.onSecondary.withOpacity(0.8),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
+              color: context.colorScheme.primary,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

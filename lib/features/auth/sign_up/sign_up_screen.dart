@@ -115,7 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         15.verticalSpace,
                         Text(
-                          'Choose a password',
+                          'Create a password',
                           style: Styles.boldStyle(
                             fontSize: 14,
                             color: context.colorScheme.onPrimary,
