@@ -38,7 +38,7 @@ class _BottomBarIconState extends State<BottomBarIcon> {
           return GestureDetector(
             onTap: () => cubit.updateIndex(widget.index),
             child: Image.asset(
-              widget.item.icon,
+              widget.item.image,
               height: 25,
               color: isSelected
                   ? context.colorScheme.onPrimary

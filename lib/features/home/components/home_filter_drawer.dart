@@ -3,15 +3,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
+import 'package:masla_bolo_app/service/app_service.dart';
 
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/header.dart';
 import 'issue/issue_cubit.dart';
 import 'issue/issue_state.dart';
 
-class HomeFilterDrawer extends StatelessWidget {
-  const HomeFilterDrawer({super.key, required this.cubit});
-  final IssueCubit cubit;
+class HomeFilterDrawer extends StatefulWidget {
+  const HomeFilterDrawer({super.key});
+
+  @override
+  State<HomeFilterDrawer> createState() => _HomeFilterDrawerState();
+}
+
+class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
+  final cubit = getIt<IssueCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    cubit.filterInit();
+  }
 
   @override
   Widget build(BuildContext context) {

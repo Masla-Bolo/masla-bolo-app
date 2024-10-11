@@ -30,7 +30,7 @@ class NotificationPage extends StatelessWidget {
                       style: Styles.boldStyle(
                         fontSize: 20,
                         color: context.colorScheme.onPrimary,
-                        family: FontFamily.dmSans,
+                        family: FontFamily.varela,
                       ),
                     ),
                   ),
@@ -40,7 +40,7 @@ class NotificationPage extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       itemCount: state.notifications.length,
                       separatorBuilder: (context, index) => Divider(
-                        color: AppColor.black3.withOpacity(0.2),
+                        color: context.colorScheme.secondary.withOpacity(0.2),
                       ),
                       itemBuilder: (context, index) {
                         final notification = state.notifications[index];

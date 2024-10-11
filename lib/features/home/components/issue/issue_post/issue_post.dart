@@ -7,6 +7,7 @@ import 'package:masla_bolo_app/helpers/widgets/cached_image.dart';
 
 import '../../../../../domain/entities/issue_entity.dart';
 import '../../../../../helpers/styles/styles.dart';
+import '../issue_helper.dart';
 
 class IssuePost extends StatelessWidget {
   const IssuePost({
@@ -54,6 +55,16 @@ class IssuePost extends StatelessWidget {
                       family: FontFamily.varela,
                     ),
                   ),
+                  const Spacer(),
+                  Text(
+                    issue.status.name.capitalized(),
+                    style: Styles.boldStyle(
+                      fontSize: 12,
+                      family: FontFamily.dmSans,
+                      color: IssueHelper.getIssueStatusColor(issue.status),
+                    ),
+                  ),
+                  10.horizontalSpace,
                 ],
               ),
             ),

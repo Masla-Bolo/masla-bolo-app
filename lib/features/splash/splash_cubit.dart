@@ -12,8 +12,9 @@ class SplashCubit extends Cubit<SplashState> {
       : super(SplashState());
 
   onInit() {
+    emit(state.copyWith(isLoaded: true));
     Future.delayed(
-        const Duration(seconds: 3),
+        const Duration(seconds: 2),
         () => {
               localStorageRepository.getValue(getStartedKey).then((result) => {
                     result.fold(
@@ -34,6 +35,8 @@ class SplashCubit extends Cubit<SplashState> {
                       },
                     ),
                   }),
-            });
+            }).then((_) {
+      emit(state.copyWith(isLoaded: false));
+    });
   }
 }

@@ -18,4 +18,5 @@ class AppImages {
   static const successful = "$_baseDir/successful.jpg";
   static const unsuccessful = "$_baseDir/unsuccessful.jpg";
   static const access = "$_baseDir/access.png";
+  static const heart = "$_baseDir/heart.png";
 }

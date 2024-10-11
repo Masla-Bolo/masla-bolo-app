@@ -43,6 +43,18 @@ class ApiIssueRepository implements IssueRepository {
   }
 
   @override
+  Future<List<IssueEntity>> likedIssues({
+    Map<String, dynamic>? queryParams,
+  }) async {
+    final response = await networkRepository.get(
+        url: '/issues/liked_issues/', extraQuery: queryParams);
+    final data = parseList(response.data["results"], IssueJson.fromJson)
+        .map((json) => json.toDomain())
+        .toList();
+    return data;
+  }
+
+  @override
   Future<IssueEntity> getIssueyId({
     required int issueId,
     Map<String, dynamic>? queryParams,

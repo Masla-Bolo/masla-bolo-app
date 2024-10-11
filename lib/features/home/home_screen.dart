@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
+import 'package:masla_bolo_app/helpers/widgets/indicator.dart';
+import 'package:masla_bolo_app/helpers/widgets/input_field.dart';
 
 import '../../helpers/styles/styles.dart';
 import '../../service/app_service.dart';
@@ -48,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: HomeFilterDrawer(cubit: homeCubit),
+      endDrawer: const HomeFilterDrawer(),
       onEndDrawerChanged: (result) {
         getIt<BottomBarCubit>().toggleVisibility();
       },
@@ -66,12 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   controller: scrollController,
                   slivers: [
                     SliverAppBar(
-                      expandedHeight: 0.05.sh,
+                      expandedHeight: 0.07.sh,
                       floating: true,
                       title: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          10.verticalSpace,
                           Text(
                             "MASLA BOLO",
                             style: Styles.boldStyle(
@@ -101,7 +104,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 35,
+                          width: 1.sw,
+                          child: InputField(
+                            borderRadius: 20,
+                            onChanged: (val) {
+                              homeCubit.onChanged(val);
+                            },
+                            hintText: "Search Issues",
+                          ),
+                        ),
+                      ),
+                    ),
                     SliverList(delegate: getDelegate(state)),
+                    if (!state.isScrolled && state.isLoaded)
+                      const SliverToBoxAdapter(
+                        child: Indicator(),
+                      ),
                   ],
                 ),
               );
