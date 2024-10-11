@@ -4,11 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/explore/explore_cubit.dart';
 import 'package:masla_bolo_app/features/explore/explore_state.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
-import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
 import '../../helpers/styles/styles.dart';
-import '../../helpers/widgets/input_field.dart';
 
 class ExplorePage extends StatefulWidget {
   final ExploreCubit cubit;
@@ -38,43 +36,23 @@ class _ExplorePageState extends State<ExplorePage> {
         bloc: widget.cubit,
         builder: (context, state) {
           return Scaffold(
+            appBar: AppBar(
+              leadingWidth: 35,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: CircleAvatar(
+                  backgroundColor: context.colorScheme.onPrimary,
+                  child: Icon(
+                    Icons.person,
+                    size: 15,
+                    color: context.colorScheme.primary,
+                  ),
+                ),
+              ),
+            ),
             body: SafeArea(
               child: Column(
                 children: [
-                  20.verticalSpace,
-                  Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 35,
-                              child: InputField(
-                                borderRadius: 5,
-                                focusNode: focusNode,
-                                textEditingController: controller,
-                                hintText: "find issues here..",
-                                onChanged: (val) {
-                                  widget.cubit.debounce(val);
-                                },
-                              ),
-                            ),
-                          ),
-                          10.horizontalSpace,
-                          GestureDetector(
-                            onTap: () {
-                              focusNode.requestFocus();
-                            },
-                            child: Image.asset(
-                              AppImages.search,
-                              color: context.colorScheme.onPrimary,
-                              height: 30,
-                            ),
-                          ),
-                          10.horizontalSpace,
-                        ],
-                      )),
                   20.verticalSpace,
                   Expanded(
                     child: ScrollShaderMask(

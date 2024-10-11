@@ -23,6 +23,7 @@ class InputField extends StatefulWidget {
     this.onCrossTap,
     this.borderRadius,
     this.showCrossIcon = false,
+    this.onTap,
     this.disableOnTapOutside = false,
     required this.onChanged,
   });
@@ -30,6 +31,7 @@ class InputField extends StatefulWidget {
   final String? preFilledValue;
   final bool disableOnTapOutside;
   final bool passwordField;
+  final void Function()? onTap;
   final int? maxLength;
   final bool isDateField;
   final bool readOnly;
@@ -68,7 +70,7 @@ class _InputFieldState extends State<InputField> {
   @override
   void dispose() {
     if (widget.focusNode != null) {
-      widget.focusNode!.dispose();
+      // widget.focusNode!.dispose();
     }
     super.dispose();
   }
@@ -96,7 +98,11 @@ class _InputFieldState extends State<InputField> {
         cursorErrorColor: context.colorScheme.onPrimary,
         onChanged: widget.onChanged,
         validator: widget.validator,
-        onTap: () {},
+        onTap: () {
+          if (widget.onTap != null) {
+            widget.onTap!();
+          }
+        },
         maxLength: widget.maxLength,
         scrollPadding: const EdgeInsets.all(0),
         onFieldSubmitted: widget.onSubmit,

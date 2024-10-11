@@ -6,11 +6,11 @@ import '../entities/comments_entity.dart';
 
 class CommentsJson {
   int id;
-  CommentsEntity? parentId;
   String content;
   UserEntity user;
   bool isLiked;
-  UserEntity? replyTo;
+  int? parentId;
+  int? replyTo;
   int issueId;
   List<CommentsEntity> replies;
 
@@ -39,7 +39,7 @@ class CommentsJson {
   factory CommentsJson.fromJson(Map<String, dynamic> json) => CommentsJson(
         id: json['id'],
         isLiked: json["is_liked"],
-        // parentId: CommentsJson.fromJson(json["parent"]).toDomain(),
+        parentId: json["parent"],
         content: json['content'],
         user: UserJson.fromData(json['user']).toDomain(),
         replyTo: json['reply_to'],
@@ -65,8 +65,8 @@ class CommentsJson {
       'id': id,
       'content': content,
       'user': user.id,
-      'replyTo': replyTo,
-      "paren_id": parentId,
+      'reply_to': replyTo,
+      "parent": parentId,
       'issueId': issueId,
     };
   }

@@ -24,11 +24,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late IssueCubit homeCubit;
   final scrollController = ScrollController();
+  final controller = TextEditingController();
+  late final FocusNode focusNode;
 
   @override
   void initState() {
     super.initState();
     homeCubit = widget.cubit;
+    focusNode = FocusNode();
     if (!homeCubit.state.isLoaded) {
       homeCubit.getIssues();
     }
@@ -63,8 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   controller: scrollController,
                   slivers: [
                     SliverAppBar(
-                      floating: true,
                       expandedHeight: 0.05.sh,
+                      floating: true,
                       title: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,

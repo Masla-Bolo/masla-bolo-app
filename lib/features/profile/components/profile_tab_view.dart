@@ -90,7 +90,6 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                                         ),
                                       ),
                                       const SizedBox(width: 10),
-                                      // Username and status
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:

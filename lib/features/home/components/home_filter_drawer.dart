@@ -30,6 +30,7 @@ class HomeFilterDrawer extends StatelessWidget {
                   children: [
                     20.verticalSpace,
                     Header(
+                      fontSize: 20,
                       title: "Apply Filters",
                       onBackTap: () {
                         cubit.closeDrawer(context);

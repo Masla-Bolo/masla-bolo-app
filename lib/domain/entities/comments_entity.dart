@@ -5,10 +5,10 @@ import 'user_entity.dart';
 class CommentsEntity {
   int? id;
   bool isLiked;
-  CommentsEntity? parent;
+  int? parent;
+  int? replyTo;
   String content;
   UserEntity? user;
-  UserEntity? replyTo;
   int issueId;
   List<CommentsEntity> replies;
 
@@ -27,10 +27,11 @@ class CommentsEntity {
         id: 0,
         content: '',
         user: UserEntity.empty(),
-        replyTo: UserEntity.empty(),
+        replyTo: null,
         isLiked: false,
         issueId: 0,
         replies: [],
+        parent: null,
       );
 
   Map<String, dynamic> toCommentJson() {

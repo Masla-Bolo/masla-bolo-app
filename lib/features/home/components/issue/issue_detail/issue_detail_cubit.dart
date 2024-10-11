@@ -68,15 +68,15 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
       user: user,
     );
     if (state.replyTo != null) {
-      comment.replyTo = state.replyTo?.user;
+      comment.replyTo = state.replyTo?.id;
       if (state.replyTo?.parent == null) {
-        comment.parent = state.replyTo;
+        comment.parent = state.replyTo?.id;
       } else {
         comment.parent = state.replyTo?.parent;
       }
-      final parent = state.replyTo?.parent ?? state.replyTo;
+      final parent = state.replyTo?.parent ?? state.replyTo?.id;
       final parentComment = state.comments.firstWhereOrNull((comment) {
-        return comment.id == parent?.id;
+        return comment.id == parent;
       });
       parentComment?.replies.insert(0, comment);
     } else {
