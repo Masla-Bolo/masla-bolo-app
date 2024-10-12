@@ -36,11 +36,6 @@ class LikeIssueCubit extends Cubit<LikeIssueState> {
       isLoaded: true,
       isScrolled: true,
     ));
-
-    emit(state.copyWith(
-      issuesPagination: issuesPagination,
-      isLoaded: true,
-    ));
   }
 
   refreshIssues() {

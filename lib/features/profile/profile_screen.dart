@@ -26,8 +26,8 @@ class _ProfileScreenState extends State<ProfileScreen>
     cubit = widget.cubit;
     tabController = TabController(length: 3, vsync: this);
     cubit.getUser();
-    if (!cubit.state.isLoaded) {
-      cubit.getMyIssues();
+    if (!cubit.state.isAllIssuesLoaded) {
+      cubit.getAllIssues();
     }
   }
 
@@ -170,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           )),
                           Center(
                             child: Text(
-                              'Completed Issues',
+                              'Solved Issues',
                               textAlign: TextAlign.center,
                               style: Styles.boldStyle(
                                 fontSize: 15,
@@ -184,17 +184,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                   Expanded(
                     child: TabBarView(
                       controller: tabController,
-                      children: const [
-                        ProfileTabView(
-                          status: "not_approved",
-                        ),
-                        ProfileTabView(
-                          status: "approved",
-                        ),
-                        ProfileTabView(
-                          status: "completed",
-                        ),
-                      ],
+                      children: state.allIssues.keys.map((status) {
+                        return ProfileTabView(
+                          status: status,
+                        );
+                      }).toList(),
                     ),
                   ),
                 ],

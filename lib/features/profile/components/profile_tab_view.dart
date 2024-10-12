@@ -7,6 +7,7 @@ import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/service/app_service.dart';
 
 import '../../../helpers/styles/styles.dart';
+import '../../../helpers/widgets/indicator.dart';
 import '../../../helpers/widgets/issue_container.dart';
 import '../../../helpers/widgets/shimmer_effect.dart';
 
@@ -20,20 +21,31 @@ class ProfileTabView extends StatefulWidget {
 
 class _ProfileTabViewState extends State<ProfileTabView> {
   final cubit = getIt<ProfileCubit>();
+  final scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
+    scrollController.addListener(() {
+      if (scrollController.hasClients) {
+        final threshold = scrollController.position.maxScrollExtent * 0.2;
+        if (scrollController.position.pixels >= threshold) {
+          cubit.scrollAndCall(widget.status);
+        }
+      }
+    });
   }
-
-  onScroll() {}
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
         bloc: cubit,
         builder: (context, state) {
-          final issues = state.issues[widget.status] ?? [];
-          return (!state.isLoaded)
+          final result = state.allIssues[widget.status]!;
+          final isLoaded = result.isLoaded;
+          final isScrolled = result.isScrolled;
+          final issues = result.issues.results;
+
+          return (!isLoaded)
               ? ListView.builder(
                   itemCount: 5,
                   itemBuilder: (context, index) {
@@ -46,7 +58,7 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                       ),
                     );
                   })
-              : (issues.isEmpty && state.isLoaded)
+              : (issues.isEmpty && isLoaded)
                   ? Center(
                       child: Text(
                         "No Issues found",
@@ -57,17 +69,34 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                         ),
                       ),
                     )
-                  : ListView.builder(
-                      itemCount: issues.length,
-                      itemBuilder: (context, index) {
-                        final issue = issues[index];
-                        return IssueContainer(
-                          issue: issue,
-                          onTap: () {
-                            cubit.goToIssueDetail(issue);
-                          },
-                        );
-                      },
+                  : Column(
+                      children: [
+                        Expanded(
+                          child: RefreshIndicator(
+                            color: context.colorScheme.onPrimary,
+                            onRefresh: () async {
+                              await cubit.refreshIssues(widget.status);
+                            },
+                            child: ListView.builder(
+                              itemCount: issues.length,
+                              itemBuilder: (context, index) {
+                                final issue = issues[index];
+                                return IssueContainer(
+                                  issue: issue,
+                                  onTap: () {
+                                    cubit.goToIssueDetail(issue);
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        if (!isScrolled && isLoaded)
+                          const Padding(
+                            padding: EdgeInsets.all(8),
+                            child: Indicator(),
+                          ),
+                      ],
                     );
         });
   }

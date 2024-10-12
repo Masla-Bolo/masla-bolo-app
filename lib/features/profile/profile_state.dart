@@ -1,35 +1,62 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
+import 'package:masla_bolo_app/domain/model/paginate.dart';
 
 import '../../domain/stores/user_store.dart';
 import '../../service/app_service.dart';
 
 class ProfileState {
-  final bool isLoaded;
+  final bool isAllIssuesLoaded;
   final UserEntity user;
-  Map<String, List<IssueEntity>> issues;
+  Map<String, MyIssuesState> allIssues;
   ProfileState({
     required this.user,
-    required this.issues,
-    this.isLoaded = false,
+    required this.allIssues,
+    this.isAllIssuesLoaded = false,
   });
 
   factory ProfileState.empty() => ProfileState(
-        issues: {
-          "approved": [],
-          "not_approved": [],
-          "completed": [],
+        allIssues: {
+          "not_approved": MyIssuesState.empty(),
+          "approved": MyIssuesState.empty(),
+          "solved": MyIssuesState.empty(),
         },
         user: getIt<UserStore>().appUser,
       );
 
-  copyWith(
-          {Map<String, List<IssueEntity>>? issues,
-          bool? isLoaded,
-          UserEntity? user}) =>
+  copyWith({
+    Map<String, MyIssuesState>? allIssues,
+    bool? isAllIssuesLoaded,
+    UserEntity? user,
+  }) =>
       ProfileState(
+        allIssues: allIssues ?? this.allIssues,
+        isAllIssuesLoaded: isAllIssuesLoaded ?? this.isAllIssuesLoaded,
+        user: user ?? this.user,
+      );
+}
+
+class MyIssuesState {
+  final bool isLoaded;
+  final Paginate<IssueEntity> issues;
+  final bool isScrolled;
+
+  MyIssuesState({
+    required this.issues,
+    this.isLoaded = false,
+    this.isScrolled = false,
+  });
+
+  factory MyIssuesState.empty() => MyIssuesState(issues: Paginate.empty());
+
+  MyIssuesState copyWith({
+    Paginate<IssueEntity>? issues,
+    bool? isLoaded,
+    bool? isScrolled,
+  }) =>
+      MyIssuesState(
         issues: issues ?? this.issues,
         isLoaded: isLoaded ?? this.isLoaded,
-        user: user ?? this.user,
+        isScrolled: isScrolled ?? this.isScrolled,
       );
 }
