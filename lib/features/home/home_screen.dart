@@ -36,16 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!homeCubit.state.isLoaded) {
       homeCubit.getIssues();
     }
-
-    final scrollController = homeCubit.state.scrollController;
-    scrollController.addListener(() {
-      if (scrollController.hasClients) {
-        final threshold = scrollController.position.maxScrollExtent * 0.2;
-        if (scrollController.position.pixels >= threshold) {
-          homeCubit.scrollAndCall();
-        }
-      }
-    });
   }
 
   @override
@@ -63,9 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: context.colorScheme.onPrimary,
                 backgroundColor: context.colorScheme.primary,
                 onRefresh: () async {
-                  await widget.cubit.refreshIssues();
+                  await homeCubit.refreshIssues();
                 },
                 child: CustomScrollView(
+                  key: const PageStorageKey(0),
                   controller: state.scrollController,
                   slivers: [
                     SliverAppBar(
@@ -121,7 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    SliverList(delegate: getDelegate(state)),
+                    SliverList(
+                      delegate: getDelegate(state),
+                    ),
                     if (!state.isScrolled && state.isLoaded)
                       const SliverToBoxAdapter(
                         child: Padding(

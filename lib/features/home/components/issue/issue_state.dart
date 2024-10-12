@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/model/paginate.dart';
@@ -13,9 +14,10 @@ class IssueState {
   List<IssueHelper> previousCategories;
   List<IssueHelper> previousSortBy;
   Map<String, dynamic> queryParams;
-  final scrollController = ScrollController();
+  ScrollController scrollController;
   IssueState({
     this.isLoaded = false,
+    required this.scrollController,
     required this.queryParams,
     this.isScrolled = false,
     this.previousCategories = const [],
@@ -34,6 +36,7 @@ class IssueState {
     Map<String, dynamic>? queryParams,
     List<IssueHelper>? categories,
     List<IssueHelper>? previousSortBy,
+    ScrollController? scrollController,
     List<IssueHelper>? previousCategories,
     IssueEntity? currentServer,
     double? panelOffsetX,
@@ -41,6 +44,7 @@ class IssueState {
     int? serverIndex,
   }) =>
       IssueState(
+          scrollController: scrollController ?? this.scrollController,
           isScrolled: isScrolled ?? this.isScrolled,
           isLoaded: isLoaded ?? this.isLoaded,
           sortBy: sortBy ?? this.sortBy,
@@ -52,6 +56,7 @@ class IssueState {
 
   factory IssueState.empty() => IssueState(
         sortBy: IssueHelper.sortBy,
+        scrollController: ScrollController(),
         queryParams: {},
         categories: IssueHelper.cloneCategories(),
         issuesPagination: Paginate.empty(),

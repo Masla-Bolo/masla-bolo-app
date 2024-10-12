@@ -78,6 +78,7 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                               await cubit.refreshIssues(widget.status);
                             },
                             child: ListView.builder(
+                              key: PageStorageKey(widget.status),
                               itemCount: issues.length,
                               itemBuilder: (context, index) {
                                 final issue = issues[index];

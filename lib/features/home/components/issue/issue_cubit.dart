@@ -22,6 +22,14 @@ class IssueCubit extends Cubit<IssueState> {
   final debouncer = Debouncer(delay: const Duration(milliseconds: 800));
 
   getIssues({bool clearAll = false, String url = "/issues/"}) async {
+    state.scrollController.addListener(() {
+      if (state.scrollController.hasClients) {
+        final threshold = state.scrollController.position.maxScrollExtent * 0.2;
+        if (state.scrollController.position.pixels >= threshold) {
+          scrollAndCall();
+        }
+      }
+    });
     emit(state.copyWith(isScrolled: false));
     if (clearAll) {
       state.issuesPagination.results.clear();
