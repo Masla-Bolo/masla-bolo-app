@@ -1,6 +1,8 @@
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 
+import '../../service/app_service.dart';
 import 'bottom_bar_state.dart';
 
 class BottomBarCubit extends Cubit<BottomBarState> {
@@ -8,6 +10,9 @@ class BottomBarCubit extends Cubit<BottomBarState> {
   BottomBarCubit(this.navigation) : super(BottomBarState.empty());
 
   void updateIndex(int index) {
+    if (index == 0) {
+      getIt<IssueCubit>().scrollToTop();
+    }
     emit(state.copyWith(currentIndex: index, page: state.items[index].page));
   }
 

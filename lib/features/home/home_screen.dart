@@ -25,7 +25,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late IssueCubit homeCubit;
-  final scrollController = ScrollController();
   final controller = TextEditingController();
   late final FocusNode focusNode;
 
@@ -37,6 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!homeCubit.state.isLoaded) {
       homeCubit.getIssues();
     }
+
+    final scrollController = homeCubit.state.scrollController;
     scrollController.addListener(() {
       if (scrollController.hasClients) {
         final threshold = scrollController.position.maxScrollExtent * 0.2;
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   await widget.cubit.refreshIssues();
                 },
                 child: CustomScrollView(
-                  controller: scrollController,
+                  controller: state.scrollController,
                   slivers: [
                     SliverAppBar(
                       expandedHeight: 0.07.sh,

@@ -192,4 +192,14 @@ class IssueCubit extends Cubit<IssueState> {
       getIssues(clearAll: true);
     }
   }
+
+  void scrollToTop() {
+    if (state.scrollController.hasClients) {
+      state.scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/model/paginate.dart';
@@ -12,6 +13,7 @@ class IssueState {
   List<IssueHelper> previousCategories;
   List<IssueHelper> previousSortBy;
   Map<String, dynamic> queryParams;
+  final scrollController = ScrollController();
   IssueState({
     this.isLoaded = false,
     required this.queryParams,
