@@ -44,40 +44,50 @@ class _ProfileTabViewState extends State<ProfileTabView> {
           final isLoaded = result.isLoaded;
           final isScrolled = result.isScrolled;
           final issues = result.issues.results;
-
-          return (!isLoaded)
-              ? ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: SizedBox(
-                        height: 0.2.sh,
-                        width: 0.7.sw,
-                        child: const ShimmerEffect(),
-                      ),
-                    );
-                  })
-              : (issues.isEmpty && isLoaded)
-                  ? Center(
-                      child: Text(
-                        "No Issues found",
-                        style: Styles.boldStyle(
-                          family: FontFamily.varela,
-                          fontSize: 16,
-                          color: context.colorScheme.onPrimary,
-                        ),
-                      ),
-                    )
-                  : Column(
-                      children: [
-                        Expanded(
-                          child: RefreshIndicator(
-                            color: context.colorScheme.onPrimary,
-                            onRefresh: () async {
-                              await cubit.refreshIssues(widget.status);
-                            },
-                            child: ListView.builder(
+          return RefreshIndicator(
+            color: context.colorScheme.onPrimary,
+            onRefresh: () async {
+              if (isLoaded) {
+                await cubit.refreshIssues(widget.status);
+              }
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              controller: scrollController,
+              child: (!isLoaded)
+                  ? ListView.builder(
+                      itemCount: 5,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: SizedBox(
+                            height: 0.2.sh,
+                            width: 0.7.sw,
+                            child: const ShimmerEffect(),
+                          ),
+                        );
+                      })
+                  : (issues.isEmpty && isLoaded)
+                      ? SizedBox(
+                          height: 0.5.sh,
+                          child: Center(
+                            child: Text(
+                              "No Issues found",
+                              style: Styles.boldStyle(
+                                family: FontFamily.varela,
+                                fontSize: 16,
+                                color: context.colorScheme.onPrimary,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Column(
+                          children: [
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
                               key: PageStorageKey(widget.status),
                               itemCount: issues.length,
                               itemBuilder: (context, index) {
@@ -90,15 +100,15 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                                 );
                               },
                             ),
-                          ),
+                            if (!isScrolled && isLoaded)
+                              const Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Indicator(),
+                              ),
+                          ],
                         ),
-                        if (!isScrolled && isLoaded)
-                          const Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Indicator(),
-                          ),
-                      ],
-                    );
+            ),
+          );
         });
   }
 }

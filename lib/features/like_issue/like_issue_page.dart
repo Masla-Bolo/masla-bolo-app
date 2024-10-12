@@ -5,7 +5,6 @@ import 'package:masla_bolo_app/features/like_issue/like_issue_cubit.dart';
 import 'package:masla_bolo_app/features/like_issue/like_issue_state.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/widgets/issue_container.dart';
-import 'package:masla_bolo_app/helpers/widgets/scroll_shader_mask.dart';
 
 import '../../helpers/styles/styles.dart';
 import '../../helpers/widgets/indicator.dart';
@@ -68,60 +67,64 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                     ),
                   ),
                   10.verticalSpace,
-                  Builder(builder: (context) {
-                    return (!state.isLoaded)
-                        ? Expanded(
-                            child: ListView.builder(
+                  Expanded(
+                    child: RefreshIndicator(
+                      color: context.colorScheme.onPrimary,
+                      onRefresh: () async {
+                        if (state.isLoaded) {
+                          await cubit.refreshIssues();
+                        }
+                      },
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        child: (!state.isLoaded)
+                            ? ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
                                 itemCount: 5,
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: SizedBox(
-                                      height: 0.2.sh,
+                                      height: 0.15.sh,
                                       width: 0.7.sw,
                                       child: const ShimmerEffect(),
                                     ),
                                   );
-                                }),
-                          )
-                        : (issues.isEmpty && state.isLoaded)
-                            ? Center(
-                                child: Text(
-                                  "No Issues found",
-                                  style: Styles.boldStyle(
-                                    family: FontFamily.varela,
-                                    fontSize: 16,
-                                    color: context.colorScheme.onPrimary,
-                                  ),
-                                ),
-                              )
-                            : Expanded(
-                                child: RefreshIndicator(
-                                  color: context.colorScheme.onPrimary,
-                                  onRefresh: () async {
-                                    await cubit.refreshIssues();
-                                  },
-                                  child: ScrollShaderMask(
-                                    scrollController: scrollController,
-                                    child: ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: issues.length,
-                                      itemBuilder: (context, index) {
-                                        final issue = issues[index];
-                                        return IssueContainer(
-                                          issue: issue,
-                                          onTap: () {
-                                            cubit.goToIssueDetail(issue);
-                                          },
-                                        );
-                                      },
+                                })
+                            : (issues.isEmpty && state.isLoaded)
+                                ? SizedBox(
+                                    height: 0.5.sh,
+                                    child: Center(
+                                      child: Text(
+                                        "No Liked Issues found",
+                                        style: Styles.boldStyle(
+                                          family: FontFamily.varela,
+                                          fontSize: 16,
+                                          color: context.colorScheme.onPrimary,
+                                        ),
+                                      ),
                                     ),
+                                  )
+                                : ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: issues.length,
+                                    itemBuilder: (context, index) {
+                                      final issue = issues[index];
+                                      return IssueContainer(
+                                        issue: issue,
+                                        onTap: () {
+                                          cubit.goToIssueDetail(issue);
+                                        },
+                                      );
+                                    },
                                   ),
-                                ),
-                              );
-                  }),
+                      ),
+                    ),
+                  ),
                   if (!state.isScrolled && state.isLoaded)
                     const Padding(
                       padding: EdgeInsets.all(8),
