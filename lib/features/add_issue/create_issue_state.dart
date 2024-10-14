@@ -27,6 +27,6 @@ class CreateIssueState {
   factory CreateIssueState.empty() => CreateIssueState(
         key: GlobalKey<FormState>(),
         issue: IssueEntity.empty(),
-        categories: IssueHelper.cloneCategories(),
+        categories: IssueHelper.cloneInitialCategories(),
       );
 }

@@ -47,19 +47,44 @@ class IssueState {
           scrollController: scrollController ?? this.scrollController,
           isScrolled: isScrolled ?? this.isScrolled,
           isLoaded: isLoaded ?? this.isLoaded,
-          sortBy: sortBy ?? this.sortBy,
-          categories: categories ?? this.categories,
+          sortBy: sortBy ??
+              this.sortBy.map((e) => e.copyWith()).toList().cast<IssueHelper>(),
+          categories: categories ??
+              this
+                  .categories
+                  .map((e) => e.copyWith())
+                  .toList()
+                  .cast<IssueHelper>(),
           issuesPagination: issuesPagination ?? this.issuesPagination,
-          previousCategories: previousCategories ?? this.previousCategories,
-          previousSortBy: previousSortBy ?? this.previousSortBy,
+          previousCategories: previousCategories ??
+              this
+                  .previousCategories
+                  .map((e) => e.copyWith())
+                  .toList()
+                  .cast<IssueHelper>(),
+          previousSortBy: previousSortBy ??
+              this
+                  .previousSortBy
+                  .map((e) => e.copyWith())
+                  .toList()
+                  .cast<IssueHelper>(),
           queryParams: queryParams ?? this.queryParams);
 
   factory IssueState.empty() => IssueState(
         sortBy: IssueHelper.sortBy,
         scrollController: ScrollController(),
         queryParams: {},
-        categories: IssueHelper.cloneCategories(),
+        categories: IssueHelper.cloneInitialCategories(),
         issuesPagination: Paginate.empty(),
         isLoaded: false,
       );
+
+  List<IssueHelper> get categoryCopy =>
+      categories.map((e) => e.copyWith()).toList().cast<IssueHelper>();
+  List<IssueHelper> get sortByCopy =>
+      sortBy.map((e) => e.copyWith()).toList().cast<IssueHelper>();
+  List<IssueHelper> get previousCategoryCopy =>
+      previousCategories.map((e) => e.copyWith()).toList().cast<IssueHelper>();
+  List<IssueHelper> get previousSortByCopy =>
+      previousSortBy.map((e) => e.copyWith()).toList().cast<IssueHelper>();
 }

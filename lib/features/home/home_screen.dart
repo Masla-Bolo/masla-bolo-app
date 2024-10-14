@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: context.colorScheme.onPrimary,
                 backgroundColor: context.colorScheme.primary,
                 onRefresh: () async {
-                  await homeCubit.refreshIssues();
+                  homeCubit.refreshIssues();
                 },
                 child: CustomScrollView(
                   key: const PageStorageKey(0),

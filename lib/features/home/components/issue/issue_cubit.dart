@@ -16,20 +16,28 @@ class IssueCubit extends Cubit<IssueState> {
   final IssueNavigator navigation;
   final IssueRepository issueRepository;
   final MusicService musicService;
+  final Debouncer _debouncer;
+
   IssueCubit(this.navigation, this.issueRepository, this.musicService)
-      : super(IssueState.empty());
+      : _debouncer = Debouncer(delay: const Duration(milliseconds: 800)),
+        super(IssueState.empty()) {
+    _initScrollListener();
+  }
 
-  final debouncer = Debouncer(delay: const Duration(milliseconds: 800));
+  void _initScrollListener() {
+    state.scrollController.addListener(_onScroll);
+  }
 
-  getIssues({bool clearAll = false, String url = "/issues/"}) async {
-    state.scrollController.addListener(() {
-      if (state.scrollController.hasClients) {
-        final threshold = state.scrollController.position.maxScrollExtent * 0.2;
-        if (state.scrollController.position.pixels >= threshold) {
-          scrollAndCall();
-        }
-      }
-    });
+  void _onScroll() {
+    if (!state.scrollController.hasClients) return;
+    final threshold = state.scrollController.position.maxScrollExtent * 0.2;
+    if (state.scrollController.position.pixels >= threshold) {
+      scrollAndCall();
+    }
+  }
+
+  Future<void> getIssues(
+      {bool clearAll = false, String url = "/issues/"}) async {
     emit(state.copyWith(isScrolled: false));
     if (clearAll) {
       state.issuesPagination.results.clear();
@@ -52,19 +60,12 @@ class IssueCubit extends Cubit<IssueState> {
     ));
   }
 
-  void filterInit() {
-    emit(state.copyWith(
-      previousCategories: state.categories,
-      previousSortBy: state.sortBy,
-    ));
-  }
-
-  refreshIssues() {
+  void refreshIssues() {
     emit(state.copyWith(isLoaded: false));
     getIssues(clearAll: true);
   }
 
-  scrollAndCall() {
+  void scrollAndCall() {
     if (state.issuesPagination.next != null && state.isScrolled) {
       getIssues();
     }
@@ -72,133 +73,172 @@ class IssueCubit extends Cubit<IssueState> {
 
   void likeUnlikeIssue(IssueEntity issue) {
     issue.isLiked = !issue.isLiked;
-    if (issue.isLiked) {
-      issue.likesCount += 1;
-      musicService.play(musicService.likeUnlikeMusic);
-    } else {
-      issue.likesCount -= 1;
-      musicService.play(musicService.likeUnlikeMusic);
-    }
+    issue.likesCount += issue.isLiked ? 1 : -1;
+    musicService.play(musicService.likeUnlikeMusic);
     emit(state.copyWith(issuesPagination: state.issuesPagination));
     issueRepository.likeUnlikeIssue(issue.id);
   }
 
-  pop() {
-    navigation.pop();
-  }
+  void pop() => navigation.pop();
 
-  goToIssueDetail({bool showComment = false, required IssueEntity issue}) {
+  void goToIssueDetail({bool showComment = false, required IssueEntity issue}) {
     navigation.goToIssueDetail(
         IssueDetailInitialParams(showComment: showComment, issue: issue));
   }
 
-  void updateCategorySelection(IssueHelper value) {
-    final categories = state.categories.map((category) {
-      if (category.item == value.item) {
-        category.isSelected = !value.isSelected;
-      }
-      return category;
-    }).toList();
-
-    emit(
-      state.copyWith(
-        categories: categories,
-      ),
-    );
-  }
-
-  void clearAllCategoryFilters() {
-    final categories = state.categories.map((category) {
-      category.isSelected = false;
-      return category;
-    }).toList();
-    state.queryParams.remove("categories");
-    emit(
-      state.copyWith(categories: categories),
-    );
-  }
-
   void applyFilters() {
     final addFilters = state.categories
-        .where((value) => value.isSelected == true)
-        .map((value) => value.key)
+        .where((value) => value.isSelected)
+        .map((value) => value.item)
         .toList();
-
-    if (addFilters.isNotEmpty) {
-      state.queryParams['categories'] = addFilters.join(',');
-    }
-
     final sortBy = state.sortBy.firstWhereOrNull((value) => value.isSelected);
-    if (sortBy?.key != null) {
-      state.queryParams["ordering"] = sortBy!.key;
+
+    if (sortBy?.key == null && addFilters.isEmpty) {
+      showToast("Select a filter to apply");
+      return;
     }
 
-    if (sortBy?.key == null && addFilters.isNotEmpty) {
-      showToast("Select a filter to apply");
-    } else {
-      emit(state.copyWith(isLoaded: false));
-      getIssues(clearAll: true);
+    final queryParams = Map<String, dynamic>.from(state.queryParams);
+    if (addFilters.isNotEmpty) {
+      queryParams['categories'] = addFilters.join(',');
     }
+    if (sortBy?.key != null) {
+      queryParams["ordering"] = sortBy!.key;
+    }
+
+    emit(state.copyWith(isLoaded: false, queryParams: queryParams));
+    getIssues(clearAll: true);
+  }
+
+  List<IssueHelper> updateSelection(
+      List<IssueHelper> items, IssueHelper value) {
+    final updatedItems = items
+        .map((item) {
+          if (item.item == value.item) {
+            return item.copyWith(isSelected: !value.isSelected);
+          }
+          return item;
+        })
+        .toList()
+        .cast<IssueHelper>();
+    return updatedItems;
+  }
+
+  void updateCategorySelection(IssueHelper value) {
+    final categories = updateSelection(state.categories, value);
+    emit(state.copyWith(categories: categories));
   }
 
   void updateSortBySelection(IssueHelper value) {
-    final sortBy = state.sortBy.map((sortValue) {
-      if (sortValue.item == value.item) {
-        sortValue.isSelected = !value.isSelected;
-      } else if (sortValue.item != value.item) {
-        sortValue.isSelected = false;
-      }
-      return sortValue;
-    }).toList();
-
-    emit(
-      state.copyWith(
-        sortBy: sortBy,
-      ),
-    );
+    final sortBy = state.sortBy
+        .map((sortValue) {
+          if (sortValue.item == value.item) {
+            return sortValue.copyWith(isSelected: !value.isSelected);
+          }
+          return sortValue.copyWith(isSelected: false);
+        })
+        .toList()
+        .cast<IssueHelper>();
+    emit(state.copyWith(sortBy: sortBy));
   }
 
-  void closeDrawer(BuildContext context) async {
-    final check = state.previousCategories != state.categories ||
-        state.previousSortBy != state.sortBy;
-    if (check) {
-      if (await showConfirmationDialog(
-          "Are you sure you want to discard your changes")) {
+  void filterInit() {
+    emit(state.copyWith(
+      previousCategories: state.categoryCopy,
+      previousSortBy: state.sortByCopy,
+    ));
+  }
+
+  Future<void> closeDrawer(BuildContext context) async {
+    final deepEq = const DeepCollectionEquality().equals;
+    final hasChanges = !deepEq(state.previousCategories, state.categories) ||
+        !deepEq(state.previousSortBy, state.sortBy);
+    final hasSelection = state.categories.any((val) => val.isSelected) ||
+        state.sortBy.any((val) => val.isSelected);
+
+    if (!hasSelection && hasChanges) {
+      _resetFiltersAndFetch(context);
+      return;
+    }
+
+    if (hasChanges) {
+      final shouldDiscard = await showConfirmationDialog(
+          "Are you sure you want to discard your changes");
+      if (shouldDiscard) {
         if (context.mounted) {
-          Scaffold.of(context).closeEndDrawer();
+          _closeDrawerAndResetState(context);
         }
-        emit(state.copyWith(
-          categories: state.previousCategories,
-          sortBy: state.previousSortBy,
-        ));
       }
     } else {
       Scaffold.of(context).closeEndDrawer();
     }
   }
 
+  void _resetFiltersAndFetch(BuildContext context) {
+    emit(state.copyWith(
+      categories: state.categories,
+      sortBy: state.sortBy,
+      isLoaded: false,
+    ));
+    clearAllCategoryFilters();
+    clearSortByFilter();
+    getIssues(clearAll: true);
+    if (context.mounted) {
+      Scaffold.of(context).closeEndDrawer();
+    }
+  }
+
+  void _closeDrawerAndResetState(BuildContext context) {
+    if (context.mounted) {
+      Scaffold.of(context).closeEndDrawer();
+    }
+    emit(state.copyWith(
+      categories: state.previousCategoryCopy,
+      sortBy: state.previousSortBy,
+    ));
+  }
+
+  void clearAllCategoryFilters() {
+    final categories = state.categories
+        .map((category) => category.copyWith(isSelected: false))
+        .toList()
+        .cast<IssueHelper>();
+    final queryParams = Map<String, dynamic>.from(state.queryParams)
+      ..remove("categories");
+    emit(state.copyWith(categories: categories, queryParams: queryParams));
+  }
+
   void clearSortByFilter() {
-    final sortBy = state.sortBy.map((sortValue) {
-      sortValue.isSelected = false;
-      return sortValue;
-    }).toList();
-    state.queryParams.remove("ordering");
-    emit(state.copyWith(sortBy: sortBy));
+    final sortBy = state.sortBy
+        .map((sortValue) => sortValue.copyWith(isSelected: false))
+        .toList()
+        .cast<IssueHelper>();
+    final queryParams = Map<String, dynamic>.from(state.queryParams)
+      ..remove("ordering");
+    emit(state.copyWith(sortBy: sortBy, queryParams: queryParams));
   }
 
   void onChanged(String val) {
     if (val.isNotEmpty) {
-      debouncer.call(() {
-        state.queryParams["search"] = val;
-        emit(state.copyWith(isLoaded: false));
-        getIssues(clearAll: true);
-      });
+      _debouncer.call(() => _updateSearchAndFetch(val));
     } else {
-      debouncer.cancel();
-      state.queryParams.remove("search");
-      emit(state.copyWith(isLoaded: false));
-      getIssues(clearAll: true);
+      _debouncer.cancel();
+      _clearSearchAndFetch();
     }
+  }
+
+  void _updateSearchAndFetch(String val) {
+    final queryParams = Map<String, dynamic>.from(state.queryParams)
+      ..["search"] = val;
+    emit(state.copyWith(isLoaded: false, queryParams: queryParams));
+    getIssues(clearAll: true);
+  }
+
+  void _clearSearchAndFetch() {
+    final queryParams = Map<String, dynamic>.from(state.queryParams)
+      ..remove("search");
+    emit(state.copyWith(isLoaded: false, queryParams: queryParams));
+    getIssues(clearAll: true);
   }
 
   void scrollToTop() {
@@ -209,5 +249,11 @@ class IssueCubit extends Cubit<IssueState> {
         curve: Curves.easeInOut,
       );
     }
+  }
+
+  @override
+  Future<void> close() {
+    state.scrollController.dispose();
+    return super.close();
   }
 }

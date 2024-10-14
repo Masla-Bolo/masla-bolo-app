@@ -4,11 +4,10 @@ import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 
 class IssueDetailState {
   List<CommentsEntity> comments;
-  final CommentsEntity? replyTo;
-  final bool commentLoading;
-  final IssueEntity currentIssue;
-  final focusNode = FocusNode();
-  final TextEditingController commentController;
+  CommentsEntity? replyTo;
+  bool commentLoading;
+  IssueEntity currentIssue;
+  TextEditingController commentController;
   IssueDetailState({
     required this.currentIssue,
     required this.comments,
@@ -17,6 +16,7 @@ class IssueDetailState {
     this.commentLoading = false,
   });
 
+  final focusNode = FocusNode();
   final key = GlobalKey<FormState>();
 
   copyWith({

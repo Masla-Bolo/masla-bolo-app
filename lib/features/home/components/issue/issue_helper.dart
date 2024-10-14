@@ -1,9 +1,12 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
 
 import '../../../../helpers/styles/app_colors.dart';
 
-class IssueHelper {
+class IssueHelper extends Equatable {
   bool isSelected;
   String item;
   String? key;
@@ -21,7 +24,7 @@ class IssueHelper {
   }) =>
       IssueHelper(
         item: category ?? item,
-        key: key,
+        key: key ?? this.key,
         isSelected: isSelected ?? this.isSelected,
       );
 
@@ -64,7 +67,7 @@ class IssueHelper {
     IssueHelper(item: "Z-A", key: "-title"),
   ];
 
-  static List<IssueHelper> cloneCategories() {
+  static List<IssueHelper> cloneInitialCategories() {
     final categories = IssueHelper.categories
         .map((category) => category.copyWith(isSelected: false))
         .toList()
@@ -97,4 +100,7 @@ class IssueHelper {
             : AppColor.skyBlue;
     return color;
   }
+
+  @override
+  List<Object?> get props => [isSelected, item];
 }

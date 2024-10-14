@@ -191,9 +191,16 @@ Future<DateTime?> getDateFromPicke() async {
 
 get scrollBottomPadding => const EdgeInsets.only(bottom: 70);
 
-mixin ToastParam {
-  Color? backgroundColor;
-  Color? textColor;
-  String? image;
-  bool showToast = true;
+class ToastParam {
+  final Color? backgroundColor;
+  final Color? textColor;
+  final String? image;
+  final bool showToast;
+
+  ToastParam({
+    this.backgroundColor,
+    this.textColor,
+    this.image,
+    this.showToast = true,
+  });
 }
