@@ -145,10 +145,11 @@ class _HomeScreenState extends State<HomeScreen> {
         : SliverChildBuilderDelegate(
             (context, index) {
               final issue = state.issuesPagination.results[index];
-              // > 110
-              final end = issue.description.length > 55 && !issue.seeMore
-                  ? (issue.description.length / 2).floor().toInt()
-                  : issue.description.length;
+              final end =
+                  issue.description.length > state.descriptionThreshold &&
+                          !issue.seeMore
+                      ? (issue.description.length / 2).floor().toInt()
+                      : issue.description.length;
               final description = issue.description.substring(0, end);
               return Column(
                 children: [
