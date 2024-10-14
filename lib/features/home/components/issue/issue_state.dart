@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
@@ -78,6 +79,14 @@ class IssueState {
         issuesPagination: Paginate.empty(),
         isLoaded: false,
       );
+
+  final deepEq = const DeepCollectionEquality().equals;
+  bool get hasChanges =>
+      !deepEq(previousCategories, categories) ||
+      !deepEq(previousSortBy, sortBy);
+  bool get hasSelection =>
+      categories.any((val) => val.isSelected) ||
+      sortBy.any((val) => val.isSelected);
 
   List<IssueHelper> get categoryCopy =>
       categories.map((e) => e.copyWith()).toList().cast<IssueHelper>();

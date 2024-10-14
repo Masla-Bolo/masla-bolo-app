@@ -176,10 +176,13 @@ class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: ElevatedButton(
-                              onPressed: () {
-                                cubit.applyFilters();
-                                Scaffold.of(context).closeEndDrawer();
-                              },
+                              onPressed:
+                                  (state.hasChanges && state.hasSelection)
+                                      ? () {
+                                          cubit.applyFilters();
+                                          Scaffold.of(context).closeEndDrawer();
+                                        }
+                                      : null,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: context.colorScheme.onPrimary,
                               ),

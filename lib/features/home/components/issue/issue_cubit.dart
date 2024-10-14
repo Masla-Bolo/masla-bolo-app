@@ -93,11 +93,6 @@ class IssueCubit extends Cubit<IssueState> {
         .toList();
     final sortBy = state.sortBy.firstWhereOrNull((value) => value.isSelected);
 
-    if (sortBy?.key == null && addFilters.isEmpty) {
-      showToast("Select a filter to apply");
-      return;
-    }
-
     final queryParams = Map<String, dynamic>.from(state.queryParams);
     if (addFilters.isNotEmpty) {
       queryParams['categories'] = addFilters.join(',');
@@ -150,18 +145,12 @@ class IssueCubit extends Cubit<IssueState> {
   }
 
   Future<void> closeDrawer(BuildContext context) async {
-    final deepEq = const DeepCollectionEquality().equals;
-    final hasChanges = !deepEq(state.previousCategories, state.categories) ||
-        !deepEq(state.previousSortBy, state.sortBy);
-    final hasSelection = state.categories.any((val) => val.isSelected) ||
-        state.sortBy.any((val) => val.isSelected);
-
-    if (!hasSelection && hasChanges) {
+    if (!state.hasSelection && state.hasChanges) {
       _resetFiltersAndFetch(context);
       return;
     }
 
-    if (hasChanges) {
+    if (state.hasChanges) {
       final shouldDiscard = await showConfirmationDialog(
           "Are you sure you want to discard your changes");
       if (shouldDiscard) {
