@@ -17,8 +17,10 @@ class IssueEntity {
   DateTime createdAt;
   DateTime updatedAt;
   UserEntity user;
+  bool seeMore;
 
   IssueEntity({
+    this.seeMore = false,
     required this.id,
     required this.description,
     required this.isLiked,

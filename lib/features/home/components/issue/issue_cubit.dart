@@ -86,6 +86,11 @@ class IssueCubit extends Cubit<IssueState> {
         IssueDetailInitialParams(showComment: showComment, issue: issue));
   }
 
+  void toggleSeeMore(IssueEntity issue) {
+    issue.seeMore = !issue.seeMore;
+    emit(state.copyWith(issuesPagination: state.issuesPagination));
+  }
+
   void applyFilters() {
     final addFilters = state.categories
         .where((value) => value.isSelected)

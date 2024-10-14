@@ -28,6 +28,8 @@ class IssueState {
     required this.issuesPagination,
   });
 
+  int get descriptionThreshold => 55;
+
   copyWith({
     bool? isLoaded,
     bool? isScrolled,
