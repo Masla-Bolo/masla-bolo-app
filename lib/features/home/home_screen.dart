@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   homeCubit.refreshIssues();
                 },
                 child: CustomScrollView(
-                  key: const PageStorageKey(0),
+                  restorationId: "home",
                   controller: state.scrollController,
                   slivers: [
                     SliverAppBar(
@@ -104,6 +104,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 1.sw,
                           child: InputField(
                             borderRadius: 20,
+                            suffixIcon: Icon(
+                              Icons.search,
+                              color: context.colorScheme.onPrimary,
+                            ),
                             onChanged: (val) {
                               homeCubit.onChanged(val);
                             },
@@ -141,10 +145,20 @@ class _HomeScreenState extends State<HomeScreen> {
         : SliverChildBuilderDelegate(
             (context, index) {
               final issue = state.issuesPagination.results[index];
-              return IssuePost(
-                index: index,
-                cubit: widget.cubit,
-                issue: issue,
+              return Column(
+                children: [
+                  IssuePost(
+                    index: index,
+                    cubit: widget.cubit,
+                    issue: issue,
+                  ),
+                  5.verticalSpace,
+                  if (index != state.issuesPagination.results.length - 1)
+                    Divider(
+                      color: context.colorScheme.secondary,
+                      thickness: 1,
+                    ),
+                ],
               );
             },
             childCount: state.issuesPagination.results.length,

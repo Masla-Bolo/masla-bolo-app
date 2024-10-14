@@ -54,6 +54,8 @@ class _ProfileTabViewState extends State<ProfileTabView> {
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               controller: scrollController,
+              key: PageStorageKey(widget.status),
+              restorationId: widget.status,
               child: (!isLoaded)
                   ? ListView.builder(
                       itemCount: 5,
@@ -88,7 +90,6 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                             ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              key: PageStorageKey(widget.status),
                               itemCount: issues.length,
                               itemBuilder: (context, index) {
                                 final issue = issues[index];

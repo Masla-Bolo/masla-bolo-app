@@ -50,7 +50,7 @@ class IssueDetailDiscussion extends StatelessWidget {
                                 cubit.likeUnlikeIssue();
                               },
                               child: Text(
-                                "Like",
+                                state.currentIssue.isLiked ? "Liked" : "Like",
                                 style: Styles.boldStyle(
                                   fontSize: 15,
                                   color: context.colorScheme.onPrimary,

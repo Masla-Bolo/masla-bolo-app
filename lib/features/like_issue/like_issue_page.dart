@@ -57,7 +57,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
                     child: Text(
-                      "YOUR FAVOURITE ISSUES",
+                      "YOUR LIKED ISSUES",
                       maxLines: 1,
                       style: Styles.boldStyle(
                         fontSize: 20,

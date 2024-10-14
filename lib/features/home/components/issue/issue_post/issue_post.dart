@@ -42,37 +42,98 @@ class IssuePost extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          issue.isAnonymous
-                              ? "by Anonymous user"
-                              : "by ${issue.user.username}",
-                          style: Styles.mediumStyle(
-                            fontSize: 12,
-                            family: FontFamily.dmSans,
-                            color: context.colorScheme.onPrimary,
+                        CircleAvatar(
+                          backgroundColor: context.colorScheme.onPrimary,
+                          radius: 12,
+                          child: Icon(
+                            Icons.person,
+                            size: 12,
+                            color: context.colorScheme.primary,
                           ),
                         ),
-                        const Spacer(),
-                        Text(
-                          issue.status.name.capitalized(),
-                          style: Styles.mediumStyle(
-                            fontSize: 12,
-                            color:
-                                IssueHelper.getIssueStatusColor(issue.status),
-                            family: FontFamily.varela,
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                issue.user.username!,
+                                style: Styles.boldStyle(
+                                  family: FontFamily.varela,
+                                  fontSize: 14,
+                                  color: context.colorScheme.onPrimary,
+                                ),
+                              ),
+                              Text(
+                                issue.status.name.capitalized(),
+                                style: Styles.boldStyle(
+                                  fontSize: 12,
+                                  family: FontFamily.dmSans,
+                                  color: IssueHelper.getIssueStatusColor(
+                                      issue.status),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                    5.verticalSpace,
+                    const SizedBox(height: 10),
                     Text(
                       issue.title,
                       style: Styles.boldStyle(
-                        fontSize: 20,
                         family: FontFamily.varela,
+                        fontSize: 16,
                         color: context.colorScheme.onPrimary,
                       ),
                     ),
+                    const SizedBox(height: 5),
+                    Text(
+                      issue.description,
+                      style: Styles.mediumStyle(
+                        family: FontFamily.dmSans,
+                        fontSize: 12,
+                        color: context.colorScheme.onPrimary,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    // Row(children: [
+                    //   Expanded(
+                    //     child: Text(
+                    //       issue.description,
+                    //       style: Styles.mediumStyle(
+                    //         family: FontFamily.dmSans,
+                    //         fontSize: 12,
+                    //         color: context.colorScheme.onPrimary,
+                    //       ),
+                    //       maxLines: 2,
+                    //       overflow: TextOverflow.ellipsis,
+                    //     ),
+                    //   ),
+                    //   GestureDetector(
+                    //     onTap: () {
+                    //       cubit.goToIssueDetail(issue: issue);
+                    //     },
+                    //     child: Text(
+                    //       "See More",
+                    //       // style: Styles.mediumStyle(
+                    //       //   family: FontFamily.dmSans,
+                    //       //   fontSize: 12,
+                    //       //   color: context.colorScheme.onPrimary,
+                    //       // ),
+                    //       style: TextStyle(
+                    //         fontWeight: FontWeight.w600,
+                    //         fontSize: 12.sp,
+                    //         decoration: TextDecoration.underline,
+                    //         color: context.colorScheme.onPrimary,
+                    //         fontFamily: "dmSans",
+                    //       ),
+                    //       maxLines: 2,
+                    //       overflow: TextOverflow.ellipsis,
+                    //     ),
+                    //   ),
+                    // ]),
                   ],
                 ),
               ),

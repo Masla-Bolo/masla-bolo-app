@@ -27,7 +27,8 @@ class Comment extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: CircleAvatar(
                       radius: 15,
-                      backgroundColor: context.colorScheme.onPrimary,
+                      backgroundColor:
+                          context.colorScheme.onPrimary.withOpacity(0.9),
                       child: Icon(
                         Icons.person_2,
                         size: 15,
@@ -46,8 +47,10 @@ class Comment extends StatelessWidget {
                           children: [
                             Container(
                               padding: const EdgeInsets.all(8),
+                              width: 1.sw,
                               decoration: BoxDecoration(
-                                color: context.colorScheme.onPrimary,
+                                color: context.colorScheme.onPrimary
+                                    .withOpacity(0.9),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Column(
@@ -56,7 +59,7 @@ class Comment extends StatelessWidget {
                                   Text(
                                     comment.user?.username ?? "",
                                     style: Styles.boldStyle(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       color: context.colorScheme.primary,
                                       family: FontFamily.varela,
                                     ),
@@ -65,7 +68,7 @@ class Comment extends StatelessWidget {
                                   Text(
                                     comment.content,
                                     style: Styles.mediumStyle(
-                                      fontSize: 12,
+                                      fontSize: 14,
                                       color: context.colorScheme.primary,
                                       family: FontFamily.varela,
                                     ),

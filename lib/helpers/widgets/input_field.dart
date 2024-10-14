@@ -108,25 +108,26 @@ class _InputFieldState extends State<InputField> {
         onFieldSubmitted: widget.onSubmit,
         decoration: InputDecoration(
           hintText: widget.hintText,
-          suffixIcon: widget.passwordField
-              ? GestureDetector(
-                  onTap: () {
-                    isObsecure = !isObsecure;
-                    setState(() {});
-                  },
-                  child: Icon(
-                    isObsecure
-                        ? Icons.visibility_off
-                        : Icons.remove_red_eye_rounded,
-                    color: context.colorScheme.onPrimary,
-                  ))
-              : widget.showCrossIcon
+          suffixIcon: widget.suffixIcon ??
+              (widget.passwordField
                   ? GestureDetector(
                       onTap: () {
-                        widget.onCrossTap?.call();
+                        isObsecure = !isObsecure;
+                        setState(() {});
                       },
-                      child: const Icon(Icons.cancel))
-                  : null,
+                      child: Icon(
+                        isObsecure
+                            ? Icons.visibility_off
+                            : Icons.remove_red_eye_rounded,
+                        color: context.colorScheme.onPrimary,
+                      ))
+                  : widget.showCrossIcon
+                      ? GestureDetector(
+                          onTap: () {
+                            widget.onCrossTap?.call();
+                          },
+                          child: const Icon(Icons.cancel))
+                      : null),
           fillColor: context.colorScheme.secondary,
           errorStyle: Styles.boldStyle(
               fontSize: 12, color: AppColor.red, family: FontFamily.varela),

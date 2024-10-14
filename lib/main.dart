@@ -26,7 +26,7 @@ class MaslaBolo extends StatelessWidget {
         builder: (context) {
           return AdaptiveTheme(
             light: AppTheme.theme(),
-            initial: AdaptiveThemeMode.light,
+            initial: AdaptiveThemeMode.dark,
             dark: AppTheme.theme(dark: true),
             builder: (light, dark) {
               return GlobalLoaderOverlay(
