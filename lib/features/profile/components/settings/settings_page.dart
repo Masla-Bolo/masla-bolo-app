@@ -12,10 +12,12 @@ import '../../../../helpers/helpers.dart';
 import '../../../../helpers/styles/app_colors.dart';
 import '../../../../helpers/styles/styles.dart';
 import '../../../../helpers/widgets/header.dart';
+import '../../../../service/app_service.dart';
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key, required this.cubit});
-  final SettingsCubit cubit;
+  const SettingsPage({super.key});
+  static final cubit = getIt<SettingsCubit>();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(

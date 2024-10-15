@@ -6,20 +6,10 @@ import '../../helpers/helpers.dart';
 import '../../service/app_service.dart';
 import 'get_started_cubit.dart';
 
-class GetStartedScreen extends StatefulWidget {
+class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({super.key});
 
-  @override
-  State<GetStartedScreen> createState() => _GetStartedScreenState();
-}
-
-class _GetStartedScreenState extends State<GetStartedScreen> {
-  late GetStartedCubit cubit;
-  @override
-  void initState() {
-    super.initState();
-    cubit = getIt<GetStartedCubit>();
-  }
+  static final cubit = getIt<GetStartedCubit>();
 
   @override
   Widget build(BuildContext context) {

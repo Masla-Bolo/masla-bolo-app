@@ -7,25 +7,14 @@ import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/input_field.dart';
 
+import '../../../service/app_service.dart';
 import '../auth_cubit.dart';
 import '../auth_state.dart';
 
-class SignUpScreen extends StatefulWidget {
-  final AuthCubit cubit;
-  const SignUpScreen({super.key, required this.cubit});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  late AuthCubit authCubit;
-
-  @override
-  void initState() {
-    super.initState();
-    authCubit = widget.cubit;
-  }
+  static final authCubit = getIt<AuthCubit>();
 
   @override
   Widget build(BuildContext context) {

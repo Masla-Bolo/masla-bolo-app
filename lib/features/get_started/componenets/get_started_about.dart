@@ -18,12 +18,7 @@ class GetStartedAbout extends StatefulWidget {
 }
 
 class _GetStartedAboutState extends State<GetStartedAbout> {
-  late GetStartedCubit cubit;
-  @override
-  void initState() {
-    super.initState();
-    cubit = getIt<GetStartedCubit>();
-  }
+  final cubit = getIt<GetStartedCubit>();
 
   @override
   Widget build(BuildContext context) {

@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../service/app_service.dart';
 
 class BottomBar extends StatelessWidget {
-  const BottomBar({super.key, required this.cubit});
-  final BottomBarCubit cubit;
+  const BottomBar({super.key});
+  static final cubit = getIt<BottomBarCubit>();
 
   @override
   Widget build(BuildContext context) {

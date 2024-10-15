@@ -11,10 +11,11 @@ import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 
 import '../../helpers/styles/styles.dart';
+import '../../service/app_service.dart';
 
 class CreateIssueScreen extends StatelessWidget {
-  const CreateIssueScreen({super.key, required this.cubit});
-  final CreateIssueCubit cubit;
+  const CreateIssueScreen({super.key});
+  static final cubit = getIt<CreateIssueCubit>();
 
   @override
   Widget build(BuildContext context) {

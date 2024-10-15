@@ -16,22 +16,20 @@ import 'components/issue/issue_post/issue_post.dart';
 import 'components/issue/issue_post/issue_post_shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.cubit});
-  final IssueCubit cubit;
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late IssueCubit homeCubit;
+  final homeCubit = getIt<IssueCubit>();
   final controller = TextEditingController();
   late final FocusNode focusNode;
 
   @override
   void initState() {
     super.initState();
-    homeCubit = widget.cubit;
     focusNode = FocusNode();
     if (!homeCubit.state.isLoaded) {
       homeCubit.getIssues();
@@ -155,12 +153,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   IssuePost(
                     index: index,
-                    cubit: widget.cubit,
+                    cubit: homeCubit,
                     description: description,
                     issue: issue,
                     descriptionThreshold: state.descriptionThreshold,
                     calledSeeMore: () {
-                      widget.cubit.toggleSeeMore(issue);
+                      homeCubit.toggleSeeMore(issue);
                     },
                   ),
                   5.verticalSpace,

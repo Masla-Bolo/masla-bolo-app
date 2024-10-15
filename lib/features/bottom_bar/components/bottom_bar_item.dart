@@ -6,8 +6,6 @@ import 'package:masla_bolo_app/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 
-import '../../../service/app_service.dart';
-
 class BottomBarItem {
   Widget page;
   String image;
@@ -19,23 +17,23 @@ class BottomBarItem {
   static final items = [
     BottomBarItem(
       image: AppImages.homeGrey,
-      page: HomeScreen(cubit: getIt()),
+      page: const HomeScreen(),
     ),
     BottomBarItem(
       image: AppImages.heart,
-      page: LikeIssuePage(cubit: getIt()),
+      page: const LikeIssuePage(),
     ),
     BottomBarItem(
       image: AppImages.writeGrey,
-      page: CreateIssueScreen(cubit: getIt()),
+      page: const CreateIssueScreen(),
     ),
     BottomBarItem(
       image: AppImages.bell,
-      page: NotificationPage(cubit: getIt()),
+      page: const NotificationPage(),
     ),
     BottomBarItem(
       image: AppImages.profileGrey,
-      page: ProfileScreen(cubit: getIt()),
+      page: const ProfileScreen(),
     )
   ];
 }

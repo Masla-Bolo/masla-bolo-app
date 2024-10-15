@@ -18,11 +18,10 @@ class GetStartedRole extends StatefulWidget {
 }
 
 class _GetStartedRoleState extends State<GetStartedRole> {
-  late GetStartedCubit cubit;
+  final cubit = getIt<GetStartedCubit>();
   @override
   void initState() {
     super.initState();
-    cubit = getIt<GetStartedCubit>();
     cubit.onInit();
   }
 

@@ -31,36 +31,28 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(const SplashScreen(), TransitionType.fade);
 
     case RouteName.login:
-      return getRoute(LoginScreen(cubit: getIt()), TransitionType.fade);
+      return getRoute(const LoginScreen(), TransitionType.fade);
 
     case RouteName.bottomBar:
-      return getRoute(BottomBar(cubit: getIt()), TransitionType.fade);
+      return getRoute(const BottomBar(), TransitionType.fade);
 
     case RouteName.register:
-      return getRoute(SignUpScreen(cubit: getIt()), TransitionType.fade);
+      return getRoute(const SignUpScreen(), TransitionType.fade);
 
     case RouteName.profile:
-      return getRoute(ProfileScreen(cubit: getIt()), TransitionType.fade);
+      return getRoute(const ProfileScreen(), TransitionType.fade);
 
     case RouteName.home:
-      return getRoute(HomeScreen(cubit: getIt()), TransitionType.slide);
+      return getRoute(const HomeScreen(), TransitionType.slide);
 
     case RouteName.notification:
-      return getRoute(
-          NotificationPage(
-            cubit: getIt(),
-          ),
-          TransitionType.fade);
+      return getRoute(const NotificationPage(), TransitionType.fade);
 
     case RouteName.likeIssue:
-      return getRoute(
-          LikeIssuePage(
-            cubit: getIt(),
-          ),
-          TransitionType.fade);
+      return getRoute(const LikeIssuePage(), TransitionType.fade);
 
     case RouteName.issue:
-      return getRoute(CreateIssueScreen(cubit: getIt()), TransitionType.fade);
+      return getRoute(const CreateIssueScreen(), TransitionType.fade);
 
     case RouteName.issueDetail:
       return getRoute(
@@ -75,7 +67,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(const GetStartedScreen(), TransitionType.fade);
 
     case RouteName.settings:
-      return getRoute(SettingsPage(cubit: getIt()), TransitionType.slide);
+      return getRoute(const SettingsPage(), TransitionType.slide);
 
     default:
       return MaterialPageRoute(

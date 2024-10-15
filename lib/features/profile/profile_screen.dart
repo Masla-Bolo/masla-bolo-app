@@ -6,11 +6,11 @@ import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
+import '../../service/app_service.dart';
 import 'profile_state.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key, required this.cubit});
-  final ProfileCubit cubit;
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -19,11 +19,11 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  late ProfileCubit cubit;
+  final cubit = getIt<ProfileCubit>();
+
   @override
   void initState() {
     super.initState();
-    cubit = widget.cubit;
     tabController = TabController(length: 3, vsync: this);
     cubit.getUser();
     if (!cubit.state.isAllIssuesLoaded) {

@@ -2,7 +2,6 @@ import 'package:masla_bolo_app/features/bottom_bar/components/bottom_bar_item.da
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../service/app_service.dart';
 import '../home/home_screen.dart';
 
 class BottomBarState {
@@ -23,7 +22,7 @@ class BottomBarState {
         items: BottomBarItem.items,
         currentIndex: 0,
         hideBottomBar: false,
-        page: HomeScreen(cubit: getIt()),
+        page: const HomeScreen(),
       );
 
   BottomBarState copyWith(
