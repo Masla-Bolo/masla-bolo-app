@@ -1,7 +1,7 @@
-import 'package:masla_bolo_app/domain/entities/user_entity.dart';
-import 'package:masla_bolo_app/domain/repositories/auth_repository.dart';
-import 'package:masla_bolo_app/domain/model/user_json.dart';
-import 'package:masla_bolo_app/network/network_repository.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../../domain/model/user_json.dart';
+import '../../network/network_repository.dart';
 
 import '../../domain/stores/user_store.dart';
 

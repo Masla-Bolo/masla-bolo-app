@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
-import 'package:masla_bolo_app/helpers/extensions.dart';
+import '../../domain/entities/issue_entity.dart';
+import '../extensions.dart';
 
-import '../../features/home/components/issue/issue_helper.dart';
+import '../../presentation/home/components/issue/issue_helper.dart';
 import '../helpers.dart';
 import '../styles/styles.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masla_bolo_app/helpers/styles/styles.dart';
+import '../styles/styles.dart';
 import 'package:multiselect/multiselect.dart';
 
 class MultiSelectField extends StatefulWidget {

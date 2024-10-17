@@ -1,5 +1,5 @@
-import 'package:masla_bolo_app/network/dio/dio_client.dart';
-import 'package:masla_bolo_app/network/dio/interceptors/network_interceptor.dart';
+import '../../dio/dio_client.dart';
+import '../../dio/interceptors/network_interceptor.dart';
 
 import '../../../di/service_locator.dart';
 

@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/domain/model/user_json.dart';
+import '../model/user_json.dart';
 
 class UserEntity {
   String? email;

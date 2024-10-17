@@ -1,5 +1,5 @@
-import 'package:masla_bolo_app/network/dio/dio_client.dart';
-import 'package:masla_bolo_app/network/network_response.dart';
+import 'dio/dio_client.dart';
+import 'network_response.dart';
 
 class NetworkRepository implements Exception {
   final DioClient dioClient;

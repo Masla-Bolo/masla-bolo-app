@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {

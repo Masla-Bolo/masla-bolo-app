@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:masla_bolo_app/domain/entities/user_entity.dart';
-import 'package:masla_bolo_app/domain/failures/local_storage_failure.dart';
-import 'package:masla_bolo_app/domain/model/user_json.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/failures/local_storage_failure.dart';
+import '../../domain/model/user_json.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageRepository {

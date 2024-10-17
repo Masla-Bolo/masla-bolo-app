@@ -1,5 +1,5 @@
-import 'package:masla_bolo_app/data/auth/api_auth_repository.dart';
-import 'package:masla_bolo_app/domain/repositories/auth_repository.dart';
+import '../../../data/auth/api_auth_repository.dart';
+import '../../repositories/auth_repository.dart';
 
 import '../../../di/service_locator.dart';
 

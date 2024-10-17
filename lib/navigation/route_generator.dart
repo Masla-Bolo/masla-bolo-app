@@ -1,21 +1,21 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:masla_bolo_app/features/auth/sign_up/sign_up_screen.dart';
-import 'package:masla_bolo_app/features/bottom_bar/bottom_bar.dart';
-import 'package:masla_bolo_app/features/like_issue/like_issue_page.dart';
-import 'package:masla_bolo_app/features/get_started/get_started_screen.dart';
-import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail.dart';
-import 'package:masla_bolo_app/features/add_issue/create_issue_screen.dart';
-import 'package:masla_bolo_app/features/notification/notification_page.dart';
-import 'package:masla_bolo_app/features/profile/components/settings/settings_page.dart';
-import 'package:masla_bolo_app/features/profile/profile_screen.dart';
+import 'package:masla_bolo_app/presentation/auth/sign_up/sign_up_screen.dart';
+import 'package:masla_bolo_app/presentation/bottom_bar/bottom_bar.dart';
+import 'package:masla_bolo_app/presentation/like_issue/like_issue_page.dart';
+import 'package:masla_bolo_app/presentation/get_started/get_started_screen.dart';
+import 'package:masla_bolo_app/presentation/home/components/issue/issue_detail/issue_detail.dart';
+import 'package:masla_bolo_app/presentation/add_issue/create_issue_screen.dart';
+import 'package:masla_bolo_app/presentation/notification/notification_page.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_page.dart';
+import 'package:masla_bolo_app/presentation/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/navigation/route_name.dart';
 
 import '../di/service_locator.dart';
-import '../features/auth/login/login_screen.dart';
-import '../features/home/home_screen.dart';
-import '../features/splash/splash_screen.dart';
+import '../presentation/auth/login/login_screen.dart';
+import '../presentation/home/home_screen.dart';
+import '../presentation/splash/splash_screen.dart';
 
 enum TransitionType {
   fade,

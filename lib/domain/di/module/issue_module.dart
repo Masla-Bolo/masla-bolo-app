@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
+import '../../repositories/issue_repository.dart';
 
 import '../../../data/issue/api_issue_repository.dart';
 import '../../../di/service_locator.dart';

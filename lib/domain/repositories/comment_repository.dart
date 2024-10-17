@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
+import '../entities/comments_entity.dart';
 
 abstract class CommentRepository {
   Future<List<CommentsEntity>> getComments({

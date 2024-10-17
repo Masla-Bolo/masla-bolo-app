@@ -1,5 +1,5 @@
-import 'package:masla_bolo_app/helpers/extensions.dart';
-import 'package:masla_bolo_app/helpers/styles/styles.dart';
+import '../extensions.dart';
+import '../styles/styles.dart';
 import 'package:flutter/services.dart';
 import '../styles/app_colors.dart';
 import 'package:flutter/material.dart';

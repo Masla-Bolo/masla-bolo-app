@@ -1,7 +1,7 @@
-import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
-import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
-import 'package:masla_bolo_app/domain/model/comments_json.dart';
-import 'package:masla_bolo_app/service/utility_service.dart';
+import '../../domain/entities/comments_entity.dart';
+import '../../domain/repositories/comment_repository.dart';
+import '../../domain/model/comments_json.dart';
+import '../../service/utility_service.dart';
 
 import '../../helpers/helpers.dart';
 import '../../network/network_repository.dart';

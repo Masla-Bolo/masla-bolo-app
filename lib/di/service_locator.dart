@@ -1,10 +1,10 @@
 import 'package:get_it/get_it.dart';
-import 'package:masla_bolo_app/data/di/data_layer_injection.dart';
-import 'package:masla_bolo_app/domain/di/domain_layer_injection.dart';
-import 'package:masla_bolo_app/features/di/presentation_layer_injection.dart';
-import 'package:masla_bolo_app/navigation/di/navigation_layer_injection.dart';
-import 'package:masla_bolo_app/network/di/network_layer_injection.dart';
-import 'package:masla_bolo_app/service/di/service_injection.dart';
+import '../data/di/data_layer_injection.dart';
+import '../domain/di/domain_layer_injection.dart';
+import '../presentation/di/presentation_layer_injection.dart';
+import '../navigation/di/navigation_layer_injection.dart';
+import '../network/di/network_layer_injection.dart';
+import '../service/di/service_injection.dart';
 
 final getIt = GetIt.instance;
 

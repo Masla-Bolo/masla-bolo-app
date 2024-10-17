@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
+import '../../repositories/comment_repository.dart';
 
 import '../../../data/comment/api_comment_repository.dart';
 import '../../../di/service_locator.dart';

@@ -1,9 +1,9 @@
-import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
-import 'package:masla_bolo_app/domain/model/paginate.dart';
-import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
-import 'package:masla_bolo_app/domain/model/issue_json.dart';
-import 'package:masla_bolo_app/network/network_repository.dart';
-import 'package:masla_bolo_app/service/utility_service.dart';
+import '../../domain/entities/issue_entity.dart';
+import '../../domain/model/paginate.dart';
+import '../../domain/repositories/issue_repository.dart';
+import '../../domain/model/issue_json.dart';
+import '../../network/network_repository.dart';
+import '../../service/utility_service.dart';
 
 class ApiIssueRepository implements IssueRepository {
   final NetworkRepository networkRepository;

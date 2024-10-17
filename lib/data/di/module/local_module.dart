@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/data/local_storage/local_storage_repository.dart';
+import '../../local_storage/local_storage_repository.dart';
 
 import '../../../di/service_locator.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/helpers/extensions.dart';
+import '../extensions.dart';
 
 class Header extends StatelessWidget {
   const Header({

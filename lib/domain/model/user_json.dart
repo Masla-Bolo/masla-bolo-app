@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/domain/entities/user_entity.dart';
+import '../entities/user_entity.dart';
 
 enum UserRole { user, official }
 

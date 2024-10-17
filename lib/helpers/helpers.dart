@@ -2,16 +2,16 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/helpers/extensions.dart';
-import 'package:masla_bolo_app/network/dio/dio_client.dart';
-import 'package:masla_bolo_app/network/network_response.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
-import 'package:masla_bolo_app/helpers/styles/app_images.dart';
-import 'package:masla_bolo_app/helpers/styles/styles.dart';
-import 'package:masla_bolo_app/helpers/widgets/indicator.dart';
+import 'extensions.dart';
+import '../network/dio/dio_client.dart';
+import '../network/network_response.dart';
+import 'styles/app_colors.dart';
+import 'styles/app_images.dart';
+import 'styles/styles.dart';
+import 'widgets/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:masla_bolo_app/navigation/app_navigation.dart';
+import '../navigation/app_navigation.dart';
 
 Future loader(Future Function() func, {ToastParam? params}) async {
   final context = AppNavigation.context;
