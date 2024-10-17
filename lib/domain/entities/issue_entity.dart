@@ -17,10 +17,12 @@ class IssueEntity {
   DateTime createdAt;
   DateTime updatedAt;
   UserEntity user;
-  bool seeMore;
+  bool seeMore; // for issuePost seemore-seeLess
+  int currentIndex; // for issuePost pageView
 
   IssueEntity({
     this.seeMore = false,
+    this.currentIndex = 0,
     required this.id,
     required this.description,
     required this.isLiked,

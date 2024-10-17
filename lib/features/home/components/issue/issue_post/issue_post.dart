@@ -1,29 +1,27 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_post/issue_post_params.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/widgets/cached_image.dart';
 
-import '../../../../../domain/entities/issue_entity.dart';
 import '../../../../../helpers/styles/styles.dart';
 import '../issue_helper.dart';
 
 class IssuePost extends StatelessWidget {
-  final int index;
-  final int descriptionThreshold;
-  final IssueCubit cubit;
-  final IssueEntity issue;
-  final String description;
-  final VoidCallback calledSeeMore;
+  final IssuePostParams params;
+  const IssuePost({
+    super.key,
+    required this.params,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        cubit.goToIssueDetail(issue: issue);
+        params.cubit.goToIssueDetail(issue: params.issue);
       },
       child: Container(
         color: context.colorScheme.primary,
@@ -32,7 +30,7 @@ class IssuePost extends StatelessWidget {
             20.verticalSpace,
             GestureDetector(
               onTap: () {
-                cubit.goToIssueDetail(issue: issue);
+                params.cubit.goToIssueDetail(issue: params.issue);
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
@@ -57,7 +55,7 @@ class IssuePost extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                issue.user.username!,
+                                params.issue.user.username!,
                                 style: Styles.boldStyle(
                                   family: FontFamily.varela,
                                   fontSize: 14,
@@ -65,12 +63,12 @@ class IssuePost extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                issue.status.name.capitalized(),
+                                params.issue.status.name.capitalized(),
                                 style: Styles.boldStyle(
                                   fontSize: 12,
                                   family: FontFamily.dmSans,
                                   color: IssueHelper.getIssueStatusColor(
-                                      issue.status),
+                                      params.issue.status),
                                 ),
                               ),
                             ],
@@ -80,7 +78,7 @@ class IssuePost extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      issue.title,
+                      params.issue.title,
                       style: Styles.boldStyle(
                         family: FontFamily.varela,
                         fontSize: 16,
@@ -90,16 +88,18 @@ class IssuePost extends StatelessWidget {
                     const SizedBox(height: 5),
                     RichText(
                       text: TextSpan(
-                          text: issue.seeMore ? "$description " : description,
+                          text: params.issue.seeMore
+                              ? "${params.description} "
+                              : params.description,
                           style: Styles.mediumStyle(
                             family: FontFamily.dmSans,
                             fontSize: 12,
                             color: context.colorScheme.onPrimary,
                           ),
                           children: [
-                            if (!issue.seeMore &&
-                                !(issue.description.length <
-                                    descriptionThreshold))
+                            if (!params.issue.seeMore &&
+                                !(params.issue.description.length <
+                                    params.descriptionThreshold))
                               TextSpan(
                                 text: "... ",
                                 style: TextStyle(
@@ -107,13 +107,15 @@ class IssuePost extends StatelessWidget {
                                   color: context.colorScheme.onPrimary,
                                 ),
                               ),
-                            if (!(issue.description.length < 55))
+                            if (!(params.issue.description.length < 55))
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    calledSeeMore.call();
+                                    params.calledSeeMore.call();
                                   },
-                                text: issue.seeMore ? "see less" : "see more",
+                                text: params.issue.seeMore
+                                    ? "see less"
+                                    : "see more",
                                 style: const TextStyle(
                                   fontSize: 13,
                                   color: AppColor.blue,
@@ -129,13 +131,54 @@ class IssuePost extends StatelessWidget {
             10.verticalSpace,
             GestureDetector(
               onTap: () {
-                cubit.goToIssueDetail(issue: issue);
+                params.cubit.goToIssueDetail(issue: params.issue);
               },
               child: SizedBox(
                 height: 0.5.sh,
-                child: CachedImage(image: issue.images.first),
+                child: PageView.builder(
+                  controller: params.pageController,
+                  itemCount: params.issue.images.length,
+                  onPageChanged: (index) {
+                    params.pageController.jumpToPage(index);
+                    params.updateIndex.call(index);
+                  },
+                  itemBuilder: (context, index) {
+                    final image = params.issue.images[index];
+                    return Padding(
+                      key: Key("${params.currentImageIndex}"),
+                      padding: const EdgeInsets.symmetric(horizontal: 1),
+                      child: CachedImage(
+                        image: image,
+                        borderRadius: 0,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
+            15.verticalSpace,
+            if (params.issue.images.length > 1)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List<Widget>.generate(
+                    params.issue.images.length,
+                    (index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: InkWell(
+                            onTap: () {
+                              params.pageController.animateToPage(index,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeIn);
+                            },
+                            child: CircleAvatar(
+                              radius: 3,
+                              backgroundColor: params.currentImageIndex == index
+                                  ? context.colorScheme.onPrimary
+                                  : context.colorScheme.secondary,
+                            ),
+                          ),
+                        )),
+              ),
             Container(
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 8),
               color: context.colorScheme.primary,
@@ -148,10 +191,10 @@ class IssuePost extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          cubit.likeUnlikeIssue(issue);
+                          params.cubit.likeUnlikeIssue(params.issue);
                         },
                         child: Icon(
-                          issue.isLiked
+                          params.issue.isLiked
                               ? Icons.thumb_up
                               : Icons.thumb_up_alt_outlined,
                           color: context.colorScheme.onPrimary,
@@ -159,14 +202,14 @@ class IssuePost extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          cubit.likeUnlikeIssue(issue);
+                          params.cubit.likeUnlikeIssue(params.issue);
                         },
                         child: Text(
-                          issue.likesCount < 1
+                          params.issue.likesCount < 1
                               ? "Like"
-                              : issue.likesCount == 1
+                              : params.issue.likesCount == 1
                                   ? "1 Like"
-                                  : "${issue.likesCount} Likes",
+                                  : "${params.issue.likesCount} Likes",
                           style: Styles.mediumStyle(
                               fontSize: 12,
                               color: context.colorScheme.onPrimary,
@@ -178,9 +221,9 @@ class IssuePost extends StatelessWidget {
                       5.horizontalSpace,
                       GestureDetector(
                         onTap: () {
-                          cubit.goToIssueDetail(
+                          params.cubit.goToIssueDetail(
                             showComment: true,
-                            issue: issue,
+                            issue: params.issue,
                           );
                         },
                         child: Icon(
@@ -190,17 +233,17 @@ class IssuePost extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          cubit.goToIssueDetail(
+                          params.cubit.goToIssueDetail(
                             showComment: true,
-                            issue: issue,
+                            issue: params.issue,
                           );
                         },
                         child: Text(
-                          issue.commentsCount < 1
+                          params.issue.commentsCount < 1
                               ? "comment"
-                              : issue.commentsCount == 1
+                              : params.issue.commentsCount == 1
                                   ? "1 comment"
-                                  : "${issue.commentsCount} comments",
+                                  : "${params.issue.commentsCount} comments",
                           style: Styles.mediumStyle(
                               fontSize: 12,
                               color: context.colorScheme.onPrimary,
@@ -217,7 +260,7 @@ class IssuePost extends StatelessWidget {
                       ),
                       5.horizontalSpace,
                       Text(
-                        formatDate(issue.createdAt),
+                        formatDate(params.issue.createdAt),
                         style: Styles.mediumStyle(
                             fontSize: 12,
                             color: context.colorScheme.onPrimary,
@@ -234,14 +277,4 @@ class IssuePost extends StatelessWidget {
       ),
     );
   }
-
-  const IssuePost({
-    super.key,
-    required this.index,
-    required this.cubit,
-    required this.issue,
-    required this.description,
-    required this.calledSeeMore,
-    required this.descriptionThreshold,
-  });
 }

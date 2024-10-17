@@ -126,9 +126,7 @@ class IssueJson {
     return {
       'title': title,
       'description': description,
-      'images': [
-        "http://pakistanhouse.net/wp-content/uploads/2022/07/a-flooded-flooded-road-in-karachi-1657258177-8149.jpg"
-      ],
+      'images': images,
       'categories': categories,
       "is_anonymous": isAnonymous,
       "latitude": 40.712776,

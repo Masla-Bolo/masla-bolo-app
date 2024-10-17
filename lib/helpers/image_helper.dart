@@ -1,7 +1,10 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:masla_bolo_app/helpers/helpers.dart';
+import 'package:masla_bolo_app/navigation/app_navigation.dart';
+import 'dart:io' as io;
 import 'styles/styles.dart';
 
 class ImageHelper {
@@ -14,9 +17,9 @@ class ImageHelper {
     return null;
   }
 
-  Future<XFile?> showOptions(BuildContext context) async {
+  Future<XFile?> showOptions() async {
     return await showCupertinoModalPopup(
-      context: context,
+      context: AppNavigation.context,
       builder: (context) => CupertinoActionSheet(
         actions: [
           CupertinoActionSheetAction(
@@ -53,5 +56,27 @@ class ImageHelper {
         ],
       ),
     );
+  }
+
+  Future<String?> uploadImage() async {
+    late UploadTask uploadTask;
+    final file = await showOptions();
+    if (file != null) {
+      final url = await loader(() async {
+        final path = "images/${file.name}";
+        final ref = FirebaseStorage.instance.ref().child(path);
+
+        final metadata = SettableMetadata(
+          contentType: 'image/jpeg',
+          customMetadata: {'picked-file-path': file.path},
+        );
+        uploadTask = ref.putFile(io.File(file.path), metadata);
+        final snapshot = await uploadTask.whenComplete(() {});
+        final downloadUrl = await snapshot.ref.getDownloadURL();
+        return downloadUrl;
+      });
+      return url.toString();
+    }
+    return null;
   }
 }

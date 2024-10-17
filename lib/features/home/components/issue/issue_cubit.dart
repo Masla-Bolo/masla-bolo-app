@@ -250,4 +250,11 @@ class IssueCubit extends Cubit<IssueState> {
     state.scrollController.dispose();
     return super.close();
   }
+
+  void updateIndex(int index, IssueEntity issue) {
+    state.issuesPagination.results.firstWhere((result) {
+      return result.id == issue.id;
+    }).currentIndex = index;
+    emit(state.copyWith(issuesPagination: state.issuesPagination));
+  }
 }

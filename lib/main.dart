@@ -1,9 +1,11 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:masla_bolo_app/firebase_options.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/service/app_service.dart';
@@ -13,6 +15,9 @@ import 'navigation/route_generator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await AppService.initialize();
   runApp(const MaslaBolo());
 }

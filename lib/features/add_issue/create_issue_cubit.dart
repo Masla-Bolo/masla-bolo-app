@@ -6,6 +6,7 @@ import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart'
 import 'package:masla_bolo_app/features/add_issue/create_issue_navigator.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
 import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
+import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
 import 'package:masla_bolo_app/service/app_service.dart';
 
@@ -17,12 +18,23 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
       : super(CreateIssueState.empty());
 
   Future<void> showOptions(BuildContext context) async {
-    final image = await imageHelper.showOptions(context);
-    if (image != null) {}
+    final image = await imageHelper.uploadImage();
+    if (image != null) {
+      if (state.issue.images.isEmpty) {
+        state.issue.images.insert(0, image);
+      } else {
+        state.issue.images.add(image);
+      }
+      emit(state.copyWith(issue: state.issue));
+    }
   }
 
   Future<void> createIssue() async {
-    final isValid = state.key.currentState?.validate() ?? false;
+    if (state.issue.images.isEmpty) {
+      showToast("Select atleast an image as a proof");
+      return;
+    }
+    final isValid = (state.key.currentState?.validate() ?? false);
     if (isValid && state.categories.any((value) => value.isSelected)) {
       final categories = state.categories
           .where((val) => val.isSelected)
@@ -68,6 +80,11 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
 
   void changeAnonymous(bool val) {
     state.issue.isAnonymous = val;
+    emit(state.copyWith(issue: state.issue));
+  }
+
+  void removeImage(String image) {
+    state.issue.images.remove(image);
     emit(state.copyWith(issue: state.issue));
   }
 }

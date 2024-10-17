@@ -15,6 +15,7 @@ class IssueState {
   List<IssueHelper> previousCategories;
   List<IssueHelper> previousSortBy;
   Map<String, dynamic> queryParams;
+
   ScrollController scrollController;
   IssueState({
     this.isLoaded = false,
@@ -31,6 +32,7 @@ class IssueState {
   int get descriptionThreshold => 55;
 
   copyWith({
+    int? currentImage,
     bool? isLoaded,
     bool? isScrolled,
     UserEntity? user,
@@ -38,6 +40,7 @@ class IssueState {
     List<IssueHelper>? sortBy,
     Map<String, dynamic>? queryParams,
     List<IssueHelper>? categories,
+    PageController? pageController,
     List<IssueHelper>? previousSortBy,
     ScrollController? scrollController,
     List<IssueHelper>? previousCategories,

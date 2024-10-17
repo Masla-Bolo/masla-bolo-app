@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "232339894152",
+    "project_id": "reportit-4073e",
+    "storage_bucket": "reportit-4073e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232339894152:android:04a0d031b8ac248243d43d",
+        "android_client_info": {
+          "package_name": "com.example.masla_bolo_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmLGqEGI163xJipZ4XTYmZV7CBIpXEEuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

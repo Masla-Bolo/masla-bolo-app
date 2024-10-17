@@ -9,6 +9,7 @@ import 'package:masla_bolo_app/features/add_issue/create_issue_cubit.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
+import 'package:masla_bolo_app/helpers/widgets/cached_image.dart';
 
 import '../../helpers/styles/styles.dart';
 import '../../service/app_service.dart';
@@ -31,6 +32,41 @@ class CreateIssueScreen extends StatelessWidget {
                     IssueHeader(cubit: cubit),
                     10.verticalSpace,
                     IssueForm(cubit: cubit),
+                    20.verticalSpace,
+                    if (state.issue.images.isNotEmpty)
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: state.issue.images.map((image) {
+                              return Stack(
+                                children: [
+                                  SizedBox(
+                                    height: 0.2.sh,
+                                    width: 0.4.sw,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
+                                      child: CachedImage(image: image),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: -2,
+                                    right: 1,
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          cubit.removeImage(image);
+                                        },
+                                        child: const Icon(Icons.cancel)),
+                                  ),
+                                ],
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
                     20.verticalSpace,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

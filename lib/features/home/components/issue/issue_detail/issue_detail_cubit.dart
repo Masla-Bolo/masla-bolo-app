@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
@@ -58,8 +57,8 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     );
   }
 
-  Future<void> showOptions(BuildContext context) async {
-    final image = await imageHelper.showOptions(context);
+  Future<void> showOptions() async {
+    final image = await imageHelper.uploadImage();
     if (image != null) {}
   }
 

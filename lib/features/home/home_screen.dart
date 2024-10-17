@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/home_filter_drawer.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
+import 'package:masla_bolo_app/features/home/components/issue/issue_post/issue_post_params.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -124,6 +125,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Indicator(),
                         ),
                       ),
+                    if (state.isScrolled &&
+                        state.isLoaded &&
+                        state.issuesPagination.next == null)
+                      SliverToBoxAdapter(
+                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            "thats it for now...\nNo more issues to show",
+                            textAlign: TextAlign.center,
+                            style: Styles.boldStyle(
+                              fontSize: 14,
+                              color: context.colorScheme.onPrimary,
+                              family: FontFamily.dmSans,
+                            ),
+                          ),
+                        ),
+                      )),
                   ],
                 ),
               );
@@ -152,14 +171,22 @@ class _HomeScreenState extends State<HomeScreen> {
               return Column(
                 children: [
                   IssuePost(
-                    index: index,
-                    cubit: homeCubit,
-                    description: description,
-                    issue: issue,
-                    descriptionThreshold: state.descriptionThreshold,
-                    calledSeeMore: () {
-                      homeCubit.toggleSeeMore(issue);
-                    },
+                    params: IssuePostParams(
+                      index: index,
+                      cubit: homeCubit,
+                      description: description,
+                      updateIndex: (index) {
+                        homeCubit.updateIndex(index, issue);
+                      },
+                      currentImageIndex: issue.currentIndex,
+                      issue: issue,
+                      pageController:
+                          PageController(initialPage: issue.currentIndex),
+                      descriptionThreshold: state.descriptionThreshold,
+                      calledSeeMore: () {
+                        homeCubit.toggleSeeMore(issue);
+                      },
+                    ),
                   ),
                   5.verticalSpace,
                   if (index != state.issuesPagination.results.length - 1)
