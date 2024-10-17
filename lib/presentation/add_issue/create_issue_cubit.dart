@@ -48,7 +48,10 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
           getIt<ProfileCubit>().appendToPendingIssues(result);
           final bottomarCubit = getIt<BottomBarCubit>();
           bottomarCubit.updateIndex(4);
-          showToast(" Pending approval from the admin!");
+          showToast(
+            " Pending approval from the admin!",
+            params: ToastParam(toastAlignment: Alignment.bottomCenter),
+          );
           emit(state.copyWith(
             issue: IssueEntity.empty(),
             categories: IssueHelper.cloneInitialCategories(),

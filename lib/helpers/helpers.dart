@@ -74,7 +74,7 @@ Future<void> showToast(String message, {ToastParam? params}) async {
         insetAnimationDuration: const Duration(milliseconds: 500),
         elevation: 0,
         child: Align(
-          alignment: Alignment.topCenter,
+          alignment: params?.toastAlignment ?? Alignment.topCenter,
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
             decoration: BoxDecoration(
@@ -204,8 +204,9 @@ class ToastParam {
   final Color? textColor;
   final String? image;
   final bool showToast;
-
+  final Alignment? toastAlignment;
   ToastParam({
+    this.toastAlignment,
     this.backgroundColor,
     this.textColor,
     this.image,
