@@ -2,22 +2,22 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/entities/comments_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/comment_repository.dart';
-import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
-import 'package:masla_bolo_app/helpers/image_helper.dart';
+import 'package:masla_bolo_app/service/image_service.dart';
 import 'package:masla_bolo_app/service/music_service.dart';
 
+import '../../../../../data/local_storage/local_storage_repository.dart';
+import '../../../../../di/service_locator.dart';
 import '../../../../../domain/repositories/issue_repository.dart';
-import '../../../../../service/app_service.dart';
 import 'issue_detail_navigator.dart';
 import 'issue_detail_state.dart';
 
 class IssueDetailCubit extends Cubit<IssueDetailState> {
   final IssueDetailInitialParams params;
   final IssueDetailNavigator navigator;
-  final ImageHelper imageHelper;
+  final ImageService imageHelper;
   final CommentRepository commentRepository;
   final IssueRepository issueRepository;
   final LocalStorageRepository localStorageRepository;

@@ -7,7 +7,7 @@ import 'package:masla_bolo_app/features/get_started/get_started_state.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
-import '../../../service/app_service.dart';
+import '../../../di/service_locator.dart';
 import 'info_card.dart';
 
 class GetStartedAbout extends StatefulWidget {

@@ -4,11 +4,9 @@ import 'package:dartz/dartz.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/failures/local_storage_failure.dart';
 import 'package:masla_bolo_app/domain/model/user_json.dart';
-import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PrimaryLocalStorageRepository implements LocalStorageRepository {
-  @override
+class LocalStorageRepository {
   Future<Either<LocalStorageFailure, String>> getValue(String key) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -23,7 +21,6 @@ class PrimaryLocalStorageRepository implements LocalStorageRepository {
     }
   }
 
-  @override
   Future<Either<LocalStorageFailure, bool>> setValue(
     String key,
     String value,
@@ -37,7 +34,6 @@ class PrimaryLocalStorageRepository implements LocalStorageRepository {
     }
   }
 
-  @override
   Future<Either<LocalStorageFailure, bool>> deleteValue(String key) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -48,7 +44,6 @@ class PrimaryLocalStorageRepository implements LocalStorageRepository {
     }
   }
 
-  @override
   Future<Either<LocalStorageFailure, UserEntity>> getUser(String key) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -64,7 +59,6 @@ class PrimaryLocalStorageRepository implements LocalStorageRepository {
     }
   }
 
-  @override
   Future<Either<LocalStorageFailure, bool>> setUser(
       String key, UserEntity user) async {
     try {

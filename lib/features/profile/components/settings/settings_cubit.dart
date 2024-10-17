@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:masla_bolo_app/features/profile/components/settings/settings_state.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
 
+import '../../../../data/local_storage/local_storage_repository.dart';
 import 'settings_navigator.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {

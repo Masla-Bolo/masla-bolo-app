@@ -8,7 +8,7 @@ import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/input_field.dart';
 
-import '../../../service/app_service.dart';
+import '../../../di/service_locator.dart';
 import '../auth_cubit.dart';
 import '../auth_state.dart';
 

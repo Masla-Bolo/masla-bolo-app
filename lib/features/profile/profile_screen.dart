@@ -6,7 +6,7 @@ import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
-import '../../service/app_service.dart';
+import '../../di/service_locator.dart';
 import 'profile_state.dart';
 
 class ProfileScreen extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../service/app_service.dart';
+import '../../di/service_locator.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key});

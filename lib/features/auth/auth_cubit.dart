@@ -1,12 +1,12 @@
 import 'package:masla_bolo_app/domain/repositories/auth_repository.dart';
-import 'package:masla_bolo_app/domain/repositories/local_storage_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/auth/auth_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
 
-import '../../service/app_service.dart';
+import '../../data/local_storage/local_storage_repository.dart';
+import '../../di/service_locator.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {

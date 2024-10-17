@@ -11,8 +11,8 @@ import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/helpers/widgets/indicator.dart';
 import 'package:masla_bolo_app/helpers/widgets/input_field.dart';
 
+import '../../di/service_locator.dart';
 import '../../helpers/styles/styles.dart';
-import '../../service/app_service.dart';
 import 'components/issue/issue_post/issue_post.dart';
 import 'components/issue/issue_post/issue_post_shimmer.dart';
 

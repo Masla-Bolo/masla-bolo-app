@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
 import 'package:masla_bolo_app/features/profile/profile_state.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
-import 'package:masla_bolo_app/service/app_service.dart';
 
+import '../../../di/service_locator.dart';
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/indicator.dart';
 import '../../../helpers/widgets/issue_container.dart';

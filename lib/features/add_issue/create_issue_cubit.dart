@@ -8,12 +8,13 @@ import 'package:masla_bolo_app/features/add_issue/create_issue_navigator.dart';
 import 'package:masla_bolo_app/features/add_issue/create_issue_state.dart';
 import 'package:masla_bolo_app/features/profile/profile_cubit.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
-import 'package:masla_bolo_app/helpers/image_helper.dart';
-import 'package:masla_bolo_app/service/app_service.dart';
+import 'package:masla_bolo_app/service/image_service.dart';
+
+import '../../di/service_locator.dart';
 
 class CreateIssueCubit extends Cubit<CreateIssueState> {
   final CreateIssueNavigator navigator;
-  final ImageHelper imageHelper;
+  final ImageService imageHelper;
   final IssueRepository issueRepository;
   CreateIssueCubit(this.navigator, this.imageHelper, this.issueRepository)
       : super(CreateIssueState.empty());

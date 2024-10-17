@@ -5,9 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'dart:io' as io;
-import 'styles/styles.dart';
+import '../helpers/styles/styles.dart';
 
-class ImageHelper {
+class ImageService {
   final picker = ImagePicker();
   Future<XFile?> getImage(ImageSource source) async {
     final file = await picker.pickImage(source: source);

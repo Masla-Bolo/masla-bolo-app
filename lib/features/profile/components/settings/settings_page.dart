@@ -8,11 +8,11 @@ import 'package:masla_bolo_app/features/profile/components/settings/settings_sta
 import 'package:masla_bolo_app/features/profile/components/settings/theme_switch.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 
+import '../../../../di/service_locator.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../helpers/styles/app_colors.dart';
 import '../../../../helpers/styles/styles.dart';
 import '../../../../helpers/widgets/header.dart';
-import '../../../../service/app_service.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

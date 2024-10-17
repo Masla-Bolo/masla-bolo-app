@@ -2,8 +2,8 @@ import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/model/paginate.dart';
 
+import '../../di/service_locator.dart';
 import '../../domain/stores/user_store.dart';
-import '../../service/app_service.dart';
 
 class ProfileState {
   final bool isAllIssuesLoaded;

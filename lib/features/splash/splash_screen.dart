@@ -5,7 +5,7 @@ import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import 'package:masla_bolo_app/helpers/widgets/jumping_dots.dart';
 
-import '../../service/app_service.dart';
+import '../../di/service_locator.dart';
 import 'splash_state.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  late SplashCubit cubit;
+  final cubit = getIt<SplashCubit>();
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
@@ -25,8 +25,6 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    cubit = getIt<SplashCubit>();
-
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:masla_bolo_app/service/app_service.dart';
+
+import '../di/service_locator.dart';
 
 class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();

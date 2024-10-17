@@ -2,7 +2,7 @@ import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_cubit.dart';
 
-import '../../service/app_service.dart';
+import '../../di/service_locator.dart';
 import 'bottom_bar_state.dart';
 
 class BottomBarCubit extends Cubit<BottomBarState> {

@@ -11,8 +11,8 @@ import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/helpers/widgets/cached_image.dart';
 
+import '../../di/service_locator.dart';
 import '../../helpers/styles/styles.dart';
-import '../../service/app_service.dart';
 
 class CreateIssueScreen extends StatelessWidget {
   const CreateIssueScreen({super.key});

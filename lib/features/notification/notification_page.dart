@@ -7,7 +7,7 @@ import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/styles/styles.dart';
 
-import '../../service/app_service.dart';
+import '../../di/service_locator.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});

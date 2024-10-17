@@ -6,7 +6,8 @@ import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_detail/issue_detail_initial_params.dart';
 import 'package:masla_bolo_app/features/profile/profile_navigator.dart';
 import 'package:masla_bolo_app/features/profile/profile_state.dart';
-import 'package:masla_bolo_app/service/app_service.dart';
+
+import '../../di/service_locator.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileNavigator navigation;

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../domain/repositories/local_storage_repository.dart';
+import '../../../data/local_storage/local_storage_repository.dart';
 import '../../../helpers/strings.dart';
 import '../../network_response.dart';
 

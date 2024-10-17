@@ -7,7 +7,7 @@ import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../service/app_service.dart';
+import '../../di/service_locator.dart';
 import 'components/bottom_bar_icon.dart';
 
 class BottomBarContainer extends StatelessWidget {

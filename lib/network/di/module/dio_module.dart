@@ -1,7 +1,7 @@
 import 'package:masla_bolo_app/network/dio/dio_client.dart';
 import 'package:masla_bolo_app/network/dio/interceptors/network_interceptor.dart';
 
-import '../../../service/app_service.dart';
+import '../../../di/service_locator.dart';
 
 class DioModule {
   static Future<void> configureDioModuleInjection() async {

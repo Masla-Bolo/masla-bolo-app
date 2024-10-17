@@ -5,8 +5,8 @@ import 'package:masla_bolo_app/features/like_issue/like_issue_cubit.dart';
 import 'package:masla_bolo_app/features/like_issue/like_issue_state.dart';
 import 'package:masla_bolo_app/helpers/extensions.dart';
 import 'package:masla_bolo_app/helpers/widgets/issue_container.dart';
-import 'package:masla_bolo_app/service/app_service.dart';
 
+import '../../di/service_locator.dart';
 import '../../helpers/styles/styles.dart';
 import '../../helpers/widgets/indicator.dart';
 import '../../helpers/widgets/shimmer_effect.dart';

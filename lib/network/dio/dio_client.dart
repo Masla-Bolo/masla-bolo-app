@@ -60,12 +60,12 @@ class DioClient {
     dynamic data;
     int code = 200;
     String success = "false";
-    if (error.response != null) {
-      final response = error.response;
-      code = response!.data["code"] ?? 200;
-      message = response.data["message"] ?? "Unknown error occurred";
-      data = response.data["data"] ?? "";
-      success = response.data["success"] ?? "false";
+    if (error.response?.data != null) {
+      final responseData = error.response!.data;
+      code = responseData["code"] ?? 200;
+      message = responseData["message"] ?? "Unknown error occurred";
+      data = responseData["data"] ?? "";
+      success = responseData["success"] ?? "false";
     } else {
       switch (error.type) {
         case DioExceptionType.cancel:
