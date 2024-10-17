@@ -110,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onChanged: (val) {
                               homeCubit.onChanged(val);
                             },
+                            preFilledValue: state.queryParams["search"],
                             hintText: "Search Issues",
                           ),
                         ),

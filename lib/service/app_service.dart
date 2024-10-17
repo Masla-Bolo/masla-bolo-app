@@ -26,8 +26,9 @@ import 'package:masla_bolo_app/features/splash/splash_cubit.dart';
 import 'package:masla_bolo_app/helpers/image_helper.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/features/splash/splash_navigator.dart';
+import 'package:masla_bolo_app/network/dio/dio_client.dart';
+import 'package:masla_bolo_app/network/dio/interceptors/network_interceptor.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
-import 'package:masla_bolo_app/service/api_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:masla_bolo_app/service/music_service.dart';
 import 'package:masla_bolo_app/service/utility_service.dart';
@@ -46,7 +47,10 @@ class AppService {
     getIt.registerSingleton<LocalStorageRepository>(
         PrimaryLocalStorageRepository());
     getIt.registerSingleton<UserStore>(UserStore(getIt()));
-    getIt.registerSingleton<ApiService>(ApiService(getIt()));
+    getIt.registerSingleton<NetworkInterceptor>(NetworkInterceptor(getIt()));
+    getIt.registerSingleton<DioClient>(DioClient(interceptors: [
+      getIt<NetworkInterceptor>(),
+    ]));
     getIt.registerSingleton<MusicService>(MusicService());
     getIt.registerLazySingleton<UtilityService>(() => UtilityService());
     getIt.registerSingleton<NetworkRepository>(NetworkRepository(getIt()));

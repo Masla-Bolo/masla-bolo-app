@@ -1,18 +1,18 @@
+import 'package:masla_bolo_app/network/dio/dio_client.dart';
 import 'package:masla_bolo_app/network/network_response.dart';
-import 'package:masla_bolo_app/service/api_service.dart';
 
-class NetworkRepository {
-  final ApiService apiService;
-  NetworkRepository(this.apiService);
+class NetworkRepository implements Exception {
+  final DioClient dioClient;
+  NetworkRepository(this.dioClient);
 
   Future<NetworkResponse> get({
     required String url,
     Map<String, dynamic>? extraQuery,
   }) async {
-    final response = await apiService.dio.get(url, queryParameters: {
+    final response = await dioClient.dio.get(url, queryParameters: {
       ...?extraQuery,
     });
-    final result = apiService.checkError(response);
+    final result = dioClient.checkError(response);
     return result;
   }
 
@@ -20,8 +20,8 @@ class NetworkRepository {
     required String url,
     Map<String, dynamic>? data,
   }) async {
-    final response = await apiService.dio.put(url, data: data);
-    final result = apiService.checkError(response);
+    final response = await dioClient.dio.put(url, data: data);
+    final result = dioClient.checkError(response);
     return result;
   }
 
@@ -29,16 +29,16 @@ class NetworkRepository {
     required String url,
     Map<String, dynamic>? data,
   }) async {
-    final response = await apiService.dio.post(url, data: data);
-    final result = apiService.checkError(response);
+    final response = await dioClient.dio.post(url, data: data);
+    final result = dioClient.checkError(response);
     return result;
   }
 
   Future<NetworkResponse> delete({
     required String url,
   }) async {
-    final response = await apiService.dio.delete(url);
-    final result = apiService.checkError(response);
+    final response = await dioClient.dio.delete(url);
+    final result = dioClient.checkError(response);
     return result;
   }
 }

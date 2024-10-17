@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/issue_repository.dart';
 import 'package:masla_bolo_app/features/bottom_bar/bottom_bar_cubit.dart';
 import 'package:masla_bolo_app/features/home/components/issue/issue_helper.dart';
@@ -31,7 +32,7 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
 
   Future<void> createIssue() async {
     if (state.issue.images.isEmpty) {
-      showToast("Select atleast an image as a proof");
+      showToast("Provide an image or a video as a proof");
       return;
     }
     final isValid = (state.key.currentState?.validate() ?? false);
@@ -43,9 +44,14 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
       state.issue.categories = categories;
       return issueRepository.createIssue(state.issue).then(
         (result) {
-          getIt<ProfileCubit>().appendToPendingIssues(state.issue);
+          getIt<ProfileCubit>().appendToPendingIssues(result);
           final bottomarCubit = getIt<BottomBarCubit>();
           bottomarCubit.updateIndex(4);
+          showToast(" Pending approval from the admin!");
+          emit(state.copyWith(
+            issue: IssueEntity.empty(),
+            categories: IssueHelper.cloneInitialCategories(),
+          ));
         },
       );
     }

@@ -129,7 +129,7 @@ class IssueJson {
       'images': images,
       'categories': categories,
       "is_anonymous": isAnonymous,
-      "latitude": 40.712776,
+      "latitude": 10.712776,
       "longitude": -74.005974,
     };
   }

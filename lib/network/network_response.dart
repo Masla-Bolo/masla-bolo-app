@@ -1,4 +1,4 @@
-class NetworkResponse {
+class NetworkResponse implements Exception {
   String success;
   String message;
   int code;
@@ -9,4 +9,7 @@ class NetworkResponse {
     this.message = "",
     this.success = "",
   });
+
+  @override
+  String toString() => message;
 }
