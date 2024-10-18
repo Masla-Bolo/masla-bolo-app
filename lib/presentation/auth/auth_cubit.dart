@@ -121,7 +121,7 @@ class AuthCubit extends Cubit<AuthState> {
       ));
     } else {
       state.otpCodes.insert(index, Otp(code: pin, index: index));
-      if (state.otpCodes.length == 4) {
+      if (state.otpCodes.length == 6) {
         emit(state.copyWith(
           otpCodes: state.otpCodes,
         ));

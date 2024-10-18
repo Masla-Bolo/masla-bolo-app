@@ -10,6 +10,7 @@ import '../../../helpers/helpers.dart';
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/header.dart';
 import '../../../helpers/widgets/input_field.dart';
+import '../../../helpers/widgets/rounded_image.dart';
 
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
@@ -34,6 +35,11 @@ class EditProfile extends StatelessWidget {
                     onBackTap: () {
                       profileCubit.pop();
                     },
+                    suffix: RoundedImage(
+                      imageUrl: state.user.image,
+                      iconText: state.user.username,
+                      radius: 15.w,
+                    ),
                   ),
                   50.verticalSpace,
                   Text(

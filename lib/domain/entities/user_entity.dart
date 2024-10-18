@@ -30,6 +30,7 @@ class UserEntity {
   }) =>
       UserEntity(
         image: image ?? this.image,
+        id: id ?? this.id,
         emailVerified: emailVerified ?? this.emailVerified,
         email: email ?? this.email,
         role: role ?? this.role,

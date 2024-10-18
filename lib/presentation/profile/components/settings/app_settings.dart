@@ -18,11 +18,6 @@ class AppSettings {
     ),
     AppSettings(
       routeName: "",
-      icon: Icons.location_on_outlined,
-      title: "Location",
-    ),
-    AppSettings(
-      routeName: "",
       icon: Icons.notifications_active_outlined,
       title: "Notification",
     ),

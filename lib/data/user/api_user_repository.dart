@@ -22,6 +22,14 @@ class ApiUserRepository implements UserRepository {
       url: '/users/${user.id}/',
       data: user.toUserJson(),
     );
+    final newUser = UserJson.fromData(response.data).toDomain();
+    userStore.setUser(newUser);
+    return newUser;
+  }
+
+  @override
+  Future<UserEntity> getProfile() async {
+    final response = await networkRepository.get(url: '/users/');
     final newUser = UserJson.fromData(response.data['user']).toDomain();
     userStore.setUser(newUser);
     return newUser;

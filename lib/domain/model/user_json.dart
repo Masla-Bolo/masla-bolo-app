@@ -23,7 +23,7 @@ class UserJson {
 
   factory UserJson.fromData(Map<String, dynamic> json) => UserJson(
         email: json["email"],
-        image: json["image"],
+        image: json["profile_image"],
         username: json["username"],
         id: json['id'],
         emailVerified: json["email_verified"],
@@ -63,7 +63,8 @@ class UserJson {
     return {
       'username': username,
       'email': email,
-      "image": image,
+      "profile_image": image,
+      "id": id,
       "role": role,
       "password": password,
     };

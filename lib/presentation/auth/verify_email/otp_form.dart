@@ -17,10 +17,10 @@ class OtpForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: otps.map((otp) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.all(2),
           child: SizedBox(
             height: 0.1.sh,
-            width: 0.14.sw,
+            width: 0.12.sw,
             child: TextFormField(
               onChanged: (pin) {
                 otp.onChanged!(pin);

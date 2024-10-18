@@ -1,10 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/repositories/user_repository.dart';
+import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'package:masla_bolo_app/service/image_service.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/model/paginate.dart';
 import '../../domain/repositories/issue_repository.dart';
 import '../../domain/stores/user_store.dart';
+import '../../helpers/helpers.dart';
 import '../home/components/issue/issue_detail/issue_detail_initial_params.dart';
 import 'profile_navigator.dart';
 import 'profile_state.dart';
@@ -28,37 +31,29 @@ class ProfileCubit extends Cubit<ProfileState> {
       getIt<UserStore>().getUser().then((user) => {
             if (user == null)
               {
-                print("1")
-                // fetch profile api here
+                userRepository.getProfile().then((user) {
+                  emit(state.copyWith(user: user));
+                }),
               }
             else
-              {print("2"), emit(state.copyWith(user: user))}
+              {emit(state.copyWith(user: user))}
           });
     }
   }
 
   Future<void> showOptions() async {
     final image = await imageService.uploadImage();
-    final userStore = getIt<UserStore>();
     if (image != null) {
       state.user.image = image;
-      userStore.setUser(
-        await userStore.getUser().then(
-              (user) => user!.copyWith(image: image),
-            ),
-      );
-      // loader(
-      //   () => userRepository.updateUser(state.user).then(
-      //     (newUser) {
-      //       emit(
-      //         state.copyWith(
-      //           user: newUser,
-      //         ),
-      //       );
-      //     },
-      //   ),
-      // );
       emit(state.copyWith(user: state.user));
+      showToast(
+        "Image Uploaded!",
+        params: ToastParam(
+          toastAlignment: Alignment.bottomCenter,
+          image: AppImages.successful,
+        ),
+      );
+      userRepository.updateUser(state.user);
     }
   }
 

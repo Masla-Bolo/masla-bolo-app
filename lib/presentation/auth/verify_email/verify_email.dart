@@ -92,15 +92,20 @@ class _VerifyEmailState extends State<VerifyEmail> {
                         Otp(onChanged: (pin) {
                           authCubit.checkPinCompletion(pin, widget.email, 3);
                         }),
+                        Otp(onChanged: (pin) {
+                          authCubit.checkPinCompletion(pin, widget.email, 4);
+                        }),
+                        Otp(onChanged: (pin) {
+                          authCubit.checkPinCompletion(pin, widget.email, 5);
+                        }),
                       ]),
                       20.verticalSpace,
                       ElevatedButton(
-                        onPressed: state.otpCodes.length != 4
+                        onPressed: state.otpCodes.length != 6
                             ? null
                             : () {
                                 loader(
                                   () => authCubit.verifyMyEmail(widget.email),
-                                  indicatorColor: context.colorScheme.primary,
                                 );
                               },
                         style: ElevatedButton.styleFrom(

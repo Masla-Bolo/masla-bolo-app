@@ -123,27 +123,27 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ),
                           ],
                         ),
-                        30.verticalSpace,
-                        OutlinedButton.icon(
-                          onPressed: () {
-                            cubit.goToEditProfile();
-                          },
-                          label: Text(
-                            'Edit Profile',
-                            style: Styles.boldStyle(
-                              fontSize: 14,
-                              color: context.colorScheme.primary,
-                              family: FontFamily.varela,
-                            ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: context.colorScheme.onPrimary,
-                            minimumSize: const Size(double.infinity, 35),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
+                        // 30.verticalSpace,
+                        // OutlinedButton.icon(
+                        //   onPressed: () {
+                        //     cubit.goToEditProfile();
+                        //   },
+                        //   label: Text(
+                        //     'Edit Profile',
+                        //     style: Styles.boldStyle(
+                        //       fontSize: 14,
+                        //       color: context.colorScheme.primary,
+                        //       family: FontFamily.varela,
+                        //     ),
+                        //   ),
+                        //   style: OutlinedButton.styleFrom(
+                        //     backgroundColor: context.colorScheme.onPrimary,
+                        //     minimumSize: const Size(double.infinity, 35),
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

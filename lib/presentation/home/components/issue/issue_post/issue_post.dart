@@ -195,8 +195,8 @@ class IssuePost extends StatelessWidget {
                         },
                         child: Icon(
                           params.issue.isLiked
-                              ? Icons.thumb_up
-                              : Icons.thumb_up_alt_outlined,
+                              ? Icons.keyboard_double_arrow_up
+                              : Icons.keyboard_double_arrow_down,
                           color: context.colorScheme.onPrimary,
                         ),
                       ),
@@ -206,10 +206,8 @@ class IssuePost extends StatelessWidget {
                         },
                         child: Text(
                           params.issue.likesCount < 1
-                              ? "Like"
-                              : params.issue.likesCount == 1
-                                  ? "1 Like"
-                                  : "${params.issue.likesCount} Likes",
+                              ? "Raise"
+                              : "${params.issue.likesCount} Raised",
                           style: Styles.mediumStyle(
                               fontSize: 12,
                               color: context.colorScheme.onPrimary,

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'issue_comment/issue_comments.dart';
 import '../issue_detail_cubit.dart';
 import '../issue_detail_state.dart';
-import '../../../../../../helpers/extensions.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
 import '../../../../../../helpers/styles/styles.dart';
 
@@ -37,8 +37,8 @@ class IssueDetailDiscussion extends StatelessWidget {
                           },
                           child: Icon(
                             state.currentIssue.isLiked
-                                ? Icons.thumb_up
-                                : Icons.thumb_up_alt_outlined,
+                                ? Icons.keyboard_double_arrow_up
+                                : Icons.keyboard_double_arrow_down,
                             color: context.colorScheme.onPrimary,
                             size: 22,
                           ),
@@ -50,7 +50,7 @@ class IssueDetailDiscussion extends StatelessWidget {
                                 cubit.likeUnlikeIssue();
                               },
                               child: Text(
-                                state.currentIssue.isLiked ? "Liked" : "Like",
+                                state.currentIssue.isLiked ? "Raised" : "Raise",
                                 style: Styles.boldStyle(
                                   fontSize: 15,
                                   color: context.colorScheme.onPrimary,
@@ -61,8 +61,8 @@ class IssueDetailDiscussion extends StatelessWidget {
                             const Spacer(),
                             Text(
                               state.currentIssue.likesCount == 1
-                                  ? "1 Like"
-                                  : "${state.currentIssue.likesCount} Likes",
+                                  ? "1 Raised"
+                                  : "${state.currentIssue.likesCount} Raised",
                               style: Styles.mediumStyle(
                                 fontSize: 12,
                                 color: context.colorScheme.onPrimary,
