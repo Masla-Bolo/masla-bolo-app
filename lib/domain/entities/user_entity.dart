@@ -5,9 +5,11 @@ class UserEntity {
   String? username;
   String? password;
   int? id;
+  bool? emailVerified;
   String? role;
 
   UserEntity({
+    this.emailVerified,
     this.email,
     this.role,
     this.password,

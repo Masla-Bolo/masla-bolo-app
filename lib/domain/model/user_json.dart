@@ -6,10 +6,12 @@ class UserJson {
   String? username;
   String? password;
   String? email;
+  bool? emailVerified;
   String? role;
   int? id;
 
   UserJson({
+    this.emailVerified,
     this.id,
     this.password,
     this.role,
@@ -21,6 +23,7 @@ class UserJson {
         email: json["email"],
         username: json["username"],
         id: json['id'],
+        emailVerified: json["email_verified"],
         role: json["role"],
       );
 
@@ -28,6 +31,8 @@ class UserJson {
         username: username,
         email: email,
         id: id,
+        role: role,
+        emailVerified: emailVerified,
       );
 
   static mapDataToRole(String data) {

@@ -57,61 +57,63 @@ List<T> parseList<T>(
 
 Future<void> showToast(String message, {ToastParam? params}) async {
   final context = AppNavigation.context;
-  showDialog(
-    context: context,
-    barrierColor: AppColor.transparent,
-    barrierDismissible: false,
-    builder: (context) {
-      Future.delayed(params?.duration ?? const Duration(seconds: 2), () {
-        Navigator.of(context).pop(true);
-      });
+  if (context.mounted) {
+    showDialog(
+      context: context,
+      barrierColor: AppColor.transparent,
+      barrierDismissible: false,
+      builder: (context) {
+        Future.delayed(params?.duration ?? const Duration(seconds: 2), () {
+          Navigator.of(context).pop(true);
+        });
 
-      return Dialog(
-        shadowColor: AppColor.transparent,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: AppColor.transparent,
-        insetAnimationCurve: Curves.easeIn,
-        insetAnimationDuration: const Duration(milliseconds: 500),
-        elevation: 0,
-        child: Align(
-          alignment: params?.toastAlignment ?? Alignment.topCenter,
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
-            decoration: BoxDecoration(
-              color: params?.backgroundColor ?? context.colorScheme.onPrimary,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (params?.hideImage == false) ...[
+        return Dialog(
+          shadowColor: AppColor.transparent,
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: AppColor.transparent,
+          insetAnimationCurve: Curves.easeIn,
+          insetAnimationDuration: const Duration(milliseconds: 500),
+          elevation: 0,
+          child: Align(
+            alignment: params?.toastAlignment ?? Alignment.topCenter,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
+              decoration: BoxDecoration(
+                color: params?.backgroundColor ?? context.colorScheme.onPrimary,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (params?.hideImage == false) ...[
+                    10.horizontalSpace,
+                    Image.asset(
+                      params?.image ?? AppImages.access,
+                      color: params?.textColor ?? context.colorScheme.primary,
+                      filterQuality: FilterQuality.high,
+                      height: 25,
+                    ),
+                  ],
                   10.horizontalSpace,
-                  Image.asset(
-                    params?.image ?? AppImages.access,
-                    color: params?.textColor ?? context.colorScheme.primary,
-                    filterQuality: FilterQuality.high,
-                    height: 25,
+                  Flexible(
+                    child: Text(
+                      message,
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        color: params?.textColor ?? context.colorScheme.primary,
+                        fontFamily: "Varela",
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ],
-                10.horizontalSpace,
-                Flexible(
-                  child: Text(
-                    message,
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      color: params?.textColor ?? context.colorScheme.primary,
-                      fontFamily: "Varela",
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
+  }
 }
 
 Future<bool> showConfirmationDialog(String title) async {

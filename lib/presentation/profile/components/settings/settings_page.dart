@@ -115,11 +115,11 @@ class SettingsPage extends StatelessWidget {
                                   color: context.colorScheme.onPrimary,
                                 ),
                               ),
-                              title: Text(
+                              trailing: Text(
                                 "Log Out",
                                 style: Styles.boldStyle(
                                   family: FontFamily.varela,
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   color: context.colorScheme.onPrimary,
                                 ),
                               ),

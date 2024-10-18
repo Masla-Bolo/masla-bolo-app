@@ -23,8 +23,8 @@ class OtpForm extends StatelessWidget {
             width: 0.14.sw,
             child: TextFormField(
               onChanged: (pin) {
+                otp.onChanged!(pin);
                 if (pin.isNotEmpty) {
-                  otp.onChanged(pin);
                   FocusScope.of(context).nextFocus();
                 }
               },

@@ -1,14 +1,18 @@
-import 'package:masla_bolo_app/helpers/helpers.dart';
+import 'package:masla_bolo_app/presentation/auth/verify_email/otp.dart';
 
+import '../../di/service_locator.dart';
 import '../../domain/repositories/auth_repository.dart';
+// import '../../domain/stores/user_store.dart';
 import '../../domain/stores/user_store.dart';
+import '../../helpers/helpers.dart';
+import '../../helpers/strings.dart';
 import 'auth_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../helpers/strings.dart';
+// import '../../helpers/strings.dart';
 
 import '../../data/local_storage/local_storage_repository.dart';
-import '../../di/service_locator.dart';
+// import '../../di/service_locator.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -28,11 +32,22 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login() async {
     final isValid = state.loginKey.currentState?.validate() ?? false;
     if (isValid) {
-      return authRepository
-          .login(state.user.email!, state.user.password!)
-          .then((user) {
+      final user =
+          await authRepository.login(state.user.email!, state.user.password!);
+
+      if (user.emailVerified!) {
         navigation.goToBottomBar();
-      });
+      } else {
+        return sendEmail(user.email!);
+      }
+    }
+  }
+
+  void exitEmailVerification() async {
+    if (await showConfirmationDialog(
+        "Exit without verifying your email? Your account won’t be activated.")) {
+      emit(state.copyWith(otpCodes: []));
+      goToRegister();
     }
   }
 
@@ -57,32 +72,39 @@ class AuthCubit extends Cubit<AuthState> {
     if (role != null) {
       state.user.role = role;
       final email = await authRepository.register(state.user);
-      return authRepository.sendEmail(email).then((response) {
-        if (response) {
-          navigation.goToVerifyEmail(email);
-          showToast(
-            "An Email Verifcation Code has been sent to your email",
-            params: ToastParam(
-              hideImage: true,
-              duration: const Duration(seconds: 5),
-              toastAlignment: Alignment.bottomCenter,
-            ),
-          );
-        }
-      });
+      return sendEmail(email);
     }
   }
 
-  Future<void> verifyMyEmail(String email) {
-    return authRepository.verifyEmail(email, state.verifyCode).then((response) {
-      navigation.goToBottomBar();
+  Future<void> sendEmail(String email) async {
+    return authRepository.sendEmail(email).then((response) {
+      if (response) {
+        navigation.goToVerifyEmail(email);
+      }
     });
   }
 
-  void checkPinCompletion(String pin, String email) {
-    state.verifyCode += pin;
-    if (state.verifyCode.length == 4) {
-      emit(state.copyWith(verifyCode: state.verifyCode));
+  Future<void> verifyMyEmail(String email) {
+    final code = state.otpCodes.map((otp) => otp.code).join();
+    return authRepository.verifyEmail(email, code).then((response) {
+      navigation.goToBottomBar();
+      emit(state.copyWith(otpCodes: []));
+    });
+  }
+
+  void checkPinCompletion(String pin, String email, int index) {
+    if (pin.isEmpty) {
+      state.otpCodes.removeWhere((otp) => otp.index == index);
+      emit(state.copyWith(
+        otpCodes: state.otpCodes,
+      ));
+    } else {
+      state.otpCodes.insert(index, Otp(code: pin, index: index));
+      if (state.otpCodes.length == 4) {
+        emit(state.copyWith(
+          otpCodes: state.otpCodes,
+        ));
+      }
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,7 @@ class VerifyEmail extends StatelessWidget {
     return PopScope(
       canPop: false,
       onPopInvoked: (result) {
-        authCubit.goToRegister();
+        authCubit.exitEmailVerification();
       },
       child: Scaffold(
         body: BlocBuilder<AuthCubit, AuthState>(
@@ -33,10 +34,10 @@ class VerifyEmail extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      10.verticalSpace,
+                      20.verticalSpace,
                       GestureDetector(
                         onTap: () {
-                          authCubit.goToRegister();
+                          authCubit.exitEmailVerification();
                         },
                         child: Icon(
                           Icons.arrow_back_ios_new,
@@ -69,22 +70,21 @@ class VerifyEmail extends StatelessWidget {
                       //coded field here
                       OtpForm(otps: [
                         Otp(onChanged: (pin) {
-                          authCubit.checkPinCompletion(pin, email);
+                          authCubit.checkPinCompletion(pin, email, 0);
                         }),
                         Otp(onChanged: (pin) {
-                          authCubit.checkPinCompletion(pin, email);
+                          authCubit.checkPinCompletion(pin, email, 1);
                         }),
                         Otp(onChanged: (pin) {
-                          authCubit.checkPinCompletion(pin, email);
+                          authCubit.checkPinCompletion(pin, email, 2);
                         }),
                         Otp(onChanged: (pin) {
-                          authCubit.checkPinCompletion(pin, email);
+                          authCubit.checkPinCompletion(pin, email, 3);
                         }),
                       ]),
                       20.verticalSpace,
                       ElevatedButton(
-                        onPressed: state.verifyCode.length != 4 ||
-                                state.verifyCode.isEmpty
+                        onPressed: state.otpCodes.length != 4
                             ? null
                             : () {
                                 loader(() => authCubit.verifyMyEmail(email));
@@ -106,6 +106,30 @@ class VerifyEmail extends StatelessWidget {
                         ),
                       ),
                       10.verticalSpace,
+                      RichText(
+                        text: TextSpan(
+                            text: "  haven't recieved a code yet? ",
+                            style: Styles.mediumStyle(
+                              fontSize: 12,
+                              color: context.colorScheme.secondary,
+                              family: FontFamily.varela,
+                            ),
+                            children: [
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    // send code here again
+                                  },
+                                text: "Resend Code",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: context.colorScheme.onPrimary,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              )
+                            ]),
+                      ),
+                      15.verticalSpace,
                     ],
                   ),
                 ),

@@ -1,6 +1,10 @@
 class Otp {
-  void Function(String value) onChanged;
+  void Function(String value)? onChanged;
+  int index;
+  String code;
   Otp({
-    required this.onChanged,
+    this.code = "",
+    this.index = 0,
+    this.onChanged,
   });
 }
