@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import 'issue_post_params.dart';
 import '../../../../../helpers/extensions.dart';
 import '../../../../../helpers/helpers.dart';
@@ -224,8 +225,8 @@ class IssuePost extends StatelessWidget {
                             issue: params.issue,
                           );
                         },
-                        child: Icon(
-                          Icons.comment_outlined,
+                        child: Image.asset(
+                          AppImages.comment,
                           color: context.colorScheme.onPrimary,
                         ),
                       ),

@@ -10,10 +10,10 @@ final getIt = GetIt.instance;
 
 class ServiceLocator {
   static Future<void> configureServiceLocator() async {
-    await ServiceInjection.configureServiceLayerInjction();
     await NavigationLayerInjection.configureNavigationLayerInjection();
-    await DataLayerInjection.configureDataLayerInjction();
     await NetworkLayerInjection.configureNetworkLayerInjection();
+    await ServiceInjection.configureServiceLayerInjction();
+    await DataLayerInjection.configureDataLayerInjction();
     await DomainLayerInjection.configureDataLayerInjection();
     await PresentationLayerInjection.configurePresentationLayerInjection();
   }

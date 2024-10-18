@@ -54,7 +54,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
                     child: Text(
-                      "YOUR LIKED ISSUES",
+                      "YOUR SUPPORTED ISSUES",
                       maxLines: 1,
                       style: Styles.boldStyle(
                         fontSize: 20,
@@ -95,7 +95,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                                     height: 0.5.sh,
                                     child: Center(
                                       child: Text(
-                                        "No Liked Issues found",
+                                        "No Supported Issues found",
                                         style: Styles.boldStyle(
                                           family: FontFamily.varela,
                                           fontSize: 16,
