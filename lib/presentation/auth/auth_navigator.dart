@@ -22,5 +22,11 @@ mixin AuthRoute {
     navigation.pushReplacement(RouteName.register);
   }
 
+  void goToVerifyEmail(String email) {
+    navigation.pushReplacement(RouteName.emailVerify, arguments: {
+      'email': email,
+    });
+  }
+
   AppNavigation get navigation;
 }

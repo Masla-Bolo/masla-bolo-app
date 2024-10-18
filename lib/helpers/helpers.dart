@@ -62,7 +62,7 @@ Future<void> showToast(String message, {ToastParam? params}) async {
     barrierColor: AppColor.transparent,
     barrierDismissible: false,
     builder: (context) {
-      Future.delayed(const Duration(seconds: 2), () {
+      Future.delayed(params?.duration ?? const Duration(seconds: 2), () {
         Navigator.of(context).pop(true);
       });
 
@@ -84,13 +84,15 @@ Future<void> showToast(String message, {ToastParam? params}) async {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                10.horizontalSpace,
-                Image.asset(
-                  params?.image ?? AppImages.access,
-                  color: params?.textColor ?? context.colorScheme.primary,
-                  filterQuality: FilterQuality.high,
-                  height: 25,
-                ),
+                if (params?.hideImage == false) ...[
+                  10.horizontalSpace,
+                  Image.asset(
+                    params?.image ?? AppImages.access,
+                    color: params?.textColor ?? context.colorScheme.primary,
+                    filterQuality: FilterQuality.high,
+                    height: 25,
+                  ),
+                ],
                 10.horizontalSpace,
                 Flexible(
                   child: Text(
@@ -204,8 +206,12 @@ class ToastParam {
   final Color? textColor;
   final String? image;
   final bool showToast;
+  final Duration? duration;
   final Alignment? toastAlignment;
+  final bool hideImage;
   ToastParam({
+    this.hideImage = false,
+    this.duration,
     this.toastAlignment,
     this.backgroundColor,
     this.textColor,

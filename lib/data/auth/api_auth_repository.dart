@@ -25,13 +25,30 @@ class ApiAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<UserEntity> register(UserEntity user) async {
+  Future<String> register(UserEntity user) async {
     final response = await networkRepository.post(
       url: '/register/',
       data: user.toUserJson(),
     );
-    final registeredUser = UserJson.fromData(response.data['user']).toDomain();
-    userStore.setUser(registeredUser);
-    return registeredUser;
+    return response.data["email"];
+  }
+
+  @override
+  Future<bool> sendEmail(String email) async {
+    await networkRepository.get(url: '/send-email-verification/', extraQuery: {
+      'email': email,
+    });
+    return true;
+  }
+
+  @override
+  Future<UserEntity> verifyEmail(String email, String code) async {
+    final response = await networkRepository.post(url: '/verify-email/', data: {
+      'email': email,
+      'code': code,
+    });
+    final user = UserJson.fromData(response.data['user']).toDomain();
+    userStore.setUser(user);
+    return user;
   }
 }

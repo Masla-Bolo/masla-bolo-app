@@ -1,16 +1,17 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:flutter/material.dart';
+import 'package:masla_bolo_app/navigation/route_name.dart';
+import 'package:masla_bolo_app/presentation/add_issue/create_issue_screen.dart';
 import 'package:masla_bolo_app/presentation/auth/sign_up/sign_up_screen.dart';
+import 'package:masla_bolo_app/presentation/auth/verify_email/verify_email.dart';
 import 'package:masla_bolo_app/presentation/bottom_bar/bottom_bar.dart';
-import 'package:masla_bolo_app/presentation/like_issue/like_issue_page.dart';
 import 'package:masla_bolo_app/presentation/get_started/get_started_screen.dart';
 import 'package:masla_bolo_app/presentation/home/components/issue/issue_detail/issue_detail.dart';
-import 'package:masla_bolo_app/presentation/add_issue/create_issue_screen.dart';
+import 'package:masla_bolo_app/presentation/like_issue/like_issue_page.dart';
 import 'package:masla_bolo_app/presentation/notification/notification_page.dart';
 import 'package:masla_bolo_app/presentation/profile/components/settings/settings_page.dart';
 import 'package:masla_bolo_app/presentation/profile/profile_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:masla_bolo_app/navigation/route_name.dart';
 
 import '../di/service_locator.dart';
 import '../presentation/auth/login/login_screen.dart';
@@ -38,6 +39,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteName.register:
       return getRoute(const SignUpScreen(), TransitionType.fade);
+
+    case RouteName.emailVerify:
+      return getRoute(VerifyEmail(email: args["email"]), TransitionType.slide);
 
     case RouteName.profile:
       return getRoute(const ProfileScreen(), TransitionType.fade);

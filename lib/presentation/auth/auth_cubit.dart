@@ -1,3 +1,5 @@
+import 'package:masla_bolo_app/helpers/helpers.dart';
+
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/stores/user_store.dart';
 import 'auth_navigator.dart';
@@ -45,6 +47,7 @@ class AuthCubit extends Cubit<AuthState> {
       final result = await localStorageRepository.getValue(roleKey);
       result.fold(
         (error) {
+          showToast("Select your role first");
           return goToGetStated();
         },
         (value) => role = value,
@@ -54,8 +57,34 @@ class AuthCubit extends Cubit<AuthState> {
     if (role != null) {
       state.user.role = role;
       return authRepository.register(state.user).then(
-            (result) => navigation.goToBottomBar(),
-          );
+        (userEmail) {
+          authRepository.sendEmail(userEmail).then((response) {
+            if (response) {
+              navigation.goToVerifyEmail(userEmail);
+              showToast(
+                "An Email Verifcation Code has been sent to your email",
+                params: ToastParam(
+                  hideImage: true,
+                  duration: const Duration(seconds: 5),
+                ),
+              );
+            }
+          });
+        },
+      );
+    }
+  }
+
+  Future<void> verifyMyEmail(String email) {
+    return authRepository.verifyEmail(email, state.verifyCode).then((response) {
+      navigation.goToBottomBar();
+    });
+  }
+
+  void checkPinCompletion(String pin, String email) {
+    state.verifyCode += pin;
+    if (state.verifyCode.length == 4) {
+      emit(state.copyWith(verifyCode: state.verifyCode));
     }
   }
 
