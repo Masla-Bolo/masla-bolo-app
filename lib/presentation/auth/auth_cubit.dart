@@ -56,22 +56,20 @@ class AuthCubit extends Cubit<AuthState> {
 
     if (role != null) {
       state.user.role = role;
-      return authRepository.register(state.user).then(
-        (userEmail) {
-          authRepository.sendEmail(userEmail).then((response) {
-            if (response) {
-              navigation.goToVerifyEmail(userEmail);
-              showToast(
-                "An Email Verifcation Code has been sent to your email",
-                params: ToastParam(
-                  hideImage: true,
-                  duration: const Duration(seconds: 5),
-                ),
-              );
-            }
-          });
-        },
-      );
+      final email = await authRepository.register(state.user);
+      return authRepository.sendEmail(email).then((response) {
+        if (response) {
+          navigation.goToVerifyEmail(email);
+          showToast(
+            "An Email Verifcation Code has been sent to your email",
+            params: ToastParam(
+              hideImage: true,
+              duration: const Duration(seconds: 5),
+              toastAlignment: Alignment.bottomCenter,
+            ),
+          );
+        }
+      });
     }
   }
 
