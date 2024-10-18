@@ -3,13 +3,13 @@ import '../extensions.dart';
 import '../styles/app_colors.dart';
 
 class Indicator extends StatelessWidget {
-  const Indicator({super.key});
-
+  const Indicator({super.key, this.color});
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        color: context.isDark ? AppColor.white : AppColor.darkBlue,
+        color: color ?? (context.isDark ? AppColor.white : AppColor.darkBlue),
       ),
     );
   }

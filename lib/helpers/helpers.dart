@@ -13,10 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import '../navigation/app_navigation.dart';
 
-Future loader(Future Function() func, {ToastParam? params}) async {
+Future loader(Future Function() func,
+    {ToastParam? params, Color? indicatorColor}) async {
   final context = AppNavigation.context;
-  context.loaderOverlay.show(widgetBuilder: (_) => const Indicator());
-
+  context.loaderOverlay.show(
+    widgetBuilder: (_) => Indicator(
+      color: indicatorColor,
+    ),
+  );
   try {
     final response = await func();
     return response;

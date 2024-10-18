@@ -1,18 +1,17 @@
+import 'dart:async';
+
 import 'package:masla_bolo_app/presentation/auth/verify_email/otp.dart';
 
 import '../../di/service_locator.dart';
 import '../../domain/repositories/auth_repository.dart';
-// import '../../domain/stores/user_store.dart';
 import '../../domain/stores/user_store.dart';
 import '../../helpers/helpers.dart';
-import '../../helpers/strings.dart';
 import 'auth_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import '../../helpers/strings.dart';
+import '../../helpers/strings.dart';
 
 import '../../data/local_storage/local_storage_repository.dart';
-// import '../../di/service_locator.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -38,7 +37,11 @@ class AuthCubit extends Cubit<AuthState> {
       if (user.emailVerified!) {
         navigation.goToBottomBar();
       } else {
-        return sendEmail(user.email!);
+        return authRepository.sendEmail(user.email!).then((response) {
+          if (response) {
+            goToVerifyEmail(user.email!);
+          }
+        });
       }
     }
   }
@@ -62,7 +65,7 @@ class AuthCubit extends Cubit<AuthState> {
       final result = await localStorageRepository.getValue(roleKey);
       result.fold(
         (error) {
-          showToast("Select your role first");
+          showToast("Choose your role first!");
           return goToGetStated();
         },
         (value) => role = value,
@@ -72,16 +75,35 @@ class AuthCubit extends Cubit<AuthState> {
     if (role != null) {
       state.user.role = role;
       final email = await authRepository.register(state.user);
-      return sendEmail(email);
+      return authRepository.sendEmail(email).then((response) {
+        if (response) {
+          goToVerifyEmail(email);
+        }
+      });
     }
   }
 
-  Future<void> sendEmail(String email) async {
-    return authRepository.sendEmail(email).then((response) {
-      if (response) {
-        navigation.goToVerifyEmail(email);
+  void startTimer({bool startAgain = false, String email = ""}) {
+    if (startAgain && email.isNotEmpty) {
+      emit(state.copyWith(timeLeft: 30, canResend: false));
+      authRepository.sendEmail(email);
+    }
+    initializeTimer();
+  }
+
+  void initializeTimer() {
+    state.timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (state.timeLeft > 1) {
+        state.timeLeft--;
+        emit(state.copyWith(timeLeft: state.timeLeft));
+      } else {
+        state.canResend = true;
+        emit(state.copyWith(canResend: state.canResend));
+        state.timer?.cancel();
+        timer.cancel();
       }
     });
+    emit(state.copyWith(timer: state.timer));
   }
 
   Future<void> verifyMyEmail(String email) {
@@ -118,5 +140,15 @@ class AuthCubit extends Cubit<AuthState> {
 
   void goToGetStated() {
     navigation.goToGetStarted();
+  }
+
+  void goToVerifyEmail(String email) {
+    navigation.goToVerifyEmail(email);
+  }
+
+  @override
+  Future<void> close() {
+    state.timer?.cancel();
+    return super.close();
   }
 }

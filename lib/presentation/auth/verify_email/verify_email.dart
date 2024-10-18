@@ -12,11 +12,23 @@ import 'package:masla_bolo_app/presentation/auth/verify_email/otp_form.dart';
 import '../../../helpers/helpers.dart';
 import '../../../helpers/styles/styles.dart';
 
-class VerifyEmail extends StatelessWidget {
+class VerifyEmail extends StatefulWidget {
   const VerifyEmail({super.key, required this.email});
   final String email;
 
-  static final authCubit = getIt<AuthCubit>();
+  @override
+  State<VerifyEmail> createState() => _VerifyEmailState();
+}
+
+class _VerifyEmailState extends State<VerifyEmail> {
+  final authCubit = getIt<AuthCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    authCubit.startTimer();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -57,7 +69,7 @@ class VerifyEmail extends StatelessWidget {
                       10.verticalSpace,
                       Center(
                         child: Text(
-                          "We sent your code to $email \nThis code will expired in 5:00",
+                          "We sent your code to ${widget.email} \nThis code will expire in 5:00 minutes",
                           textAlign: TextAlign.center,
                           style: Styles.mediumStyle(
                             fontSize: 16,
@@ -67,19 +79,18 @@ class VerifyEmail extends StatelessWidget {
                         ),
                       ),
                       80.verticalSpace,
-                      //coded field here
                       OtpForm(otps: [
                         Otp(onChanged: (pin) {
-                          authCubit.checkPinCompletion(pin, email, 0);
+                          authCubit.checkPinCompletion(pin, widget.email, 0);
                         }),
                         Otp(onChanged: (pin) {
-                          authCubit.checkPinCompletion(pin, email, 1);
+                          authCubit.checkPinCompletion(pin, widget.email, 1);
                         }),
                         Otp(onChanged: (pin) {
-                          authCubit.checkPinCompletion(pin, email, 2);
+                          authCubit.checkPinCompletion(pin, widget.email, 2);
                         }),
                         Otp(onChanged: (pin) {
-                          authCubit.checkPinCompletion(pin, email, 3);
+                          authCubit.checkPinCompletion(pin, widget.email, 3);
                         }),
                       ]),
                       20.verticalSpace,
@@ -87,7 +98,10 @@ class VerifyEmail extends StatelessWidget {
                         onPressed: state.otpCodes.length != 4
                             ? null
                             : () {
-                                loader(() => authCubit.verifyMyEmail(email));
+                                loader(
+                                  () => authCubit.verifyMyEmail(widget.email),
+                                  indicatorColor: context.colorScheme.primary,
+                                );
                               },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: context.colorScheme.onPrimary,
@@ -108,17 +122,21 @@ class VerifyEmail extends StatelessWidget {
                       10.verticalSpace,
                       RichText(
                         text: TextSpan(
-                            text: "  haven't recieved a code yet? ",
-                            style: Styles.mediumStyle(
-                              fontSize: 12,
-                              color: context.colorScheme.secondary,
-                              family: FontFamily.varela,
-                            ),
-                            children: [
+                          text: !state.canResend
+                              ? "Haven't received a code yet? Resend code in ${state.timeLeft}"
+                              : "Haven't received a code yet? ",
+                          style: Styles.mediumStyle(
+                            fontSize: 12,
+                            color: context.colorScheme.secondary,
+                            family: FontFamily.varela,
+                          ),
+                          children: [
+                            if (state.canResend)
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    // send code here again
+                                    authCubit.startTimer(
+                                        startAgain: true, email: widget.email);
                                   },
                                 text: "Resend Code",
                                 style: TextStyle(
@@ -126,8 +144,9 @@ class VerifyEmail extends StatelessWidget {
                                   color: context.colorScheme.onPrimary,
                                   decoration: TextDecoration.underline,
                                 ),
-                              )
-                            ]),
+                              ),
+                          ],
+                        ),
                       ),
                       15.verticalSpace,
                     ],
