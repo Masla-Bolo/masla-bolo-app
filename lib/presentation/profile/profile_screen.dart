@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../helpers/widgets/rounded_image.dart';
 import 'components/profile_tab_view.dart';
 import 'profile_cubit.dart';
 import '../../helpers/extensions.dart';
@@ -93,11 +94,30 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   ),
                                 ),
                                 20.verticalSpace,
-                                CircleAvatar(
-                                  backgroundColor: context.colorScheme.onPrimary
-                                      .withOpacity(0.3),
-                                  child: Icon(Icons.person_2,
-                                      color: context.colorScheme.primary),
+                                Center(
+                                  child: Stack(
+                                    children: [
+                                      RoundedImage(
+                                        imageUrl: state.user.image,
+                                        iconText: state.user.username,
+                                        radius: 25.w,
+                                      ),
+                                      Positioned(
+                                          right: 4,
+                                          bottom: 4,
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              await cubit.showOptions();
+                                            },
+                                            child: Icon(
+                                              Icons.edit,
+                                              size: 18,
+                                              color:
+                                                  context.colorScheme.secondary,
+                                            ),
+                                          )),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -105,7 +125,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                         ),
                         30.verticalSpace,
                         OutlinedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            cubit.goToEditProfile();
+                          },
                           label: Text(
                             'Edit Profile',
                             style: Styles.boldStyle(

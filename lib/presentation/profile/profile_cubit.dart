@@ -1,4 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/domain/repositories/user_repository.dart';
+import 'package:masla_bolo_app/helpers/helpers.dart';
+import 'package:masla_bolo_app/service/image_service.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/model/paginate.dart';
 import '../../domain/repositories/issue_repository.dart';
@@ -11,9 +14,15 @@ import '../../di/service_locator.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileNavigator navigation;
+  final UserRepository userRepository;
   final IssueRepository issueRepository;
-  ProfileCubit(this.navigation, this.issueRepository)
-      : super(ProfileState.empty());
+  final ImageService imageService;
+  ProfileCubit(
+    this.navigation,
+    this.issueRepository,
+    this.imageService,
+    this.userRepository,
+  ) : super(ProfileState.empty());
 
   getUser() {
     if (state.user.id == null) {
@@ -27,6 +36,34 @@ class ProfileCubit extends Cubit<ProfileState> {
           });
     }
   }
+
+  Future<void> showOptions() async {
+    final image = await imageService.uploadImage();
+    if (image != null) {
+      state.user.image = image;
+      loader(
+        () => userRepository.updateUser(state.user).then(
+          (newUser) {
+            emit(
+              state.copyWith(
+                user: newUser,
+              ),
+            );
+          },
+        ),
+      );
+    }
+  }
+
+  Future<void> updateProfile() async {
+    return userRepository.updateUser(state.user).then((newUser) {
+      emit(state.copyWith(user: newUser));
+    });
+  }
+
+  void goToEditProfile() => navigation.goToEditProfile();
+
+  void pop() => navigation.pop();
 
   goToSettings() {
     navigation.goToSettings();

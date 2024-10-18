@@ -10,6 +10,7 @@ import 'package:masla_bolo_app/presentation/get_started/get_started_screen.dart'
 import 'package:masla_bolo_app/presentation/home/components/issue/issue_detail/issue_detail.dart';
 import 'package:masla_bolo_app/presentation/like_issue/like_issue_page.dart';
 import 'package:masla_bolo_app/presentation/notification/notification_page.dart';
+import 'package:masla_bolo_app/presentation/profile/components/edit_profile.dart';
 import 'package:masla_bolo_app/presentation/profile/components/settings/settings_page.dart';
 import 'package:masla_bolo_app/presentation/profile/profile_screen.dart';
 
@@ -45,6 +46,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteName.profile:
       return getRoute(const ProfileScreen(), TransitionType.fade);
+
+    case RouteName.editProfile:
+      return getRoute(const EditProfile(), TransitionType.slide);
 
     case RouteName.home:
       return getRoute(const HomeScreen(), TransitionType.slide);

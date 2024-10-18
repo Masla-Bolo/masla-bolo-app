@@ -5,6 +5,7 @@ class RouteName {
   static const emailVerify = '/verify-email';
   static const home = '/home';
   static const profile = '/profile';
+  static const editProfile = '/edit-profile';
   static const notification = '/notification';
   static const issue = "/issue";
   static const issueDetail = "/issue-detail";

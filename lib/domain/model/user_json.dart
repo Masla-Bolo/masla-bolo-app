@@ -6,11 +6,13 @@ class UserJson {
   String? username;
   String? password;
   String? email;
+  String? image;
   bool? emailVerified;
   String? role;
   int? id;
 
   UserJson({
+    this.image,
     this.emailVerified,
     this.id,
     this.password,
@@ -21,6 +23,7 @@ class UserJson {
 
   factory UserJson.fromData(Map<String, dynamic> json) => UserJson(
         email: json["email"],
+        image: json["image"],
         username: json["username"],
         id: json['id'],
         emailVerified: json["email_verified"],
@@ -31,6 +34,7 @@ class UserJson {
         username: username,
         email: email,
         id: id,
+        image: image,
         role: role,
         emailVerified: emailVerified,
       );
@@ -52,12 +56,14 @@ class UserJson {
         role: userEntity.role,
         id: userEntity.id,
         password: userEntity.password,
+        image: userEntity.image,
       );
 
   Map<String, dynamic> toJson() {
     return {
       'username': username,
       'email': email,
+      "image": image,
       "role": role,
       "password": password,
     };

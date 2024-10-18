@@ -10,10 +10,13 @@ class ProfileNavigator with SettingsRoute, IssueDetailRoute {
     navigation.pop();
   }
 
+  void goToEditProfile() => navigation.push(RouteName.editProfile);
+
   ProfileNavigator(this.navigation);
 }
 
 mixin ProfileRoute {
   void goToProfile() => navigation.push(RouteName.profile);
+
   AppNavigation get navigation;
 }

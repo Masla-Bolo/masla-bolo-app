@@ -10,6 +10,8 @@ class ProfileModule {
     getIt.registerSingleton<ProfileCubit>(ProfileCubit(
       getIt(),
       getIt(),
+      getIt(),
+      getIt(),
     ));
     getIt.registerLazySingleton<SettingsNavigator>(
       () => SettingsNavigator(getIt()),

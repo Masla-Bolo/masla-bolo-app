@@ -1,3 +1,9 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/domain/entities/user_entity.dart';
+import 'package:masla_bolo_app/domain/stores/user_store.dart';
+
+import '../../../di/service_locator.dart';
+import '../../../helpers/widgets/rounded_image.dart';
 import 'bottom_bar_item.dart';
 import '../../../helpers/extensions.dart';
 import 'package:flutter/material.dart';
@@ -6,44 +12,60 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bottom_bar_cubit.dart';
 import '../bottom_bar_state.dart';
 
-class BottomBarIcon extends StatefulWidget {
+class BottomBarIcon extends StatelessWidget {
   const BottomBarIcon({
     super.key,
     required this.item,
     required this.index,
-    required this.bottomBarCubit,
   });
   final BottomBarItem item;
   final int index;
-  final BottomBarCubit bottomBarCubit;
-
-  @override
-  State<BottomBarIcon> createState() => _BottomBarIconState();
-}
-
-class _BottomBarIconState extends State<BottomBarIcon> {
-  late BottomBarCubit cubit;
-  @override
-  void initState() {
-    super.initState();
-    cubit = widget.bottomBarCubit;
-  }
+  static final cubit = getIt<BottomBarCubit>();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BottomBarCubit, BottomBarState>(
         bloc: cubit,
         builder: (context, state) {
-          bool isSelected = state.currentIndex == widget.index;
+          bool isSelected = state.currentIndex == index;
           return GestureDetector(
-            onTap: () => cubit.updateIndex(widget.index),
-            child: Image.asset(
-              widget.item.image,
-              height: 25,
-              color: isSelected
-                  ? context.colorScheme.onPrimary
-                  : context.colorScheme.secondary.withOpacity(0.6),
-            ),
+            onTap: () => cubit.updateIndex(index),
+            child: index == 4
+                ? BlocBuilder(
+                    bloc: getIt<UserStore>(),
+                    builder: (context, userState) {
+                      return FutureBuilder(
+                          future: getIt<UserStore>().getUser(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              final user = snapshot.data as UserEntity;
+                              return RoundedImage(
+                                imageUrl: user.image,
+                                iconText: user.username,
+                                radius: 13.w,
+                                color: isSelected
+                                    ? context.colorScheme.onPrimary
+                                    : context.colorScheme.secondary
+                                        .withOpacity(0.6),
+                              );
+                            }
+                            return Image.asset(
+                              item.image,
+                              height: 25,
+                              color: isSelected
+                                  ? context.colorScheme.onPrimary
+                                  : context.colorScheme.secondary
+                                      .withOpacity(0.6),
+                            );
+                          });
+                    })
+                : Image.asset(
+                    item.image,
+                    height: 25,
+                    color: isSelected
+                        ? context.colorScheme.onPrimary
+                        : context.colorScheme.secondary.withOpacity(0.6),
+                  ),
           );
         });
   }
