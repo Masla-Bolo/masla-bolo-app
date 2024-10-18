@@ -17,10 +17,11 @@ class BottomBarIcon extends StatelessWidget {
     super.key,
     required this.item,
     required this.index,
+    required this.cubit,
   });
   final BottomBarItem item;
   final int index;
-  static final cubit = getIt<BottomBarCubit>();
+  final BottomBarCubit cubit;
 
   @override
   Widget build(BuildContext context) {

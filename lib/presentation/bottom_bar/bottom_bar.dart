@@ -8,8 +8,8 @@ import 'bottom_bar_cubit.dart';
 import 'bottom_bar_state.dart';
 
 class BottomBar extends StatelessWidget {
-  const BottomBar({super.key});
-  static final cubit = getIt<BottomBarCubit>();
+  const BottomBar({super.key, required this.cubit});
+  final BottomBarCubit cubit;
 
   @override
   Widget build(BuildContext context) {

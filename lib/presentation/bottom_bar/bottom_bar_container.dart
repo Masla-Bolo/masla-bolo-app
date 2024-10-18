@@ -33,6 +33,7 @@ class BottomBarContainer extends StatelessWidget {
               children: bottomBarState.items.mapIndexed((index, item) {
                 return BottomBarIcon(
                   item: item,
+                  cubit: cubit,
                   index: index,
                 );
               }).toList(),

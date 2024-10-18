@@ -36,7 +36,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(const LoginScreen(), TransitionType.fade);
 
     case RouteName.bottomBar:
-      return getRoute(const BottomBar(), TransitionType.fade);
+      return getRoute(BottomBar(cubit: getIt()), TransitionType.fade);
 
     case RouteName.register:
       return getRoute(const SignUpScreen(), TransitionType.fade);

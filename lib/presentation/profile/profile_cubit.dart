@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/repositories/user_repository.dart';
-import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/service/image_service.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/model/paginate.dart';
@@ -29,29 +28,37 @@ class ProfileCubit extends Cubit<ProfileState> {
       getIt<UserStore>().getUser().then((user) => {
             if (user == null)
               {
+                print("1")
                 // fetch profile api here
               }
             else
-              {emit(state.copyWith(user: user))}
+              {print("2"), emit(state.copyWith(user: user))}
           });
     }
   }
 
   Future<void> showOptions() async {
     final image = await imageService.uploadImage();
+    final userStore = getIt<UserStore>();
     if (image != null) {
       state.user.image = image;
-      loader(
-        () => userRepository.updateUser(state.user).then(
-          (newUser) {
-            emit(
-              state.copyWith(
-                user: newUser,
-              ),
-            );
-          },
-        ),
+      userStore.setUser(
+        await userStore.getUser().then(
+              (user) => user!.copyWith(image: image),
+            ),
       );
+      // loader(
+      //   () => userRepository.updateUser(state.user).then(
+      //     (newUser) {
+      //       emit(
+      //         state.copyWith(
+      //           user: newUser,
+      //         ),
+      //       );
+      //     },
+      //   ),
+      // );
+      emit(state.copyWith(user: state.user));
     }
   }
 

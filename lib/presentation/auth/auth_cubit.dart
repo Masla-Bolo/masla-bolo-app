@@ -100,7 +100,6 @@ class AuthCubit extends Cubit<AuthState> {
         state.canResend = true;
         emit(state.copyWith(canResend: state.canResend));
         state.timer?.cancel();
-        timer.cancel();
       }
     });
     emit(state.copyWith(timer: state.timer));

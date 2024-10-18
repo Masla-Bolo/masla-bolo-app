@@ -11,10 +11,10 @@ import 'module/presentation_auth_module.dart';
 
 class PresentationLayerInjection {
   static Future<void> configurePresentationLayerInjection() async {
+    await BottomBarModule.configureBottomBarModuleInjection();
     await SplashModule.configureSplashModuleInjection();
     await PresentationAuthModule.configurePresentaionAuthModuleInjection();
     await GetStartedModule.configureGetStartedModuleInjection();
-    await BottomBarModule.configureBottomBarModuleInjection();
     await HomeModule.configureLikeHomeModuleInjection();
     await LikeIssueModule.configureLikeIssueModuleInjection();
     await CreateIssueModule.configureCreateIssueModuleInjection();

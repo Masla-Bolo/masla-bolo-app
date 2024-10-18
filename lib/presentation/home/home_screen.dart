@@ -42,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       endDrawer: const HomeFilterDrawer(),
       onEndDrawerChanged: (result) {
-        getIt<BottomBarCubit>().toggleVisibility();
+        final bottomBarState = getIt<BottomBarCubit>();
+        bottomBarState.toggleVisibility();
       },
       body: SafeArea(
         child: BlocBuilder<IssueCubit, IssueState>(
