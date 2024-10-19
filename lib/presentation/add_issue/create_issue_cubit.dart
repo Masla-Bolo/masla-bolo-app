@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/service/permission_service.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/repositories/issue_repository.dart';
+import '../../service/location_service.dart';
 import '../bottom_bar/bottom_bar_cubit.dart';
 import '../home/components/issue/issue_helper.dart';
 import 'create_issue_navigator.dart';
@@ -15,8 +17,15 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
   final CreateIssueNavigator navigator;
   final ImageService imageHelper;
   final IssueRepository issueRepository;
-  CreateIssueCubit(this.navigator, this.imageHelper, this.issueRepository)
-      : super(CreateIssueState.empty());
+  final LocationService locationService;
+  final PermissionService permissionService;
+  CreateIssueCubit(
+    this.navigator,
+    this.imageHelper,
+    this.issueRepository,
+    this.locationService,
+    this.permissionService,
+  ) : super(CreateIssueState.empty());
 
   Future<void> showOptions(BuildContext context) async {
     final image = await imageHelper.uploadImage();
@@ -37,20 +46,25 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
     }
     final isValid = (state.key.currentState?.validate() ?? false);
     if (isValid && state.categories.any((value) => value.isSelected)) {
-      final categories = state.categories
-          .where((val) => val.isSelected)
-          .map((value) => value.item)
-          .toList();
-      state.issue.categories = categories;
-      return issueRepository.createIssue(state.issue).then(
-        (result) {
-          getIt<BottomBarCubit>().updateIndex(0);
-          emit(state.copyWith(
-            issue: IssueEntity.empty(),
-            categories: IssueHelper.cloneInitialCategories(),
-          ));
-        },
-      );
+      await permissionService.permissionServiceCall();
+      return locationService.getLocation().then((position) {
+        state.issue.latitude = position.latitude;
+        state.issue.longitude = position.longitude;
+        final categories = state.categories
+            .where((val) => val.isSelected)
+            .map((value) => value.item)
+            .toList();
+        state.issue.categories = categories;
+        return issueRepository.createIssue(state.issue).then(
+          (result) {
+            getIt<BottomBarCubit>().updateIndex(0);
+            emit(state.copyWith(
+              issue: IssueEntity.empty(),
+              categories: IssueHelper.cloneInitialCategories(),
+            ));
+          },
+        );
+      });
     }
   }
 

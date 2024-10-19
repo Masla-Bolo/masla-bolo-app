@@ -10,6 +10,8 @@ class CreateIssueModule {
       getIt(),
       getIt(),
       getIt(),
+      getIt(),
+      getIt(),
     ));
   }
 }

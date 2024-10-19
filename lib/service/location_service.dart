@@ -6,14 +6,20 @@ class LocationService {
   Position get position => _position;
   setPosition(Position newPosition) => _position = newPosition;
 
-  Future<void> getLocation() async {
+  Future<Position> getLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     while (!serviceEnabled) {
       showToast(
-          "Location services are disabled, enable your locations to continue");
-      await Future.delayed(const Duration(seconds: 2));
+          "Location services are disabled, enable your locations to continue",
+          params: ToastParam(
+            duration: serviceEnabled
+                ? null
+                : const Duration(hours: 1000000000000000000),
+          ));
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
     }
-    setPosition(await Geolocator.getCurrentPosition());
+    final position = await Geolocator.getCurrentPosition();
+    setPosition(position);
+    return position;
   }
 }

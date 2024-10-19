@@ -55,7 +55,7 @@ class IssueCubit extends Cubit<IssueState> {
   }
 
   void initServices() {
-    // if user is logged in and service is not initialized then only initilize it
+    // if user is logged in and service is not initialized then only initilize the services.
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       localStorageRepository
           .getValue(tokenKey)
@@ -68,10 +68,10 @@ class IssueCubit extends Cubit<IssueState> {
                               log("Notification Initialized");
                               locationService.getLocation().then((_) {
                                 log("Location Initialized");
-                                localStorageRepository.setValue(
-                                    serviceInItKey, "SERVICE_INIT");
                               });
                             });
+                            localStorageRepository.setValue(
+                                serviceInItKey, "SERVICE_INIT");
                           });
                         },
                         (value) {
