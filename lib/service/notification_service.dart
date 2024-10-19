@@ -29,7 +29,7 @@ class NotificationService {
   }
 
   Future<void> initNotifications() async {
-    await requestPermission();
+    // await requestPermission();
     await sendTokenToServer();
     Future.wait([
       handleForegroundNotification(),
@@ -39,7 +39,16 @@ class NotificationService {
   }
 
   Future<void> handleForegroundNotification() async {
-    FirebaseMessaging.onMessage.listen(handleMessage);
+    log("FOREGROUND LISTENER INITIALIZED");
+    FirebaseMessaging.onMessage.listen(
+      handleMessage,
+      onError: (obj) {
+        log("Error handling foreground notification: ${obj.toString()}");
+      },
+      onDone: () {
+        log("Foreground notification listener done");
+      },
+    );
   }
 
   Future<void> sendTokenToServer() async {
@@ -77,6 +86,7 @@ class NotificationService {
   }
 
   Future<void> handleTerminatedNotificationClick() async {
+    log("TERMINATED LISTENER INITIALIZED");
     await FirebaseMessaging.instance.getInitialMessage().then((message) {
       log("App Terminated Notification Received");
       if (message != null) {
@@ -89,6 +99,7 @@ class NotificationService {
   }
 
   static Future<void> handleBackgroundMessage(RemoteMessage? message) async {
+    log("BACKGROUND LISTENER INITIALIZED");
     if (message == null) return;
     if (message.notification != null) {
       log("Background Message Title: ${message.notification?.title}");

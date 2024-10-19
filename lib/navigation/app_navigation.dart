@@ -32,14 +32,19 @@ class AppNavigation {
   }
 
   popAll(String routeName) {
-    getIt.reset().then((_) {
-      ServiceLocator.configureServiceLocator();
-    }).then((_) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        routeName,
-        (Route<dynamic> route) => false,
-      );
-    });
+    // getIt.reset().then((_) {
+    //   ServiceLocator.configureServiceLocator();
+    // }).then((_) {
+    //   Navigator.pushNamedAndRemoveUntil(
+    //     context,
+    //     routeName,
+    //     (Route<dynamic> route) => false,
+    //   );
+    // });
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      routeName,
+      (Route<dynamic> route) => false,
+    );
   }
 }

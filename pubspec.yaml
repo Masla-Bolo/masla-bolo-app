@@ -30,7 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  app_links: ^6.3.2
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
   bloc: ^8.1.4
@@ -48,6 +47,8 @@ dependencies:
   shared_preferences: ^2.3.1
   device_preview: ^1.2.0
   get_it: ^7.7.0
+  event_bus: ^2.0.1
+  permission_handler: ^11.3.1
   connectivity_plus: ^6.0.5
   flutter_markdown_selectionarea: ^0.6.17+1
   pretty_dio_logger: ^1.4.0

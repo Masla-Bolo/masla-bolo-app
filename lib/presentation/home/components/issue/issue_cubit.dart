@@ -2,6 +2,9 @@ import 'dart:developer';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:masla_bolo_app/helpers/strings.dart';
+import 'package:masla_bolo_app/service/permission_service.dart';
+import '../../../../data/local_storage/local_storage_repository.dart';
 import '../../../../domain/entities/issue_entity.dart';
 import '../../../../domain/repositories/issue_repository.dart';
 import '../../../../service/location_service.dart';
@@ -22,11 +25,15 @@ class IssueCubit extends Cubit<IssueState> {
   final MusicService musicService;
   final Debouncer _debouncer;
   final NotificationService notificationService;
+  final PermissionService permissionService;
   final LocationService locationService;
+  final LocalStorageRepository localStorageRepository;
 
   IssueCubit(
     this.navigation,
     this.issueRepository,
+    this.permissionService,
+    this.localStorageRepository,
     this.musicService,
     this.locationService,
     this.notificationService,
@@ -48,13 +55,31 @@ class IssueCubit extends Cubit<IssueState> {
   }
 
   void initServices() {
+    // if user is logged in and service is not initialized then only initilize it
     WidgetsBinding.instance.addPostFrameCallback((duration) {
-      notificationService.initNotifications().then((_) {
-        log("Notification Initialized");
-        locationService.requestPermission().then((_) {
-          log("Location Initialized");
-        });
-      });
+      localStorageRepository
+          .getValue(tokenKey)
+          .then((result) => result.fold((error) {}, (value) {
+                localStorageRepository.getValue(serviceInItKey).then(
+                      (result) => result.fold(
+                        (error) {
+                          permissionService.permissionServiceCall().then((_) {
+                            notificationService.initNotifications().then((_) {
+                              log("Notification Initialized");
+                              locationService.getLocation().then((_) {
+                                log("Location Initialized");
+                                localStorageRepository.setValue(
+                                    serviceInItKey, "SERVICE_INIT");
+                              });
+                            });
+                          });
+                        },
+                        (value) {
+                          log("NOTIFICATION AND LOCATION SERVICES ARE ALREADY INITIALIZED");
+                        },
+                      ),
+                    );
+              }));
     });
   }
 

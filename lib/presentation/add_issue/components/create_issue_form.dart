@@ -41,7 +41,7 @@ class IssueForm extends StatelessWidget {
                       color: context.colorScheme.secondary.withOpacity(0.9),
                       family: FontFamily.varela,
                     ),
-                    maxLength: 2,
+                    maxLength: 1,
                     textStyle: Styles.semiBoldStyle(
                       fontSize: 40,
                       color: context.colorScheme.onPrimary,

@@ -19,7 +19,7 @@ class UtilityService {
 
   void initializeListener() {
     listenerInitialized = true;
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 1), () {
       executeAll().then((_) => listenerInitialized = false);
     });
   }
