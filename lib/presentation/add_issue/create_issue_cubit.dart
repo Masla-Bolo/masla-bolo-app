@@ -47,23 +47,29 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
     final isValid = (state.key.currentState?.validate() ?? false);
     if (isValid && state.categories.any((value) => value.isSelected)) {
       await permissionService.permissionServiceCall();
-      return locationService.getLocation().then((position) {
-        state.issue.latitude = position.latitude;
-        state.issue.longitude = position.longitude;
-        final categories = state.categories
-            .where((val) => val.isSelected)
-            .map((value) => value.item)
-            .toList();
-        state.issue.categories = categories;
-        return issueRepository.createIssue(state.issue).then(
-          (result) {
-            getIt<BottomBarCubit>().updateIndex(0);
-            emit(state.copyWith(
-              issue: IssueEntity.empty(),
-              categories: IssueHelper.cloneInitialCategories(),
-            ));
-          },
-        );
+      return locationService.getLocation().then((enabled) {
+        if (enabled) {
+          state.issue.latitude = locationService.position.latitude;
+          state.issue.longitude = locationService.position.longitude;
+          final categories = state.categories
+              .where((val) => val.isSelected)
+              .map((value) => value.item)
+              .toList();
+          state.issue.categories = categories;
+          return issueRepository.createIssue(state.issue).then(
+            (result) {
+              getIt<BottomBarCubit>().updateIndex(0);
+              emit(state.copyWith(
+                issue: IssueEntity.empty(),
+                categories: IssueHelper.cloneInitialCategories(),
+              ));
+            },
+          );
+        } else {
+          showToast(
+            "Location services are disabled, turn on your locations to create an issue",
+          );
+        }
       });
     }
   }

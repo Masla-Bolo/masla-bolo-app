@@ -93,7 +93,7 @@ Future<void> showToast(String message, {ToastParam? params}) async {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (params?.hideImage == false) ...[
+                  if (params == null || params.hideImage == false) ...[
                     10.horizontalSpace,
                     Image.asset(
                       params?.image ?? AppImages.access,
