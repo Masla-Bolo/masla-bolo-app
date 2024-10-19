@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/presentation/home/components/issue/issue_helper.dart';
+import '../../../../../../helpers/styles/app_images.dart';
 import 'issue_comment/issue_comments.dart';
 import '../issue_detail_cubit.dart';
 import '../issue_detail_state.dart';
@@ -35,12 +37,12 @@ class IssueDetailDiscussion extends StatelessWidget {
                           onTap: () {
                             cubit.likeUnlikeIssue();
                           },
-                          child: Icon(
+                          child: Image.asset(
                             state.currentIssue.isLiked
-                                ? Icons.keyboard_double_arrow_up
-                                : Icons.keyboard_double_arrow_down,
+                                ? AppImages.raised
+                                : AppImages.raise,
+                            height: 30,
                             color: context.colorScheme.onPrimary,
-                            size: 22,
                           ),
                         ),
                         label: Row(
@@ -60,9 +62,9 @@ class IssueDetailDiscussion extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              state.currentIssue.likesCount == 1
-                                  ? "1 Raised"
-                                  : "${state.currentIssue.likesCount} Raised",
+                              state.currentIssue.likesCount < 1
+                                  ? "Raise"
+                                  : "${IssueHelper.getLikesCount(state.currentIssue.likesCount)} Raises",
                               style: Styles.mediumStyle(
                                 fontSize: 12,
                                 color: context.colorScheme.onPrimary,

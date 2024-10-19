@@ -101,6 +101,18 @@ class IssueHelper extends Equatable {
     return color;
   }
 
+  static String getLikesCount(int likesCount) {
+    if (likesCount < 1000) {
+      return likesCount.toString();
+    } else if (likesCount >= 1000 && likesCount < 1000000) {
+      return "${(likesCount / 1000).toStringAsFixed(1)}K";
+    } else if (likesCount >= 1000000 && likesCount < 1000000000) {
+      return "${(likesCount / 1000000).toStringAsFixed(1)}M";
+    } else {
+      return "${(likesCount / 1000000000).toStringAsFixed(1)}B";
+    }
+  }
+
   @override
   List<Object?> get props => [isSelected, item];
 }

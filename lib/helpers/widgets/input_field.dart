@@ -124,9 +124,13 @@ class _InputFieldState extends State<InputField> {
                   : widget.showCrossIcon
                       ? GestureDetector(
                           onTap: () {
+                            controller.text = "";
                             widget.onCrossTap?.call();
                           },
-                          child: const Icon(Icons.cancel))
+                          child: Icon(
+                            Icons.cancel,
+                            color: context.colorScheme.onPrimary,
+                          ))
                       : null),
           fillColor: context.colorScheme.secondary,
           errorStyle: Styles.boldStyle(

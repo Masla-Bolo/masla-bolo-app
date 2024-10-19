@@ -104,10 +104,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 1.sw,
                           child: InputField(
                             borderRadius: 20,
-                            suffixIcon: Icon(
-                              Icons.search,
-                              color: context.colorScheme.onPrimary,
-                            ),
+                            showCrossIcon: state.queryParams["search"] != null
+                                ? true
+                                : false,
+                            onCrossTap: () {
+                              homeCubit.clearSearchAndFetch();
+                            },
+                            suffixIcon: state.queryParams["search"] != null
+                                ? null
+                                : Icon(
+                                    Icons.search,
+                                    color: context.colorScheme.onPrimary,
+                                  ),
                             onChanged: (val) {
                               homeCubit.onChanged(val);
                             },

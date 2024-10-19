@@ -20,7 +20,7 @@ class BottomBarItem {
       page: const HomeScreen(),
     ),
     BottomBarItem(
-      image: AppImages.heart,
+      image: AppImages.raised,
       page: const LikeIssuePage(),
     ),
     BottomBarItem(

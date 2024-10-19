@@ -20,4 +20,6 @@ class AppImages {
   static const access = "$_baseDir/access.png";
   static const heart = "$_baseDir/heart.png";
   static const comment = "$_baseDir/comment.png";
+  static const raise = "$_baseDir/raise.png";
+  static const raised = "$_baseDir/raised.png";
 }

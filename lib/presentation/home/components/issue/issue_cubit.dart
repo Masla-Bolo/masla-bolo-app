@@ -217,7 +217,7 @@ class IssueCubit extends Cubit<IssueState> {
       _debouncer.call(() => _updateSearchAndFetch(val));
     } else {
       _debouncer.cancel();
-      _clearSearchAndFetch();
+      clearSearchAndFetch();
     }
   }
 
@@ -228,7 +228,7 @@ class IssueCubit extends Cubit<IssueState> {
     getIssues(clearAll: true);
   }
 
-  void _clearSearchAndFetch() {
+  void clearSearchAndFetch() {
     final queryParams = Map<String, dynamic>.from(state.queryParams)
       ..remove("search");
     emit(state.copyWith(isLoaded: false, queryParams: queryParams));

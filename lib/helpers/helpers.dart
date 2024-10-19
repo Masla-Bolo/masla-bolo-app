@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -67,8 +68,11 @@ Future<void> showToast(String message, {ToastParam? params}) async {
       barrierColor: AppColor.transparent,
       barrierDismissible: false,
       builder: (context) {
-        Future.delayed(params?.duration ?? const Duration(seconds: 2), () {
-          Navigator.of(context).pop(true);
+        Timer.periodic(params?.duration ?? const Duration(seconds: 2), (timer) {
+          if (context.mounted) {
+            Navigator.of(context, rootNavigator: true).pop('dialog');
+            timer.cancel();
+          }
         });
 
         return Dialog(

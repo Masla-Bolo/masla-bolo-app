@@ -194,10 +194,11 @@ class IssuePost extends StatelessWidget {
                         onTap: () {
                           params.cubit.likeUnlikeIssue(params.issue);
                         },
-                        child: Icon(
+                        child: Image.asset(
                           params.issue.isLiked
-                              ? Icons.keyboard_double_arrow_up
-                              : Icons.keyboard_double_arrow_down,
+                              ? AppImages.raised
+                              : AppImages.raise,
+                          height: 22,
                           color: context.colorScheme.onPrimary,
                         ),
                       ),
@@ -208,7 +209,7 @@ class IssuePost extends StatelessWidget {
                         child: Text(
                           params.issue.likesCount < 1
                               ? "Raise"
-                              : "${params.issue.likesCount} Raised",
+                              : "${IssueHelper.getLikesCount(params.issue.likesCount)} Raises",
                           style: Styles.mediumStyle(
                               fontSize: 12,
                               color: context.colorScheme.onPrimary,
