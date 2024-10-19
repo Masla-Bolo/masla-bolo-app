@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
+import '../../../../../helpers/widgets/rounded_image.dart';
 import 'issue_post_params.dart';
 import '../../../../../helpers/extensions.dart';
 import '../../../../../helpers/helpers.dart';
@@ -41,14 +42,10 @@ class IssuePost extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CircleAvatar(
-                          backgroundColor: context.colorScheme.onPrimary,
-                          radius: 15,
-                          child: Icon(
-                            Icons.person,
-                            size: 12,
-                            color: context.colorScheme.primary,
-                          ),
+                        RoundedImage(
+                          imageUrl: params.issue.user.image,
+                          iconText: params.issue.user.username,
+                          radius: 13.w,
                         ),
                         const SizedBox(width: 10),
                         Expanded(

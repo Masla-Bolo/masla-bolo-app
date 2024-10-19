@@ -25,6 +25,15 @@ class NetworkRepository implements Exception {
     return result;
   }
 
+  Future<NetworkResponse> patch({
+    required String url,
+    Map<String, dynamic>? data,
+  }) async {
+    final response = await dioClient.dio.patch(url, data: data);
+    final result = dioClient.checkError(response);
+    return result;
+  }
+
   Future<NetworkResponse> post({
     required String url,
     Map<String, dynamic>? data,

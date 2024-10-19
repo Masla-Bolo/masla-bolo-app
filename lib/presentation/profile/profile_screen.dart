@@ -94,29 +94,29 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   ),
                                 ),
                                 20.verticalSpace,
-                                Center(
-                                  child: Stack(
-                                    children: [
-                                      RoundedImage(
-                                        imageUrl: state.user.image,
-                                        iconText: state.user.username,
-                                        radius: 25.w,
-                                      ),
-                                      Positioned(
-                                          right: 4,
-                                          bottom: 4,
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              await cubit.showOptions();
-                                            },
+                                GestureDetector(
+                                  onTap: () async {
+                                    await cubit.showOptions();
+                                  },
+                                  child: Center(
+                                    child: Stack(
+                                      children: [
+                                        RoundedImage(
+                                          imageUrl: state.user.image,
+                                          iconText: state.user.username,
+                                          radius: 25.w,
+                                        ),
+                                        Positioned(
+                                            right: 4,
+                                            bottom: 4,
                                             child: Icon(
                                               Icons.edit,
                                               size: 18,
                                               color:
                                                   context.colorScheme.secondary,
-                                            ),
-                                          )),
-                                    ],
+                                            )),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],

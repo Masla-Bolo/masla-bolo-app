@@ -62,7 +62,7 @@ class BottomBarIcon extends StatelessWidget {
                     })
                 : Image.asset(
                     item.image,
-                    height: 25,
+                    height: index == 1 ? 22 : 25,
                     color: isSelected
                         ? context.colorScheme.onPrimary
                         : context.colorScheme.secondary.withOpacity(0.6),

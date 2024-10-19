@@ -12,6 +12,8 @@ class HomeModule {
       getIt(),
       getIt(),
       getIt(),
+      getIt(),
+      getIt(),
     ));
     getIt
         .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));

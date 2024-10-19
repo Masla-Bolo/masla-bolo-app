@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import '../../../../domain/entities/issue_entity.dart';
 import '../../../../domain/repositories/issue_repository.dart';
+import '../../../../service/location_service.dart';
+import '../../../../service/notification_service.dart';
 import 'issue_helper.dart';
 import 'issue_navigator.dart';
 import 'issue_state.dart';
@@ -17,9 +21,16 @@ class IssueCubit extends Cubit<IssueState> {
   final IssueRepository issueRepository;
   final MusicService musicService;
   final Debouncer _debouncer;
+  final NotificationService notificationService;
+  final LocationService locationService;
 
-  IssueCubit(this.navigation, this.issueRepository, this.musicService)
-      : _debouncer = Debouncer(delay: const Duration(milliseconds: 800)),
+  IssueCubit(
+    this.navigation,
+    this.issueRepository,
+    this.musicService,
+    this.locationService,
+    this.notificationService,
+  )   : _debouncer = Debouncer(delay: const Duration(milliseconds: 800)),
         super(IssueState.empty()) {
     _initScrollListener();
   }
@@ -34,6 +45,17 @@ class IssueCubit extends Cubit<IssueState> {
     if (state.scrollController.position.pixels >= threshold) {
       scrollAndCall();
     }
+  }
+
+  void initServices() {
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      notificationService.initNotifications().then((_) {
+        log("Notification Initialized");
+        locationService.requestPermission().then((_) {
+          log("Location Initialized");
+        });
+      });
+    });
   }
 
   Future<void> getIssues(

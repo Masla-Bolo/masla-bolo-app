@@ -6,7 +6,6 @@ import '../bottom_bar/bottom_bar_cubit.dart';
 import '../home/components/issue/issue_helper.dart';
 import 'create_issue_navigator.dart';
 import 'create_issue_state.dart';
-import '../profile/profile_cubit.dart';
 import '../../helpers/helpers.dart';
 import '../../service/image_service.dart';
 
@@ -45,13 +44,7 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
       state.issue.categories = categories;
       return issueRepository.createIssue(state.issue).then(
         (result) {
-          getIt<ProfileCubit>().appendToPendingIssues(result);
-          final bottomarCubit = getIt<BottomBarCubit>();
-          bottomarCubit.updateIndex(4);
-          showToast(
-            " Pending approval from the admin!",
-            params: ToastParam(toastAlignment: Alignment.bottomCenter),
-          );
+          getIt<BottomBarCubit>().updateIndex(0);
           emit(state.copyWith(
             issue: IssueEntity.empty(),
             categories: IssueHelper.cloneInitialCategories(),

@@ -11,8 +11,10 @@ import '../../di/service_locator.dart';
 class GetStartedCubit extends Cubit<GetStartedState> {
   final GetStartedNavigator navigator;
   final LocalStorageRepository localStorageRepository;
-  GetStartedCubit(this.navigator, this.localStorageRepository)
-      : super(GetStartedState.empty());
+  GetStartedCubit(
+    this.navigator,
+    this.localStorageRepository,
+  ) : super(GetStartedState.empty());
 
   onInit() {
     localStorageRepository.setValue(getStartedKey, "GET_STARTED");

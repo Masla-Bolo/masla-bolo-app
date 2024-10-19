@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:masla_bolo_app/helpers/helpers.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
 
@@ -10,9 +12,7 @@ class NotificationService {
   final AppNavigation navigation;
   final NetworkRepository networkRepository;
 
-  NotificationService(this.navigation, this.networkRepository) {
-    initNotifications();
-  }
+  NotificationService(this.navigation, this.networkRepository);
 
   final fcm = FirebaseMessaging.instance;
 
@@ -30,10 +30,12 @@ class NotificationService {
 
   Future<void> initNotifications() async {
     await requestPermission();
-    // await sendTokenToServer();
-    handleForegroundNotification();
-    handleBackgroundNotificationClick();
-    handleTerminatedNotificationClick();
+    await sendTokenToServer();
+    Future.wait([
+      handleForegroundNotification(),
+      handleBackgroundNotificationClick(),
+      handleTerminatedNotificationClick(),
+    ]);
   }
 
   Future<void> handleForegroundNotification() async {
@@ -45,7 +47,7 @@ class NotificationService {
       String? firebaseMessagingToken = await fcm.getToken();
       log("firebaseMessagingToken: $firebaseMessagingToken");
       if (firebaseMessagingToken != null) {
-        await networkRepository.post(url: "/fcm-token/", data: {
+        await networkRepository.patch(url: "/users/fcmtoken/", data: {
           "token": firebaseMessagingToken,
         });
       }
@@ -60,6 +62,12 @@ class NotificationService {
     if (message.notification != null) {
       log("Message Title: ${message.notification?.title}");
       log("Message Body: ${message.notification?.body}");
+      showToast(
+        "${message.notification?.title}",
+        params: ToastParam(
+          toastAlignment: Alignment.bottomCenter,
+        ),
+      );
     }
     log("Full message data: ${message.data}");
   }

@@ -1,16 +1,15 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:masla_bolo_app/helpers/helpers.dart';
 
 class LocationService {
-  LocationService() {
-    _requestPermission();
-  }
-
-  Future<void> _requestPermission() async {
+  Future<void> requestPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
       permission = await Geolocator.requestPermission();
-      _requestPermission();
+      requestPermission();
+    } else {
+      await getLocation();
     }
   }
 
@@ -18,17 +17,19 @@ class LocationService {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      showToast(
+          "Location services are disabled, enable your locations to continue");
+      return Future.error("Location services are disabled!");
     }
 
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are denied.');
+      showToast(
+          "Location services are disabled, enable your locations to continue");
+      return Future.error("Location services are disabled!");
     }
 
-    return await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+    return await Geolocator.getCurrentPosition();
   }
 }
