@@ -3,56 +3,72 @@ import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../network_response.dart';
+import 'interceptors/dio_retry_interceptor.dart';
 
 class DioClient {
   final List<Interceptor> interceptors;
+  bool _initialized = false;
+  bool get initialized => _initialized;
+  updateInitialize(bool value) {
+    _initialized = value;
+    if (!_initialized) {
+      dio.close(force: true);
+    } else {
+      _initializeDioClient();
+    }
+  }
+
   DioClient({
     required this.interceptors,
   }) {
-    _initializeApiService();
+    _initializeDioClient();
   }
   static const baseUrl = 'http://192.168.1.106:8000/api';
+  static const int maxRetries = 3;
+  static const int retryDelay = 1;
 
   final dio = Dio(
     BaseOptions(
       baseUrl: baseUrl,
       contentType: 'application/json',
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
     ),
   );
 
-  void _initializeApiService() {
+  void _initializeDioClient() {
     dio.interceptors.addAll([
+      RetryInterceptor(
+        dio: dio,
+        options: RetryOptions(
+          retries: maxRetries,
+          retryInterval: const Duration(seconds: retryDelay),
+          retryEvaluator: (error) async {
+            if (error.type == DioExceptionType.connectionError ||
+                error.type == DioExceptionType.connectionTimeout ||
+                (error.response?.statusCode != null &&
+                    error.response!.statusCode! >= 500)) {
+              return true;
+            }
+            return false;
+          },
+        ),
+      ),
       ...interceptors,
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90,
-        enabled: kDebugMode,
-      )
+      if (kDebugMode)
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+          enabled: kDebugMode,
+        )
     ]);
-  }
-
-  NetworkResponse checkError(Response response) {
-    final body = response.data;
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return NetworkResponse(
-        code: body["code"] ?? 200,
-        message: body["message"] ?? "",
-        success: body["success"] ?? "",
-        data: body["data"],
-      );
-    } else {
-      throw NetworkResponse(
-        code: body["code"] ?? 200,
-        message: body["message"] ?? "Unknown error occurred",
-        success: body["success"] ?? "false",
-        data: body["data"],
-      );
-    }
+    _initialized = true;
   }
 
   static NetworkResponse handleDioError(DioException error) {

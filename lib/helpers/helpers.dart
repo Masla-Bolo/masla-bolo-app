@@ -22,6 +22,7 @@ Future loader(Future Function() func,
       color: indicatorColor,
     ),
   );
+
   try {
     final response = await func();
     return response;
