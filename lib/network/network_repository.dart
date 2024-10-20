@@ -27,6 +27,7 @@ class NetworkRepository extends NetworkMonitor implements Exception {
       );
     }
 
+    // checking connection throught the api call
     final completer = Completer<NetworkResponse>();
     StreamSubscription? networkSubscription;
 
