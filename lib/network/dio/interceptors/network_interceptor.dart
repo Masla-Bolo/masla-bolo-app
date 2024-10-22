@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 
 import '../../../data/local_storage/local_storage_repository.dart';
 import '../../../helpers/strings.dart';
-import '../../network_response.dart';
 
 class NetworkInterceptor extends Interceptor {
   final LocalStorageRepository localStorageRepository;
@@ -22,14 +21,6 @@ class NetworkInterceptor extends Interceptor {
       }
     }
     return handler.next(response);
-  }
-
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    if (err.type == DioExceptionType.connectionError) {
-      throw NetworkResponse(message: "Check your internet connection");
-    }
-    return handler.next(err);
   }
 
   @override

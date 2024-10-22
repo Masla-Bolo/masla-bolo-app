@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 
 typedef RetryEvaluator = FutureOr<bool> Function(DioException error);
 
-// retry_options.dart
 class RetryOptions {
   final int retries;
   final Duration retryInterval;
@@ -22,7 +21,6 @@ class RetryOptions {
   }
 }
 
-// retry_interceptor.dart
 class RetryInterceptor extends Interceptor {
   final Dio dio;
   final RetryOptions options;
