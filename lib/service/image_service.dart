@@ -17,6 +17,14 @@ class ImageService {
     return null;
   }
 
+  Future<List<XFile>> getImages() async {
+    final files = await picker.pickMultipleMedia();
+    if (files.isNotEmpty) {
+      return files;
+    }
+    return [];
+  }
+
   Future<XFile?> showOptions() async {
     return await showCupertinoModalPopup(
       context: AppNavigation.context,
@@ -78,5 +86,26 @@ class ImageService {
       return url.toString();
     }
     return null;
+  }
+
+  Future<List<String>> uploadImages(List<XFile> files) async {
+    if (files.isEmpty) {
+      return [];
+    }
+    late UploadTask uploadTask;
+    List<String> imageUrls = [];
+    files.map((file) async {
+      final path = "images/${file.name}";
+      final ref = FirebaseStorage.instance.ref().child(path);
+      final metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked-file-path': file.path},
+      );
+      uploadTask = ref.putFile(io.File(file.path), metadata);
+      final snapshot = await uploadTask.whenComplete(() {});
+      final downloadUrl = await snapshot.ref.getDownloadURL();
+      imageUrls.add(downloadUrl);
+    });
+    return imageUrls;
   }
 }

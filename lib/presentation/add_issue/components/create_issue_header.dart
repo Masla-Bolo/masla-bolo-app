@@ -26,7 +26,7 @@ class IssueHeader extends StatelessWidget {
           const Spacer(),
           GestureDetector(
               onTap: () {
-                cubit.showOptions(context);
+                cubit.getImages();
               },
               child: Image.asset(
                 AppImages.link,

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:masla_bolo_app/service/permission_service.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/repositories/issue_repository.dart';
@@ -27,16 +27,17 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
     this.permissionService,
   ) : super(CreateIssueState.empty());
 
-  Future<void> showOptions(BuildContext context) async {
-    final image = await imageHelper.uploadImage();
-    if (image != null) {
-      if (state.issue.images.isEmpty) {
-        state.issue.images.insert(0, image);
-      } else {
-        state.issue.images.add(image);
-      }
+  Future<void> getImages() async {
+    final images = await imageHelper.getImages();
+    if (images.isNotEmpty) {
+      state.issue.fileImages.addAll(images);
       emit(state.copyWith(issue: state.issue));
     }
+  }
+
+  Future<void> uploadImages() async {
+    final images = await imageHelper.uploadImages(state.issue.fileImages);
+    state.issue.images = images;
   }
 
   Future<void> createIssue() async {
@@ -49,22 +50,25 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
       await permissionService.permissionServiceCall();
       return locationService.getLocation().then((enabled) {
         if (enabled) {
-          state.issue.latitude = locationService.position.latitude;
-          state.issue.longitude = locationService.position.longitude;
-          final categories = state.categories
-              .where((val) => val.isSelected)
-              .map((value) => value.item)
-              .toList();
-          state.issue.categories = categories;
-          return issueRepository.createIssue(state.issue).then(
-            (result) {
-              getIt<BottomBarCubit>().updateIndex(0);
-              emit(state.copyWith(
-                issue: IssueEntity.empty(),
-                categories: IssueHelper.cloneInitialCategories(),
-              ));
-            },
-          );
+          uploadImages().then((_) {
+            state.issue.latitude = locationService.position.latitude;
+            state.issue.longitude = locationService.position.longitude;
+            final categories = state.categories
+                .where((val) => val.isSelected)
+                .map((value) => value.item)
+                .toList();
+            state.issue.categories = categories;
+
+            return issueRepository.createIssue(state.issue).then(
+              (result) {
+                getIt<BottomBarCubit>().updateIndex(0);
+                emit(state.copyWith(
+                  issue: IssueEntity.empty(),
+                  categories: IssueHelper.cloneInitialCategories(),
+                ));
+              },
+            );
+          });
         } else {
           showToast(
             "Location services are disabled, turn on your locations to create an issue",
@@ -106,8 +110,8 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
     emit(state.copyWith(issue: state.issue));
   }
 
-  void removeImage(String image) {
-    state.issue.images.remove(image);
+  void removeMedia(XFile image) {
+    state.issue.fileImages.remove(image);
     emit(state.copyWith(issue: state.issue));
   }
 }

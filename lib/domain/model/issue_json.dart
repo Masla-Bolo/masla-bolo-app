@@ -107,6 +107,7 @@ class IssueJson {
   IssueEntity toDomain() => IssueEntity(
         isLiked: isLiked,
         id: id,
+        fileImages: [],
         description: description,
         images: images,
         title: title,

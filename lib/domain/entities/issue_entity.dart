@@ -1,3 +1,5 @@
+import 'package:image_picker/image_picker.dart';
+
 import '../model/issue_json.dart';
 import 'user_entity.dart';
 
@@ -6,6 +8,7 @@ class IssueEntity {
   String title;
   bool isLiked;
   List<String> images;
+  List<XFile> fileImages;
   String description;
   List<String> categories;
   int likesCount;
@@ -25,6 +28,7 @@ class IssueEntity {
     this.currentIndex = 0,
     required this.id,
     required this.description,
+    required this.fileImages,
     required this.isLiked,
     required this.images,
     required this.title,
@@ -43,6 +47,7 @@ class IssueEntity {
   factory IssueEntity.empty() => IssueEntity(
         id: 0,
         description: '',
+        fileImages: [],
         images: [],
         isLiked: false,
         title: '',

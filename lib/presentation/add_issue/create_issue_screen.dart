@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/presentation/add_issue/components/show_media.dart';
 import 'components/create_issue_form.dart';
 import 'components/create_issue_header.dart';
 import 'create_issue_cubit.dart';
 import 'create_issue_state.dart';
 import '../../helpers/extensions.dart';
 import '../../helpers/helpers.dart';
-import '../../helpers/widgets/cached_image.dart';
 
 import '../../di/service_locator.dart';
 import '../../helpers/styles/styles.dart';
@@ -33,40 +33,12 @@ class CreateIssueScreen extends StatelessWidget {
                     10.verticalSpace,
                     IssueForm(cubit: cubit),
                     20.verticalSpace,
-                    if (state.issue.images.isNotEmpty)
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: state.issue.images.map((image) {
-                              return Stack(
-                                children: [
-                                  SizedBox(
-                                    height: 0.2.sh,
-                                    width: 0.4.sw,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
-                                      child: CachedImage(image: image),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: -2,
-                                    right: 1,
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          cubit.removeImage(image);
-                                        },
-                                        child: const Icon(Icons.cancel)),
-                                  ),
-                                ],
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
+                    if (state.issue.fileImages.isNotEmpty)
+                      ShowMedia(
+                          media: state.issue.fileImages,
+                          onCrossTap: (image) {
+                            cubit.removeMedia(image);
+                          }),
                     20.verticalSpace,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
