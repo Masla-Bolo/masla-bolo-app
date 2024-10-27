@@ -1,5 +1,5 @@
 
-# Masla Bolo
+# Masla Bolo [In Development]
 
 Masla Bolo is a community-driven mobile application developed in Flutter, aimed at empowering users to discuss, share, and seek solutions for various community and individual issues. The app is designed with a focus on modularity, scalability, and clean code principles, making it easy to maintain and extend.
 
