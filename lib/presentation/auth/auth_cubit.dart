@@ -46,6 +46,14 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> googleSignIn() async {
+    return authRepository.googleSignIn().then((user) {
+      if (user.id != null) {
+        navigation.goToBottomBar();
+      }
+    });
+  }
+
   void exitEmailVerification() async {
     if (await showConfirmationDialog(
         "Exit without verifying your email? Your account won’t be activated.")) {

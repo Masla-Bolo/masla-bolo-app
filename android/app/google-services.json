@@ -12,7 +12,12 @@
           "package_name": "com.example.masla_bolo_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "665033539649-5lcvpj08to0escb3k1i5vgb836q2tcal.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCKX4AoHJXI7QTJwiE6vZ7gokbqmN_BggI"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665033539649-5lcvpj08to0escb3k1i5vgb836q2tcal.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "665033539649-b4ihbmmm03ed8a4pauk5mg2tg0n471gp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.maslaBoloApp"
+              }
+            }
+          ]
         }
       }
     }

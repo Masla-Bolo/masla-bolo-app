@@ -17,7 +17,6 @@ class NetworkRepository extends NetworkMonitor implements Exception {
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
   }) async {
-    // checking initial internet connection!
     if (!await networkMonitor.checkConnection()) {
       throw NetworkResponse(
         message: "No internet connection",
@@ -27,7 +26,6 @@ class NetworkRepository extends NetworkMonitor implements Exception {
       );
     }
 
-    // checking connection throught the api call
     final completer = Completer<NetworkResponse>();
     StreamSubscription? networkSubscription;
 

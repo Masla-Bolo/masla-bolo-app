@@ -6,10 +6,12 @@ class UserEntity {
   String? password;
   String? image;
   int? id;
+  bool? isSocial;
   bool? emailVerified;
   String? role;
 
   UserEntity({
+    this.isSocial,
     this.image,
     this.emailVerified,
     this.email,
@@ -25,10 +27,12 @@ class UserEntity {
     String? password,
     String? image,
     int? id,
+    bool? isSocial,
     bool? emailVerified,
     String? role,
   }) =>
       UserEntity(
+        isSocial: isSocial ?? this.isSocial,
         image: image ?? this.image,
         id: id ?? this.id,
         emailVerified: emailVerified ?? this.emailVerified,

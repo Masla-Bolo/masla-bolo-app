@@ -174,13 +174,15 @@ class LoginScreen extends StatelessWidget {
                         ),
                         15.verticalSpace,
                         OutlinedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            loader(() => authCubit.googleSignIn());
+                          },
                           icon: Image.asset(
                             AppImages.google,
                             height: 20,
                           ),
                           label: Text(
-                            'Sign up with Google',
+                            'Sign in with Google',
                             style: Styles.boldStyle(
                               fontSize: 14,
                               color: context.colorScheme.onPrimary,
@@ -195,30 +197,6 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                         15.verticalSpace,
-                        // OutlinedButton.icon(
-                        //   onPressed: () {},
-                        //   icon: Image.asset(
-                        //     AppImages.apple,
-                        //     height: 25,
-                        //   ),
-                        //   label: Padding(
-                        //     padding: const EdgeInsets.only(right: 8),
-                        //     child: Text(
-                        //       'Sign up with Apple',
-                        //       style: Styles.boldStyle(
-                        //         fontSize: 14,
-                        //         color: context.colorScheme.onPrimary,
-                        //         family: FontFamily.varela,
-                        //       ),
-                        //     ),
-                        //   ),
-                        //   style: OutlinedButton.styleFrom(
-                        //     minimumSize: const Size(double.infinity, 48),
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(8),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

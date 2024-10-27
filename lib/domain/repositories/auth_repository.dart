@@ -5,4 +5,5 @@ abstract class AuthRepository {
   Future<String> register(UserEntity user);
   Future<bool> sendEmail(String email);
   Future<UserEntity> verifyEmail(String email, String code);
+  Future<UserEntity> googleSignIn();
 }

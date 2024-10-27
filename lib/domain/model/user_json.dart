@@ -10,8 +10,10 @@ class UserJson {
   bool? emailVerified;
   String? role;
   int? id;
+  bool? isSocial;
 
   UserJson({
+    this.isSocial,
     this.image,
     this.emailVerified,
     this.id,
@@ -24,6 +26,7 @@ class UserJson {
   factory UserJson.fromData(Map<String, dynamic> json) => UserJson(
         email: json["email"],
         image: json["profile_image"],
+        isSocial: json["is_social"],
         username: json["username"],
         id: json['id'],
         emailVerified: json["email_verified"],
@@ -34,6 +37,7 @@ class UserJson {
         username: username,
         email: email,
         id: id,
+        isSocial: isSocial,
         image: image,
         role: role,
         emailVerified: emailVerified,
@@ -57,10 +61,12 @@ class UserJson {
         id: userEntity.id,
         password: userEntity.password,
         image: userEntity.image,
+        isSocial: userEntity.isSocial,
       );
 
   Map<String, dynamic> toJson() {
     return {
+      "is_social": isSocial,
       'username': username,
       'email': email,
       "profile_image": image,
