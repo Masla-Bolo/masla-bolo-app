@@ -30,7 +30,7 @@ class NotificationService {
 
   Future<void> initNotifications() async {
     // await requestPermission();
-    await sendTokenToServer();
+    // await sendTokenToServer();
     Future.wait([
       handleForegroundNotification(),
       handleBackgroundNotificationClick(),

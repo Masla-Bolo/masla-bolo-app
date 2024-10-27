@@ -99,7 +99,6 @@ class IssueCubit extends Cubit<IssueState> {
       queryParams: state.queryParams,
       previousIssues: state.issuesPagination.results,
     );
-    print("IN HERE NOW");
     emit(state.copyWith(
       issuesPagination: issuesPagination,
       isLoaded: true,

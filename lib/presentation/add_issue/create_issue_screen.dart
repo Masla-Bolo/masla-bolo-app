@@ -36,8 +36,8 @@ class CreateIssueScreen extends StatelessWidget {
                     if (state.issue.fileImages.isNotEmpty)
                       ShowMedia(
                           media: state.issue.fileImages,
-                          onCrossTap: (image) {
-                            cubit.removeMedia(image);
+                          onCrossTap: (media) {
+                            cubit.removeMedia(media);
                           }),
                     20.verticalSpace,
                     Column(

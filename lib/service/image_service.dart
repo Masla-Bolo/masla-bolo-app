@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import '../helpers/helpers.dart';
 import '../navigation/app_navigation.dart';
@@ -66,14 +69,13 @@ class ImageService {
     );
   }
 
-  Future<String?> uploadImage() async {
+  Future<String?> uploadImage({XFile? newFile}) async {
     late UploadTask uploadTask;
-    final file = await showOptions();
+    XFile? file = newFile ?? await showOptions();
     if (file != null) {
       final url = await loader(() async {
         final path = "images/${file.name}";
         final ref = FirebaseStorage.instance.ref().child(path);
-
         final metadata = SettableMetadata(
           contentType: 'image/jpeg',
           customMetadata: {'picked-file-path': file.path},
@@ -92,20 +94,13 @@ class ImageService {
     if (files.isEmpty) {
       return [];
     }
-    late UploadTask uploadTask;
-    List<String> imageUrls = [];
-    files.map((file) async {
-      final path = "images/${file.name}";
-      final ref = FirebaseStorage.instance.ref().child(path);
-      final metadata = SettableMetadata(
-        contentType: 'image/jpeg',
-        customMetadata: {'picked-file-path': file.path},
-      );
-      uploadTask = ref.putFile(io.File(file.path), metadata);
-      final snapshot = await uploadTask.whenComplete(() {});
-      final downloadUrl = await snapshot.ref.getDownloadURL();
-      imageUrls.add(downloadUrl);
-    });
-    return imageUrls;
+
+    final uploadFutures =
+        files.map((file) => uploadImage(newFile: file)).toList();
+    final results = await Future.wait(uploadFutures);
+    final urls =
+        results.where((url) => url != null).map((url) => url!).toList();
+    log("URLS: $urls");
+    return urls;
   }
 }

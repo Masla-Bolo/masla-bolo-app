@@ -35,47 +35,53 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
     }
   }
 
-  Future<void> uploadImages() async {
-    final images = await imageHelper.uploadImages(state.issue.fileImages);
-    state.issue.images = images;
-  }
-
   Future<void> createIssue() async {
-    if (state.issue.images.isEmpty) {
+    if (state.issue.fileImages.isEmpty) {
       showToast("Provide an image or a video as a proof");
       return;
     }
-    final isValid = (state.key.currentState?.validate() ?? false);
-    if (isValid && state.categories.any((value) => value.isSelected)) {
-      await permissionService.permissionServiceCall();
-      return locationService.getLocation().then((enabled) {
-        if (enabled) {
-          uploadImages().then((_) {
-            state.issue.latitude = locationService.position.latitude;
-            state.issue.longitude = locationService.position.longitude;
-            final categories = state.categories
-                .where((val) => val.isSelected)
-                .map((value) => value.item)
-                .toList();
-            state.issue.categories = categories;
 
-            return issueRepository.createIssue(state.issue).then(
-              (result) {
-                getIt<BottomBarCubit>().updateIndex(0);
-                emit(state.copyWith(
-                  issue: IssueEntity.empty(),
-                  categories: IssueHelper.cloneInitialCategories(),
-                ));
-              },
-            );
-          });
-        } else {
-          showToast(
-            "Location services are disabled, turn on your locations to create an issue",
-          );
-        }
-      });
+    final isValid = (state.key.currentState?.validate() ?? false);
+    if (!isValid) {
+      showToast("Fill in the required fields!");
+      return;
     }
+    if (!state.categories.any((value) => value.isSelected)) {
+      showToast("Select categories that apply");
+      return;
+    }
+
+    await permissionService.permissionServiceCall();
+    final enabled = await locationService.getLocation();
+
+    if (!enabled) {
+      showToast(
+          "Location services are disabled, turn on your locations to create an issue");
+      return;
+    }
+
+    final imagesFuture = imageHelper.uploadImages(state.issue.fileImages);
+    return imagesFuture.then((images) {
+      if (images.isEmpty) {
+        showToast("Provide an image or a video as a proof");
+      } else {
+        state.issue.images = images;
+        state.issue.latitude = locationService.position.latitude;
+        state.issue.longitude = locationService.position.longitude;
+        final categories = state.categories
+            .where((val) => val.isSelected)
+            .map((value) => value.item)
+            .toList();
+        state.issue.categories = categories;
+        issueRepository.createIssue(state.issue).then((_) {
+          getIt<BottomBarCubit>().updateIndex(0);
+          emit(state.copyWith(
+            issue: IssueEntity.empty(),
+            categories: IssueHelper.cloneInitialCategories(),
+          ));
+        });
+      }
+    });
   }
 
   void updateSelection(IssueHelper value) {
