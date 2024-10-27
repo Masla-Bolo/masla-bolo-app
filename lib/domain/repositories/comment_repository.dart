@@ -1,20 +1,23 @@
+import 'package:dartz/dartz.dart';
+import 'package:masla_bolo_app/domain/failures/comment_failure.dart';
+
 import '../entities/comments_entity.dart';
 
 abstract class CommentRepository {
-  Future<List<CommentsEntity>> getComments({
+  Future<Either<CommentFailure, List<CommentsEntity>>> getComments({
     Map<String, dynamic>? params,
   });
-  Future<CommentsEntity> createComment(
+  Future<Either<CommentFailure, CommentsEntity>> createComment(
     CommentsEntity comment,
   );
-  Future<CommentsEntity> updateComment(
+  Future<Either<CommentFailure, CommentsEntity>> updateComment(
     CommentsEntity comment,
   );
 
-  Future<void> likeUnlikeComment(
+  Future<Either<CommentFailure, void>> likeUnlikeComment(
     int commentId,
   );
-  Future<bool> deleteComment(
+  Future<Either<CommentFailure, bool>> deleteComment(
     int commentId,
   );
 }

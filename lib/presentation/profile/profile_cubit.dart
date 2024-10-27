@@ -31,9 +31,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       getIt<UserStore>().getUser().then((user) => {
             if (user == null)
               {
-                userRepository.getProfile().then((user) {
-                  emit(state.copyWith(user: user));
-                }),
+                userRepository
+                    .getProfile()
+                    .then((response) => response.fold((error) {}, (user) {
+                          emit(state.copyWith(user: user));
+                        })),
               }
             else
               {emit(state.copyWith(user: user))}
@@ -58,9 +60,11 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> updateProfile() async {
-    return userRepository.updateUser(state.user).then((newUser) {
-      emit(state.copyWith(user: newUser));
-    });
+    return userRepository
+        .updateUser(state.user)
+        .then((response) => response.fold((error) {}, (newUser) {
+              emit(state.copyWith(user: newUser));
+            }));
   }
 
   void goToEditProfile() => navigation.goToEditProfile();
@@ -102,13 +106,23 @@ class ProfileCubit extends Cubit<ProfileState> {
     final apiUrl =
         issues.next != null && !clearAll ? issues.next.toString() : url;
 
-    final issuesPagination = await issueRepository.getIssues(
-      url: apiUrl,
-      queryParams: {"issue_status": status},
-      previousIssues: issues.results,
-    );
-
-    distributeIssues(issuesPagination, status);
+    issueRepository
+        .getIssues(
+          url: apiUrl,
+          queryParams: {"issue_status": status},
+          previousIssues: issues.results,
+        )
+        .then((response) => response.fold((error) {
+              final issue = state.allIssues[status]!.copyWith(
+                issues: Paginate.empty(),
+                isLoaded: true,
+                isScrolled: true,
+              );
+              state.allIssues[status] = issue;
+              emit(state.copyWith(allIssues: state.allIssues));
+            }, (issuesPagination) {
+              distributeIssues(issuesPagination, status);
+            }));
   }
 
   void distributeIssues(Paginate<IssueEntity> result, String status) {

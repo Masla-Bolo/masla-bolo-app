@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   homeCubit.refreshIssues();
                 },
                 child: CustomScrollView(
-                  restorationId: "home",
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: state.scrollController,
                   slivers: [
                     SliverAppBar(
@@ -145,7 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: Text(
-                            "thats it for now...\nNo more issues to show",
+                            state.issuesPagination.results.isNotEmpty
+                                ? "thats it for now...\nNo more issues to show"
+                                : "No issues to show for now try again later!!",
                             textAlign: TextAlign.center,
                             style: Styles.boldStyle(
                               fontSize: 14,

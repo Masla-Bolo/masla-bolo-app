@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:masla_bolo_app/service/network_monitor.dart';
@@ -36,6 +37,7 @@ class NetworkRepository extends NetworkMonitor implements Exception {
             NetworkResponse(
               message: "Internet connection lost",
               data: null,
+              failed: true,
               code: 500,
               success: "false",
             ),
@@ -43,7 +45,7 @@ class NetworkRepository extends NetworkMonitor implements Exception {
         }
       },
     );
-
+    late NetworkResponse networkResponse;
     try {
       final response = await dioClient.dio.request(
         url,
@@ -52,32 +54,35 @@ class NetworkRepository extends NetworkMonitor implements Exception {
         options: Options(method: method),
       );
 
-      final result = _handleResponse(response);
-      completer.complete(result);
+      networkResponse = _handleResponse(response);
+      completer.complete(networkResponse);
     } on DioException catch (e) {
       if (!completer.isCompleted) {
-        completer.completeError(DioClient.handleDioError(e));
+        networkResponse = DioClient.handleDioError(e);
+        networkResponse.failed = true;
+        completer.completeError(networkResponse);
       }
     } on NetworkResponse catch (e) {
       if (!completer.isCompleted) {
-        completer.completeError(e);
+        networkResponse = e;
+        networkResponse.failed = true;
+        completer.completeError(networkResponse);
       }
     } catch (e) {
       if (!completer.isCompleted) {
-        completer.completeError(
-          NetworkResponse(
-            message: "An unexpected error occurred",
-            data: null,
-            code: 500,
-            success: "false",
-          ),
+        networkResponse = NetworkResponse(
+          message: "An unexpected error occurred",
+          data: null,
+          code: 500,
+          success: "false",
+          failed: true,
         );
+        completer.completeError(networkResponse);
       }
     } finally {
       await networkSubscription.cancel();
     }
-
-    return completer.future;
+    return networkResponse;
   }
 
   Future<NetworkResponse> get({
@@ -135,7 +140,7 @@ class NetworkRepository extends NetworkMonitor implements Exception {
         data: body["data"],
       );
     }
-
+    log("HERE THROWN");
     throw NetworkResponse(
       code: body["code"] ?? response.statusCode,
       message: body["message"] ?? "Unknown error occurred",

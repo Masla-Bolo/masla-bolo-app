@@ -1,8 +1,10 @@
+import 'package:dartz/dartz.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/repositories/user_repository.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
 
+import '../../domain/failures/user_failure.dart';
 import '../../domain/model/user_json.dart';
 
 class ApiUserRepository implements UserRepository {
@@ -11,27 +13,35 @@ class ApiUserRepository implements UserRepository {
   ApiUserRepository(this.networkRepository, this.userStore);
 
   @override
-  Future<bool> deleteUser(int userId) async {
-    await networkRepository.delete(url: '/users/$userId/');
-    return true;
+  Future<Either<UserFailure, bool>> deleteUser(int userId) async {
+    final response = await networkRepository.delete(url: '/users/$userId/');
+    return response.failed
+        ? left(UserFailure(error: response.message))
+        : right(true);
   }
 
   @override
-  Future<UserEntity> updateUser(UserEntity user) async {
+  Future<Either<UserFailure, UserEntity>> updateUser(UserEntity user) async {
     final response = await networkRepository.put(
       url: '/users/${user.id}/',
       data: user.toUserJson(),
     );
+    if (response.failed) {
+      return left(UserFailure(error: response.message));
+    }
     final newUser = UserJson.fromData(response.data).toDomain();
     userStore.setUser(newUser);
-    return newUser;
+    return right(newUser);
   }
 
   @override
-  Future<UserEntity> getProfile() async {
+  Future<Either<UserFailure, UserEntity>> getProfile() async {
     final response = await networkRepository.get(url: '/users/');
+    if (response.failed) {
+      return left(UserFailure(error: response.message));
+    }
     final newUser = UserJson.fromData(response.data['user']).toDomain();
     userStore.setUser(newUser);
-    return newUser;
+    return right(newUser);
   }
 }

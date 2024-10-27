@@ -3,9 +3,11 @@ class NetworkResponse implements Exception {
   String message;
   int code;
   dynamic data;
+  bool failed;
   NetworkResponse({
     this.code = 200,
     this.data,
+    this.failed = false,
     this.message = "",
     this.success = "",
   });

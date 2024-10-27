@@ -31,27 +31,32 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login() async {
     final isValid = state.loginKey.currentState?.validate() ?? false;
     if (isValid) {
-      final user =
-          await authRepository.login(state.user.email!, state.user.password!);
-
-      if (user.emailVerified!) {
-        navigation.goToBottomBar();
-      } else {
-        return authRepository.sendEmail(user.email!).then((response) {
-          if (response) {
-            goToVerifyEmail(user.email!);
-          }
-        });
-      }
+      authRepository
+          .login(state.user.email!, state.user.password!)
+          .then((response) => response.fold((error) {}, (user) {
+                if (user.emailVerified!) {
+                  navigation.goToBottomBar();
+                } else {
+                  return authRepository
+                      .sendEmail(user.email!)
+                      .then((response) => response.fold((error) {}, (value) {
+                            if (value) {
+                              goToVerifyEmail(user.email!);
+                            }
+                          }));
+                }
+              }));
     }
   }
 
   Future<void> googleSignIn() async {
-    return authRepository.googleSignIn().then((user) {
-      if (user.id != null) {
-        navigation.goToBottomBar();
-      }
-    });
+    return authRepository
+        .googleSignIn()
+        .then((response) => response.fold((error) {}, (user) {
+              if (user.id != null) {
+                navigation.goToBottomBar();
+              }
+            }));
   }
 
   void exitEmailVerification() async {
@@ -82,12 +87,18 @@ class AuthCubit extends Cubit<AuthState> {
 
     if (role != null) {
       state.user.role = role;
-      final email = await authRepository.register(state.user);
-      return authRepository.sendEmail(email).then((response) {
-        if (response) {
-          goToVerifyEmail(email);
-        }
-      });
+
+      return authRepository
+          .register(state.user)
+          .then((response) => response.fold((error) {}, (email) {
+                return authRepository
+                    .sendEmail(email)
+                    .then((response) => response.fold((error) {}, (value) {
+                          if (value) {
+                            goToVerifyEmail(email);
+                          }
+                        }));
+              }));
     }
   }
 

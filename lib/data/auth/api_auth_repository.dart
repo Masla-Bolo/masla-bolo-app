@@ -1,7 +1,9 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../domain/entities/user_entity.dart';
+import '../../domain/failures/auth_failure.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/model/user_json.dart';
 import '../../network/network_repository.dart';
@@ -14,7 +16,7 @@ class ApiAuthRepository implements AuthRepository {
   ApiAuthRepository(this.userStore, this.networkRepository);
 
   @override
-  Future<UserEntity> login(
+  Future<Either<AuthFailure, UserEntity>> login(
     String email,
     String password,
   ) async {
@@ -22,44 +24,57 @@ class ApiAuthRepository implements AuthRepository {
       'email': email,
       'password': password,
     });
-    final user = UserJson.fromData(response.data['user']).toDomain();
-    userStore.setUser(user);
-    return user;
+    if (response.failed) {
+      return left(AuthFailure(error: response.message));
+    } else {
+      final user = UserJson.fromData(response.data['user']).toDomain();
+      userStore.setUser(user);
+      return right(user);
+    }
   }
 
   @override
-  Future<String> register(UserEntity user) async {
+  Future<Either<AuthFailure, String>> register(UserEntity user) async {
     final response = await networkRepository.post(
       url: '/register/',
       data: user.toUserJson(),
     );
-    return response.data["email"];
+    return response.failed
+        ? left(AuthFailure(error: response.message))
+        : right(response.data["email"]);
   }
 
   @override
-  Future<bool> sendEmail(String email) async {
-    await networkRepository.get(url: '/send-email-verification/', extraQuery: {
+  Future<Either<AuthFailure, bool>> sendEmail(String email) async {
+    final response = await networkRepository
+        .get(url: '/send-email-verification/', extraQuery: {
       'email': email,
     });
-    return true;
+    return response.failed
+        ? left(AuthFailure(error: response.message))
+        : right(true);
   }
 
   @override
-  Future<UserEntity> verifyEmail(String email, String code) async {
+  Future<Either<AuthFailure, UserEntity>> verifyEmail(
+      String email, String code) async {
     final response = await networkRepository.post(url: '/verify-email/', data: {
       'email': email,
       'code': code,
     });
-    final user = UserJson.fromData(response.data['user']).toDomain();
-    userStore.setUser(user);
-    return user;
+    if (response.data["user"] != null) {
+      final user = UserJson.fromData(response.data['user']).toDomain();
+      userStore.setUser(user);
+      return right(user);
+    }
+    return left(AuthFailure(error: response.message));
   }
 
   @override
-  Future<UserEntity> googleSignIn() async {
+  Future<Either<AuthFailure, UserEntity>> googleSignIn() async {
     final googleUser = await GoogleSignIn().signIn();
     if (googleUser == null) {
-      return UserEntity.empty();
+      return left(AuthFailure(error: "Not Attempted to sign in!"));
     } else {
       final googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
@@ -86,10 +101,10 @@ class ApiAuthRepository implements AuthRepository {
       if (response.data["user"] != null) {
         final userJson = UserJson.fromData(response.data['user']).toDomain();
         userStore.setUser(userJson);
-        return userJson;
+        return right(userJson);
+      } else {
+        return left(AuthFailure(error: response.message));
       }
-
-      return UserEntity.empty();
     }
   }
 }

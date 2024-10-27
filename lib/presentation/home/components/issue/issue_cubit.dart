@@ -86,7 +86,7 @@ class IssueCubit extends Cubit<IssueState> {
   Future<void> getIssues(
       {bool clearAll = false, String url = "/issues/"}) async {
     emit(state.copyWith(isScrolled: false));
-    if (clearAll) {
+    if (clearAll && state.issuesPagination.results.isNotEmpty) {
       state.issuesPagination.results.clear();
     }
 
@@ -94,16 +94,27 @@ class IssueCubit extends Cubit<IssueState> {
         ? state.issuesPagination.next.toString()
         : url;
 
-    final issuesPagination = await issueRepository.getIssues(
-      url: apiUrl,
-      queryParams: state.queryParams,
-      previousIssues: state.issuesPagination.results,
-    );
-    emit(state.copyWith(
-      issuesPagination: issuesPagination,
-      isLoaded: true,
-      isScrolled: true,
-    ));
+    log("HERE BEFORE");
+    issueRepository
+        .getIssues(
+          url: apiUrl,
+          queryParams: state.queryParams,
+          previousIssues: state.issuesPagination.results,
+        )
+        .then((response) => response.fold((error) {
+              emit(state.copyWith(
+                issuesPagination: null,
+                isLoaded: true,
+                isScrolled: true,
+              ));
+              showToast(error.error);
+            }, (issuesPagination) {
+              emit(state.copyWith(
+                issuesPagination: issuesPagination,
+                isLoaded: true,
+                isScrolled: true,
+              ));
+            }));
   }
 
   void refreshIssues() {

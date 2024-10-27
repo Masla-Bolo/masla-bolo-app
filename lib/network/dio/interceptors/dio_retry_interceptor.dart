@@ -19,7 +19,6 @@ class RetryInterceptor extends Interceptor {
 
     var shouldRetry = extra.retries > 0 && await options.retryEvaluator(err);
     if (!shouldRetry) {
-      log("IN END");
       handler.next(err);
       return;
     }

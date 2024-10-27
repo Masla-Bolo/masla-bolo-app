@@ -25,17 +25,25 @@ class LikeIssueCubit extends Cubit<LikeIssueState> {
         ? state.issuesPagination.next.toString()
         : url;
 
-    final issuesPagination = await issueRepository.getIssues(
-      url: apiUrl,
-      queryParams: state.queryParams,
-      previousIssues: state.issuesPagination.results,
-    );
-
-    emit(state.copyWith(
-      issuesPagination: issuesPagination,
-      isLoaded: true,
-      isScrolled: true,
-    ));
+    issueRepository
+        .getIssues(
+          url: apiUrl,
+          queryParams: state.queryParams,
+          previousIssues: state.issuesPagination.results,
+        )
+        .then((response) => response.fold((error) {
+              emit(state.copyWith(
+                issuesPagination: null,
+                isLoaded: true,
+                isScrolled: true,
+              ));
+            }, (issuesPagination) {
+              emit(state.copyWith(
+                issuesPagination: issuesPagination,
+                isLoaded: true,
+                isScrolled: true,
+              ));
+            }));
   }
 
   refreshIssues() {

@@ -45,15 +45,14 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     commentRepository.getComments(params: {
       'issueId': params.issue.id,
     }).then(
-      (comments) => {
-        if (comments.isNotEmpty)
-          {
-            emit(state.copyWith(
-              comments: comments,
-            )),
-          },
-        emit(state.copyWith(commentLoading: false)),
-      },
+      (response) => response.fold((error) {}, (comments) {
+        if (comments.isNotEmpty) {
+          emit(state.copyWith(
+            comments: comments,
+          ));
+        }
+        emit(state.copyWith(commentLoading: false));
+      }),
     );
   }
 
