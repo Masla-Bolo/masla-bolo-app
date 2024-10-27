@@ -11,9 +11,11 @@ class CommentsEntity {
   UserEntity? user;
   int issueId;
   List<CommentsEntity> replies;
+  bool showReplies;
 
   CommentsEntity({
     this.id,
+    this.showReplies = false,
     this.parent,
     this.isLiked = false,
     required this.content,

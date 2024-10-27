@@ -89,6 +89,17 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     commentRepository.createComment(comment);
   }
 
+  void showHideReply(CommentsEntity newComment) {
+    state.comments.firstWhereOrNull(
+      (comment) {
+        return comment.id == newComment.id;
+      },
+    )!.showReplies = !newComment.showReplies;
+    emit(state.copyWith(
+      comments: state.comments,
+    ));
+  }
+
   void makeReply(CommentsEntity replyTo) {
     state.commentController.removeListener(textControllerListener);
     emit(

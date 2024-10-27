@@ -120,6 +120,40 @@ class Comment extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            if (comment.replies.isNotEmpty) ...[
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  cubit.showHideReply(comment);
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Icon(
+                                      comment.showReplies
+                                          ? Icons.arrow_drop_up_outlined
+                                          : Icons.arrow_drop_down_outlined,
+                                      color: context.colorScheme.onPrimary
+                                          .withOpacity(0.9),
+                                    ),
+                                    2.horizontalSpace,
+                                    Text(
+                                      comment.showReplies
+                                          ? "Hide Replies"
+                                          : "Show Replies",
+                                      style: Styles.mediumStyle(
+                                        fontSize: 12,
+                                        color: context.colorScheme.onPrimary
+                                            .withOpacity(0.9),
+                                        family: FontFamily.varela,
+                                      ),
+                                    ),
+                                    10.horizontalSpace,
+                                  ],
+                                ),
+                              ),
+                            ],
+                            10.horizontalSpace,
                           ],
                         ),
                       ),
@@ -127,7 +161,7 @@ class Comment extends StatelessWidget {
                   ),
                 ],
               ),
-              if (comment.replies.isNotEmpty)
+              if (comment.replies.isNotEmpty && comment.showReplies)
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: IssueComments(
