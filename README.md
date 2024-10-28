@@ -14,7 +14,7 @@ Masla Bolo is a community-driven mobile application developed in Flutter, aimed 
 
 - **Frontend**: Flutter (Dart)
 - **State Management**: Bloc and Cubit
-- **Architecture**: Clean Architecture
+- **Architecture**: a Clean Architecture-driven MVVM approach
 - **Backend**: python - Django - webSockets - Firebase
 - **Database**: PostgreSql
 
