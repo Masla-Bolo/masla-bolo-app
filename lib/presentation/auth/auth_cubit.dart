@@ -33,7 +33,9 @@ class AuthCubit extends Cubit<AuthState> {
     if (isValid) {
       return authRepository
           .login(state.user.email!, state.user.password!)
-          .then((response) => response.fold((error) {}, (user) {
+          .then((response) => response.fold((error) {
+                showToast(error.error);
+              }, (user) {
                 if (user.emailVerified!) {
                   navigation.goToBottomBar();
                 } else {
@@ -90,7 +92,9 @@ class AuthCubit extends Cubit<AuthState> {
 
       return authRepository
           .register(state.user)
-          .then((response) => response.fold((error) {}, (email) {
+          .then((response) => response.fold((error) {
+                showToast(error.error);
+              }, (email) {
                 return authRepository
                     .sendEmail(email)
                     .then((response) => response.fold((error) {}, (value) {

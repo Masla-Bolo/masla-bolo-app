@@ -72,8 +72,9 @@ class ImageService {
   Future<String?> uploadImage({XFile? newFile}) async {
     late UploadTask uploadTask;
     XFile? file = newFile ?? await showOptions();
+    String? url;
     if (file != null) {
-      final url = await loader(() async {
+      await loader(() async {
         final path = "images/${file.name}";
         final ref = FirebaseStorage.instance.ref().child(path);
         final metadata = SettableMetadata(
@@ -82,10 +83,9 @@ class ImageService {
         );
         uploadTask = ref.putFile(io.File(file.path), metadata);
         final snapshot = await uploadTask.whenComplete(() {});
-        final downloadUrl = await snapshot.ref.getDownloadURL();
-        return downloadUrl;
+        url = await snapshot.ref.getDownloadURL();
       });
-      return url.toString();
+      return url;
     }
     return null;
   }

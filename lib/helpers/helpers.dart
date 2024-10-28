@@ -1,11 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
-
-import 'package:dio/dio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'extensions.dart';
-import '../network/dio/dio_client.dart';
-import '../network/network_response.dart';
 import 'styles/app_colors.dart';
 import 'styles/app_images.dart';
 import 'styles/styles.dart';
@@ -14,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import '../navigation/app_navigation.dart';
 
-Future loader(Future Function() func,
+Future<void> loader(Future Function() func,
     {ToastParam? params, Color? indicatorColor}) async {
   final context = AppNavigation.context;
   context.loaderOverlay.show(
@@ -22,31 +17,10 @@ Future loader(Future Function() func,
       color: indicatorColor,
     ),
   );
-
-  try {
-    final response = await func();
-    return response;
-  } on NetworkResponse catch (e) {
-    log("ERROR IN NETWORK: ${e.toString()}");
-    if (params?.showToast ?? true) {
-      showToast(e.toString(), params: params);
-    }
-  } on DioException catch (dioError) {
-    log("ERROR IN DIO: $dioError");
-    final resp = DioClient.handleDioError(dioError);
-    showToast(resp.toString(), params: params);
-  } catch (e) {
-    log("ERROR IN CATCH: ${e.toString()}");
-    if (params?.showToast ?? true) {
-      showToast("An Internal Error Occurred!", params: params);
-    }
-  } finally {
-    if (context.mounted) {
-      context.loaderOverlay.hide();
-    }
+  await func();
+  if (context.mounted) {
+    context.loaderOverlay.hide();
   }
-
-  return null;
 }
 
 List<String> getStringList(List<dynamic> data) {

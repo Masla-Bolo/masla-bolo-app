@@ -175,7 +175,9 @@ class LoginScreen extends StatelessWidget {
                         15.verticalSpace,
                         OutlinedButton.icon(
                           onPressed: () {
-                            loader(() => authCubit.googleSignIn());
+                            loader(() async {
+                              await authCubit.googleSignIn();
+                            });
                           },
                           icon: Image.asset(
                             AppImages.google,
