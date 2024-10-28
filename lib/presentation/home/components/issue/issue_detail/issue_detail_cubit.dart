@@ -1,5 +1,13 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/domain/model/comments_json.dart';
+import 'package:masla_bolo_app/helpers/strings.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../../../../domain/entities/comments_entity.dart';
 import '../../../../../domain/repositories/comment_repository.dart';
 import '../../../../../domain/stores/user_store.dart';
@@ -42,6 +50,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
       commentLoading: true,
       currentIssue: params.issue,
     ));
+    initWebSocket();
     commentRepository.getComments(params: {
       'issueId': params.issue.id,
     }).then(
@@ -56,11 +65,6 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     );
   }
 
-  Future<void> showOptions() async {
-    final image = await imageHelper.uploadImage();
-    if (image != null) {}
-  }
-
   Future<void> addComment() async {
     final user = await getIt<UserStore>().getUser();
     final comment = CommentsEntity(
@@ -69,13 +73,17 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
       user: user,
     );
     if (state.replyTo != null) {
-      comment.replyTo = state.replyTo?.id;
+      // meaning this comment is replying to someOne
+      // if the replied comment"s parent is null then the current comment"s parent
+      // will the one which the comment is replying to or else the parent of this
+      // comment will be the parent of the comment that this current comment is replying to
+      comment.replyTo = state.replyTo!.user!.id;
       if (state.replyTo?.parent == null) {
-        comment.parent = state.replyTo?.id;
+        comment.parent = state.replyTo!.id;
       } else {
-        comment.parent = state.replyTo?.parent;
+        comment.parent = state.replyTo!.parent;
       }
-      final parent = state.replyTo?.parent ?? state.replyTo?.id;
+      final parent = state.replyTo?.parent ?? state.replyTo!.id;
       final parentComment = state.comments.firstWhereOrNull((comment) {
         return comment.id == parent;
       });
@@ -156,5 +164,52 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
 
   void onChanged(String value) {
     state.commentController.text = value;
+  }
+
+  void initWebSocket() async {
+    state.channel = WebSocketChannel.connect(
+      Uri.parse(socketUrl(params.issue.id)),
+    );
+    if (state.channel != null) {
+      try {
+        log("MAKING SOCKET CONNECTION....");
+        await state.channel!.ready;
+        log("SOCKET CONNECTED FOR: ${params.issue.id}");
+        state.channel!.stream.listen(
+          (data) => addSocketComment(data),
+          onError: (e) {
+            log("SOCKET ERROR: $e");
+          },
+        );
+      } on SocketException catch (e) {
+        log("Socket Error: ${e.toString()}");
+      } on WebSocketChannelException catch (e) {
+        log("Websocket Error: ${e.toString()}");
+      }
+    }
+  }
+
+  void addSocketComment(dynamic data) {
+    final commentData = jsonDecode(data)["comment"];
+    final streamComment = CommentsJson.fromJson(commentData).toDomain();
+    if (streamComment.parent != null) {
+      final parentComment = state.comments.firstWhereOrNull((comment) {
+        return comment.id == streamComment.parent;
+      });
+      if (parentComment != null) {
+        parentComment.replies.insert(0, streamComment);
+      } else {
+        state.comments.insert(0, streamComment);
+      }
+    } else {
+      state.comments.insert(0, streamComment);
+    }
+    emit(state.copyWith(comments: state.comments));
+  }
+
+  @override
+  Future<void> close() {
+    state.channel!.sink.close();
+    return super.close();
   }
 }

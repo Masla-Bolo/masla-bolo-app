@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+import '../../helpers/strings.dart';
 import '../network_response.dart';
 import 'interceptors/dio_retry_interceptor.dart';
 
@@ -23,7 +24,6 @@ class DioClient {
   }) {
     _initializeDioClient();
   }
-  static const baseUrl = 'http://192.168.1.106:8000/api';
   static const int maxRetries = 3;
   static const int retryDelay = 1;
 
@@ -31,9 +31,9 @@ class DioClient {
     BaseOptions(
       baseUrl: baseUrl,
       contentType: 'application/json',
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-      sendTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 20),
     ),
   );
 

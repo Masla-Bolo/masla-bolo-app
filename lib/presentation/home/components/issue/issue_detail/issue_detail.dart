@@ -38,6 +38,12 @@ class _IssueDetailState extends State<IssueDetail> {
   }
 
   @override
+  void dispose() {
+    cubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<IssueDetailCubit, IssueDetailState>(
         bloc: cubit,

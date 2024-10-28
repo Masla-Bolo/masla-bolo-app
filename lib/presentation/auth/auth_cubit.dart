@@ -31,7 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login() async {
     final isValid = state.loginKey.currentState?.validate() ?? false;
     if (isValid) {
-      authRepository
+      return authRepository
           .login(state.user.email!, state.user.password!)
           .then((response) => response.fold((error) {}, (user) {
                 if (user.emailVerified!) {
