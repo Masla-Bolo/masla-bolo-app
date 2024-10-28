@@ -57,7 +57,9 @@ class Comment extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    comment.user?.username ?? "",
+                                    cubit.params.issue.isAnonymous
+                                        ? "Anonymous"
+                                        : comment.user?.username ?? "",
                                     style: Styles.boldStyle(
                                       fontSize: 12,
                                       color: context.colorScheme.primary,

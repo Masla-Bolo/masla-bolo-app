@@ -53,7 +53,9 @@ class IssuePost extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                params.issue.user.username!,
+                                params.issue.isAnonymous
+                                    ? "Anonymous"
+                                    : params.issue.user.username!,
                                 style: Styles.boldStyle(
                                   family: FontFamily.varela,
                                   fontSize: 14,

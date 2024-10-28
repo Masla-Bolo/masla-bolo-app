@@ -87,6 +87,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
       final parentComment = state.comments.firstWhereOrNull((comment) {
         return comment.id == parent;
       });
+      parentComment?.showReplies = true;
       parentComment?.replies.insert(0, comment);
     } else {
       state.comments.insert(0, comment);
@@ -197,6 +198,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
         return comment.id == streamComment.parent;
       });
       if (parentComment != null) {
+        parentComment.showReplies = true;
         parentComment.replies.insert(0, streamComment);
       } else {
         state.comments.insert(0, streamComment);
