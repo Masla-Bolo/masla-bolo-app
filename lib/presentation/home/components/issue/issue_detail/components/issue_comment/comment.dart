@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../../domain/entities/comments_entity.dart';
+import '../../../../../../../helpers/widgets/rounded_image.dart';
 import '../../issue_detail_state.dart';
 import '../../../../../../../helpers/extensions.dart';
 
@@ -24,16 +25,11 @@ class Comment extends StatelessWidget {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: CircleAvatar(
-                      radius: 15,
-                      backgroundColor:
-                          context.colorScheme.onPrimary.withOpacity(0.9),
-                      child: Icon(
-                        Icons.person_2,
-                        size: 15,
-                        color: context.colorScheme.primary,
-                      ),
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: RoundedImage(
+                      imageUrl: comment.user?.image,
+                      iconText: comment.user?.username,
+                      radius: 20.w,
                     ),
                   ),
                   5.horizontalSpace,
@@ -60,8 +56,8 @@ class Comment extends StatelessWidget {
                                     cubit.params.issue.isAnonymous
                                         ? "Anonymous"
                                         : comment.user?.username ?? "",
-                                    style: Styles.boldStyle(
-                                      fontSize: 12,
+                                    style: Styles.mediumStyle(
+                                      fontSize: 16,
                                       color: context.colorScheme.primary,
                                       family: FontFamily.varela,
                                     ),
@@ -70,7 +66,7 @@ class Comment extends StatelessWidget {
                                   Text(
                                     comment.content,
                                     style: Styles.mediumStyle(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       color: context.colorScheme.primary,
                                       family: FontFamily.varela,
                                     ),

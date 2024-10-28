@@ -62,13 +62,45 @@ class _HomeScreenState extends State<HomeScreen> {
                   controller: state.scrollController,
                   slivers: [
                     SliverAppBar(
-                      expandedHeight: 0.07.sh,
+                      toolbarHeight: 0.12.sh,
                       floating: true,
+                      bottom: PreferredSize(
+                        preferredSize: const Size(0, 0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: SizedBox(
+                            width: 1.sw,
+                            height: 35,
+                            child: InputField(
+                              focusNode: focusNode,
+                              onTap: null,
+                              borderRadius: 25,
+                              showCrossIcon: state.queryParams["search"] != null
+                                  ? true
+                                  : false,
+                              onCrossTap: () {
+                                homeCubit.clearSearchAndFetch();
+                              },
+                              suffixIcon: state.queryParams["search"] != null
+                                  ? null
+                                  : Icon(
+                                      Icons.search,
+                                      color: context.colorScheme.onPrimary,
+                                    ),
+                              onChanged: (val) {
+                                homeCubit.onChanged(val);
+                              },
+                              preFilledValue: state.queryParams["search"],
+                              hintText: "Search Issues",
+                            ),
+                          ),
+                        ),
+                      ),
                       title: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          10.verticalSpace,
+                          20.verticalSpace,
                           Text(
                             "MASLA BOLO",
                             style: Styles.boldStyle(
@@ -86,46 +118,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               family: FontFamily.varela,
                             ),
                           ),
+                          5.verticalSpace,
                         ],
                       ),
                       actions: [
-                        GestureDetector(
-                          onTap: () => Scaffold.of(context).openEndDrawer(),
-                          child: Image.asset(
-                            AppImages.filter,
-                            color: context.colorScheme.onPrimary,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: GestureDetector(
+                            onTap: () => Scaffold.of(context).openEndDrawer(),
+                            child: Image.asset(
+                              AppImages.filter,
+                              color: context.colorScheme.onPrimary,
+                            ),
                           ),
                         ),
                       ],
-                    ),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          height: 35,
-                          width: 1.sw,
-                          child: InputField(
-                            borderRadius: 20,
-                            showCrossIcon: state.queryParams["search"] != null
-                                ? true
-                                : false,
-                            onCrossTap: () {
-                              homeCubit.clearSearchAndFetch();
-                            },
-                            suffixIcon: state.queryParams["search"] != null
-                                ? null
-                                : Icon(
-                                    Icons.search,
-                                    color: context.colorScheme.onPrimary,
-                                  ),
-                            onChanged: (val) {
-                              homeCubit.onChanged(val);
-                            },
-                            preFilledValue: state.queryParams["search"],
-                            hintText: "Search Issues",
-                          ),
-                        ),
-                      ),
                     ),
                     SliverList(
                       delegate: getDelegate(state),

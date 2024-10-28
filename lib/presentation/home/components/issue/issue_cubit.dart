@@ -94,7 +94,6 @@ class IssueCubit extends Cubit<IssueState> {
         ? state.issuesPagination.next.toString()
         : url;
 
-    log("HERE BEFORE");
     issueRepository
         .getIssues(
           url: apiUrl,
@@ -134,6 +133,11 @@ class IssueCubit extends Cubit<IssueState> {
     musicService.play(musicService.likeUnlikeMusic);
     emit(state.copyWith(issuesPagination: state.issuesPagination));
     issueRepository.likeUnlikeIssue(issue.id);
+  }
+
+  void increaseCommentCount(IssueEntity issue) {
+    issue.commentsCount += 1;
+    emit(state.copyWith(issuesPagination: state.issuesPagination));
   }
 
   void pop() => navigation.pop();

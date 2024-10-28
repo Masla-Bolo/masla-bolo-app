@@ -29,23 +29,15 @@ class IssueComments extends StatelessWidget {
                 duration: const Duration(milliseconds: 300),
                 switchInCurve: Curves.easeIn,
                 switchOutCurve: Curves.easeOut,
-                child: state.comments.isNotEmpty
-                    ? AnimatedList(
-                        initialItemCount: comments.length,
+                child: comments.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: comments.length,
                         reverse: true,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index, animation) {
+                        itemBuilder: (context, index) {
                           final comment = comments[index];
-                          return SlideTransition(
-                            position: animation.drive(
-                              Tween<Offset>(
-                                begin: const Offset(0, 1),
-                                end: Offset.zero,
-                              ).chain(CurveTween(curve: Curves.easeInOut)),
-                            ),
-                            child: Comment(comment: comment, cubit: cubit),
-                          );
+                          return Comment(comment: comment, cubit: cubit);
                         },
                       )
                     : Padding(

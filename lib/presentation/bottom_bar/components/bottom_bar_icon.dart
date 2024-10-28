@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
+import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 
 import '../../../di/service_locator.dart';
 import '../../../helpers/widgets/rounded_image.dart';
@@ -40,14 +41,23 @@ class BottomBarIcon extends StatelessWidget {
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               final user = snapshot.data as UserEntity;
-                              return RoundedImage(
-                                imageUrl: user.image,
-                                iconText: user.username,
-                                radius: 13.w,
-                                color: isSelected
-                                    ? context.colorScheme.onPrimary
-                                    : context.colorScheme.secondary
-                                        .withOpacity(0.6),
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: isSelected
+                                      ? context.colorScheme.onPrimary
+                                      : AppColor.transparent,
+                                ),
+                                padding: const EdgeInsets.all(1.5),
+                                child: RoundedImage(
+                                  imageUrl: user.image,
+                                  iconText: user.username,
+                                  radius: 13.w,
+                                  color: isSelected
+                                      ? context.colorScheme.onPrimary
+                                      : context.colorScheme.secondary
+                                          .withOpacity(0.6),
+                                ),
                               );
                             }
                             return Image.asset(

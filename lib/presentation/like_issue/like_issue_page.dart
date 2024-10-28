@@ -112,6 +112,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                                     itemBuilder: (context, index) {
                                       final issue = issues[index];
                                       return IssueContainer(
+                                        image: issue.user.image,
                                         issue: issue,
                                         onTap: () {
                                           cubit.goToIssueDetail(issue);

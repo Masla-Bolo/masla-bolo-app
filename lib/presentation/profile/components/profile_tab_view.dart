@@ -94,6 +94,7 @@ class _ProfileTabViewState extends State<ProfileTabView> {
                               itemBuilder: (context, index) {
                                 final issue = issues[index];
                                 return IssueContainer(
+                                  image: state.user.image,
                                   issue: issue,
                                   onTap: () {
                                     cubit.goToIssueDetail(issue);

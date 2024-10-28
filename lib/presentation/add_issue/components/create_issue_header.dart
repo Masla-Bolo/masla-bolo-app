@@ -11,20 +11,22 @@ class IssueHeader extends StatelessWidget {
   final CreateIssueCubit cubit;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Text(
-            "Create Issue",
-            style: Styles.semiBoldStyle(
-              fontSize: 30,
-              color: context.colorScheme.onPrimary,
-              family: FontFamily.dmSans,
-            ),
-          ),
-          const Spacer(),
-          GestureDetector(
+    return SliverAppBar(
+      toolbarHeight: 0.07.sh,
+      floating: true,
+      pinned: true,
+      title: Text(
+        "Create Issue",
+        style: Styles.semiBoldStyle(
+          fontSize: 30,
+          color: context.colorScheme.onPrimary,
+          family: FontFamily.dmSans,
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GestureDetector(
               onTap: () {
                 cubit.getImages();
               },
@@ -32,9 +34,8 @@ class IssueHeader extends StatelessWidget {
                 AppImages.link,
                 color: context.colorScheme.onPrimary,
               )),
-          5.horizontalSpace,
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -46,21 +46,26 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   }
 
   void fetchIssueComments() {
-    emit(state.copyWith(
-      commentLoading: true,
-      currentIssue: params.issue,
-    ));
+    if (!isClosed) {
+      emit(state.copyWith(
+        commentLoading: true,
+        currentIssue: params.issue,
+      ));
+    }
     initWebSocket();
     commentRepository.getComments(params: {
       'issueId': params.issue.id,
     }).then(
       (response) => response.fold((error) {}, (comments) {
-        if (comments.isNotEmpty) {
-          emit(state.copyWith(
-            comments: comments,
-          ));
+        if (!isClosed) {
+          if (comments.isNotEmpty) {
+            emit(state.copyWith(
+              comments: comments,
+            ));
+          } else {
+            emit(state.copyWith(commentLoading: false));
+          }
         }
-        emit(state.copyWith(commentLoading: false));
       }),
     );
   }
@@ -72,26 +77,28 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
       issueId: params.issue.id,
       user: user,
     );
-    if (state.replyTo != null) {
-      // meaning this comment is replying to someOne
-      // if the replied comment"s parent is null then the current comment"s parent
-      // will the one which the comment is replying to or else the parent of this
-      // comment will be the parent of the comment that this current comment is replying to
-      comment.replyTo = state.replyTo!.user!.id;
-      if (state.replyTo?.parent == null) {
-        comment.parent = state.replyTo!.id;
-      } else {
-        comment.parent = state.replyTo!.parent;
-      }
-      final parent = state.replyTo?.parent ?? state.replyTo!.id;
-      final parentComment = state.comments.firstWhereOrNull((comment) {
-        return comment.id == parent;
-      });
-      parentComment?.showReplies = true;
-      parentComment?.replies.insert(0, comment);
+    // if (state.replyTo != null) {
+    // meaning this comment is replying to someOne
+    // if the replied comment"s parent is null then the current comment"s parent
+    // will the one which the comment is replying to or else the parent of this
+    // comment will be the parent of the comment that this current comment is replying to
+    comment.replyTo = state.replyTo?.user?.id;
+    if (state.replyTo?.parent == null) {
+      comment.parent = state.replyTo?.id;
     } else {
-      state.comments.insert(0, comment);
+      comment.parent = state.replyTo?.parent;
     }
+    // final parent = state.replyTo?.parent ?? state.replyTo?.id;
+    // final parentComment = state.comments.firstWhereOrNull((comment) {
+    //   return comment.id == parent;
+    // });
+    // parentComment?.showReplies = true;
+    // parentComment?.replies.insert(0, comment);
+    // } else {
+    //   state.comments.insert(0, comment);
+    //   increaseCommentCount();
+    // }
+
     emit(state.copyWith(comments: state.comments));
     onChanged("");
     commentRepository.createComment(comment);
@@ -163,6 +170,11 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     emit(state.copyWith(currentIssue: state.currentIssue));
   }
 
+  void increaseCommentCount() {
+    getIt<IssueCubit>().increaseCommentCount(state.currentIssue);
+    emit(state.copyWith(currentIssue: state.currentIssue));
+  }
+
   void onChanged(String value) {
     state.commentController.text = value;
   }
@@ -202,9 +214,11 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
         parentComment.replies.insert(0, streamComment);
       } else {
         state.comments.insert(0, streamComment);
+        increaseCommentCount();
       }
     } else {
       state.comments.insert(0, streamComment);
+      increaseCommentCount();
     }
     emit(state.copyWith(comments: state.comments));
   }

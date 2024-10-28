@@ -54,7 +54,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> googleSignIn() async {
     return authRepository
         .googleSignIn()
-        .then((response) => response.fold((error) {}, (user) {
+        .then((response) => response.fold((error) {
+              showToast(error.error);
+            }, (user) {
               if (user.id != null) {
                 navigation.goToBottomBar();
               }

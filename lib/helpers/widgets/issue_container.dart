@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../extensions.dart';
 
 import '../../presentation/home/components/issue/issue_helper.dart';
 import '../helpers.dart';
 import '../styles/styles.dart';
+import 'rounded_image.dart';
 
 class IssueContainer extends StatelessWidget {
-  const IssueContainer({super.key, required this.onTap, required this.issue});
+  const IssueContainer({
+    super.key,
+    required this.onTap,
+    required this.issue,
+    required this.image,
+  });
   final IssueEntity issue;
   final void Function() onTap;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +36,10 @@ class IssueContainer extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 12,
-                    child: Icon(
-                      Icons.person,
-                      size: 12,
-                      color: context.colorScheme.onPrimary,
-                    ),
+                  RoundedImage(
+                    imageUrl: image,
+                    iconText: issue.user.username,
+                    radius: 18.w,
                   ),
                   const SizedBox(width: 10),
                   Expanded(

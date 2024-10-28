@@ -71,9 +71,12 @@ class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
                                   },
                                   child: Text("Clear All",
                                       style: Styles.mediumStyle(
-                                        fontSize: 20,
-                                        color: context.colorScheme.secondary
-                                            .withOpacity(0.6),
+                                        fontSize: 16,
+                                        color: state.categories
+                                                .any((val) => val.isSelected)
+                                            ? context.colorScheme.onPrimary
+                                            : context.colorScheme.secondary
+                                                .withOpacity(0.6),
                                         family: FontFamily.varela,
                                       )),
                                 ),
@@ -129,9 +132,12 @@ class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
                                   },
                                   child: Text("Clear",
                                       style: Styles.mediumStyle(
-                                        fontSize: 20,
-                                        color: context.colorScheme.secondary
-                                            .withOpacity(0.6),
+                                        fontSize: 16,
+                                        color: state.sortBy
+                                                .any((val) => val.isSelected)
+                                            ? context.colorScheme.onPrimary
+                                            : context.colorScheme.secondary
+                                                .withOpacity(0.6),
                                         family: FontFamily.varela,
                                       )),
                                 ),

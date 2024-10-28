@@ -44,10 +44,8 @@ Future<void> showToast(String message, {ToastParam? params}) async {
       barrierDismissible: false,
       builder: (context) {
         Timer.periodic(params?.duration ?? const Duration(seconds: 2), (timer) {
-          if (context.mounted) {
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-            timer.cancel();
-          }
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+          timer.cancel();
         });
 
         return Dialog(

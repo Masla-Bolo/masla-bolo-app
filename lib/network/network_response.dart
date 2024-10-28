@@ -1,4 +1,4 @@
-class NetworkResponse implements Exception {
+class NetworkResponse {
   String success;
   String message;
   int code;
