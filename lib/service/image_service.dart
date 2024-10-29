@@ -20,7 +20,7 @@ class ImageService {
   }
 
   Future<List<XFile>> getImages() async {
-    final files = await picker.pickMultipleMedia();
+    final files = await picker.pickMultiImage();
     if (files.isNotEmpty) {
       return files;
     }

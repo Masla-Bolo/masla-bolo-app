@@ -113,19 +113,17 @@ class SettingsPage extends StatelessWidget {
                             child: ListTile(
                               contentPadding:
                                   EdgeInsets.symmetric(vertical: 8.h),
-                              leading: CircleAvatar(
+                              leading: Text("Log Out",
+                                  style: Styles.boldStyle(
+                                    family: FontFamily.varela,
+                                    fontSize: 20,
+                                    color: context.colorScheme.onPrimary,
+                                  )),
+                              trailing: CircleAvatar(
                                 radius: 24.w,
                                 backgroundColor: AppColor.red.withOpacity(0.1),
                                 child: Icon(
                                   Icons.power_settings_new_outlined,
-                                  color: context.colorScheme.onPrimary,
-                                ),
-                              ),
-                              trailing: Text(
-                                "Log Out",
-                                style: Styles.boldStyle(
-                                  family: FontFamily.varela,
-                                  fontSize: 20,
                                   color: context.colorScheme.onPrimary,
                                 ),
                               ),

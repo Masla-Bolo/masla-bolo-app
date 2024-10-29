@@ -29,9 +29,8 @@ class NotificationService {
   }
 
   Future<void> initNotifications() async {
-    // await requestPermission();
-    // await sendTokenToServer();
     Future.wait([
+      sendTokenToServer(),
       handleForegroundNotification(),
       handleBackgroundNotificationClick(),
       handleTerminatedNotificationClick(),

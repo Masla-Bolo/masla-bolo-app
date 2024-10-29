@@ -69,7 +69,7 @@ class Developers extends StatelessWidget {
                 role: "Python Developer & Aspiring Data Analyst",
                 description:
                     "Specializes in Python programming with a growing interest in data analysis. Passionate about uncovering insights through data-driven solutions.",
-                email: "osamaalikhan@gmail.com",
+                email: "osamakhannnn499@gmail.com",
                 phone: "+923196172259",
               ),
             ],

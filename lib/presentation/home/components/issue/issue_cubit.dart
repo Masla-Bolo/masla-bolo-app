@@ -71,7 +71,9 @@ class IssueCubit extends Cubit<IssueState> {
                               });
                             });
                             localStorageRepository.setValue(
-                                serviceInItKey, "SERVICE_INIT");
+                              serviceInItKey,
+                              "SERVICE_INIT",
+                            );
                           });
                         },
                         (value) {
