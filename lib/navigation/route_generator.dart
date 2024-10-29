@@ -12,6 +12,12 @@ import 'package:masla_bolo_app/presentation/like_issue/like_issue_page.dart';
 import 'package:masla_bolo_app/presentation/notification/notification_page.dart';
 import 'package:masla_bolo_app/presentation/profile/components/edit_profile.dart';
 import 'package:masla_bolo_app/presentation/profile/components/settings/settings_page.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_sub_screens/about/about_us.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_sub_screens/contact/contact_us.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_sub_screens/developers/developers.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_sub_screens/notification_settings/app_notification_settings.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_sub_screens/privacy_policy/privacy_policy.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_sub_screens/support_us/support_us.dart';
 import 'package:masla_bolo_app/presentation/profile/profile_screen.dart';
 
 import '../di/service_locator.dart';
@@ -76,6 +82,24 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteName.settings:
       return getRoute(const SettingsPage(), TransitionType.slide);
+
+    case RouteName.aboutUs:
+      return getRoute(const AboutUs(), TransitionType.slide);
+
+    case RouteName.contactUs:
+      return getRoute(const ContactUs(), TransitionType.slide);
+
+    case RouteName.supportUs:
+      return getRoute(const SupportUs(), TransitionType.slide);
+
+    case RouteName.notificationSettings:
+      return getRoute(const AppNotificationSettings(), TransitionType.slide);
+
+    case RouteName.privacyPolicy:
+      return getRoute(const PrivacyPolicy(), TransitionType.slide);
+
+    case RouteName.developers:
+      return getRoute(const Developers(), TransitionType.slide);
 
     default:
       return MaterialPageRoute(

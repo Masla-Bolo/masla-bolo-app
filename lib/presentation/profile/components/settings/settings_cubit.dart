@@ -25,4 +25,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   void pop() {
     navigator.pop();
   }
+
+  void navigateToPage(String routeName) {
+    navigator.push(routeName);
+  }
 }

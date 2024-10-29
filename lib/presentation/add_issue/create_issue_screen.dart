@@ -46,7 +46,9 @@ class CreateIssueScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: state.categories.slices(7).map((row) {
+                            children: state.categories
+                                .slices((state.categories.length / 3).floor())
+                                .map((row) {
                               return SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(

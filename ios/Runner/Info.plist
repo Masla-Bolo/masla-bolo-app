@@ -8,6 +8,10 @@
 	<string>Masla Bolo App</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  		<string>mailto</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

@@ -9,8 +9,14 @@ class RouteName {
   static const notification = '/notification';
   static const issue = "/issue";
   static const issueDetail = "/issue-detail";
-  static const settings = '/settings';
   static const bottomBar = '/bottom-bar';
   static const getStarted = '/get-started';
   static const likeIssue = "/like-issue";
+  static const settings = '/settings';
+  static const aboutUs = "/about-us";
+  static const contactUs = "/contact-us";
+  static const developers = "/developers";
+  static const supportUs = "/support-us";
+  static const notificationSettings = "/notification-settings";
+  static const privacyPolicy = "/privacy-policy";
 }

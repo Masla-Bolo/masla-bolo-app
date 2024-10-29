@@ -48,41 +48,47 @@ class SettingsPage extends StatelessWidget {
                           itemCount: state.appSettings.length,
                           itemBuilder: (context, index) {
                             final setting = state.appSettings[index];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Container(
+                            return GestureDetector(
+                              onTap: () {
+                                cubit.navigateToPage(setting.routeName);
+                              },
+                              child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  color: context.colorScheme.secondary
-                                      .withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(30),
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    color: context.colorScheme.secondary
+                                        .withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: ListTile(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 8.h),
+                                      leading: CircleAvatar(
+                                        radius: 24.w,
+                                        backgroundColor: context
+                                            .colorScheme.secondary
+                                            .withOpacity(0.1),
+                                        child: Icon(
+                                          setting.icon,
+                                          color: context.colorScheme.onPrimary,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        setting.title,
+                                        style: Styles.boldStyle(
+                                          family: FontFamily.varela,
+                                          fontSize: 16,
+                                          color: context.colorScheme.onPrimary,
+                                        ),
+                                      ),
+                                      trailing: Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        color: context.colorScheme.onPrimary,
+                                      )),
                                 ),
-                                child: ListTile(
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 8.h),
-                                    leading: CircleAvatar(
-                                      radius: 24.w,
-                                      backgroundColor: context
-                                          .colorScheme.secondary
-                                          .withOpacity(0.1),
-                                      child: Icon(
-                                        setting.icon,
-                                        color: context.colorScheme.onPrimary,
-                                      ),
-                                    ),
-                                    title: Text(
-                                      setting.title,
-                                      style: Styles.boldStyle(
-                                        family: FontFamily.varela,
-                                        fontSize: 16,
-                                        color: context.colorScheme.onPrimary,
-                                      ),
-                                    ),
-                                    trailing: Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      color: context.colorScheme.onPrimary,
-                                    )),
                               ),
                             );
                           },

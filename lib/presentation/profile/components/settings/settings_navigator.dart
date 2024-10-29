@@ -11,6 +11,8 @@ class SettingsNavigator {
     navigation.pop();
   }
 
+  void push(String routeName) => navigation.push(routeName);
+
   void popAll() {
     navigation.popAll(RouteName.login);
   }
