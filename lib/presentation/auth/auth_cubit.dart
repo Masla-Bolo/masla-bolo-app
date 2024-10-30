@@ -92,19 +92,29 @@ class AuthCubit extends Cubit<AuthState> {
     if (role != null) {
       state.user.role = role;
 
-      return authRepository
-          .register(state.user)
-          .then((response) => response.fold((error) {
+      return authRepository.register(state.user).then(
+            (response) => response.fold(
+              (error) {
                 showToast(error.error);
-              }, (email) {
-                return authRepository
-                    .sendEmail(email)
-                    .then((response) => response.fold((error) {}, (value) {
-                          if (value) {
-                            goToVerifyEmail(email);
-                          }
-                        }));
-              }));
+              },
+              (result) => result.fold(
+                (email) {
+                  return authRepository
+                      .sendEmail(email)
+                      .then((response) => response.fold((error) {
+                            showToast(error.error);
+                          }, (value) {
+                            if (value) {
+                              goToVerifyEmail(email);
+                            }
+                          }));
+                },
+                (user) {
+                  navigation.goToBottomBar();
+                },
+              ),
+            ),
+          );
     }
   }
 
@@ -132,10 +142,17 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> verifyMyEmail(String email) {
     final code = state.otpCodes.map((otp) => otp.code).join();
-    return authRepository.verifyEmail(email, code).then((response) {
-      navigation.goToBottomBar();
-      emit(state.copyWith(otpCodes: []));
-    });
+    return authRepository.verifyEmail(email, code).then(
+          (response) => response.fold(
+            (error) {
+              showToast(error.error);
+            },
+            (user) {
+              navigation.goToBottomBar();
+              emit(state.copyWith(otpCodes: []));
+            },
+          ),
+        );
   }
 
   void checkPinCompletion(String pin, String email, int index) {

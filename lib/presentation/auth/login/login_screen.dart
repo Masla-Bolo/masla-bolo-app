@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../di/service_locator.dart';
+import '../../../domain/stores/user_store.dart';
 import '../../../helpers/extensions.dart';
 import '../../../helpers/helpers.dart';
 import '../../../helpers/styles/app_images.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   static final authCubit = getIt<AuthCubit>();
+  static final user = getIt<UserStore>().appUser;
 
   @override
   Widget build(BuildContext context) {
@@ -154,49 +156,51 @@ class LoginScreen extends StatelessWidget {
                               ]),
                         ),
                         15.verticalSpace,
-                        Row(
-                          children: [
-                            const Expanded(child: Divider()),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text(
-                                'or',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                  color: context.colorScheme.onPrimary,
+                        if (user.role == "user") ...[
+                          Row(
+                            children: [
+                              const Expanded(child: Divider()),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Text(
+                                  'or',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: context.colorScheme.onPrimary,
+                                  ),
                                 ),
                               ),
-                            ),
-                            const Expanded(child: Divider()),
-                          ],
-                        ),
-                        15.verticalSpace,
-                        OutlinedButton.icon(
-                          onPressed: () {
-                            loader(() => authCubit.googleSignIn());
-                          },
-                          icon: Image.asset(
-                            AppImages.google,
-                            height: 20,
+                              const Expanded(child: Divider()),
+                            ],
                           ),
-                          label: Text(
-                            'Sign in with Google',
-                            style: Styles.boldStyle(
-                              fontSize: 14,
-                              color: context.colorScheme.onPrimary,
-                              family: FontFamily.varela,
+                          15.verticalSpace,
+                          OutlinedButton.icon(
+                            onPressed: () {
+                              loader(() => authCubit.googleSignIn());
+                            },
+                            icon: Image.asset(
+                              AppImages.google,
+                              height: 20,
+                            ),
+                            label: Text(
+                              'Sign in with Google',
+                              style: Styles.boldStyle(
+                                fontSize: 14,
+                                color: context.colorScheme.onPrimary,
+                                family: FontFamily.varela,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              minimumSize: const Size(double.infinity, 48),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
                           ),
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 48),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                        15.verticalSpace,
+                          15.verticalSpace,
+                        ],
                       ],
                     ),
                   ),

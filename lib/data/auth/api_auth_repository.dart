@@ -33,15 +33,23 @@ class ApiAuthRepository implements AuthRepository {
     }
   }
 
+  // incase of user registering it will return a string with email and incase of admin it will return user in which there will be normal registration.
   @override
-  Future<Either<AuthFailure, String>> register(UserEntity user) async {
+  Future<Either<AuthFailure, Either<String, UserEntity>>> register(
+      UserEntity user) async {
     final response = await networkRepository.post(
       url: '/register/',
       data: user.toUserJson(),
     );
-    return response.failed
-        ? left(AuthFailure(error: response.message))
-        : right(response.data["email"]);
+    if (response.failed) {
+      return left(AuthFailure(error: response.message));
+    } else if (response.data['email'] != null) {
+      return right(left(response.data['email']));
+    } else {
+      final user = UserJson.fromData(response.data['user']).toDomain();
+      userStore.setUser(user);
+      return right(right(user));
+    }
   }
 
   @override

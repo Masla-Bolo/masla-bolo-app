@@ -1,3 +1,6 @@
+import 'package:masla_bolo_app/di/service_locator.dart';
+import 'package:masla_bolo_app/domain/stores/user_store.dart';
+
 import 'splash_navigator.dart';
 import '../../helpers/strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,25 +19,34 @@ class SplashCubit extends Cubit<SplashState> {
     Future.delayed(
         const Duration(seconds: 2),
         () => {
-              localStorageRepository.getValue(getStartedKey).then((result) => {
-                    result.fold(
-                      (error) {
-                        navigator.goToGetStarted();
-                      },
-                      (success) => {
-                        localStorageRepository.getValue(tokenKey).then(
-                              (value) => value.fold(
-                                (error) {
-                                  navigator.goToLogin();
-                                },
-                                (value) {
-                                  navigator.goToBottomBar();
-                                },
-                              ),
-                            ),
-                      },
-                    ),
-                  }),
+              localStorageRepository
+                  .getUser(userKey)
+                  .then((response) => response.fold((error) {}, (user) {
+                        getIt<UserStore>().setUser(user);
+                        localStorageRepository
+                            .getValue(getStartedKey)
+                            .then((result) => {
+                                  result.fold(
+                                    (error) {
+                                      navigator.goToGetStarted();
+                                    },
+                                    (success) => {
+                                      localStorageRepository
+                                          .getValue(tokenKey)
+                                          .then(
+                                            (value) => value.fold(
+                                              (error) {
+                                                navigator.goToLogin();
+                                              },
+                                              (value) {
+                                                navigator.goToBottomBar();
+                                              },
+                                            ),
+                                          ),
+                                    },
+                                  ),
+                                });
+                      })),
             }).then((_) {
       emit(state.copyWith(isLoaded: false));
     });
