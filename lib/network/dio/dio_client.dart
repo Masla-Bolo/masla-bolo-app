@@ -8,16 +8,6 @@ import 'interceptors/dio_retry_interceptor.dart';
 
 class DioClient {
   final List<Interceptor> interceptors;
-  bool _initialized = false;
-  bool get initialized => _initialized;
-  updateInitialize(bool value) {
-    _initialized = value;
-    if (!_initialized) {
-      dio.close(force: true);
-    } else {
-      _initializeDioClient();
-    }
-  }
 
   DioClient({
     required this.interceptors,
@@ -67,7 +57,6 @@ class DioClient {
         enabled: kDebugMode,
       )
     ]);
-    _initialized = true;
   }
 
   static NetworkResponse handleDioError(DioException error) {

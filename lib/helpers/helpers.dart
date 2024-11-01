@@ -17,9 +17,12 @@ Future<void> loader(Future Function() func,
       color: indicatorColor,
     ),
   );
-  await func();
-  if (context.mounted) {
-    context.loaderOverlay.hide();
+  try {
+    await func();
+  } finally {
+    if (context.mounted) {
+      context.loaderOverlay.hide();
+    }
   }
 }
 

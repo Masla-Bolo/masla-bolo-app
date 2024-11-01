@@ -11,7 +11,27 @@ class IssuePostShimmer extends StatelessWidget {
     return Container(
       color: context.colorScheme.primary,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          10.verticalSpace,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SizedBox(
+              height: 0.01.sh,
+              width: 0.3.sw,
+              child: const ShimmerEffect(),
+            ),
+          ),
+          10.verticalSpace,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SizedBox(
+              height: 0.01.sh,
+              width: 0.7.sw,
+              child: const ShimmerEffect(),
+            ),
+          ),
+          10.verticalSpace,
           Center(
             child: SizedBox(
                 height: 200,
@@ -21,56 +41,42 @@ class IssuePostShimmer extends StatelessWidget {
                 )),
           ),
           10.verticalSpace,
-          Container(
-            padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 0.025.sh,
-                  width: 0.7.sw,
-                  child: const ShimmerEffect(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                height: 0.015.sh,
+                width: 0.2.sw,
+                child: const ShimmerEffect(),
+              ),
+              5.horizontalSpace,
+              Text(
+                "•",
+                style: TextStyle(
+                  color: context.colorScheme.onPrimary,
                 ),
-                20.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      height: 0.015.sh,
-                      width: 0.2.sw,
-                      child: const ShimmerEffect(),
-                    ),
-                    5.horizontalSpace,
-                    Text(
-                      "•",
-                      style: TextStyle(
-                        color: context.colorScheme.onPrimary,
-                      ),
-                    ),
-                    5.horizontalSpace,
-                    SizedBox(
-                      width: 0.2.sw,
-                      height: 0.015.sh,
-                      child: const ShimmerEffect(),
-                    ),
-                    5.horizontalSpace,
-                    Text(
-                      "•",
-                      style: TextStyle(
-                        color: context.colorScheme.onPrimary,
-                      ),
-                    ),
-                    5.horizontalSpace,
-                    SizedBox(
-                      width: 0.2.sw,
-                      height: 0.015.sh,
-                      child: const ShimmerEffect(),
-                    ),
-                    5.horizontalSpace,
-                  ],
+              ),
+              5.horizontalSpace,
+              SizedBox(
+                width: 0.2.sw,
+                height: 0.015.sh,
+                child: const ShimmerEffect(),
+              ),
+              5.horizontalSpace,
+              Text(
+                "•",
+                style: TextStyle(
+                  color: context.colorScheme.onPrimary,
                 ),
-              ],
-            ),
+              ),
+              5.horizontalSpace,
+              SizedBox(
+                width: 0.2.sw,
+                height: 0.015.sh,
+                child: const ShimmerEffect(),
+              ),
+              5.horizontalSpace,
+            ],
           ),
         ],
       ),

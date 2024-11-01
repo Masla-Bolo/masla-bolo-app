@@ -105,13 +105,12 @@ class ApiAuthRepository implements AuthRepository {
         url: '/social-register/',
         data: user.toUserJson(),
       );
-
-      if (response.data["user"] != null) {
+      if (response.failed) {
+        return left(AuthFailure(error: response.message));
+      } else {
         final userJson = UserJson.fromData(response.data['user']).toDomain();
         userStore.setUser(userJson);
         return right(userJson);
-      } else {
-        return left(AuthFailure(error: response.message));
       }
     }
   }

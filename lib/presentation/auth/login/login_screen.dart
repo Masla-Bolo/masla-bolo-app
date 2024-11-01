@@ -13,11 +13,21 @@ import '../../../helpers/widgets/input_field.dart';
 import '../auth_cubit.dart';
 import '../auth_state.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-  static final authCubit = getIt<AuthCubit>();
-  static final user = getIt<UserStore>().appUser;
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final authCubit = getIt<AuthCubit>();
+  late String role;
+  @override
+  void initState() {
+    super.initState();
+    role = getIt<UserStore>().appUser.role ?? "user";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +166,7 @@ class LoginScreen extends StatelessWidget {
                               ]),
                         ),
                         15.verticalSpace,
-                        if (user.role == "user") ...[
+                        if (role == "user") ...[
                           Row(
                             children: [
                               const Expanded(child: Divider()),

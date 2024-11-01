@@ -23,30 +23,26 @@ class SplashCubit extends Cubit<SplashState> {
                   .getUser(userKey)
                   .then((response) => response.fold((error) {}, (user) {
                         getIt<UserStore>().setUser(user);
-                        localStorageRepository
-                            .getValue(getStartedKey)
-                            .then((result) => {
-                                  result.fold(
-                                    (error) {
-                                      navigator.goToGetStarted();
-                                    },
-                                    (success) => {
-                                      localStorageRepository
-                                          .getValue(tokenKey)
-                                          .then(
-                                            (value) => value.fold(
-                                              (error) {
-                                                navigator.goToLogin();
-                                              },
-                                              (value) {
-                                                navigator.goToBottomBar();
-                                              },
-                                            ),
-                                          ),
-                                    },
-                                  ),
-                                });
                       })),
+              localStorageRepository.getValue(getStartedKey).then((result) => {
+                    result.fold(
+                      (error) {
+                        navigator.goToGetStarted();
+                      },
+                      (success) => {
+                        localStorageRepository.getValue(tokenKey).then(
+                              (value) => value.fold(
+                                (error) {
+                                  navigator.goToLogin();
+                                },
+                                (value) {
+                                  navigator.goToBottomBar();
+                                },
+                              ),
+                            ),
+                      },
+                    ),
+                  }),
             }).then((_) {
       emit(state.copyWith(isLoaded: false));
     });

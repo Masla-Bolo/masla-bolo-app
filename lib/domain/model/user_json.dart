@@ -29,7 +29,7 @@ class UserJson {
         isSocial: json["is_social"],
         username: json["username"],
         id: json['id'],
-        emailVerified: json["email_verified"],
+        emailVerified: json["verified"],
         role: json["role"],
       );
 

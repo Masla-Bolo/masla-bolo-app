@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'components/issue_container_shimmer.dart';
 import 'like_issue_cubit.dart';
 import 'like_issue_state.dart';
 import '../../helpers/extensions.dart';
@@ -9,7 +10,6 @@ import '../../helpers/widgets/issue_container.dart';
 import '../../di/service_locator.dart';
 import '../../helpers/styles/styles.dart';
 import '../../helpers/widgets/indicator.dart';
-import '../../helpers/widgets/shimmer_effect.dart';
 
 class LikeIssuePage extends StatefulWidget {
   const LikeIssuePage({
@@ -81,14 +81,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                                 shrinkWrap: true,
                                 itemCount: 5,
                                 itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: SizedBox(
-                                      height: 0.15.sh,
-                                      width: 0.7.sw,
-                                      child: const ShimmerEffect(),
-                                    ),
-                                  );
+                                  return const IssueContainerShimmer();
                                 })
                             : (issues.isEmpty && state.isLoaded)
                                 ? SizedBox(

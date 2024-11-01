@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
 
 import '../../../../../../helpers/widgets/header.dart';
 
@@ -24,6 +25,7 @@ class ContactUs extends StatelessWidget {
               20.verticalSpace,
               Card(
                 elevation: 4,
+                color: context.colorScheme.onPrimary,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
                 child: Padding(
@@ -36,43 +38,45 @@ class ContactUs extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: context.colorScheme.primary,
                         ),
                       ),
                       SizedBox(height: 10.h),
-                      _buildContactItem("📧 Email", "support@maslabolo.com"),
-                      _buildContactItem("📞 Phone", "+1 (234) 567-890"),
+                      _buildContactItem(
+                          "📧 Email", "support@maslabolo.com", context),
+                      _buildContactItem(
+                          "📞 Phone", "+1 (234) 567-890", context),
                     ],
                   ),
                 ),
               ),
               20.verticalSpace,
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Follow Us",
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Card(
+              //   elevation: 4,
+              //   shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(15)),
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(16),
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text(
+              //           "Follow Us",
+              //           style: TextStyle(
+              //             fontSize: 20.sp,
+              //             fontWeight: FontWeight.bold,
+              //             color: Theme.of(context).colorScheme.onPrimary,
+              //           ),
+              //         ),
+              //         SizedBox(height: 10.h),
+              //         const Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //           children: [],
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -81,7 +85,7 @@ class ContactUs extends StatelessWidget {
   }
 
   // Method to create contact items
-  Widget _buildContactItem(String title, String detail) {
+  Widget _buildContactItem(String title, String detail, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -90,8 +94,10 @@ class ContactUs extends StatelessWidget {
           RichText(
             text: TextSpan(
               text: "$title: ",
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: context.colorScheme.primary,
+              ),
               children: <TextSpan>[
                 TextSpan(
                     text: detail,

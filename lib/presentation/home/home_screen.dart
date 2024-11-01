@@ -24,7 +24,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final homeCubit = getIt<IssueCubit>();
+  final issueCubit = getIt<IssueCubit>();
   final controller = TextEditingController();
   late final FocusNode focusNode;
 
@@ -32,9 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     focusNode = FocusNode();
-    if (!homeCubit.state.isLoaded) {
-      homeCubit.getIssues().then((_) {
-        homeCubit.initServices();
+    if (!issueCubit.state.isLoaded) {
+      issueCubit.getIssues().then((_) {
+        issueCubit.initServices();
       });
     }
   }
@@ -49,13 +49,13 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       body: SafeArea(
         child: BlocBuilder<IssueCubit, IssueState>(
-            bloc: homeCubit,
+            bloc: issueCubit,
             builder: (context, state) {
               return RefreshIndicator(
                 color: context.colorScheme.onPrimary,
                 backgroundColor: context.colorScheme.primary,
                 onRefresh: () async {
-                  homeCubit.refreshIssues();
+                  issueCubit.refreshIssues();
                 },
                 child: CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? true
                                   : false,
                               onCrossTap: () {
-                                homeCubit.clearSearchAndFetch();
+                                issueCubit.clearSearchAndFetch();
                               },
                               suffixIcon: state.queryParams["search"] != null
                                   ? null
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: context.colorScheme.onPrimary,
                                     ),
                               onChanged: (val) {
-                                homeCubit.onChanged(val);
+                                issueCubit.onChanged(val);
                               },
                               preFilledValue: state.queryParams["search"],
                               hintText: "Search Issues",
@@ -176,7 +176,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return !state.isLoaded
         ? SliverChildBuilderDelegate(
             (context, index) {
-              return const IssuePostShimmer();
+              return Column(
+                children: [
+                  const IssuePostShimmer(),
+                  if (index != 5)
+                    Divider(
+                      color: context.colorScheme.secondary,
+                      thickness: 1,
+                    ),
+                ],
+              );
             },
             childCount: 5,
           )
@@ -194,10 +203,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   IssuePost(
                     params: IssuePostParams(
                       index: index,
-                      cubit: homeCubit,
+                      cubit: issueCubit,
                       description: description,
                       updateIndex: (index) {
-                        homeCubit.updateIndex(index, issue);
+                        issueCubit.updateIndex(index, issue);
                       },
                       currentImageIndex: issue.currentIndex,
                       issue: issue,
@@ -205,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           PageController(initialPage: issue.currentIndex),
                       descriptionThreshold: state.descriptionThreshold,
                       calledSeeMore: () {
-                        homeCubit.toggleSeeMore(issue);
+                        issueCubit.toggleSeeMore(issue);
                       },
                     ),
                   ),
