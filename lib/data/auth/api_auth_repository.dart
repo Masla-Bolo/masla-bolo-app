@@ -43,7 +43,7 @@ class ApiAuthRepository implements AuthRepository {
     );
     if (response.failed) {
       return left(AuthFailure(error: response.message));
-    } else if (response.data['email'] != null) {
+    } else if (response.data['email'] != null && !response.failed) {
       return right(left(response.data['email']));
     } else {
       final user = UserJson.fromData(response.data['user']).toDomain();

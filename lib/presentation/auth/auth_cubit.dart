@@ -6,6 +6,8 @@ import '../../di/service_locator.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/stores/user_store.dart';
 import '../../helpers/helpers.dart';
+import '../../service/location_service.dart';
+import '../../service/permission_service.dart';
 import 'auth_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +20,16 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthRepository authRepository;
   final AuthNavigator navigation;
   final LocalStorageRepository localStorageRepository;
-  AuthCubit(this.authRepository, this.navigation, this.localStorageRepository)
-      : super(AuthState.initial());
+  final LocationService locationService;
+  final PermissionService permissionService;
+
+  AuthCubit(
+    this.authRepository,
+    this.navigation,
+    this.localStorageRepository,
+    this.locationService,
+    this.permissionService,
+  ) : super(AuthState.initial());
 
   void onInit() {
     emit(state.copyWith(
@@ -36,9 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
           .then((response) => response.fold((error) {
                 showToast(error.error);
               }, (user) {
-                if (user.emailVerified!) {
-                  navigation.goToBottomBar();
-                } else {
+                if (!user.verified && user.role == "user") {
                   return authRepository
                       .sendEmail(user.email!)
                       .then((response) => response.fold((error) {}, (value) {
@@ -46,6 +54,8 @@ class AuthCubit extends Cubit<AuthState> {
                               goToVerifyEmail(user.email!);
                             }
                           }));
+                } else {
+                  navigation.goToBottomBar();
                 }
               }));
     }
@@ -76,22 +86,32 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> register() async {
     final isValid = state.signUpKey.currentState?.validate() ?? false;
     if (!isValid) return;
+    await permissionService.permissionServiceCall();
+    final enabled = await locationService.getLocation();
+    if (!enabled) {
+      showToast(
+          "Location services are disabled, turn on your locations to create an account");
+      return;
+    }
 
     var role = getIt<UserStore>().appUser.role;
     if (role == null) {
-      final result = await localStorageRepository.getValue(roleKey);
-      result.fold(
-        (error) {
-          showToast("Choose your role first!");
-          return goToGetStated();
-        },
-        (value) => role = value,
-      );
-    }
-
-    if (role != null) {
+      localStorageRepository.getValue(roleKey).then(
+            (result) => result.fold(
+              (error) {
+                showToast("Choose your role first!").then((_) {
+                  goToGetStated();
+                });
+              },
+              (value) {
+                role = value;
+              },
+            ),
+          );
+    } else {
       state.user.role = role;
-
+      state.user.latitude = locationService.position.latitude;
+      state.user.longitude = locationService.position.longitude;
       return authRepository.register(state.user).then(
             (response) => response.fold(
               (error) {

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../di/service_locator.dart';
 import '../../../domain/stores/user_store.dart';
@@ -190,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () {
                               loader(() => authCubit.googleSignIn());
                             },
-                            icon: Image.asset(
+                            icon: SvgPicture.asset(
                               AppImages.google,
                               height: 20,
                             ),

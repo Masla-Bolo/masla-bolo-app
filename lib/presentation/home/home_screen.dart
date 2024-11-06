@@ -1,4 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../bottom_bar/bottom_bar_cubit.dart';
 import 'components/home_filter_drawer.dart';
 import 'components/issue/issue_cubit.dart';
@@ -81,12 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               onCrossTap: () {
                                 issueCubit.clearSearchAndFetch();
                               },
-                              suffixIcon: state.queryParams["search"] != null
-                                  ? null
-                                  : Icon(
-                                      Icons.search,
-                                      color: context.colorScheme.onPrimary,
-                                    ),
                               onChanged: (val) {
                                 issueCubit.onChanged(val);
                               },
@@ -123,12 +118,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       actions: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.only(top: 5, right: 5),
                           child: GestureDetector(
                             onTap: () => Scaffold.of(context).openEndDrawer(),
-                            child: Image.asset(
+                            child: SvgPicture.asset(
                               AppImages.filter,
-                              color: context.colorScheme.onPrimary,
+                              height: 35,
+                              colorFilter: ColorFilter.mode(
+                                context.colorScheme.onPrimary,
+                                BlendMode.srcIn,
+                              ),
                             ),
                           ),
                         ),

@@ -14,7 +14,7 @@ class BottomBarItem {
     required this.image,
     required this.page,
   });
-  static final items = [
+  static final userItems = [
     BottomBarItem(
       image: AppImages.homeGrey,
       page: const HomeScreen(),
@@ -26,6 +26,25 @@ class BottomBarItem {
     BottomBarItem(
       image: AppImages.writeGrey,
       page: const CreateIssueScreen(),
+    ),
+    BottomBarItem(
+      image: AppImages.bell,
+      page: const NotificationPage(),
+    ),
+    BottomBarItem(
+      image: AppImages.profileGrey,
+      page: const ProfileScreen(),
+    )
+  ];
+
+  static final officialItems = [
+    BottomBarItem(
+      image: AppImages.homeGrey,
+      page: const HomeScreen(),
+    ),
+    BottomBarItem(
+      image: AppImages.raised,
+      page: const LikeIssuePage(),
     ),
     BottomBarItem(
       image: AppImages.bell,

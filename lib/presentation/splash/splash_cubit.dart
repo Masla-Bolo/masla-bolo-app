@@ -16,14 +16,14 @@ class SplashCubit extends Cubit<SplashState> {
 
   onInit() {
     emit(state.copyWith(isLoaded: true));
+    localStorageRepository
+        .getUser(userKey)
+        .then((response) => response.fold((error) {}, (user) {
+              getIt<UserStore>().setUser(user);
+            }));
     Future.delayed(
         const Duration(seconds: 2),
         () => {
-              localStorageRepository
-                  .getUser(userKey)
-                  .then((response) => response.fold((error) {}, (user) {
-                        getIt<UserStore>().setUser(user);
-                      })),
               localStorageRepository.getValue(getStartedKey).then((result) => {
                     result.fold(
                       (error) {

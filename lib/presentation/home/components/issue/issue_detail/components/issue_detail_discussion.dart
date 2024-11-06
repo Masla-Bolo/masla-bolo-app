@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:masla_bolo_app/presentation/home/components/issue/issue_helper.dart';
 import '../../../../../../helpers/styles/app_images.dart';
 import 'issue_comment/issue_comments.dart';
@@ -37,12 +38,15 @@ class IssueDetailDiscussion extends StatelessWidget {
                           onTap: () {
                             cubit.likeUnlikeIssue();
                           },
-                          child: Image.asset(
+                          child: SvgPicture.asset(
                             state.currentIssue.isLiked
                                 ? AppImages.raised
                                 : AppImages.raise,
                             height: 30,
-                            color: context.colorScheme.onPrimary,
+                            colorFilter: ColorFilter.mode(
+                              context.colorScheme.onPrimary,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
                         label: Row(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/presentation/profile/components/official_profile/official_profile.dart';
 import '../../helpers/widgets/rounded_image.dart';
-import 'components/profile_tab_view.dart';
 import 'profile_cubit.dart';
 import '../../helpers/extensions.dart';
 import '../../helpers/styles/styles.dart';
@@ -17,15 +17,12 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController tabController;
+class _ProfileScreenState extends State<ProfileScreen> {
   final cubit = getIt<ProfileCubit>();
 
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
     cubit.getUser();
     if (!cubit.state.isAllIssuesLoaded) {
       cubit.getAllIssues();
@@ -123,96 +120,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                             ),
                           ],
                         ),
-                        // 30.verticalSpace,
-                        // OutlinedButton.icon(
-                        //   onPressed: () {
-                        //     cubit.goToEditProfile();
-                        //   },
-                        //   label: Text(
-                        //     'Edit Profile',
-                        //     style: Styles.boldStyle(
-                        //       fontSize: 14,
-                        //       color: context.colorScheme.primary,
-                        //       family: FontFamily.varela,
-                        //     ),
-                        //   ),
-                        //   style: OutlinedButton.styleFrom(
-                        //     backgroundColor: context.colorScheme.onPrimary,
-                        //     minimumSize: const Size(double.infinity, 35),
-                        //     shape: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(8),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
                   20.verticalSpace,
-                  Center(
-                    child: TabBar(
-                        indicatorColor: context.colorScheme.onPrimary,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        unselectedLabelStyle: Styles.boldStyle(
-                          fontSize: 12,
-                          color: context.colorScheme.onPrimary,
-                          family: FontFamily.dmSans,
-                        ),
-                        labelStyle: Styles.boldStyle(
-                          fontSize: 12,
-                          color: context.colorScheme.onPrimary,
-                          family: FontFamily.dmSans,
-                        ),
-                        labelPadding: const EdgeInsets.only(
-                            bottom: 5, left: 15, right: 15),
-                        tabAlignment: TabAlignment.start,
-                        isScrollable: true,
-                        dividerColor: Colors.transparent,
-                        controller: tabController,
-                        tabs: [
-                          Center(
-                            child: Text(
-                              'Pending Issues',
-                              textAlign: TextAlign.center,
-                              style: Styles.boldStyle(
-                                fontSize: 15,
-                                color: context.colorScheme.onPrimary,
-                                family: FontFamily.varela,
-                              ),
-                            ),
-                          ),
-                          Center(
-                              child: Text(
-                            'Approved Issues',
-                            textAlign: TextAlign.center,
-                            style: Styles.boldStyle(
-                              fontSize: 15,
-                              color: context.colorScheme.onPrimary,
-                              family: FontFamily.varela,
-                            ),
-                          )),
-                          Center(
-                            child: Text(
-                              'Solved Issues',
-                              textAlign: TextAlign.center,
-                              style: Styles.boldStyle(
-                                fontSize: 15,
-                                color: context.colorScheme.onPrimary,
-                                family: FontFamily.varela,
-                              ),
-                            ),
-                          ),
-                        ]),
-                  ),
-                  Expanded(
-                    child: TabBarView(
-                      controller: tabController,
-                      children: state.allIssues.keys.map((status) {
-                        return ProfileTabView(
-                          status: status,
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                  // state.user.role == "official"
+                  //     ?
+                  const OfficialProfile()
+                  // : const UserProfile(),
                 ],
               ),
             ),

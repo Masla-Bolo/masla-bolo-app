@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../create_issue_cubit.dart';
 import '../../../helpers/extensions.dart';
 
@@ -30,9 +31,12 @@ class IssueHeader extends StatelessWidget {
               onTap: () {
                 cubit.getImages();
               },
-              child: Image.asset(
+              child: SvgPicture.asset(
                 AppImages.link,
-                color: context.colorScheme.onPrimary,
+                colorFilter: ColorFilter.mode(
+                  context.colorScheme.onPrimary,
+                  BlendMode.srcIn,
+                ),
               )),
         ),
       ],

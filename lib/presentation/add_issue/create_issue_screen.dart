@@ -51,6 +51,8 @@ class CreateIssueScreen extends StatelessWidget {
                                 .map((row) {
                               return SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
+                                controller:
+                                    ScrollController(initialScrollOffset: 0.5),
                                 child: Row(
                                   children: row.map((value) {
                                     return Padding(
@@ -109,7 +111,7 @@ class CreateIssueScreen extends StatelessWidget {
                         ),
                         20.verticalSpace,
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                          padding: const EdgeInsets.all(8),
                           child: ElevatedButton(
                             onPressed: () {
                               loader(() => cubit.createIssue());
@@ -117,7 +119,7 @@ class CreateIssueScreen extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(double.infinity, 48),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius: BorderRadius.circular(30),
                               ),
                               backgroundColor: context.colorScheme.onPrimary,
                             ),

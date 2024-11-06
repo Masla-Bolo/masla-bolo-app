@@ -7,13 +7,16 @@ class UserEntity {
   String? image;
   int? id;
   bool? isSocial;
-  bool? emailVerified;
+  bool verified;
   String? role;
-
+  double? latitude;
+  double? longitude;
   UserEntity({
     this.isSocial,
     this.image,
-    this.emailVerified,
+    this.latitude,
+    this.longitude,
+    this.verified = false,
     this.email,
     this.role,
     this.password,
@@ -28,14 +31,18 @@ class UserEntity {
     String? image,
     int? id,
     bool? isSocial,
+    double? latitude,
+    double? longitude,
     bool? emailVerified,
     String? role,
   }) =>
       UserEntity(
+        latitude: latitude ?? this.latitude,
+        longitude: longitude ?? this.longitude,
         isSocial: isSocial ?? this.isSocial,
         image: image ?? this.image,
         id: id ?? this.id,
-        emailVerified: emailVerified ?? this.emailVerified,
+        verified: emailVerified ?? verified,
         email: email ?? this.email,
         role: role ?? this.role,
         password: password ?? this.password,
@@ -45,6 +52,8 @@ class UserEntity {
   factory UserEntity.empty() => UserEntity(
         email: '',
         username: '',
+        latitude: 0,
+        longitude: 0,
         id: null,
         password: "",
         image: "",

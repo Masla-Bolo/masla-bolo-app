@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/presentation/like_issue/components/issue_container_shimmer.dart';
-import '../profile_cubit.dart';
-import '../profile_state.dart';
-import '../../../helpers/extensions.dart';
+import '../../profile_cubit.dart';
+import '../../profile_state.dart';
+import '../../../../helpers/extensions.dart';
 
-import '../../../di/service_locator.dart';
-import '../../../helpers/styles/styles.dart';
-import '../../../helpers/widgets/indicator.dart';
-import '../../../helpers/widgets/issue_container.dart';
+import '../../../../di/service_locator.dart';
+import '../../../../helpers/styles/styles.dart';
+import '../../../../helpers/widgets/indicator.dart';
+import '../../../../helpers/widgets/issue_container.dart';
 
-class ProfileTabView extends StatefulWidget {
-  const ProfileTabView({super.key, required this.status});
+class UserProfileTabView extends StatefulWidget {
+  const UserProfileTabView({super.key, required this.status});
   final String status;
 
   @override
-  State<ProfileTabView> createState() => _ProfileTabViewState();
+  State<UserProfileTabView> createState() => _UserProfileTabViewState();
 }
 
-class _ProfileTabViewState extends State<ProfileTabView> {
+class _UserProfileTabViewState extends State<UserProfileTabView> {
   final cubit = getIt<ProfileCubit>();
   final scrollController = ScrollController();
   @override

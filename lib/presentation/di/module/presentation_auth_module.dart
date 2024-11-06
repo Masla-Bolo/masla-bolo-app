@@ -9,6 +9,8 @@ class PresentationAuthModule {
       getIt(),
       getIt(),
       getIt(),
+      getIt(),
+      getIt(),
     ));
   }
 }

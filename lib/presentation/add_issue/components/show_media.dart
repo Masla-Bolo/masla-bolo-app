@@ -27,6 +27,7 @@ class ShowMedia extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Container(
                       padding: const EdgeInsets.all(5),
@@ -35,45 +36,28 @@ class ShowMedia extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       height: 0.1.sh,
-                      width: 0.2.sw,
+                      width: 0.3.sw,
                       child: Image.file(
                         File(file.path),
-                        fit: BoxFit.contain,
-                      )
-                      // FutureBuilder<XFile?>(
-                      //   future: _getThumbnail(file),
-                      //   builder: (context, snapshot) {
-                      //     if (snapshot.connectionState ==
-                      //         ConnectionState.waiting) {
-                      //       return const Indicator();
-                      //     } else if (snapshot.hasError) {
-                      //       return Center(
-                      //           child: Text('Error: ${snapshot.error}'));
-                      //     }
-                      //     if (snapshot.hasData) {
-                      //       return Image.file(
-                      //         File(snapshot.data!.path),
-                      //         fit: BoxFit.contain,
-                      //       );
-                      //     } else {
-                      //       return Image.file(
-                      //         File(file.path),
-                      //         fit: BoxFit.contain,
-                      //       );
-                      //     }
-                      //   },
-                      // ),
-                      ),
+                        fit: BoxFit.cover,
+                      )),
                   Positioned(
-                    top: -4,
-                    right: -5,
-                    child: GestureDetector(
-                      onTap: () {
-                        onCrossTap.call(file);
-                      },
-                      child: const Icon(
-                        Icons.delete,
-                        color: AppColor.red,
+                    top: -6,
+                    right: -6,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(2),
+                      child: GestureDetector(
+                        onTap: () {
+                          onCrossTap.call(file);
+                        },
+                        child: const Icon(
+                          Icons.delete_outline,
+                          color: AppColor.red,
+                        ),
                       ),
                     ),
                   ),
@@ -85,17 +69,4 @@ class ShowMedia extends StatelessWidget {
       ),
     );
   }
-
-  // Future<XFile?> _getThumbnail(XFile file) async {
-  //   if ((file.name.endsWith('mp4'))) {
-  //     final thumbnail = await VideoThumbnail.thumbnailFile(
-  //       video: file.path,
-  //       imageFormat: ImageFormat.PNG,
-  //       maxWidth: 128,
-  //       quality: 75,
-  //     );
-  //     return thumbnail;
-  //   }
-  //   return null;
-  // }
 }

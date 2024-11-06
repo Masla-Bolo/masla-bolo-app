@@ -7,15 +7,19 @@ class UserJson {
   String? password;
   String? email;
   String? image;
-  bool? emailVerified;
+  bool? verified;
   String? role;
   int? id;
   bool? isSocial;
+  double? latitude;
+  double? longitude;
 
   UserJson({
+    this.latitude,
+    this.longitude,
     this.isSocial,
     this.image,
-    this.emailVerified,
+    this.verified,
     this.id,
     this.password,
     this.role,
@@ -29,7 +33,7 @@ class UserJson {
         isSocial: json["is_social"],
         username: json["username"],
         id: json['id'],
-        emailVerified: json["verified"],
+        verified: json["verified"],
         role: json["role"],
       );
 
@@ -40,7 +44,7 @@ class UserJson {
         isSocial: isSocial,
         image: image,
         role: role,
-        emailVerified: emailVerified,
+        verified: verified ?? false,
       );
 
   static mapDataToRole(String data) {
@@ -61,6 +65,8 @@ class UserJson {
         id: userEntity.id,
         password: userEntity.password,
         image: userEntity.image,
+        latitude: userEntity.latitude,
+        longitude: userEntity.longitude,
         isSocial: userEntity.isSocial,
       );
 
@@ -71,6 +77,8 @@ class UserJson {
       'email': email,
       "profile_image": image,
       "id": id,
+      "latitude": latitude,
+      "longitude": longitude,
       "role": role,
       "password": password,
     };

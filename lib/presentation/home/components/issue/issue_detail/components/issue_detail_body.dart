@@ -48,10 +48,11 @@ class IssueDetailBody extends StatelessWidget {
                       direction: Axis.horizontal,
                       children: state.currentIssue.categories.map((category) {
                         return Chip(
+                            padding: const EdgeInsets.all(0),
                             backgroundColor: context.colorScheme.onPrimary,
                             label: Text(category,
-                                style: Styles.boldStyle(
-                                  fontSize: 15,
+                                style: Styles.semiMediumStyle(
+                                  fontSize: 12,
                                   color: context.colorScheme.primary,
                                   family: FontFamily.varela,
                                 )));

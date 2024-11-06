@@ -17,15 +17,20 @@ class CommentShimmer extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
             child: Row(
               children: [
-                const CircleAvatar(
-                  radius: 12,
-                  child: ShimmerEffect(),
+                SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: ShimmerEffect(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
                 5.horizontalSpace,
-                Expanded(
-                  child:
-                      SizedBox(height: 0.05.sh, child: const ShimmerEffect()),
-                ),
+                SizedBox(
+                    height: 0.03.sh,
+                    width: 0.8.sw,
+                    child: ShimmerEffect(
+                      borderRadius: BorderRadius.circular(20),
+                    )),
               ],
             ),
           );

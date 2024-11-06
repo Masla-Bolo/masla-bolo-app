@@ -19,23 +19,24 @@ class BottomBarState {
   });
 
   factory BottomBarState.empty() => BottomBarState(
-        items: BottomBarItem.items,
+        items: [],
         currentIndex: 0,
         hideBottomBar: false,
         page: const HomeScreen(),
       );
 
-  BottomBarState copyWith(
-      {Widget? page,
-      int? currentIndex = 0,
-      List<BottomBarItem>? items,
-      bool? hideBottomBar,
-      bool? canPop}) {
+  BottomBarState copyWith({
+    Widget? page,
+    int? currentIndex = 0,
+    List<BottomBarItem>? items,
+    bool? hideBottomBar,
+    bool? canPop,
+  }) {
     return BottomBarState(
       hideBottomBar: hideBottomBar ?? this.hideBottomBar,
       page: page ?? this.page,
       canPop: canPop ?? this.canPop,
-      items: BottomBarItem.items,
+      items: items ?? this.items,
       currentIndex: currentIndex ?? this.currentIndex,
     );
   }

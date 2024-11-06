@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColor {
-  static const white = Colors.white;
+  static const white = Color(0xffECECEC);
   static const grey = Colors.grey;
   static const darkBlueGrey = Color(0xFF3b5460);
   static const blueGrey = Color(0xFF638CA0);
@@ -9,7 +9,10 @@ class AppColor {
   static const red = Colors.red;
   static const black1 = Color(0xff1e2124);
   static const lightGrey = Color(0xff99aab5);
-  static const darkBlue = Color(0xff2E3A4D);
+  static const darkBlue = Color(0xff1E2A38);
+  // Color(0xff1E2A38);  -> Best so far (dark greenish)
+  // Color(0xff1B263B);  -> this one also looks good (midnight blue)
+  // Color(0xff2E3A4D);  -> dark blue like flutterExchange app
   static const lightWhite = Colors.white24;
   static const black2 = Color(0xff282b30);
   static const black3 = Color(0xff36393e);

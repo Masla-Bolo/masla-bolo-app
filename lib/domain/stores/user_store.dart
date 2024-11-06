@@ -13,7 +13,7 @@ class UserStore extends Cubit<UserEntity> {
   setUser(UserEntity user) async {
     await localStorageRepository.setUser(userKey, user).then((_) {
       _user = user;
-      emit(user);
+      emit(_user);
     });
   }
 

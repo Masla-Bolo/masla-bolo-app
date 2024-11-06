@@ -1,7 +1,9 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/helpers/widgets/shimmer_effect.dart';
 
 import '../../../di/service_locator.dart';
 import '../../../helpers/widgets/rounded_image.dart';
@@ -30,9 +32,10 @@ class BottomBarIcon extends StatelessWidget {
         bloc: cubit,
         builder: (context, state) {
           bool isSelected = state.currentIndex == index;
+          int lastIndex = state.items.length - 1;
           return GestureDetector(
             onTap: () => cubit.updateIndex(index),
-            child: index == 4
+            child: index == lastIndex
                 ? BlocBuilder(
                     bloc: getIt<UserStore>(),
                     builder: (context, userState) {
@@ -60,22 +63,20 @@ class BottomBarIcon extends StatelessWidget {
                                 ),
                               );
                             }
-                            return Image.asset(
-                              item.image,
-                              height: 25,
-                              color: isSelected
-                                  ? context.colorScheme.onPrimary
-                                  : context.colorScheme.secondary
-                                      .withOpacity(0.6),
+                            return ShimmerEffect(
+                              borderRadius: BorderRadius.circular(13.w),
                             );
                           });
                     })
-                : Image.asset(
+                : SvgPicture.asset(
                     item.image,
-                    height: index == 1 ? 22 : 25,
-                    color: isSelected
-                        ? context.colorScheme.onPrimary
-                        : context.colorScheme.secondary.withOpacity(0.6),
+                    height: 25,
+                    colorFilter: ColorFilter.mode(
+                      isSelected
+                          ? context.colorScheme.onPrimary
+                          : context.colorScheme.secondary.withOpacity(0.6),
+                      BlendMode.srcIn,
+                    ),
                   ),
           );
         });
