@@ -19,10 +19,12 @@ class ApiAuthRepository implements AuthRepository {
   Future<Either<AuthFailure, UserEntity>> login(
     String email,
     String password,
+    String role,
   ) async {
     final response = await networkRepository.post(url: '/login/', data: {
       'email': email,
       'password': password,
+      "role": role,
     });
     if (response.failed) {
       return left(AuthFailure(error: response.message));

@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         20.verticalSpace,
                         ElevatedButton(
                           onPressed: () {
-                            loader(() => authCubit.login());
+                            loader(() => authCubit.login(role));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: context.colorScheme.onPrimary,
