@@ -1,3 +1,5 @@
+import 'package:masla_bolo_app/domain/entities/location.dart';
+
 import '../model/user_json.dart';
 
 class UserEntity {
@@ -9,20 +11,18 @@ class UserEntity {
   bool? isSocial;
   bool verified;
   String? role;
-  double? latitude;
-  double? longitude;
+  Location location;
   UserEntity({
     this.isSocial,
     this.image,
-    this.latitude,
-    this.longitude,
+    Location? location,
     this.verified = false,
     this.email,
     this.role,
     this.password,
     this.username,
     this.id,
-  });
+  }) : location = location ?? Location.empty();
 
   UserEntity copyWith({
     String? email,
@@ -31,14 +31,12 @@ class UserEntity {
     String? image,
     int? id,
     bool? isSocial,
-    double? latitude,
-    double? longitude,
+    Location? location,
     bool? emailVerified,
     String? role,
   }) =>
       UserEntity(
-        latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude,
+        location: location ?? this.location,
         isSocial: isSocial ?? this.isSocial,
         image: image ?? this.image,
         id: id ?? this.id,
@@ -52,8 +50,7 @@ class UserEntity {
   factory UserEntity.empty() => UserEntity(
         email: '',
         username: '',
-        latitude: 0,
-        longitude: 0,
+        location: Location.empty(),
         id: null,
         password: "",
         image: "",

@@ -1,5 +1,6 @@
 import 'package:masla_bolo_app/presentation/bottom_bar/components/bottom_bar_item.dart';
 
+import '../../domain/stores/user_store.dart';
 import 'bottom_bar_navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../home/components/issue/issue_cubit.dart';
@@ -12,11 +13,11 @@ class BottomBarCubit extends Cubit<BottomBarState> {
   BottomBarCubit(this.navigation) : super(BottomBarState.empty());
 
   onInit() {
-    // if (getIt<UserStore>().appUser.role == "official") {
-    emit(state.copyWith(items: BottomBarItem.officialItems));
-    // } else {
-    //   emit(state.copyWith(items: BottomBarItem.userItems));
-    // }
+    if (getIt<UserStore>().appUser.role == "official") {
+      emit(state.copyWith(items: BottomBarItem.officialItems));
+    } else {
+      emit(state.copyWith(items: BottomBarItem.userItems));
+    }
   }
 
   void updateIndex(int index) {

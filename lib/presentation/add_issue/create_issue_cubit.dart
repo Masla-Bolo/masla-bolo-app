@@ -66,8 +66,8 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
         showToast("Provide an image or a video as a proof");
       } else {
         state.issue.images = images;
-        state.issue.latitude = locationService.position.latitude;
-        state.issue.longitude = locationService.position.longitude;
+        state.issue.location.latitude = locationService.position.latitude;
+        state.issue.location.longitude = locationService.position.longitude;
         final categories = state.categories
             .where((val) => val.isSelected)
             .map((value) => value.item)

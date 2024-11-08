@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +97,6 @@ class ImageService {
     final results = await Future.wait(uploadFutures);
     final urls =
         results.where((url) => url != null).map((url) => url!).toList();
-    log("URLS: $urls");
     return urls;
   }
 }

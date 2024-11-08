@@ -1,4 +1,5 @@
 import 'package:image_picker/image_picker.dart';
+import 'package:masla_bolo_app/domain/entities/location.dart';
 
 import '../model/issue_json.dart';
 import 'user_entity.dart';
@@ -14,12 +15,11 @@ class IssueEntity {
   int likesCount;
   int commentsCount;
   bool isAnonymous;
-  double latitude;
-  double longitude;
   IssueStatus status;
   DateTime createdAt;
   DateTime updatedAt;
   UserEntity user;
+  Location location;
   bool seeMore; // for issuePost seemore-seeLess
   int currentIndex; // for issuePost pageView
 
@@ -27,6 +27,7 @@ class IssueEntity {
     this.seeMore = false,
     this.currentIndex = 0,
     required this.id,
+    required this.location,
     required this.description,
     required this.fileImages,
     required this.isLiked,
@@ -37,8 +38,6 @@ class IssueEntity {
     required this.commentsCount,
     required this.createdAt,
     required this.updatedAt,
-    required this.latitude,
-    required this.longitude,
     required this.status,
     required this.isAnonymous,
     required this.user,
@@ -51,13 +50,12 @@ class IssueEntity {
         images: [],
         isLiked: false,
         title: '',
+        location: Location.empty(),
         categories: [],
         likesCount: 0,
         commentsCount: 0,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
-        latitude: 0,
-        longitude: 0,
         status: IssueStatus.notApproved,
         isAnonymous: false,
         user: UserEntity.empty(),

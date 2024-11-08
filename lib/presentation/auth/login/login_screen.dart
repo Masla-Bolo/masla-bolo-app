@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           child: Text(
-                            'Continue',
+                            "sign in as $role",
                             style: Styles.mediumStyle(
                               fontSize: 15,
                               color: context.colorScheme.primary,

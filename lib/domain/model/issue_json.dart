@@ -1,3 +1,5 @@
+import 'package:masla_bolo_app/domain/entities/location.dart';
+
 import '../entities/user_entity.dart';
 import '../../helpers/helpers.dart';
 import 'user_json.dart';
@@ -9,7 +11,7 @@ enum IssueStatus {
   approved,
   solving,
   officialSolved,
-  completed,
+  solved,
 }
 
 class IssueJson {
@@ -22,14 +24,14 @@ class IssueJson {
   int likesCount;
   int commentsCount;
   bool isAnonymous;
-  double latitude;
-  double longitude;
   IssueStatus status;
   DateTime createdAt;
   DateTime updatedAt;
   UserEntity user;
+  Location location;
 
   IssueJson({
+    Location? location,
     required this.id,
     required this.isLiked,
     required this.description,
@@ -39,13 +41,11 @@ class IssueJson {
     required this.likesCount,
     required this.commentsCount,
     required this.isAnonymous,
-    required this.latitude,
-    required this.longitude,
     required this.status,
     required this.createdAt,
     required this.updatedAt,
     required this.user,
-  });
+  }) : location = location ?? Location.empty();
 
   factory IssueJson.fromJson(Map<String, dynamic> json) {
     return IssueJson(
@@ -60,8 +60,6 @@ class IssueJson {
       likesCount: json['likes_count'],
       commentsCount: json['comments_count'],
       isAnonymous: json['is_anonymous'],
-      latitude: double.tryParse(json['latitude'].toString()) ?? 0,
-      longitude: double.tryParse(json['longitude'].toString()) ?? 0,
       status: mapStatus(json['issue_status']),
       createdAt: DateTime.tryParse(json['created_at']) ?? DateTime.now(),
       updatedAt: DateTime.tryParse(json['updated_at']) ?? DateTime.now(),
@@ -79,29 +77,28 @@ class IssueJson {
         return IssueStatus.solving;
       case 'official_solved':
         return IssueStatus.officialSolved;
-      case 'completed':
-        return IssueStatus.completed;
+      case 'solved':
+        return IssueStatus.solved;
       default:
         return IssueStatus.notApproved;
     }
   }
 
-  factory IssueJson.copyWith(IssueEntity serverEntity) => IssueJson(
-        id: serverEntity.id,
-        isLiked: serverEntity.isLiked,
-        title: serverEntity.title,
-        description: serverEntity.description,
-        categories: serverEntity.categories,
-        images: serverEntity.images,
-        likesCount: serverEntity.likesCount,
-        commentsCount: serverEntity.commentsCount,
-        isAnonymous: serverEntity.isAnonymous,
-        latitude: serverEntity.latitude,
-        longitude: serverEntity.longitude,
-        status: serverEntity.status,
-        createdAt: serverEntity.createdAt,
-        updatedAt: serverEntity.updatedAt,
-        user: serverEntity.user,
+  factory IssueJson.copyWith(IssueEntity issueEntity) => IssueJson(
+        id: issueEntity.id,
+        isLiked: issueEntity.isLiked,
+        title: issueEntity.title,
+        description: issueEntity.description,
+        categories: issueEntity.categories,
+        images: issueEntity.images,
+        location: issueEntity.location,
+        likesCount: issueEntity.likesCount,
+        commentsCount: issueEntity.commentsCount,
+        isAnonymous: issueEntity.isAnonymous,
+        status: issueEntity.status,
+        createdAt: issueEntity.createdAt,
+        updatedAt: issueEntity.updatedAt,
+        user: issueEntity.user,
       );
 
   IssueEntity toDomain() => IssueEntity(
@@ -111,12 +108,11 @@ class IssueJson {
         description: description,
         images: images,
         title: title,
+        location: location,
         categories: categories,
         likesCount: likesCount,
         commentsCount: commentsCount,
         isAnonymous: isAnonymous,
-        latitude: latitude,
-        longitude: longitude,
         status: status,
         createdAt: createdAt,
         updatedAt: updatedAt,
@@ -126,12 +122,11 @@ class IssueJson {
   Map<String, dynamic> toJson() {
     return {
       'title': title,
+      "location": location.toJson(),
       'description': description,
       'images': images,
       'categories': categories,
       "is_anonymous": isAnonymous,
-      "latitude": latitude,
-      "longitude": longitude,
     };
   }
 }

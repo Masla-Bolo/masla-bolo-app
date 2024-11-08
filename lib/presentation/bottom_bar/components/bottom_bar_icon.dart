@@ -2,7 +2,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
-import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/helpers/widgets/shimmer_effect.dart';
 
 import '../../../di/service_locator.dart';
@@ -47,9 +46,6 @@ class BottomBarIcon extends StatelessWidget {
                               return Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
-                                  color: isSelected
-                                      ? context.colorScheme.onPrimary
-                                      : AppColor.transparent,
                                 ),
                                 padding: const EdgeInsets.all(1.5),
                                 child: RoundedImage(

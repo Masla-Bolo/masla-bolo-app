@@ -96,7 +96,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     var role = getIt<UserStore>().appUser.role;
     if (role == null) {
-      localStorageRepository.getValue(roleKey).then(
+      await localStorageRepository.getValue(roleKey).then(
             (result) => result.fold(
               (error) {
                 showToast("Choose your role first!").then((_) {
@@ -108,10 +108,11 @@ class AuthCubit extends Cubit<AuthState> {
               },
             ),
           );
-    } else {
+    }
+    if (role != null) {
       state.user.role = role;
-      state.user.latitude = locationService.position.latitude;
-      state.user.longitude = locationService.position.longitude;
+      state.user.location.latitude = locationService.position.latitude;
+      state.user.location.longitude = locationService.position.longitude;
       return authRepository.register(state.user).then(
             (response) => response.fold(
               (error) {

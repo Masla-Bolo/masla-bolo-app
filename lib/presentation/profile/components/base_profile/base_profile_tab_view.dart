@@ -2,26 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/presentation/like_issue/components/issue_container_shimmer.dart';
+import 'package:masla_bolo_app/presentation/profile/components/base_profile/base_profile_initial_params.dart';
+import '../../../../di/service_locator.dart';
+import '../../../../domain/model/issue_json.dart';
 import '../../profile_cubit.dart';
 import '../../profile_state.dart';
 import '../../../../helpers/extensions.dart';
 
-import '../../../../di/service_locator.dart';
 import '../../../../helpers/styles/styles.dart';
 import '../../../../helpers/widgets/indicator.dart';
 import '../../../../helpers/widgets/issue_container.dart';
 
-class UserProfileTabView extends StatefulWidget {
-  const UserProfileTabView({super.key, required this.status});
-  final String status;
-
+class BaseProfileTabView extends StatefulWidget {
+  const BaseProfileTabView({
+    super.key,
+    required this.params,
+    required this.status,
+  });
+  final BaseProfileInitialParams params;
+  final IssueStatus status;
   @override
-  State<UserProfileTabView> createState() => _UserProfileTabViewState();
+  State<BaseProfileTabView> createState() => _BaseProfileTabViewState();
 }
 
-class _UserProfileTabViewState extends State<UserProfileTabView> {
-  final cubit = getIt<ProfileCubit>();
+class _BaseProfileTabViewState extends State<BaseProfileTabView> {
   final scrollController = ScrollController();
+  final profileCubit = getIt<ProfileCubit>();
+
   @override
   void initState() {
     super.initState();
@@ -29,7 +36,7 @@ class _UserProfileTabViewState extends State<UserProfileTabView> {
       if (scrollController.hasClients) {
         final threshold = scrollController.position.maxScrollExtent * 0.2;
         if (scrollController.position.pixels >= threshold) {
-          cubit.scrollAndCall(widget.status);
+          widget.params.scrollAndCall.call(widget.status);
         }
       }
     });
@@ -38,9 +45,9 @@ class _UserProfileTabViewState extends State<UserProfileTabView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
-        bloc: cubit,
+        bloc: profileCubit,
         builder: (context, state) {
-          final result = state.allIssues[widget.status]!;
+          final result = widget.params.allIssues[widget.status]!;
           final isLoaded = result.isLoaded;
           final isScrolled = result.isScrolled;
           final issues = result.issues.results;
@@ -48,14 +55,13 @@ class _UserProfileTabViewState extends State<UserProfileTabView> {
             color: context.colorScheme.onPrimary,
             onRefresh: () async {
               if (isLoaded) {
-                await cubit.refreshIssues(widget.status);
+                widget.params.refreshIssues.call(widget.status);
               }
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               controller: scrollController,
               key: PageStorageKey(widget.status),
-              restorationId: widget.status,
               child: (!isLoaded)
                   ? ListView.builder(
                       itemCount: 5,
@@ -90,7 +96,7 @@ class _UserProfileTabViewState extends State<UserProfileTabView> {
                                   image: state.user.image,
                                   issue: issue,
                                   onTap: () {
-                                    cubit.goToIssueDetail(issue);
+                                    widget.params.goToIssueDetail(issue);
                                   },
                                 );
                               },

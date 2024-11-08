@@ -6,32 +6,19 @@ import '../../di/service_locator.dart';
 import '../../domain/stores/user_store.dart';
 
 class ProfileState {
-  final bool isAllIssuesLoaded;
-  final UserEntity user;
-  Map<String, MyIssuesState> allIssues;
+  UserEntity user;
   ProfileState({
     required this.user,
-    required this.allIssues,
-    this.isAllIssuesLoaded = false,
   });
 
   factory ProfileState.empty() => ProfileState(
-        allIssues: {
-          "not_approved": MyIssuesState.empty(),
-          "approved": MyIssuesState.empty(),
-          "solved": MyIssuesState.empty(),
-        },
         user: getIt<UserStore>().appUser,
       );
 
   copyWith({
-    Map<String, MyIssuesState>? allIssues,
-    bool? isAllIssuesLoaded,
     UserEntity? user,
   }) =>
       ProfileState(
-        allIssues: allIssues ?? this.allIssues,
-        isAllIssuesLoaded: isAllIssuesLoaded ?? this.isAllIssuesLoaded,
         user: user ?? this.user,
       );
 }

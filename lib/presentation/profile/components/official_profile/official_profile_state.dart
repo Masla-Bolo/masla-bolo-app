@@ -1,3 +1,4 @@
+import 'package:masla_bolo_app/domain/entities/official_entity.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
 
 import '../../../../di/service_locator.dart';
@@ -5,40 +6,46 @@ import '../../../../domain/entities/user_entity.dart';
 import '../../../../domain/stores/user_store.dart';
 import '../../profile_state.dart';
 
-final userStatus = [
-  IssueStatus.notApproved,
+final officialStatus = [
   IssueStatus.approved,
+  IssueStatus.solving,
+  IssueStatus.officialSolved,
   IssueStatus.solved,
 ];
 
-class UserProfileState {
+class OfficialProfileState {
+  bool isAllIssuesLoaded;
+  OfficialEntity official;
   UserEntity user;
   Map<IssueStatus, MyIssuesState> allIssues;
 
-  bool isAllIssuesLoaded;
-  UserProfileState({
-    this.isAllIssuesLoaded = false,
+  OfficialProfileState({
     required this.user,
     required this.allIssues,
-  });
+    this.isAllIssuesLoaded = false,
+    OfficialEntity? official,
+  }) : official = official ?? OfficialEntity.empty();
 
-  factory UserProfileState.empty() => UserProfileState(
+  factory OfficialProfileState.empty() => OfficialProfileState(
         allIssues: {
-          IssueStatus.notApproved: MyIssuesState.empty(),
           IssueStatus.approved: MyIssuesState.empty(),
+          IssueStatus.solving: MyIssuesState.empty(),
+          IssueStatus.officialSolved: MyIssuesState.empty(),
           IssueStatus.solved: MyIssuesState.empty(),
         },
         user: getIt<UserStore>().appUser,
       );
 
   copyWith({
+    OfficialEntity? official,
+    bool? isAllIssuesLoaded,
     Map<IssueStatus, MyIssuesState>? allIssues,
     UserEntity? user,
-    bool? isAllIssuesLoaded,
   }) =>
-      UserProfileState(
+      OfficialProfileState(
         isAllIssuesLoaded: isAllIssuesLoaded ?? this.isAllIssuesLoaded,
         allIssues: allIssues ?? this.allIssues,
         user: user ?? this.user,
+        official: official ?? this.official,
       );
 }

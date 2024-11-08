@@ -4,7 +4,7 @@ import 'module/get_started_module.dart';
 import 'module/home_module.dart';
 import 'module/like_issue_module.dart';
 import 'module/notification_module.dart';
-import 'module/profle_module.dart';
+import 'module/profile_module.dart';
 import 'module/splash_module.dart';
 
 import 'module/presentation_auth_module.dart';

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:masla_bolo_app/presentation/profile/components/official_profile/official_profile.dart';
 import '../../helpers/widgets/rounded_image.dart';
+import 'components/user_profile/user_profile.dart';
 import 'profile_cubit.dart';
 import '../../helpers/extensions.dart';
 import '../../helpers/styles/styles.dart';
@@ -24,9 +25,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     cubit.getUser();
-    if (!cubit.state.isAllIssuesLoaded) {
-      cubit.getAllIssues();
-    }
   }
 
   @override
@@ -124,10 +122,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   20.verticalSpace,
-                  // state.user.role == "official"
-                  //     ?
-                  const OfficialProfile()
-                  // : const UserProfile(),
+                  state.user.role == "official"
+                      ? const OfficialProfile()
+                      : const UserProfile(),
                 ],
               ),
             ),

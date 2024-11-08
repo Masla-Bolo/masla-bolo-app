@@ -1,3 +1,4 @@
+import '../entities/location.dart';
 import '../entities/user_entity.dart';
 
 enum UserRole { user, official }
@@ -11,12 +12,10 @@ class UserJson {
   String? role;
   int? id;
   bool? isSocial;
-  double? latitude;
-  double? longitude;
+  Location location;
 
   UserJson({
-    this.latitude,
-    this.longitude,
+    required this.location,
     this.isSocial,
     this.image,
     this.verified,
@@ -35,6 +34,7 @@ class UserJson {
         id: json['id'],
         verified: json["verified"],
         role: json["role"],
+        location: Location.empty(),
       );
 
   UserEntity toDomain() => UserEntity(
@@ -44,6 +44,7 @@ class UserJson {
         isSocial: isSocial,
         image: image,
         role: role,
+        location: location,
         verified: verified ?? false,
       );
 
@@ -65,9 +66,8 @@ class UserJson {
         id: userEntity.id,
         password: userEntity.password,
         image: userEntity.image,
-        latitude: userEntity.latitude,
-        longitude: userEntity.longitude,
         isSocial: userEntity.isSocial,
+        location: userEntity.location,
       );
 
   Map<String, dynamic> toJson() {
@@ -77,10 +77,10 @@ class UserJson {
       'email': email,
       "profile_image": image,
       "id": id,
-      "latitude": latitude,
-      "longitude": longitude,
       "role": role,
       "password": password,
+      "latitude": location.latitude,
+      "longitude": location.longitude,
     };
   }
 }

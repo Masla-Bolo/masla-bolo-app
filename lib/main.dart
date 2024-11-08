@@ -1,3 +1,4 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -29,3 +30,5 @@ Future<void> setPreferredOrientations() {
     DeviceOrientation.landscapeLeft,
   ]);
 }
+
+final eventBus = EventBus();

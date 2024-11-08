@@ -10,8 +10,8 @@ class Paginate<T> {
     this.previous,
     this.next,
     this.count = 0,
-    this.results = const [],
-  });
+    List<T>? results,
+  }) : results = results ?? List<T>.empty(growable: true);
 
   factory Paginate.empty() => Paginate();
 

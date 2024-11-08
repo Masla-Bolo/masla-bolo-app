@@ -6,10 +6,10 @@ class MusicService {
   final _player = AudioPlayer();
 
   void play(String source) async {
-    // Future.wait([
-    //   _player.setSource(AssetSource(source)),
-    //   _player.play(AssetSource(source, mimeType: "mp3")),
-    // ]);
+    Future.wait([
+      _player.setSource(AssetSource(source)),
+      _player.play(AssetSource(source, mimeType: "mp3")),
+    ]);
   }
 
   void pause() {

@@ -45,9 +45,7 @@ class GetStartedCubit extends Cubit<GetStartedState> {
   selectRole(String role) {
     emit(state.copyWith(selectedRole: role));
     getIt<UserStore>().setUser(
-      UserEntity(
-        role: role,
-      ),
+      UserEntity(role: role),
     );
     localStorageRepository.setValue(roleKey, role.toString());
   }
