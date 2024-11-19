@@ -13,7 +13,8 @@ class BottomBarCubit extends Cubit<BottomBarState> {
   BottomBarCubit(this.navigation) : super(BottomBarState.empty());
 
   onInit() {
-    if (getIt<UserStore>().appUser.role == "official") {
+    final user = getIt<UserStore>().appUser;
+    if (user.role == "official") {
       emit(state.copyWith(items: BottomBarItem.officialItems));
     } else {
       emit(state.copyWith(items: BottomBarItem.userItems));

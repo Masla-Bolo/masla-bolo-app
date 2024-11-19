@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (result) {
+      onPopInvokedWithResult: (result, _) {
         authCubit.goToGetStated();
       },
       child: Scaffold(

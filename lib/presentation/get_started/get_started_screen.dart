@@ -18,7 +18,7 @@ class GetStartedScreen extends StatelessWidget {
       builder: (context, state) {
         return PopScope(
           canPop: state.canPop,
-          onPopInvoked: (result) async {
+          onPopInvokedWithResult: (result, _) async {
             if (await showConfirmationDialog('Do you want to exit the app?') &&
                 context.mounted) {
               cubit.exitApp();

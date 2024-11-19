@@ -11,7 +11,7 @@ class UserStore extends Cubit<UserEntity> {
   UserStore(this.localStorageRepository) : super(UserEntity.empty());
 
   setUser(UserEntity user) async {
-    await localStorageRepository.setUser(userKey, user).then((_) {
+    await localStorageRepository.setUser(userKey, user).then((resp) {
       _user = user;
       emit(_user);
     });

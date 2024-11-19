@@ -61,7 +61,7 @@ class _BaseProfileTabViewState extends State<BaseProfileTabView> {
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               controller: scrollController,
-              key: PageStorageKey(widget.status),
+              restorationId: widget.status.name,
               child: (!isLoaded)
                   ? ListView.builder(
                       itemCount: 5,

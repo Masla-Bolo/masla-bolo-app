@@ -33,7 +33,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (result) {
+      onPopInvokedWithResult: (result, _) {
         authCubit.exitEmailVerification();
       },
       child: Scaffold(

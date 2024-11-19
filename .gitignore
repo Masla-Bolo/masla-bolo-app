@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+project_structure.txt
 
 firebase.json
 firebase_options.dart

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/stores/user_store.dart';
@@ -42,12 +44,13 @@ class GetStartedCubit extends Cubit<GetStartedState> {
     state.currentPage = state.pageController.initialPage;
   }
 
-  selectRole(String role) {
+  selectRole(String role) async {
     emit(state.copyWith(selectedRole: role));
-    getIt<UserStore>().setUser(
+    await getIt<UserStore>().setUser(
       UserEntity(role: role),
     );
-    localStorageRepository.setValue(roleKey, role.toString());
+    final user = await getIt<UserStore>().getUser();
+    log("USER ROLE: ${user?.role}");
   }
 
   void exitApp() {

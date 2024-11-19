@@ -26,7 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (result) {
+      onPopInvokedWithResult: (result, _) {
         authCubit.goToLogin();
       },
       child: Scaffold(

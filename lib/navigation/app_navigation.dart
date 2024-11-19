@@ -7,7 +7,7 @@ class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();
   static final context = navigatorKey.currentState!.context;
   void push(String routeName, {arguments}) {
-    Navigator.pushNamed(
+    Navigator.restorablePushNamed(
       context,
       routeName,
       arguments: arguments,
@@ -24,7 +24,7 @@ class AppNavigation {
   }
 
   pushReplacement(String routeName, {arguments}) {
-    Navigator.pushReplacementNamed(
+    Navigator.restorablePushReplacementNamed(
       context,
       routeName,
       arguments: arguments,
@@ -35,11 +35,13 @@ class AppNavigation {
     getIt.reset().then((_) {
       ServiceLocator.configureServiceLocator();
     }).then((_) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        routeName,
-        (Route<dynamic> route) => false,
-      );
+      if (context.mounted) {
+        Navigator.restorablePushNamedAndRemoveUntil(
+          context,
+          routeName,
+          (Route<dynamic> route) => false,
+        );
+      }
     });
   }
 }

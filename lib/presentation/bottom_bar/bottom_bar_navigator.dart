@@ -10,6 +10,10 @@ class BottomBarNavigator with CreateIssueRoute {
     navigation.exitApp();
   }
 
+  void popAll() {
+    navigation.popAll(RouteName.login);
+  }
+
   BottomBarNavigator(this.navigation);
 }
 

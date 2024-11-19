@@ -34,7 +34,7 @@ class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
           return Scaffold(
             body: PopScope(
               canPop: true,
-              onPopInvoked: (didPop) async {
+              onPopInvokedWithResult: (didPop, _) async {
                 cubit.closeDrawer(context);
               },
               child: SafeArea(
