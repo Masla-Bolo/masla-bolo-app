@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'components/issue_container_shimmer.dart';
 import 'like_issue_cubit.dart';
 import 'like_issue_state.dart';
-import '../../helpers/extensions.dart';
-import '../../helpers/widgets/issue_container.dart';
+import '../../../../../../helpers/extensions.dart';
+import '../../../../../../helpers/widgets/issue_container.dart';
 
-import '../../di/service_locator.dart';
-import '../../helpers/styles/styles.dart';
-import '../../helpers/widgets/indicator.dart';
+import '../../../../../../di/service_locator.dart';
+import '../../../../../../helpers/styles/styles.dart';
+import '../../../../../../helpers/widgets/indicator.dart';
 
 class LikeIssuePage extends StatefulWidget {
   const LikeIssuePage({
@@ -54,7 +54,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
                     child: Text(
-                      "YOUR SUPPORTED ISSUES",
+                      "YOUR RAISED ISSUES",
                       maxLines: 1,
                       style: Styles.boldStyle(
                         fontSize: 20,
@@ -88,7 +88,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                                     height: 0.5.sh,
                                     child: Center(
                                       child: Text(
-                                        "No Supported Issues found",
+                                        "No Raised Issues found",
                                         style: Styles.boldStyle(
                                           family: FontFamily.varela,
                                           fontSize: 16,

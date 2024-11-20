@@ -8,7 +8,7 @@ import 'package:masla_bolo_app/presentation/auth/verify_email/verify_email.dart'
 import 'package:masla_bolo_app/presentation/bottom_bar/bottom_bar.dart';
 import 'package:masla_bolo_app/presentation/get_started/get_started_screen.dart';
 import 'package:masla_bolo_app/presentation/home/components/issue/issue_detail/issue_detail.dart';
-import 'package:masla_bolo_app/presentation/like_issue/like_issue_page.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_sub_screens/like_issue/like_issue_page.dart';
 import 'package:masla_bolo_app/presentation/notification/notification_page.dart';
 import 'package:masla_bolo_app/presentation/profile/components/edit_profile.dart';
 import 'package:masla_bolo_app/presentation/profile/components/settings/settings_page.dart';
@@ -65,7 +65,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(const NotificationPage(), TransitionType.fade);
 
     case RouteName.likeIssue:
-      return getRoute(const LikeIssuePage(), TransitionType.fade);
+      return getRoute(const LikeIssuePage(), TransitionType.slide);
 
     case RouteName.searchIssue:
       return getRoute(const SearchIssuePage(), TransitionType.fade);

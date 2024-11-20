@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:masla_bolo_app/presentation/like_issue/components/issue_container_shimmer.dart';
+import 'package:masla_bolo_app/presentation/profile/components/settings/settings_sub_screens/like_issue/components/issue_container_shimmer.dart';
 import 'package:masla_bolo_app/presentation/profile/components/base_profile/base_profile_initial_params.dart';
 import '../../../../di/service_locator.dart';
 import '../../../../domain/model/issue_json.dart';

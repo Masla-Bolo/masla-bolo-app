@@ -1,5 +1,5 @@
-import '../../domain/entities/issue_entity.dart';
-import '../../domain/model/paginate.dart';
+import '../../../../../../domain/entities/issue_entity.dart';
+import '../../../../../../domain/model/paginate.dart';
 
 class LikeIssueState {
   final Paginate<IssueEntity> issuesPagination;

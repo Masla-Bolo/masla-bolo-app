@@ -1,6 +1,6 @@
-import '../home/components/issue/issue_detail/issue_detail_navigator.dart';
-import '../../navigation/app_navigation.dart';
-import '../../navigation/route_name.dart';
+import '../../../../../home/components/issue/issue_detail/issue_detail_navigator.dart';
+import '../../../../../../navigation/app_navigation.dart';
+import '../../../../../../navigation/route_name.dart';
 
 class LikeIssueNavigator with IssueDetailRoute {
   @override

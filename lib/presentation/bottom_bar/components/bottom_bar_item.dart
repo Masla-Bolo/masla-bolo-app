@@ -1,6 +1,5 @@
 import 'package:masla_bolo_app/presentation/search_issue/search_issue_page.dart';
 
-import '../../like_issue/like_issue_page.dart';
 import '../../home/home_screen.dart';
 import '../../add_issue/create_issue_screen.dart';
 import '../../notification/notification_page.dart';
@@ -45,8 +44,8 @@ class BottomBarItem {
       page: const HomeScreen(),
     ),
     BottomBarItem(
-      image: AppImages.raised,
-      page: const LikeIssuePage(),
+      image: AppImages.search,
+      page: const SearchIssuePage(),
     ),
     BottomBarItem(
       image: AppImages.bell,

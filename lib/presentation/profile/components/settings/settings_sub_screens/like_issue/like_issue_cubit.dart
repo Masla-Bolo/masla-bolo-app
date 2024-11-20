@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/issue_entity.dart';
-import '../home/components/issue/issue_detail/issue_detail_initial_params.dart';
+import '../../../../../../domain/entities/issue_entity.dart';
+import '../../../../../home/components/issue/issue_detail/issue_detail_initial_params.dart';
 
-import '../../domain/repositories/issue_repository.dart';
+import '../../../../../../domain/repositories/issue_repository.dart';
 import 'like_issue_navigator.dart';
 import 'like_issue_state.dart';
 

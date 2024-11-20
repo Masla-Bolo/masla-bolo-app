@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../helpers/extensions.dart';
-import '../../../../../helpers/widgets/shimmer_effect.dart';
+import '../../../../../../../../../helpers/extensions.dart';
+import '../../../../../../../../../helpers/widgets/shimmer_effect.dart';
 
 class IssueContainerShimmer extends StatelessWidget {
   const IssueContainerShimmer({super.key});

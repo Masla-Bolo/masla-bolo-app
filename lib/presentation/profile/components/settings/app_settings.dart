@@ -23,6 +23,11 @@ class AppSettings {
       title: "Notification",
     ),
     AppSettings(
+      routeName: RouteName.likeIssue,
+      icon: Icons.back_hand_rounded,
+      title: "Your Raised Issues",
+    ),
+    AppSettings(
       routeName: RouteName.privacyPolicy,
       icon: Icons.privacy_tip_outlined,
       title: "Privacy Policy",
