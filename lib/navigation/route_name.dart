@@ -19,4 +19,6 @@ class RouteName {
   static const supportUs = "/support-us";
   static const notificationSettings = "/notification-settings";
   static const privacyPolicy = "/privacy-policy";
+  static const searchIssue = "/search-issue";
+  static const searchIssueFilter = "/search-issue-filter";
 }

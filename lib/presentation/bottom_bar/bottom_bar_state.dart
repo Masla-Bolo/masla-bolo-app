@@ -8,10 +8,8 @@ class BottomBarState {
   List<BottomBarItem> items;
   bool canPop;
   Widget page;
-  bool hideBottomBar;
   int currentIndex;
   BottomBarState({
-    this.hideBottomBar = false,
     this.canPop = false,
     required this.page,
     this.currentIndex = 0,
@@ -21,7 +19,6 @@ class BottomBarState {
   factory BottomBarState.empty() => BottomBarState(
         items: [],
         currentIndex: 0,
-        hideBottomBar: false,
         page: const HomeScreen(),
       );
 
@@ -29,11 +26,9 @@ class BottomBarState {
     Widget? page,
     int? currentIndex = 0,
     List<BottomBarItem>? items,
-    bool? hideBottomBar,
     bool? canPop,
   }) {
     return BottomBarState(
-      hideBottomBar: hideBottomBar ?? this.hideBottomBar,
       page: page ?? this.page,
       canPop: canPop ?? this.canPop,
       items: items ?? this.items,

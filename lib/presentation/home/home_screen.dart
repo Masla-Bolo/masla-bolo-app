@@ -1,16 +1,11 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../bottom_bar/bottom_bar_cubit.dart';
-import 'components/home_filter_drawer.dart';
 import 'components/issue/issue_cubit.dart';
 import 'components/issue/issue_post/issue_post_params.dart';
 import 'components/issue/issue_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../helpers/extensions.dart';
-import '../../helpers/styles/app_images.dart';
 import '../../helpers/widgets/indicator.dart';
-import '../../helpers/widgets/input_field.dart';
 
 import '../../di/service_locator.dart';
 import '../../helpers/styles/styles.dart';
@@ -43,11 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: const HomeFilterDrawer(),
-      onEndDrawerChanged: (result) {
-        final bottomBarState = getIt<BottomBarCubit>();
-        bottomBarState.toggleVisibility();
-      },
       body: SafeArea(
         child: BlocBuilder<IssueCubit, IssueState>(
             bloc: issueCubit,
@@ -63,39 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   controller: state.scrollController,
                   slivers: [
                     SliverAppBar(
-                      toolbarHeight: 0.12.sh,
+                      toolbarHeight: 0.06.sh,
                       floating: true,
-                      bottom: PreferredSize(
-                        preferredSize: const Size(0, 0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: SizedBox(
-                            width: 1.sw,
-                            height: 35,
-                            child: InputField(
-                              focusNode: focusNode,
-                              onTap: null,
-                              borderRadius: 25,
-                              showCrossIcon: state.queryParams["search"] != null
-                                  ? true
-                                  : false,
-                              onCrossTap: () {
-                                issueCubit.clearSearchAndFetch();
-                              },
-                              onChanged: (val) {
-                                issueCubit.onChanged(val);
-                              },
-                              preFilledValue: state.queryParams["search"],
-                              hintText: "Search Issues",
-                            ),
-                          ),
-                        ),
-                      ),
                       title: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          20.verticalSpace,
                           Text(
                             "MASLA BOLO",
                             style: Styles.boldStyle(
@@ -113,28 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               family: FontFamily.varela,
                             ),
                           ),
-                          5.verticalSpace,
                         ],
                       ),
-                      actions: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5, right: 5),
-                          child: GestureDetector(
-                            onTap: () => Scaffold.of(context).openEndDrawer(),
-                            child: SvgPicture.asset(
-                              AppImages.filter,
-                              height: 35,
-                              colorFilter: ColorFilter.mode(
-                                context.colorScheme.onPrimary,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                     SliverList(
-                      delegate: getDelegate(state),
+                      delegate: getDelegate(state, issueCubit),
                     ),
                     if (!state.isScrolled && state.isLoaded)
                       const SliverToBoxAdapter(
@@ -171,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  SliverChildBuilderDelegate getDelegate(IssueState state) {
+  SliverChildBuilderDelegate getDelegate(IssueState state, IssueCubit cubit) {
     return !state.isLoaded
         ? SliverChildBuilderDelegate(
             (context, index) {
@@ -202,7 +148,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   IssuePost(
                     params: IssuePostParams(
                       index: index,
-                      cubit: issueCubit,
+                      likeUnlikeIssue: (issue) {
+                        cubit.likeUnlikeIssue(issue);
+                      },
+                      goToIssueDetail: (showComment, issue) {
+                        cubit.goToIssueDetail(
+                          showComment: showComment,
+                          issue: issue,
+                        );
+                      },
                       description: description,
                       updateIndex: (index) {
                         issueCubit.updateIndex(index, issue);

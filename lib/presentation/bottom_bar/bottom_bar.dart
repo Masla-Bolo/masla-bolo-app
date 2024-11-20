@@ -30,7 +30,7 @@ class _BottomBarState extends State<BottomBar> {
           return PopScope(
             canPop: state.canPop,
             onPopInvokedWithResult: (didPop, _) async {
-              if (didPop || state.hideBottomBar) return;
+              if (didPop) return;
               if (state.currentIndex != 0) {
                 return widget.cubit.updateIndex(state.currentIndex - 1);
               } else {
@@ -44,8 +44,7 @@ class _BottomBarState extends State<BottomBar> {
             child: Scaffold(
               body: state.page,
               bottomNavigationBar:
-                  (MediaQuery.of(context).viewInsets.bottom <= 100 &&
-                          !state.hideBottomBar)
+                  (MediaQuery.of(context).viewInsets.bottom <= 100)
                       ? BottomBarContainer(
                           cubit: getIt(),
                           homeCubit: getIt(),

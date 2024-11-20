@@ -7,18 +7,18 @@ import '../../../helpers/widgets/scroll_shader_mask.dart';
 import '../../../di/service_locator.dart';
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/header.dart';
-import 'issue/issue_cubit.dart';
-import 'issue/issue_state.dart';
+import '../search_issue_cubit.dart';
+import '../search_issue_state.dart';
 
-class HomeFilterDrawer extends StatefulWidget {
-  const HomeFilterDrawer({super.key});
+class SearchFilterDrawer extends StatefulWidget {
+  const SearchFilterDrawer({super.key});
 
   @override
-  State<HomeFilterDrawer> createState() => _HomeFilterDrawerState();
+  State<SearchFilterDrawer> createState() => _SearchFilterDrawerState();
 }
 
-class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
-  final cubit = getIt<IssueCubit>();
+class _SearchFilterDrawerState extends State<SearchFilterDrawer> {
+  final cubit = getIt<SearchIssueCubit>();
 
   @override
   void initState() {
@@ -28,14 +28,14 @@ class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<IssueCubit, IssueState>(
+    return BlocBuilder<SearchIssueCubit, SearchIssueState>(
         bloc: cubit,
         builder: (context, state) {
           return Scaffold(
             body: PopScope(
-              canPop: true,
+              canPop: state.canPop,
               onPopInvokedWithResult: (didPop, _) async {
-                cubit.closeDrawer(context);
+                cubit.closeDrawer();
               },
               child: SafeArea(
                 child: Column(
@@ -46,7 +46,8 @@ class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
                       fontSize: 20,
                       title: "Apply Filters",
                       onBackTap: () {
-                        cubit.closeDrawer(context);
+                        cubit.closeDrawer();
+                        if (state.canPop) cubit.navigation.pop();
                       },
                     ),
                     30.verticalSpace,
@@ -186,7 +187,7 @@ class _HomeFilterDrawerState extends State<HomeFilterDrawer> {
                                   (state.hasChanges && state.hasSelection)
                                       ? () {
                                           cubit.applyFilters();
-                                          Scaffold.of(context).closeEndDrawer();
+                                          cubit.navigation.pop();
                                         }
                                       : null,
                               style: ElevatedButton.styleFrom(

@@ -29,7 +29,7 @@ class IssuePost extends StatelessWidget {
           20.verticalSpace,
           GestureDetector(
             onTap: () {
-              params.cubit.goToIssueDetail(issue: params.issue);
+              params.goToIssueDetail.call(false, params.issue);
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 8, right: 8),
@@ -128,7 +128,7 @@ class IssuePost extends StatelessWidget {
           10.verticalSpace,
           GestureDetector(
             onTap: () {
-              params.cubit.goToIssueDetail(issue: params.issue);
+              params.goToIssueDetail.call(false, params.issue);
             },
             child: SizedBox(
               height: 0.5.sh,
@@ -157,7 +157,7 @@ class IssuePost extends StatelessWidget {
             15.verticalSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: List<Widget>.generate(
+              children: List.generate(
                   params.issue.images.length,
                   (index) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -189,7 +189,7 @@ class IssuePost extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        params.cubit.likeUnlikeIssue(params.issue);
+                        params.likeUnlikeIssue.call(params.issue);
                       },
                       child: SvgPicture.asset(
                         params.issue.isLiked
@@ -204,7 +204,7 @@ class IssuePost extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        params.cubit.likeUnlikeIssue(params.issue);
+                        params.likeUnlikeIssue.call(params.issue);
                       },
                       child: Text(
                         params.issue.likesCount < 1
@@ -221,9 +221,9 @@ class IssuePost extends StatelessWidget {
                     5.horizontalSpace,
                     GestureDetector(
                       onTap: () {
-                        params.cubit.goToIssueDetail(
-                          showComment: true,
-                          issue: params.issue,
+                        params.goToIssueDetail.call(
+                          true,
+                          params.issue,
                         );
                       },
                       child: SvgPicture.asset(
@@ -236,9 +236,9 @@ class IssuePost extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        params.cubit.goToIssueDetail(
-                          showComment: true,
-                          issue: params.issue,
+                        params.goToIssueDetail.call(
+                          true,
+                          params.issue,
                         );
                       },
                       child: Text(

@@ -1,3 +1,5 @@
+import 'package:masla_bolo_app/presentation/di/module/search_iusse_module.dart';
+
 import 'module/bottom_bar_module.dart';
 import 'module/create_issue_module.dart';
 import 'module/get_started_module.dart';
@@ -16,6 +18,7 @@ class PresentationLayerInjection {
     await PresentationAuthModule.configurePresentaionAuthModuleInjection();
     await GetStartedModule.configureGetStartedModuleInjection();
     await HomeModule.configureLikeHomeModuleInjection();
+    await SearchIssueModule.configureSearchIssueModuleInjection();
     await LikeIssueModule.configureLikeIssueModuleInjection();
     await CreateIssueModule.configureCreateIssueModuleInjection();
     await ProfileModule.configureProfileModuleInjection();

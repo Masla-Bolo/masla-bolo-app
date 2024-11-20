@@ -23,6 +23,8 @@ import 'package:masla_bolo_app/presentation/profile/profile_screen.dart';
 import '../di/service_locator.dart';
 import '../presentation/auth/login/login_screen.dart';
 import '../presentation/home/home_screen.dart';
+import '../presentation/search_issue/components/search_filter_drawer.dart';
+import '../presentation/search_issue/search_issue_page.dart';
 import '../presentation/splash/splash_screen.dart';
 
 enum TransitionType {
@@ -64,6 +66,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteName.likeIssue:
       return getRoute(const LikeIssuePage(), TransitionType.fade);
+
+    case RouteName.searchIssue:
+      return getRoute(const SearchIssuePage(), TransitionType.fade);
+
+    case RouteName.searchIssueFilter:
+      return getRoute(const SearchFilterDrawer(), TransitionType.slide);
 
     case RouteName.issue:
       return getRoute(const CreateIssueScreen(), TransitionType.fade);
