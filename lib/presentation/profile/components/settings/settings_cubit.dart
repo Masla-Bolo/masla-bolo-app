@@ -17,6 +17,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         () => {
               localStorageRepository.deleteValue(tokenKey),
               localStorageRepository.deleteValue(userKey),
+              localStorageRepository.deleteValue(serviceInItKey),
               navigator.popAll(),
               emit(state.copyWith(isLoggingOut: false)),
             });

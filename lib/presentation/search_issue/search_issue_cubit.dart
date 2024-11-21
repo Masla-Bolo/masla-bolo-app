@@ -230,7 +230,7 @@ class SearchIssueCubit extends Cubit<SearchIssueState> {
 
   void goToIssueDetail({bool showComment = false, required IssueEntity issue}) {
     navigation.goToIssueDetail(
-        IssueDetailInitialParams(showComment: showComment, issue: issue));
+        IssueDetailInitialParams(showComment: showComment, issueId: issue.id));
   }
 
   void updateIndex(int index, IssueEntity issue) {

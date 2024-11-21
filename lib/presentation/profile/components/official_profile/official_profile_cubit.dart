@@ -37,6 +37,6 @@ class OfficialProfileCubit extends Cubit<OfficialProfileState> {
   }
 
   goToIssueDetail(IssueEntity issue) {
-    navigation.goToIssueDetail(IssueDetailInitialParams(issue: issue));
+    navigation.goToIssueDetail(IssueDetailInitialParams(issueId: issue.id));
   }
 }

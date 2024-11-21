@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:masla_bolo_app/domain/entities/user_entity.dart';
 import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/helpers/widgets/shimmer_effect.dart';
+import 'package:masla_bolo_app/presentation/notification/notification_cubit.dart';
+import 'package:masla_bolo_app/presentation/notification/notification_state.dart';
 
 import '../../../di/service_locator.dart';
 import '../../../helpers/widgets/rounded_image.dart';
@@ -31,10 +33,11 @@ class BottomBarIcon extends StatelessWidget {
         bloc: cubit,
         builder: (context, state) {
           bool isSelected = state.currentIndex == index;
-          int lastIndex = state.items.length - 1;
+          bool profileIndex = state.items.length - 1 == index;
+          bool notificationIndex = state.items.length - 2 == index;
           return GestureDetector(
             onTap: () => cubit.updateIndex(index),
-            child: index == lastIndex
+            child: profileIndex
                 ? BlocBuilder(
                     bloc: getIt<UserStore>(),
                     builder: (context, userState) {
@@ -64,16 +67,38 @@ class BottomBarIcon extends StatelessWidget {
                             );
                           });
                     })
-                : SvgPicture.asset(
-                    item.image,
-                    height: 25,
-                    colorFilter: ColorFilter.mode(
-                      isSelected
-                          ? context.colorScheme.onPrimary
-                          : context.colorScheme.secondary.withOpacity(0.6),
-                      BlendMode.srcIn,
-                    ),
-                  ),
+                : notificationIndex
+                    ? BlocBuilder<NotificationCubit, NotificationState>(
+                        bloc: getIt<NotificationCubit>(),
+                        builder: (context, notificationState) {
+                          final count = notificationState.seenCount;
+                          return Badge.count(
+                            padding: const EdgeInsets.all(0),
+                            count: count,
+                            isLabelVisible: count > 0,
+                            child: SvgPicture.asset(
+                              item.image,
+                              height: 25,
+                              colorFilter: ColorFilter.mode(
+                                isSelected
+                                    ? context.colorScheme.onPrimary
+                                    : context.colorScheme.secondary
+                                        .withOpacity(0.6),
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          );
+                        })
+                    : SvgPicture.asset(
+                        item.image,
+                        height: 25,
+                        colorFilter: ColorFilter.mode(
+                          isSelected
+                              ? context.colorScheme.onPrimary
+                              : context.colorScheme.secondary.withOpacity(0.6),
+                          BlendMode.srcIn,
+                        ),
+                      ),
           );
         });
   }

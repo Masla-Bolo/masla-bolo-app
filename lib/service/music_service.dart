@@ -7,8 +7,8 @@ class MusicService {
 
   void play(String source) async {
     Future.wait([
-      _player.setSource(AssetSource(source)),
-      _player.play(AssetSource(source, mimeType: "mp3")),
+      // _player.setSource(AssetSource(source)),
+      // _player.play(AssetSource(source, mimeType: "mp3")),
     ]);
   }
 

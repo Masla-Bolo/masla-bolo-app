@@ -79,6 +79,7 @@ class _InputFieldState extends State<InputField> {
   Widget build(BuildContext context) {
     return TextFormField(
         focusNode: widget.focusNode,
+        textInputAction: TextInputAction.done,
         onTapOutside: (event) {
           if (!widget.disableOnTapOutside) {
             FocusManager.instance.primaryFocus?.unfocus();

@@ -1,11 +1,9 @@
-import '../../../../../domain/entities/issue_entity.dart';
-
 class IssueDetailInitialParams {
   bool showComment;
-  IssueEntity issue;
+  int issueId;
 
   IssueDetailInitialParams({
     this.showComment = false,
-    required this.issue,
+    required this.issueId,
   });
 }

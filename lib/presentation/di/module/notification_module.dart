@@ -6,6 +6,9 @@ class NotificationModule {
   static Future<void> configureNotificationModuleInjection() async {
     getIt.registerSingleton<NotificationNavigator>(
         NotificationNavigator(getIt()));
-    getIt.registerSingleton<NotificationCubit>(NotificationCubit(getIt()));
+    getIt.registerSingleton<NotificationCubit>(NotificationCubit(
+      getIt(),
+      getIt(),
+    ));
   }
 }

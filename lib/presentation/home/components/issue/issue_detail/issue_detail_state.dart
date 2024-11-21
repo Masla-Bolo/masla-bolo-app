@@ -7,10 +7,12 @@ class IssueDetailState {
   List<CommentsEntity> comments;
   CommentsEntity? replyTo;
   bool commentLoading;
+  bool issueLoading;
   IssueEntity currentIssue;
   TextEditingController commentController;
   WebSocketChannel? channel;
   IssueDetailState({
+    this.issueLoading = false,
     required this.currentIssue,
     required this.comments,
     required this.commentController,
@@ -25,12 +27,14 @@ class IssueDetailState {
   copyWith({
     List<CommentsEntity>? comments,
     bool? commentLoading,
+    bool? issueLoading,
     CommentsEntity? replyTo,
     WebSocketChannel? channel,
     IssueEntity? currentIssue,
     TextEditingController? commentController,
   }) =>
       IssueDetailState(
+        issueLoading: issueLoading ?? this.issueLoading,
         currentIssue: currentIssue ?? this.currentIssue,
         channel: channel ?? this.channel,
         replyTo: replyTo ?? replyTo,

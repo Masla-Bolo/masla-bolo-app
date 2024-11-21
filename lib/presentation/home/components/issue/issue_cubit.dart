@@ -139,7 +139,7 @@ class IssueCubit extends Cubit<IssueState> {
 
   void goToIssueDetail({bool showComment = false, required IssueEntity issue}) {
     navigation.goToIssueDetail(
-        IssueDetailInitialParams(showComment: showComment, issue: issue));
+        IssueDetailInitialParams(showComment: showComment, issueId: issue.id));
   }
 
   void toggleSeeMore(IssueEntity issue) {

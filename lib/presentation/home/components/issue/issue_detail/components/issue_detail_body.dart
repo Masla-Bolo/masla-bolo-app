@@ -26,7 +26,7 @@ class IssueDetailBody extends StatelessWidget {
               10.verticalSpace,
               IssueDetailSlider(
                 onTap: () {},
-                issue: cubit.params.issue,
+                issue: state.currentIssue,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8),

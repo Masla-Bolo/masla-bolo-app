@@ -19,6 +19,7 @@ class BottomBarContainer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(15),
       width: 0.8.sw,
+      height: 0.07.sh,
       decoration: BoxDecoration(
         color: context.colorScheme.primary,
         boxShadow: [

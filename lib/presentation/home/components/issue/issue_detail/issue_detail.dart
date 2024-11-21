@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../helpers/widgets/indicator.dart';
 import 'components/issue_detail_body.dart';
 import 'components/issue_detail_footer.dart';
 import 'issue_detail_cubit.dart';
@@ -24,14 +25,16 @@ class _IssueDetailState extends State<IssueDetail> {
     cubit = widget.cubit;
     cubit.fetchIssueComments();
     if (cubit.params.showComment) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        cubit.state.focusNode.requestFocus();
-        if (scrollController.hasClients) {
-          scrollController.animateTo(
-            scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeIn,
-          );
+      cubit.stream.listen((state) {
+        if (!state.issueLoading) {
+          cubit.state.focusNode.requestFocus();
+          if (scrollController.hasClients) {
+            scrollController.animateTo(
+              scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeIn,
+            );
+          }
         }
       });
     }
@@ -40,6 +43,7 @@ class _IssueDetailState extends State<IssueDetail> {
   @override
   void dispose() {
     cubit.close();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -48,28 +52,37 @@ class _IssueDetailState extends State<IssueDetail> {
     return BlocBuilder<IssueDetailCubit, IssueDetailState>(
         bloc: cubit,
         builder: (context, state) {
+          final isIssueEmpty = state.currentIssue.id == 0;
           return Scaffold(
             body: SafeArea(
-                child: Column(
-              children: [
-                10.verticalSpace,
-                Header(
-                  title: state.currentIssue.title,
-                  fontSize: 20,
-                  onBackTap: () {
-                    widget.cubit.goBack();
-                  },
-                ),
-                10.verticalSpace,
-                Expanded(
-                  child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: IssueDetailBody(cubit: cubit),
-                  ),
-                ),
-                IssueDetailFooter(cubit: cubit),
-              ],
-            )),
+                child: state.issueLoading
+                    ? const Center(
+                        child: Indicator(),
+                      )
+                    : (!state.issueLoading && isIssueEmpty)
+                        ? const Center(
+                            child: Text("Unable to fetch the issue right now!"),
+                          )
+                        : Column(
+                            children: [
+                              10.verticalSpace,
+                              Header(
+                                title: state.currentIssue.title,
+                                fontSize: 20,
+                                onBackTap: () {
+                                  widget.cubit.goBack();
+                                },
+                              ),
+                              10.verticalSpace,
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  controller: scrollController,
+                                  child: IssueDetailBody(cubit: cubit),
+                                ),
+                              ),
+                              IssueDetailFooter(cubit: cubit),
+                            ],
+                          )),
           );
         });
   }

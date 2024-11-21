@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:masla_bolo_app/helpers/helpers.dart';
+import 'package:masla_bolo_app/di/service_locator.dart';
+import 'package:masla_bolo_app/domain/model/notification_json.dart';
 import 'package:masla_bolo_app/navigation/app_navigation.dart';
 import 'package:masla_bolo_app/network/network_repository.dart';
+import 'package:masla_bolo_app/presentation/home/components/issue/issue_detail/issue_detail_initial_params.dart';
+import 'package:masla_bolo_app/presentation/notification/notification_cubit.dart';
 
 import '../navigation/route_name.dart';
 
@@ -70,31 +72,36 @@ class NotificationService {
     if (message.notification != null) {
       log("Message Title: ${message.notification?.title}");
       log("Message Body: ${message.notification?.body}");
-      showToast(
-        "${message.notification?.title}",
-        params: ToastParam(
-          toastAlignment: Alignment.bottomCenter,
-        ),
-      );
+      addNotification(message);
     }
     log("Full message data: ${message.data}");
   }
 
-  Future<void> handleBackgroundNotificationClick() async {
-    FirebaseMessaging.onMessageOpenedApp.listen(handleMessageOpen);
+  static void addNotification(RemoteMessage? message) {
+    if (message?.data != null) {
+      var notification =
+          NotificationJson.fromJson(message?.data ?? {}).toDomain();
+      notification.isNew = true;
+      getIt<NotificationCubit>().addNotification(notification);
+    }
   }
 
   Future<void> handleTerminatedNotificationClick() async {
     log("TERMINATED LISTENER INITIALIZED");
-    await FirebaseMessaging.instance.getInitialMessage().then((message) {
+    await fcm.getInitialMessage().then((message) {
       log("App Terminated Notification Received");
       if (message != null) {
         log("Message Title: ${message.notification?.title}");
         log("Message Body: ${message.notification?.body}");
         log("Full message data: ${message.data}");
+        addNotification(message);
         _navigateBasedOnMessageType(message);
       }
     });
+  }
+
+  Future<void> handleBackgroundNotificationClick() async {
+    FirebaseMessaging.onMessageOpenedApp.listen(handleMessageOpen);
   }
 
   static Future<void> handleBackgroundMessage(RemoteMessage? message) async {
@@ -103,6 +110,7 @@ class NotificationService {
     if (message.notification != null) {
       log("Background Message Title: ${message.notification?.title}");
       log("Background Message Body: ${message.notification?.body}");
+      addNotification(message);
     }
     log("Background message data: ${message.data}");
   }
@@ -118,15 +126,26 @@ class NotificationService {
   }
 
   void _navigateBasedOnMessageType(RemoteMessage message) {
-    switch (message.data["type"]) {
-      case "notification":
-        navigation.push(RouteName.notification, arguments: message);
-        break;
+    final screen = getScreenType(message.data);
+    navigation.push(screen.$1, arguments: {
+      "params": screen.$2,
+    });
+  }
+
+  static (String, Map<String, dynamic>?) getScreenType(
+    Map<String, dynamic>? message,
+  ) {
+    final screen = message?["screen"] ?? "";
+    switch (screen) {
       case "issueDetail":
-        navigation.push(RouteName.issueDetail, arguments: message);
-        break;
+        final issuedId =
+            int.tryParse(message?["screen_id"].toString() ?? "") ?? 0;
+        return (
+          RouteName.issueDetail,
+          {"params": IssueDetailInitialParams(issueId: issuedId)}
+        );
       default:
-        log("Unknown notification type: ${message.data["type"]}");
+        return (RouteName.settings, {});
     }
   }
 }

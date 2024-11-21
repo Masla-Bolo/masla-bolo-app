@@ -10,6 +10,10 @@ class NotificationNavigator {
   void pop() {
     navigation.pop();
   }
+
+  void push(String routeName, Map<String, dynamic>? args) {
+    navigation.push(routeName, arguments: args);
+  }
 }
 
 mixin NotificationRoute {

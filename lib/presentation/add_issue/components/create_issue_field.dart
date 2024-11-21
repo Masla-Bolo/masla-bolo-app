@@ -56,6 +56,8 @@ class _IssueFieldState extends State<IssueField> {
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
+      textInputAction: TextInputAction.done,
+      textCapitalization: TextCapitalization.sentences,
       style: widget.textStyle,
       controller: controller,
       focusNode: widget.focusNode,

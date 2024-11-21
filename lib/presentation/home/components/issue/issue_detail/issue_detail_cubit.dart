@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/model/comments_json.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -48,32 +49,51 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   void fetchIssueComments() {
     if (!isClosed) {
       emit(state.copyWith(
+        issueLoading: true,
         commentLoading: true,
-        currentIssue: params.issue,
+        currentIssue: IssueEntity.empty(),
       ));
+      issueRepository.getIssueyId(issueId: params.issueId).then(
+            (response) => response.fold(
+              (error) {
+                emit(state.copyWith(
+                  issueLoading: false,
+                  commentLoading: true,
+                  currentIssue: IssueEntity.empty(),
+                ));
+              },
+              (issue) {
+                emit(state.copyWith(
+                  commentLoading: true,
+                  issueLoading: false,
+                  currentIssue: issue,
+                ));
+                commentRepository.getComments(params: {
+                  'issueId': issue.id,
+                }).then(
+                  (response) => response.fold((error) {}, (comments) {
+                    if (!isClosed) {
+                      if (comments.isNotEmpty) {
+                        emit(state.copyWith(
+                          comments: comments,
+                        ));
+                      }
+                      emit(state.copyWith(commentLoading: false));
+                    }
+                  }),
+                );
+              },
+            ),
+          );
     }
     initWebSocket();
-    commentRepository.getComments(params: {
-      'issueId': params.issue.id,
-    }).then(
-      (response) => response.fold((error) {}, (comments) {
-        if (!isClosed) {
-          if (comments.isNotEmpty) {
-            emit(state.copyWith(
-              comments: comments,
-            ));
-          }
-          emit(state.copyWith(commentLoading: false));
-        }
-      }),
-    );
   }
 
   Future<void> addComment() async {
     final user = await getIt<UserStore>().getUser();
     final comment = CommentsEntity(
       content: state.commentController.text,
-      issueId: params.issue.id,
+      issueId: params.issueId,
       user: user,
     );
     if (state.replyTo != null) {
@@ -180,13 +200,13 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
 
   void initWebSocket() async {
     state.channel = WebSocketChannel.connect(
-      Uri.parse(socketUrl(params.issue.id)),
+      Uri.parse(socketUrl(params.issueId)),
     );
     if (state.channel != null) {
       try {
         log("MAKING SOCKET CONNECTION....");
         await state.channel!.ready;
-        log("SOCKET CONNECTED FOR: ${params.issue.id}");
+        log("SOCKET CONNECTED FOR: ${params.issueId}");
         state.channel!.stream.listen(
           (data) => addSocketComment(data),
           onError: (e) {

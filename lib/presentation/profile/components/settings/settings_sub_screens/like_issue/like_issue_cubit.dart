@@ -58,6 +58,6 @@ class LikeIssueCubit extends Cubit<LikeIssueState> {
   }
 
   void goToIssueDetail(IssueEntity issue) {
-    navigation.goToIssueDetail(IssueDetailInitialParams(issue: issue));
+    navigation.goToIssueDetail(IssueDetailInitialParams(issueId: issue.id));
   }
 }
