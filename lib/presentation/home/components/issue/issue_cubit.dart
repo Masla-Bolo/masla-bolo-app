@@ -57,25 +57,29 @@ class IssueCubit extends Cubit<IssueState> {
                 localStorageRepository.getValue(serviceInItKey).then(
                       (result) => result.fold(
                         (error) {
-                          permissionService.permissionServiceCall().then((_) {
-                            notificationService.initNotifications().then((_) {
-                              log("Notification Initialized");
-                              locationService.getLocation().then((_) {
-                                log("Location Initialized");
-                              });
-                            });
-                            localStorageRepository.setValue(
-                              serviceInItKey,
-                              "SERVICE_INIT",
-                            );
-                          });
+                          getPermission(callFcm: true);
                         },
                         (value) {
-                          log("NOTIFICATION AND LOCATION SERVICES ARE ALREADY INITIALIZED");
+                          getPermission();
                         },
                       ),
                     );
               }));
+    });
+  }
+
+  void getPermission({bool callFcm = false}) {
+    permissionService.permissionServiceCall().then((_) {
+      notificationService.initNotifications(callFcm: callFcm).then((_) {
+        log("Notification Initialized");
+        locationService.getLocation().then((_) {
+          log("Location Initialized");
+        });
+      });
+      localStorageRepository.setValue(
+        serviceInItKey,
+        "SERVICE_INIT",
+      );
     });
   }
 

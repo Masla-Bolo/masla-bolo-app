@@ -23,11 +23,11 @@ class _IssueDetailState extends State<IssueDetail> {
   void initState() {
     super.initState();
     cubit = widget.cubit;
-    cubit.fetchIssueComments();
+    cubit.fetchIssueById();
     if (cubit.params.showComment) {
+      cubit.state.focusNode.requestFocus();
       cubit.stream.listen((state) {
         if (!state.issueLoading) {
-          cubit.state.focusNode.requestFocus();
           if (scrollController.hasClients) {
             scrollController.animateTo(
               scrollController.position.maxScrollExtent,

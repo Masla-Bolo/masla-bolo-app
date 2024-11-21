@@ -46,47 +46,56 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     navigator.pop();
   }
 
-  void fetchIssueComments() {
+  void fetchIssueById() {
     if (!isClosed) {
-      emit(state.copyWith(
-        issueLoading: true,
-        commentLoading: true,
-        currentIssue: IssueEntity.empty(),
-      ));
-      issueRepository.getIssueyId(issueId: params.issueId).then(
-            (response) => response.fold(
-              (error) {
-                emit(state.copyWith(
-                  issueLoading: false,
-                  commentLoading: true,
-                  currentIssue: IssueEntity.empty(),
-                ));
-              },
-              (issue) {
-                emit(state.copyWith(
-                  commentLoading: true,
-                  issueLoading: false,
-                  currentIssue: issue,
-                ));
-                commentRepository.getComments(params: {
-                  'issueId': issue.id,
-                }).then(
-                  (response) => response.fold((error) {}, (comments) {
-                    if (!isClosed) {
-                      if (comments.isNotEmpty) {
-                        emit(state.copyWith(
-                          comments: comments,
-                        ));
-                      }
-                      emit(state.copyWith(commentLoading: false));
-                    }
-                  }),
-                );
-              },
-            ),
-          );
+      if (state.currentIssue.id == params.issueId) {
+        emit(state.copyWith(commentLoading: true));
+        fetchComments();
+      } else {
+        emit(state.copyWith(
+          issueLoading: true,
+          commentLoading: true,
+          currentIssue: IssueEntity.empty(),
+        ));
+        issueRepository.getIssueyId(issueId: params.issueId).then(
+              (response) => response.fold(
+                (error) {
+                  emit(state.copyWith(
+                    issueLoading: false,
+                    commentLoading: false,
+                    currentIssue: IssueEntity.empty(),
+                  ));
+                },
+                (issue) {
+                  emit(state.copyWith(
+                    commentLoading: true,
+                    issueLoading: false,
+                    currentIssue: issue,
+                  ));
+                  fetchComments();
+                },
+              ),
+            );
+      }
     }
     initWebSocket();
+  }
+
+  Future<void> fetchComments() async {
+    commentRepository.getComments(params: {
+      'issueId': params.issueId,
+    }).then(
+      (response) => response.fold((error) {}, (comments) {
+        if (!isClosed) {
+          if (comments.isNotEmpty) {
+            emit(state.copyWith(
+              comments: comments,
+            ));
+          }
+          emit(state.copyWith(commentLoading: false));
+        }
+      }),
+    );
   }
 
   Future<void> addComment() async {
@@ -112,7 +121,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
         return comment.id == parent;
       });
       parentComment?.showReplies = true;
-      parentComment?.replies.insert(0, comment);
+      parentComment?.replies?.insert(0, comment);
     } else {
       state.comments.insert(0, comment);
       increaseCommentCount();
@@ -160,16 +169,15 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
 
   void likeUnlikeComment(int commentId) {
     var targetComment = state.comments.firstWhereOrNull(
-      (comment) =>
-          comment.id == commentId ||
-          comment.replies.any((reply) => reply.id == commentId),
+      (comment) => (comment.id == commentId ||
+          (comment.replies?.any((reply) => reply.id == commentId) ?? false)),
     );
 
     if (targetComment != null) {
       var comment = targetComment.id == commentId
           ? targetComment
           : targetComment.replies
-              .firstWhereOrNull((reply) => reply.id == commentId);
+              ?.firstWhereOrNull((reply) => reply.id == commentId);
 
       if (comment != null) {
         comment.isLiked = !comment.isLiked;
@@ -235,7 +243,9 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
         });
         if (parentComment != null) {
           parentComment.showReplies = true;
-          parentComment.replies.insert(0, streamComment);
+          if ((parentComment.replies?.isNotEmpty) ?? false) {
+            parentComment.replies!.insert(0, streamComment);
+          }
         } else {
           state.comments.insert(0, streamComment);
           increaseCommentCount();

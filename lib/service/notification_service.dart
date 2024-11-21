@@ -30,13 +30,18 @@ class NotificationService {
     }
   }
 
-  Future<void> initNotifications() async {
-    Future.wait([
-      sendTokenToServer(),
+  Future<void> initNotifications({bool callFcm = false}) async {
+    List<Future> futures = [
       handleForegroundNotification(),
       handleBackgroundNotificationClick(),
       handleTerminatedNotificationClick(),
-    ]);
+    ];
+    if (callFcm) {
+      futures.add(
+        sendTokenToServer(),
+      );
+    }
+    Future.wait(futures);
   }
 
   Future<void> handleForegroundNotification() async {

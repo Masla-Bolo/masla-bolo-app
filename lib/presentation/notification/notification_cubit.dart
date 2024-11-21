@@ -70,7 +70,9 @@ class NotificationCubit extends Cubit<NotificationState> {
   }
 
   void addNotification(NotificationEntity notification) {
-    state.pagination.results.insert(0, notification);
+    if (state.isLoaded) {
+      state.pagination.results.insert(0, notification);
+    }
     state.seenCount += 1;
     emit(state.copyWith(
         pagination: state.pagination, seenCount: state.seenCount));

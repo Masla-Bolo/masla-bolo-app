@@ -12,7 +12,7 @@ class CommentsJson {
   int? parentId;
   int? replyTo;
   int issueId;
-  List<CommentsEntity> replies;
+  List<CommentsEntity>? replies;
 
   CommentsJson({
     this.parentId,

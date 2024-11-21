@@ -118,7 +118,7 @@ class Comment extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            if (comment.replies.isNotEmpty) ...[
+                            if ((comment.replies?.isNotEmpty) ?? false) ...[
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
@@ -159,11 +159,11 @@ class Comment extends StatelessWidget {
                   ),
                 ],
               ),
-              if (comment.replies.isNotEmpty && comment.showReplies)
+              if ((comment.replies?.isNotEmpty ?? false) && comment.showReplies)
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: IssueComments(
-                    comments: comment.replies,
+                    comments: comment.replies!,
                     cubit: cubit,
                   ),
                 ),

@@ -10,7 +10,7 @@ class CommentsEntity {
   String content;
   UserEntity? user;
   int issueId;
-  List<CommentsEntity> replies;
+  List<CommentsEntity>? replies;
   bool showReplies;
 
   CommentsEntity({
@@ -22,7 +22,7 @@ class CommentsEntity {
     this.user,
     this.replyTo,
     required this.issueId,
-    this.replies = const [],
+    this.replies,
   });
 
   factory CommentsEntity.empty() => CommentsEntity(
