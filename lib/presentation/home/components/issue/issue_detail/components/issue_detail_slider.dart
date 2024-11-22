@@ -7,7 +7,7 @@ import '../../../../../../helpers/widgets/cached_image.dart';
 class IssueDetailSlider extends StatelessWidget {
   const IssueDetailSlider(
       {super.key, required this.onTap, required this.issue});
-  final void Function() onTap;
+  final void Function(int index) onTap;
   final IssueEntity issue;
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,12 @@ class IssueDetailSlider extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: GestureDetector(
-                    onTap: onTap,
+                    onLongPress: () {
+                      onTap.call(index);
+                    },
+                    onTap: () {
+                      onTap.call(index);
+                    },
                     child: SizedBox(
                         width: 0.85.sw,
                         child: Center(

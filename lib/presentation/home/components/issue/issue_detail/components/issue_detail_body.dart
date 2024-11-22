@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'animated_image_banner.dart';
 import 'issue_blinker.dart';
 import '../../../../../../helpers/extensions.dart';
 
@@ -25,7 +28,20 @@ class IssueDetailBody extends StatelessWidget {
             children: [
               10.verticalSpace,
               IssueDetailSlider(
-                onTap: () {},
+                onTap: (index) {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                        child: AnimatedImageBanner(
+                          issue: state.currentIssue,
+                          index: index,
+                        ),
+                      );
+                    },
+                  );
+                },
                 issue: state.currentIssue,
               ),
               Padding(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
+import 'package:masla_bolo_app/helpers/styles/styles.dart';
 import '../../../../../helpers/widgets/indicator.dart';
 import 'components/issue_detail_body.dart';
 import 'components/issue_detail_footer.dart';
 import 'issue_detail_cubit.dart';
 import 'issue_detail_state.dart';
-import '../../../../../helpers/widgets/header.dart';
 
 class IssueDetail extends StatefulWidget {
   const IssueDetail({super.key, required this.cubit});
@@ -25,9 +26,9 @@ class _IssueDetailState extends State<IssueDetail> {
     cubit = widget.cubit;
     cubit.fetchIssueById();
     if (cubit.params.showComment) {
-      cubit.state.focusNode.requestFocus();
       cubit.stream.listen((state) {
         if (!state.issueLoading) {
+          cubit.state.focusNode.requestFocus();
           if (scrollController.hasClients) {
             scrollController.animateTo(
               scrollController.position.maxScrollExtent,
@@ -66,14 +67,46 @@ class _IssueDetailState extends State<IssueDetail> {
                         : Column(
                             children: [
                               10.verticalSpace,
-                              Header(
-                                title: state.currentIssue.title,
-                                fontSize: 20,
-                                onBackTap: () {
-                                  widget.cubit.goBack();
-                                },
+                              Row(
+                                children: [
+                                  10.horizontalSpace,
+                                  GestureDetector(
+                                    onTap: () {
+                                      widget.cubit.goBack();
+                                    },
+                                    child: Icon(Icons.arrow_back_ios_new,
+                                        size: 20,
+                                        color: context.colorScheme.onPrimary),
+                                  ),
+                                  20.horizontalSpace,
+                                  Expanded(
+                                    child: Text(
+                                      state.currentIssue.title,
+                                      style: Styles.boldStyle(
+                                        fontSize: 20,
+                                        color: context.colorScheme.onPrimary,
+                                        family: FontFamily.dmSans,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              10.verticalSpace,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 50),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    state.currentIssue.isAnonymous
+                                        ? "by an Anonymous user"
+                                        : "by: ${state.currentIssue.user.username}",
+                                    style: Styles.lightStyle(
+                                      fontSize: 15,
+                                      color: context.colorScheme.onPrimary,
+                                      family: FontFamily.dmSans,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               Expanded(
                                 child: SingleChildScrollView(
                                   controller: scrollController,

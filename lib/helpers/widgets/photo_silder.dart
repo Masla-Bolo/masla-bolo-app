@@ -1,65 +1,133 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
-
-import '../styles/app_colors.dart';
-import 'indicator.dart';
+import 'package:masla_bolo_app/helpers/extensions.dart';
+import 'package:masla_bolo_app/helpers/widgets/photo_view_builder.dart';
 
 class PhotoSlider extends StatefulWidget {
-  const PhotoSlider(
-      {super.key, required this.images, required this.pageController});
+  const PhotoSlider({
+    super.key,
+    required this.images,
+    required this.index,
+  });
   final List<String> images;
-  final PageController pageController;
+  final int index;
 
   @override
   State<PhotoSlider> createState() => _PhotoSliderState();
 }
 
 class _PhotoSliderState extends State<PhotoSlider> {
+  late PageController pageController;
+  int currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    currentPage = widget.index;
+    pageController = PageController(initialPage: widget.index);
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter:
-          ImageFilter.blur(sigmaX: 4, sigmaY: 4, tileMode: TileMode.repeated),
-      child: SizedBox(
-        height: 0.5.sh,
-        width: 1.sw,
-        child: PhotoViewGallery.builder(
-          enableRotation: false,
-          backgroundDecoration:
-              const BoxDecoration(color: AppColor.transparent),
-          allowImplicitScrolling: true,
-          scrollPhysics: const BouncingScrollPhysics(),
-          builder: (BuildContext context, int index) {
-            return PhotoViewGalleryPageOptions(
-              heroAttributes: PhotoViewHeroAttributes(
-                tag: index,
-                transitionOnUserGestures: true,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        16.verticalSpace,
+        Flexible(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: 0.7.sh,
+              minHeight: 0.3.sh,
+            ),
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Center(
+                    child: PhotoViewBuilder(
+                      images: widget.images,
+                      onPageChanged: (index) {
+                        setState(() => currentPage = index);
+                      },
+                      pageController: pageController,
+                    ),
+                  ),
+                  if (widget.images.length > 1) ...[
+                    Positioned.fill(
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                            ),
+                            onPressed: currentPage > 0
+                                ? () {
+                                    pageController.previousPage(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  }
+                                : null,
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                            ),
+                            onPressed: currentPage < widget.images.length - 1
+                                ? () {
+                                    pageController.nextPage(
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  }
+                                : null,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ],
               ),
-              filterQuality: FilterQuality.high,
-              imageProvider: NetworkImage(widget.images[index]),
-              initialScale: PhotoViewComputedScale.covered * 0.4,
-              minScale: PhotoViewComputedScale.contained * 1.2,
-              maxScale: PhotoViewComputedScale.covered * 0.8,
-            );
-          },
-          itemCount: widget.images.length,
-          loadingBuilder: (context, event) {
-            return const Center(
-              child: SizedBox(
-                width: 40.0,
-                height: 40.0,
-                child: Indicator(),
-              ),
-            );
-          },
-          pageController: widget.pageController,
-          // onPageChanged: onPageChanged,
+            ),
+          ),
         ),
-      ),
+        if (widget.images.length > 1) ...[
+          12.verticalSpace,
+          Padding(
+            padding: EdgeInsets.only(bottom: 8.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                widget.images.length,
+                (index) => Container(
+                  width: 8.w,
+                  height: 8.w,
+                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: currentPage == index
+                        ? context.colorScheme.onPrimary
+                        : context.colorScheme.onSecondary,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ]
+      ],
     );
   }
 }

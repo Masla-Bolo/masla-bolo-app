@@ -121,7 +121,11 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
         return comment.id == parent;
       });
       parentComment?.showReplies = true;
-      parentComment?.replies?.insert(0, comment);
+      if (parentComment?.replies?.isEmpty ?? true) {
+        parentComment?.replies = [comment];
+      } else {
+        parentComment?.replies!.insert(0, comment);
+      }
     } else {
       state.comments.insert(0, comment);
       increaseCommentCount();
