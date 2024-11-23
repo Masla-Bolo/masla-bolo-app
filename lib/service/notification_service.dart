@@ -35,12 +35,8 @@ class NotificationService {
       handleForegroundNotification(),
       handleBackgroundNotificationClick(),
       handleTerminatedNotificationClick(),
+      if (callFcm) sendTokenToServer(),
     ];
-    if (callFcm) {
-      futures.add(
-        sendTokenToServer(),
-      );
-    }
     Future.wait(futures);
   }
 
@@ -86,7 +82,9 @@ class NotificationService {
     if (message?.data != null) {
       var notification =
           NotificationJson.fromJson(message?.data ?? {}).toDomain();
-      notification.isNew = true;
+      notification.isNew =
+          true; // if isNew is true, you can change that notification UI to show the user that this is the new One.
+      // adding the incoming notification to the notification list maintained in your application.
       getIt<NotificationCubit>().addNotification(notification);
     }
   }
@@ -132,9 +130,7 @@ class NotificationService {
 
   void _navigateBasedOnMessageType(RemoteMessage message) {
     final screen = getScreenType(message.data);
-    navigation.push(screen.$1, arguments: {
-      "params": screen.$2,
-    });
+    navigation.push(screen.$1, arguments: screen.$2);
   }
 
   static (String, Map<String, dynamic>?) getScreenType(

@@ -48,35 +48,44 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
 
   void fetchIssueById() {
     if (!isClosed) {
-      if (state.currentIssue.id == params.issueId) {
-        emit(state.copyWith(commentLoading: true));
-        fetchComments();
-      } else {
-        emit(state.copyWith(
-          issueLoading: true,
-          commentLoading: true,
-          currentIssue: IssueEntity.empty(),
-        ));
-        issueRepository.getIssueyId(issueId: params.issueId).then(
-              (response) => response.fold(
-                (error) {
-                  emit(state.copyWith(
-                    issueLoading: false,
-                    commentLoading: false,
-                    currentIssue: IssueEntity.empty(),
-                  ));
-                },
-                (issue) {
-                  emit(state.copyWith(
-                    commentLoading: true,
-                    issueLoading: false,
-                    currentIssue: issue,
-                  ));
-                  fetchComments();
-                },
-              ),
-            );
-      }
+      localStorageRepository.getIssue(params.issueId.toString()).then(
+            (resp) => resp.fold(
+              (error) {
+                emit(state.copyWith(
+                  issueLoading: true,
+                  commentLoading: true,
+                  currentIssue: IssueEntity.empty(),
+                ));
+                issueRepository.getIssueyId(issueId: params.issueId).then(
+                      (response) => response.fold(
+                        (error) {
+                          emit(state.copyWith(
+                            issueLoading: false,
+                            commentLoading: false,
+                            currentIssue: error.issue,
+                          ));
+                        },
+                        (issue) {
+                          emit(state.copyWith(
+                            commentLoading: true,
+                            issueLoading: false,
+                            currentIssue: issue,
+                          ));
+                          fetchComments();
+                        },
+                      ),
+                    );
+              },
+              (issue) {
+                emit(state.copyWith(
+                  issueLoading: false,
+                  commentLoading: true,
+                  currentIssue: issue,
+                ));
+                fetchComments();
+              },
+            ),
+          );
     }
     initWebSocket();
   }

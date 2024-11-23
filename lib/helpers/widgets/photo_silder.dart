@@ -117,11 +117,10 @@ class _PhotoSliderState extends State<PhotoSlider> {
                   height: 8.w,
                   margin: EdgeInsets.symmetric(horizontal: 4.w),
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: currentPage == index
-                        ? context.colorScheme.onPrimary
-                        : context.colorScheme.onSecondary,
-                  ),
+                      shape: BoxShape.circle,
+                      color: currentPage == index
+                          ? context.colorScheme.onPrimary
+                          : context.colorScheme.secondary),
                 ),
               ),
             ),
