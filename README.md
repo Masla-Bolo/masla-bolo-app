@@ -34,10 +34,6 @@ The project is organized as follows to support Clean Architecture principles:
 
 Masla Bolo uses Bloc and Cubit to manage application states. **Bloc** is used for complex flows requiring multiple states and events, while **Cubit** is used for simpler, isolated states, making the app more responsive and organized.
 
-## Contribution Guidelines
-
-Contributions are welcome! Please fork the repository and create a pull request with descriptive comments.
-
 ## Contact
 
 For any questions or feedback, feel free to reach out at [asheressani@gmail.com].
