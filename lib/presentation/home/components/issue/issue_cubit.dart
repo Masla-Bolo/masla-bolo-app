@@ -1,13 +1,20 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:masla_bolo_app/di/service_locator.dart';
+import 'package:masla_bolo_app/domain/stores/user_store.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
+import 'package:masla_bolo_app/presentation/notification/notification_cubit.dart';
+import 'package:masla_bolo_app/presentation/profile/components/official_profile/official_profile_cubit.dart';
+import 'package:masla_bolo_app/presentation/profile/components/user_profile/user_profile_cubit.dart';
+import 'package:masla_bolo_app/presentation/search_issue/search_issue_cubit.dart';
 import 'package:masla_bolo_app/service/permission_service.dart';
 import '../../../../data/local_storage/local_storage_repository.dart';
 import '../../../../domain/entities/issue_entity.dart';
 import '../../../../domain/repositories/issue_repository.dart';
 import '../../../../service/location_service.dart';
 import '../../../../service/notification_service.dart';
+import '../../../profile/profile_cubit.dart';
 import 'issue_navigator.dart';
 import 'issue_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +53,19 @@ class IssueCubit extends Cubit<IssueState> {
     if (state.scrollController.position.pixels >= threshold) {
       scrollAndCall();
     }
+  }
+
+  Future<void> init() async {
+    final userProfileCall = getIt<UserStore>().appUser.role == "user"
+        ? getIt<UserProfileCubit>().onInit()
+        : getIt<OfficialProfileCubit>().onInit();
+    await Future.wait([
+      getIssues(),
+      userProfileCall,
+      getIt<SearchIssueCubit>().getIssues(),
+      getIt<ProfileCubit>().getUser(),
+      getIt<NotificationCubit>().getMyNotifications(),
+    ]);
   }
 
   void initServices() {
@@ -101,11 +121,14 @@ class IssueCubit extends Cubit<IssueState> {
         )
         .then((response) => response.fold((error) {
               emit(state.copyWith(
-                issuesPagination: null,
+                issuesPagination: error.issues,
                 isLoaded: true,
                 isScrolled: true,
               ));
-              showToast(error.error);
+              showToast(error.error,
+                  params: ToastParam(
+                    toastAlignment: Alignment.bottomCenter,
+                  ));
             }, (issuesPagination) {
               emit(state.copyWith(
                 issuesPagination: issuesPagination,

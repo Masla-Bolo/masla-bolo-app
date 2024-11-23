@@ -21,7 +21,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final authCubit = getIt<AuthCubit>();
-  final role = getIt<UserStore>().appUser.role ?? "user";
+  String role = getIt<UserStore>().appUser.role!;
+
   @override
   Widget build(BuildContext context) {
     return PopScope(

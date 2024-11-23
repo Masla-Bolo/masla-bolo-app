@@ -23,16 +23,13 @@ class SearchIssuePage extends StatefulWidget {
 }
 
 class _SearchIssuePageState extends State<SearchIssuePage> {
-  static final cubit = getIt<SearchIssueCubit>();
+  final cubit = getIt<SearchIssueCubit>();
   late final FocusNode focusNode;
 
   @override
   void initState() {
     super.initState();
     focusNode = FocusNode();
-    if (!cubit.state.isLoaded) {
-      cubit.getIssues();
-    }
   }
 
   @override

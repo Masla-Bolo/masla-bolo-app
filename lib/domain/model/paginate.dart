@@ -1,3 +1,5 @@
+import 'package:masla_bolo_app/domain/model/base_model.dart';
+
 import '../../helpers/helpers.dart';
 
 class Paginate<T> {
@@ -39,10 +41,20 @@ class Paginate<T> {
       next: json['next'],
       results: json['results'] is List && json['results'] != null
           ? parseList(json['results'], dataFromJson)
-              .map((json) => json.toDomain())
+              .map((json) {
+                final data = json as BaseModel;
+                return data.toDomain();
+              })
               .toList()
               .cast<T>()
           : [],
     );
   }
+
+  Map<String, dynamic> toJson(List<Map<String, dynamic>> mappedIssues) => {
+        'count': count,
+        'previous': previous,
+        'next': next,
+        'results': mappedIssues,
+      };
 }

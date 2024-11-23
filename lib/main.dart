@@ -4,9 +4,10 @@ import 'package:masla_bolo_app/initializer.dart';
 
 import 'presentation/masla_bolo.dart';
 
-Future<void> main() async {
-  await Initializer.initializeApp();
-  runApp(const MaslaBolo());
+void main() {
+  Initializer.initializeApp().then((_) {
+    runApp(const MaslaBolo());
+  });
 }
 
 final eventBus = EventBus();

@@ -92,6 +92,23 @@ class IssueHelper extends Equatable {
     }
   }
 
+  static IssueStatus mapStatus(String jsonStatus) {
+    switch (jsonStatus) {
+      case 'not_approved':
+        return IssueStatus.notApproved;
+      case 'approved':
+        return IssueStatus.approved;
+      case 'solving':
+        return IssueStatus.solving;
+      case 'official_solved':
+        return IssueStatus.officialSolved;
+      case 'solved':
+        return IssueStatus.solved;
+      default:
+        return IssueStatus.notApproved;
+    }
+  }
+
   static Color getIssueStatusColor(IssueStatus status) {
     final color = status == IssueStatus.approved
         ? AppColor.green

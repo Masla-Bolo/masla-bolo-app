@@ -1,3 +1,4 @@
+import 'package:masla_bolo_app/domain/model/base_model.dart';
 import 'package:masla_bolo_app/helpers/helpers.dart';
 
 import '../entities/issue_entity.dart';
@@ -6,7 +7,7 @@ import '../entities/user_entity.dart';
 import 'issue_json.dart';
 import 'user_json.dart';
 
-class OfficialJson {
+class OfficialJson implements BaseModel<OfficialEntity> {
   UserEntity? user;
   List<IssueEntity>? assignedIssue;
   String? countryCode;
@@ -46,6 +47,7 @@ class OfficialJson {
         areaRange: json['areaRange'],
       );
 
+  @override
   OfficialEntity toDomain() => OfficialEntity(
         user: user,
         assignedIssue: assignedIssue,

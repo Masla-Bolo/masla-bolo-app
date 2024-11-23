@@ -16,7 +16,7 @@ class OfficialProfileCubit extends Cubit<OfficialProfileState> {
   OfficialProfileCubit(this.navigation, this.baseProfileIssuesService)
       : super(OfficialProfileState.empty());
 
-  onInit() {
+  Future<void> onInit() async {
     eventBus.on<OfficialProfileEvent>().listen((issue) {
       final updatedIssue = issue.data;
       state.allIssues[issue.status] = updatedIssue;

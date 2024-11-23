@@ -18,7 +18,7 @@ class UserEntity {
     Location? location,
     this.verified = false,
     this.email,
-    this.role,
+    this.role = "user",
     this.password,
     this.username,
     this.id,
@@ -50,13 +50,15 @@ class UserEntity {
   factory UserEntity.empty() => UserEntity(
         email: '',
         username: '',
+        verified: false,
+        role: "user",
         location: Location.empty(),
         id: null,
         password: "",
         image: "",
       );
 
-  Map<String, dynamic> toUserJson() {
+  Map<String, dynamic> toJson() {
     return UserJson.copyWith(this).toJson();
   }
 }

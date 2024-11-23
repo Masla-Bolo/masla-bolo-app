@@ -1,9 +1,10 @@
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/entities/notification_entity.dart';
+import 'package:masla_bolo_app/domain/model/base_model.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
 import 'package:masla_bolo_app/service/notification_service.dart';
 
-class NotificationJson {
+class NotificationJson implements BaseModel<NotificationEntity> {
   String? title;
   String? description;
   String? image;
@@ -35,6 +36,7 @@ class NotificationJson {
         createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       );
 
+  @override
   NotificationEntity toDomain() => NotificationEntity(
         title: title,
         issue: issue,

@@ -11,22 +11,26 @@ class UserStore extends Cubit<UserEntity> {
   UserStore(this.localStorageRepository) : super(UserEntity.empty());
 
   setUser(UserEntity user) async {
-    await localStorageRepository.setUser(userKey, user).then((resp) {
-      _user = user;
-      emit(_user);
-    });
+    await localStorageRepository
+        .setUser(userKey, user)
+        .then((resp) => resp.fold((error) {}, (success) {
+              _user = user;
+              emit(_user);
+            }));
   }
 
   Future<UserEntity?> getUser() async {
     if (appUser.id != null) {
       return appUser;
     }
-    return await localStorageRepository.getUser(userKey).then(
+    return localStorageRepository.getUser(userKey).then(
           (result) => result.fold(
             (left) {
               return null;
             },
-            (user) => user,
+            (user) {
+              return user;
+            },
           ),
         );
   }

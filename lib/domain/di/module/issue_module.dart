@@ -9,6 +9,7 @@ class IssueModule {
       ApiIssueRepository(
         getIt(),
         getIt(),
+        getIt(),
       ),
     );
   }

@@ -1,9 +1,11 @@
+import 'package:masla_bolo_app/domain/model/base_model.dart';
+
 import '../entities/location.dart';
 import '../entities/user_entity.dart';
 
 enum UserRole { user, official }
 
-class UserJson {
+class UserJson implements BaseModel<UserEntity> {
   String? username;
   String? password;
   String? email;
@@ -16,9 +18,9 @@ class UserJson {
 
   UserJson({
     required this.location,
+    this.verified = false,
     this.isSocial,
     this.image,
-    this.verified,
     this.id,
     this.password,
     this.role,
@@ -26,27 +28,32 @@ class UserJson {
     this.email,
   });
 
-  factory UserJson.fromData(Map<String, dynamic> json) => UserJson(
-        email: json["email"],
-        image: json["profile_image"],
-        isSocial: json["is_social"],
-        username: json["username"],
-        id: json['id'],
-        verified: json["verified"],
-        role: json["role"],
-        location: Location.empty(),
-      );
+  factory UserJson.fromData(Map<String, dynamic> json) {
+    return UserJson(
+      email: json["email"],
+      image: json["profile_image"],
+      isSocial: json["is_social"],
+      username: json["username"],
+      id: json['id'],
+      verified: json["verified"],
+      role: json["role"],
+      location: Location.empty(),
+    );
+  }
 
-  UserEntity toDomain() => UserEntity(
-        username: username,
-        email: email,
-        id: id,
-        isSocial: isSocial,
-        image: image,
-        role: role,
-        location: location,
-        verified: verified ?? false,
-      );
+  @override
+  UserEntity toDomain() {
+    return UserEntity(
+      username: username,
+      email: email,
+      id: id,
+      isSocial: isSocial,
+      image: image,
+      role: role,
+      location: location,
+      verified: verified ?? false,
+    );
+  }
 
   static mapDataToRole(String data) {
     switch (data) {

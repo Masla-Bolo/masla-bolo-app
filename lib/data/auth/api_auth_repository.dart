@@ -41,7 +41,7 @@ class ApiAuthRepository implements AuthRepository {
       UserEntity user) async {
     final response = await networkRepository.post(
       url: '/register/',
-      data: user.toUserJson(),
+      data: user.toJson(),
     );
     if (response.failed) {
       return left(AuthFailure(error: response.message));
@@ -105,7 +105,7 @@ class ApiAuthRepository implements AuthRepository {
 
       final response = await networkRepository.post(
         url: '/social-register/',
-        data: user.toUserJson(),
+        data: user.toJson(),
       );
       if (response.failed) {
         return left(AuthFailure(error: response.message));

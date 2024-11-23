@@ -1,3 +1,5 @@
+import 'package:masla_bolo_app/domain/model/base_model.dart';
+
 import '../entities/comments_entity.dart';
 import '../entities/issue_entity.dart';
 import '../entities/likes_entity.dart';
@@ -6,7 +8,7 @@ import 'comments_json.dart';
 import 'issue_json.dart';
 import 'user_json.dart';
 
-class LikesJson {
+class LikesJson implements BaseModel<LikesEntity> {
   UserEntity user;
   CommentsEntity comment;
   IssueEntity issue;
@@ -29,6 +31,7 @@ class LikesJson {
         user: UserJson.fromData(json['user']).toDomain(),
       );
 
+  @override
   LikesEntity toDomain() => LikesEntity(
         comment: comment,
         user: user,

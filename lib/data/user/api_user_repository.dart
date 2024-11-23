@@ -24,7 +24,7 @@ class ApiUserRepository implements UserRepository {
   Future<Either<UserFailure, UserEntity>> updateUser(UserEntity user) async {
     final response = await networkRepository.put(
       url: '/users/${user.id}/',
-      data: user.toUserJson(),
+      data: user.toJson(),
     );
     if (response.failed) {
       return left(UserFailure(error: response.message));

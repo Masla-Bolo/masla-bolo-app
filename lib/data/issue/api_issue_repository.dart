@@ -1,17 +1,26 @@
 import 'package:dartz/dartz.dart';
+import 'package:masla_bolo_app/data/local_storage/local_storage_repository.dart';
+import 'package:masla_bolo_app/helpers/strings.dart';
 
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/failures/issue_failure.dart';
+import '../../domain/failures/local_storage_failure.dart';
 import '../../domain/model/paginate.dart';
 import '../../domain/repositories/issue_repository.dart';
 import '../../domain/model/issue_json.dart';
 import '../../network/network_repository.dart';
 import '../../service/utility_service.dart';
+import 'dart:async' show unawaited;
 
 class ApiIssueRepository implements IssueRepository {
   final NetworkRepository networkRepository;
+  final LocalStorageRepository localStorageRepository;
   final UtilityService utilityService;
-  ApiIssueRepository(this.networkRepository, this.utilityService);
+  ApiIssueRepository(
+    this.networkRepository,
+    this.utilityService,
+    this.localStorageRepository,
+  );
 
   @override
   Future<Either<IssueFailure, Paginate<IssueEntity>>> getIssues({
@@ -21,18 +30,21 @@ class ApiIssueRepository implements IssueRepository {
   }) async {
     final response =
         await networkRepository.get(url: url, extraQuery: queryParams);
-
     if (response.failed) {
-      return left(IssueFailure(error: response.message));
+      return _handleFailedRequestWithCache(
+        cacheKey: allIssuesKey,
+        getCacheData: () => localStorageRepository.getIssues(allIssuesKey),
+        networkError: response.message,
+      );
     }
-    final pagination =
-        Paginate<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
-    if (previousIssues.isNotEmpty) {
-      previousIssues.addAll(pagination.results);
-    } else {
-      previousIssues = pagination.results;
-    }
-    return right(pagination.copyWith(results: previousIssues));
+
+    final pagination = updatedPagination(
+      previousIssues: previousIssues,
+      data: response.data,
+      localKey: allIssuesKey,
+    );
+
+    return right(pagination);
   }
 
   @override
@@ -45,16 +57,20 @@ class ApiIssueRepository implements IssueRepository {
         await networkRepository.get(url: url, extraQuery: queryParams);
 
     if (response.failed) {
-      return left(IssueFailure(error: response.message));
+      return _handleFailedRequestWithCache(
+        cacheKey: myIssuesKey,
+        getCacheData: () => localStorageRepository.getIssues(myIssuesKey),
+        networkError: response.message,
+      );
     }
-    final pagination =
-        Paginate<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
-    if (previousIssues.isNotEmpty) {
-      previousIssues.addAll(pagination.results);
-    } else {
-      previousIssues = pagination.results;
-    }
-    return right(pagination.copyWith(results: previousIssues));
+
+    final pagination = updatedPagination(
+      previousIssues: previousIssues,
+      data: response.data,
+      localKey: myIssuesKey,
+    );
+
+    return right(pagination);
   }
 
   @override
@@ -65,17 +81,22 @@ class ApiIssueRepository implements IssueRepository {
   }) async {
     final response =
         await networkRepository.get(url: url, extraQuery: queryParams);
+
     if (response.failed) {
-      return left(IssueFailure(error: response.message));
+      return _handleFailedRequestWithCache(
+        cacheKey: likedIssuesKey,
+        getCacheData: () => localStorageRepository.getIssues(likedIssuesKey),
+        networkError: response.message,
+      );
     }
-    final pagination =
-        Paginate<IssueEntity>.fromJson(response.data, IssueJson.fromJson);
-    if (previousIssues.isNotEmpty) {
-      previousIssues.addAll(pagination.results);
-    } else {
-      previousIssues = pagination.results;
-    }
-    return right(pagination.copyWith(results: previousIssues));
+
+    final pagination = updatedPagination(
+      previousIssues: previousIssues,
+      data: response.data,
+      localKey: likedIssuesKey,
+    );
+
+    return right(pagination);
   }
 
   @override
@@ -88,9 +109,15 @@ class ApiIssueRepository implements IssueRepository {
       extraQuery: queryParams,
     );
     if (response.failed) {
-      return left(IssueFailure(error: response.message));
+      return _handleFailedRequestWithCache(
+        cacheKey: issueId.toString(),
+        getCacheData: () => localStorageRepository.getIssue(issueId.toString()),
+        networkError: response.message,
+      );
     }
+
     final data = IssueJson.fromJson(response.data).toDomain();
+    unawaited(localStorageRepository.setIssue(issueId.toString(), data));
     return right(data);
   }
 
@@ -100,7 +127,7 @@ class ApiIssueRepository implements IssueRepository {
   ) async {
     final response = await networkRepository.post(
       url: '/issues/',
-      data: issue.toIssueJson(),
+      data: issue.createIssueToJson(),
     );
     if (response.failed) {
       return left(IssueFailure(error: response.message));
@@ -115,7 +142,7 @@ class ApiIssueRepository implements IssueRepository {
   ) async {
     final response = await networkRepository.put(
       url: '/issues/${issue.id}/',
-      data: issue.toIssueJson(),
+      data: issue.createIssueToJson(),
     );
     if (response.failed) {
       return left(IssueFailure(error: response.message));
@@ -141,5 +168,42 @@ class ApiIssueRepository implements IssueRepository {
       () => networkRepository.post(url: '/issues/$issueId/like/'),
     );
     return right(null);
+  }
+
+  Future<Either<IssueFailure, T>> _handleFailedRequestWithCache<T>({
+    required String cacheKey,
+    required Future<Either<LocalStorageFailure, T>> Function() getCacheData,
+    required String networkError,
+  }) async {
+    final cacheResult = await getCacheData();
+
+    return cacheResult.fold(
+      (cacheError) {
+        return left(IssueFailure(
+          error:
+              'Network Error: $networkError\nCache Error: ${cacheError.error}',
+        ));
+      },
+      (cachedData) => left(IssueFailure(
+        error: 'Network Error: $networkError\nUsing cached data',
+        issues: cachedData is Paginate<IssueEntity> ? cachedData : null,
+        issue: cachedData is IssueEntity ? cachedData : null,
+      )),
+    );
+  }
+
+  Paginate<IssueEntity> updatedPagination({
+    required List<IssueEntity> previousIssues,
+    required Map<String, dynamic> data,
+    required String localKey,
+  }) {
+    Paginate<IssueEntity> pagination =
+        Paginate<IssueEntity>.fromJson(data, IssueJson.fromJson);
+    final updatedResults = previousIssues.isEmpty
+        ? pagination.results
+        : [...previousIssues, ...pagination.results];
+    pagination = pagination.copyWith(results: updatedResults);
+    unawaited(localStorageRepository.saveIssues(localKey, pagination));
+    return pagination;
   }
 }

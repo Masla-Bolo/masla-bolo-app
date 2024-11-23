@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     focusNode = FocusNode();
     if (!issueCubit.state.isLoaded) {
-      issueCubit.getIssues().then((_) {
+      issueCubit.init().then((_) {
         issueCubit.initServices();
       });
     }

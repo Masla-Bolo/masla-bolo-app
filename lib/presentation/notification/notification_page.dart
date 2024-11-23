@@ -23,7 +23,6 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
     super.initState();
-    if (!cubit.state.isLoaded) cubit.getMyNotifications();
     cubit.updateSeenCount();
   }
 

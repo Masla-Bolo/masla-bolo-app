@@ -69,7 +69,7 @@ class BaseProfileIssuesService {
         )
         .then((response) => response.fold((error) {
               final issue = _allIssues[status]!.copyWith(
-                issues: Paginate.empty(),
+                issues: error.issues,
                 isLoaded: true,
                 isScrolled: true,
               );

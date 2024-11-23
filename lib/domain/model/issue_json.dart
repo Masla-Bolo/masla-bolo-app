@@ -1,4 +1,6 @@
 import 'package:masla_bolo_app/domain/entities/location.dart';
+import 'package:masla_bolo_app/domain/model/base_model.dart';
+import 'package:masla_bolo_app/presentation/home/components/issue/issue_helper.dart';
 
 import '../entities/user_entity.dart';
 import '../../helpers/helpers.dart';
@@ -14,7 +16,7 @@ enum IssueStatus {
   solved,
 }
 
-class IssueJson {
+class IssueJson implements BaseModel<IssueEntity> {
   int id;
   String title;
   List<String> images;
@@ -49,39 +51,24 @@ class IssueJson {
 
   factory IssueJson.fromJson(Map<String, dynamic> json) {
     return IssueJson(
-      id: json['id'],
-      isLiked: json["is_liked"],
-      description: json['description'],
+      id: json['id'] ?? 0,
+      isLiked: json["is_liked"] ?? false,
+      description: json['description'] ?? "",
       images: json['images'].isNotEmpty ? getStringList(json["images"]) : [],
-      title: json['title'],
+      title: json['title'] ?? "",
       categories: json['categories'].isNotEmpty
           ? getStringList(json["categories"])
           : [],
-      likesCount: json['likes_count'],
-      commentsCount: json['comments_count'],
-      isAnonymous: json['is_anonymous'],
-      status: mapStatus(json['issue_status']),
-      createdAt: DateTime.tryParse(json['created_at']) ?? DateTime.now(),
-      updatedAt: DateTime.tryParse(json['updated_at']) ?? DateTime.now(),
-      user: UserJson.fromData(json['user']).toDomain(),
+      likesCount: json['likes_count'] ?? 0,
+      commentsCount: json['comments_count'] ?? 0,
+      isAnonymous: json['is_anonymous'] ?? false,
+      status: IssueHelper.mapStatus(json['issue_status'] ?? ""),
+      createdAt: DateTime.tryParse(json['created_at'] ?? "") ?? DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updated_at'] ?? "") ?? DateTime.now(),
+      user: json['user'] != null
+          ? UserJson.fromData(json['user']).toDomain()
+          : UserEntity.empty(),
     );
-  }
-
-  static IssueStatus mapStatus(String jsonStatus) {
-    switch (jsonStatus) {
-      case 'not_approved':
-        return IssueStatus.notApproved;
-      case 'approved':
-        return IssueStatus.approved;
-      case 'solving':
-        return IssueStatus.solving;
-      case 'official_solved':
-        return IssueStatus.officialSolved;
-      case 'solved':
-        return IssueStatus.solved;
-      default:
-        return IssueStatus.notApproved;
-    }
   }
 
   factory IssueJson.copyWith(IssueEntity issueEntity) => IssueJson(
@@ -101,6 +88,7 @@ class IssueJson {
         user: issueEntity.user,
       );
 
+  @override
   IssueEntity toDomain() => IssueEntity(
         isLiked: isLiked,
         id: id,
@@ -119,7 +107,7 @@ class IssueJson {
         user: user,
       );
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> createIssueToJson() {
     return {
       'title': title,
       "location": location.toJson(),
@@ -127,6 +115,24 @@ class IssueJson {
       'images': images,
       'categories': categories,
       "is_anonymous": isAnonymous,
+    };
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      'title': title,
+      'description': description,
+      'images': images,
+      'categories': categories,
+      "is_anonymous": isAnonymous,
+      "user": user.toJson(),
+      "likes_count": likesCount,
+      "issue_status": IssueHelper.getIssueStatus(status),
+      "comments_count": commentsCount,
+      "is_liked": isLiked,
+      "created_at": createdAt.toIso8601String(),
+      "updated_at": updatedAt.toIso8601String(),
     };
   }
 }

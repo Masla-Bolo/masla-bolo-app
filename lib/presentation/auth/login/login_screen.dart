@@ -23,12 +23,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final authCubit = getIt<AuthCubit>();
-  late String role;
-  @override
-  void initState() {
-    super.initState();
-    role = getIt<UserStore>().appUser.role ?? "user";
-  }
+  String role = getIt<UserStore>().appUser.role!;
 
   @override
   Widget build(BuildContext context) {

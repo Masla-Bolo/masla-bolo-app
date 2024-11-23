@@ -63,7 +63,7 @@ class SearchIssueCubit extends Cubit<SearchIssueState> {
         )
         .then((response) => response.fold((error) {
               emit(state.copyWith(
-                issuesPagination: null,
+                issuesPagination: error.issues,
                 isLoaded: true,
                 isScrolled: true,
               ));

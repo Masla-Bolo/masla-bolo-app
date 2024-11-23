@@ -1,10 +1,12 @@
+import 'package:masla_bolo_app/domain/model/base_model.dart';
+
 import '../entities/user_entity.dart';
 import '../../helpers/helpers.dart';
 import 'user_json.dart';
 
 import '../entities/comments_entity.dart';
 
-class CommentsJson {
+class CommentsJson implements BaseModel<CommentsEntity> {
   int id;
   String content;
   UserEntity user;
@@ -49,6 +51,7 @@ class CommentsJson {
             .toList(),
       );
 
+  @override
   CommentsEntity toDomain() => CommentsEntity(
         id: id,
         content: content,

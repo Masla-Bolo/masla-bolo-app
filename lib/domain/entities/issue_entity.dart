@@ -61,7 +61,11 @@ class IssueEntity {
         user: UserEntity.empty(),
       );
 
-  Map<String, dynamic> toIssueJson() {
+  Map<String, dynamic> toJson() {
     return IssueJson.copyWith(this).toJson();
+  }
+
+  Map<String, dynamic> createIssueToJson() {
+    return IssueJson.copyWith(this).createIssueToJson();
   }
 }

@@ -23,7 +23,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     this.userRepository,
   ) : super(ProfileState.empty());
 
-  getUser() {
+  Future<void> getUser() async {
     if (state.user.id == null) {
       getIt<UserStore>().getUser().then((user) => {
             if (user == null)
