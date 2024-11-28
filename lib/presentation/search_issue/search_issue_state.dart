@@ -15,11 +15,12 @@ class SearchIssueState {
   List<IssueHelper> previousSortBy;
   Map<String, dynamic> queryParams;
   bool canPop;
-
+  FocusNode focusNode;
   ScrollController scrollController;
   SearchIssueState({
     this.canPop = false,
     this.isLoaded = false,
+    required this.focusNode,
     required this.scrollController,
     required this.queryParams,
     this.isScrolled = false,
@@ -39,12 +40,14 @@ class SearchIssueState {
     Paginate<IssueEntity>? issuesPagination,
     List<IssueHelper>? sortBy,
     Map<String, dynamic>? queryParams,
+    FocusNode? focusNode,
     List<IssueHelper>? categories,
     List<IssueHelper>? previousSortBy,
     ScrollController? scrollController,
     List<IssueHelper>? previousCategories,
   }) =>
       SearchIssueState(
+          focusNode: focusNode ?? this.focusNode,
           canPop: canPop ?? this.canPop,
           scrollController: scrollController ?? this.scrollController,
           isScrolled: isScrolled ?? this.isScrolled,
@@ -74,6 +77,7 @@ class SearchIssueState {
 
   factory SearchIssueState.empty() => SearchIssueState(
         sortBy: IssueHelper.sortBy,
+        focusNode: FocusNode(),
         scrollController: ScrollController(),
         queryParams: {},
         categories: IssueHelper.cloneInitialCategories(),

@@ -59,6 +59,7 @@ class _BaseProfileTabViewState extends State<BaseProfileTabView> {
               }
             },
             child: SingleChildScrollView(
+              key: Key(widget.status.name),
               physics: const AlwaysScrollableScrollPhysics(),
               controller: scrollController,
               restorationId: widget.status.name,
@@ -94,6 +95,7 @@ class _BaseProfileTabViewState extends State<BaseProfileTabView> {
                                 final issue = issues[index];
                                 return IssueContainer(
                                   image: state.user.image,
+                                  isUser: state.user.role == "user",
                                   issue: issue,
                                   onTap: () {
                                     widget.params.goToIssueDetail(issue);

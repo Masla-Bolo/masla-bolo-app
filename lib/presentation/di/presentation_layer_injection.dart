@@ -1,4 +1,4 @@
-import 'package:masla_bolo_app/presentation/di/module/search_iusse_module.dart';
+import 'package:masla_bolo_app/presentation/di/module/search_issue_module.dart';
 
 import 'module/bottom_bar_module.dart';
 import 'module/create_issue_module.dart';

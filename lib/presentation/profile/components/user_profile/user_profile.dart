@@ -23,6 +23,7 @@ class _UserProfileState extends State<UserProfile>
   void initState() {
     super.initState();
     tabController = TabController(length: 3, vsync: this);
+    if (!cubit.state.isAllIssuesLoaded) cubit.onInit();
   }
 
   @override

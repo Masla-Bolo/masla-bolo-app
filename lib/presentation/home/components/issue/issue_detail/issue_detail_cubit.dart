@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/model/comments_json.dart';
@@ -40,7 +41,23 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     this.imageHelper,
     this.commentRepository,
     this.musicService,
-  ) : super(IssueDetailState.empty());
+  ) : super(IssueDetailState.empty()) {
+    fetchIssueById();
+    if (params.showComment) {
+      stream.listen((state) {
+        if (!state.issueLoading) {
+          state.focusNode.requestFocus();
+          if (state.scrollController.hasClients) {
+            state.scrollController.animateTo(
+              state.scrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeIn,
+            );
+          }
+        }
+      });
+    }
+  }
 
   void goBack() {
     navigator.pop();
@@ -107,8 +124,8 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     );
   }
 
-  Future<void> addComment() async {
-    final user = await getIt<UserStore>().getUser();
+  void addComment() {
+    final user = getIt<UserStore>().appUser;
     final comment = CommentsEntity(
       content: state.commentController.text,
       issueId: params.issueId,
@@ -274,6 +291,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
   @override
   Future<void> close() {
     state.channel!.sink.close();
+    state.scrollController.dispose();
     return super.close();
   }
 }

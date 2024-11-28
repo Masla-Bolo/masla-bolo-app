@@ -1,0 +1,367 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Daily Chronicle</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f0f0f0;
+            line-height: 1.6;
+            color: #333;
+        }
+        .newspaper-container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid black;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .newspaper-title {
+            font-size: 60px;
+            font-weight: bold;
+            letter-spacing: -3px;
+        }
+        .weather-widget {
+            text-align: right;
+            font-size: 14px;
+            color: #666;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f4f4f4;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .nav-section {
+            cursor: pointer;
+            padding: 5px 15px;
+            transition: background-color 0.3s;
+        }
+        .nav-section:hover {
+            background-color: #e0e0e0;
+        }
+        .active-section {
+            background-color: #333;
+            color: white;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 30px;
+        }
+        .main-stories {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .story {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .story img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .story h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .sidebar {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-left: 2px solid #ddd;
+        }
+        .breaking-news {
+            background-color: #ffdddd;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: none;
+        }
+        .interactive-elements {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .comment-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f4f4f4;
+        }
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .comment-button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .comments-list {
+            margin-top: 15px;
+        }
+        .comments-list .comment {
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="newspaper-container">
+        <div class="header">
+            <div class="newspaper-title">The Daily Chronicle</div>
+            <div class="weather-widget">
+                Weather: 72°F | Partly Cloudy
+            </div>
+        </div>
+
+        <div class="breaking-news" id="breakingNews">
+            BREAKING: Major technological breakthrough announced!
+        </div>
+
+        <div class="navigation">
+            <div class="nav-section active-section" onclick="changeSection('main')">Main News</div>
+            <div class="nav-section" onclick="changeSection('technology')">Technology</div>
+            <div class="nav-section" onclick="changeSection('sports')">Sports</div>
+            <div class="nav-section" onclick="changeSection('opinion')">Opinion</div>
+        </div>
+
+        <div id="mainSection" class="content-grid">
+            <div class="main-stories">
+                <div class="story">
+                    <img src="/api/placeholder/400/250" alt="Global News">
+                    <h2>Global Economic Shifts Reshape International Trade</h2>
+                    <p>Emerging markets are driving significant changes in global economic dynamics...</p>
+                </div>
+                <div class="story">
+                    <img src="/api/placeholder/400/250" alt="Climate News">
+                    <h2>Climate Action Summit Yields Promising Results</h2>
+                    <p>World leaders commit to ambitious carbon reduction targets...</p>
+                </div>
+            </div>
+            <div class="sidebar">
+                <h3>Most Read</h3>
+                <div class="story">
+                    <h4>Tech Innovation Transforms Healthcare</h4>
+                    <p>New AI technologies promise revolutionary medical treatments...</p>
+                </div>
+                <div class="story">
+                    <h4>Space Exploration Milestone</h4>
+                    <p>Private space company achieves groundbreaking mission...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="technologySection" class="content-grid" style="display:none;">
+            <div class="main-stories">
+                <div class="story">
+                    <img src="/api/placeholder/400/250" alt="AI Technology">
+                    <h2>AI Revolution: What's Next?</h2>
+                    <p>Experts discuss the future of artificial intelligence...</p>
+                </div>
+                <div class="story">
+                    <img src="/api/placeholder/400/250" alt="Quantum Computing">
+                    <h2>Quantum Computing Breakthrough</h2>
+                    <p>Researchers solve complex computational challenges...</p>
+                </div>
+            </div>
+            <div class="sidebar">
+                <h3>Tech Trends</h3>
+                <div class="story">
+                    <h4>Cybersecurity Innovations</h4>
+                    <p>New approaches to digital protection emerge...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="sportsSection" class="content-grid" style="display:none;">
+            <div class="main-stories">
+                <div class="story">
+                    <img src="/api/placeholder/400/250" alt="Championship">
+                    <h2>World Championship Highlights</h2>
+                    <p>Unexpected victories and record-breaking performances...</p>
+                </div>
+                <div class="story">
+                    <img src="/api/placeholder/400/250" alt="Sports Analysis">
+                    <h2>Team Strategy Deep Dive</h2>
+                    <p>Experts analyze winning strategies...</p>
+                </div>
+            </div>
+            <div class="sidebar">
+                <h3>Latest Scores</h3>
+                <div class="story">
+                    <h4>Team Rankings Updated</h4>
+                    <p>Top performers of the season revealed...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="opinionSection" class="content-grid" style="display:none;">
+            <div class="main-stories">
+                <div class="story">
+                    <img src="/api/placeholder/400/250" alt="Editorial">
+                    <h2>The Future of Democracy</h2>
+                    <p>In-depth analysis of global political trends...</p>
+                </div>
+                <div class="story">
+                    <img src="/api/placeholder/400/250" alt="Opinion Piece">
+                    <h2>Innovation and Social Responsibility</h2>
+                    <p>Exploring the ethical dimensions of technological progress...</p>
+                </div>
+            </div>
+            <div class="sidebar">
+                <h3>Featured Columnists</h3>
+                <div class="story">
+                    <h4>Perspectives on Change</h4>
+                    <p>Thought-provoking commentary on current issues...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="comment-section">
+            <h3>Reader Comments</h3>
+            <textarea class="comment-input" id="commentInput" placeholder="Share your thoughts..."></textarea>
+            <button class="comment-button" onclick="addComment()">Post Comment</button>
+            <div id="commentsList" class="comments-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // Section Navigation
+        function changeSection(section) {
+            // Reset all sections and navigation
+            const sections = ['main', 'technology', 'sports', 'opinion'];
+            sections.forEach(sec => {
+                document.getElementById(sec + 'Section').style.display = 'none';
+                document.querySelector(`.nav-section:nth-child(${sections.indexOf(sec) + 1})`).classList.remove('active-section');
+            });
+
+            // Show selected section
+            document.getElementById(section + 'Section').style.display = 'grid';
+            document.querySelector(`.nav-section:nth-child(${sections.indexOf(section) + 1})`).classList.add('active-section');
+        }
+
+        // Breaking News Animation
+        function showBreakingNews() {
+            const breakingNews = document.getElementById('breakingNews');
+            breakingNews.style.display = 'block';
+            setTimeout(() => {
+                breakingNews.style.display = 'none';
+            }, 10000); // Show for 10 seconds
+        }
+
+        // Comment Functionality
+        function addComment() {
+            const commentInput = document.getElementById('commentInput');
+            const commentsList = document.getElementById('commentsList');
+
+            if (commentInput.value.trim() === '') return;
+
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `
+                <strong>Anonymous Reader</strong>
+                <p>${commentInput.value}</p>
+                <small>${new Date().toLocaleString()}</small>
+            `;
+
+            commentsList.prepend(commentElement);
+            commentInput.value = '';
+        }
+
+        // Initialize breaking news
+        showBreakingNews();
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Old School Newspaper</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <h1>Daily News</h1>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#" class="tab-link" onclick="openTab(event, 'home')">Home</a></li>
+                <li><a href="#" class="tab-link" onclick="openTab(event, 'world')">World</a></li>
+                <li><a href="#" class="tab-link" onclick="openTab(event, 'sports')">Sports</a></li>
+                <li><a href="#" class="tab-link" onclick="openTab(event, 'entertainment')">Entertainment</a></li>
+                <li><a href="#" class="tab-link" onclick="openTab(event, 'technology')">Technology</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="main-content">
+        <div id="home" class="tab-content">
+            <h2 class="article-title">Welcome to the Daily News</h2>
+            <img src="https://via.placeholder.com/800x400?text=Breaking+News" alt="Main Image" class="article-image">
+            <p class="article-content">Today's breaking news includes major updates from the world of politics, finance, and more. Stay tuned as we bring you the latest developments...</p>
+        </div>
+
+        <div id="world" class="tab-content">
+            <h2 class="article-title">Global Politics: New Era of Diplomacy</h2>
+            <img src="https://via.placeholder.com/800x400?text=Global+Politics" alt="World Politics" class="article-image">
+            <p class="article-content">In a new era of diplomacy, world leaders are coming together to solve the global crisis. From climate change to international trade, the next decade will be pivotal...</p>
+        </div>
+
+        <div id="sports" class="tab-content">
+            <h2 class="article-title">Sports: Football's Biggest Match</h2>
+            <img src="https://via.placeholder.com/800x400?text=Football+Match" alt="Football Match" class="article-image">
+            <p class="article-content">The much-anticipated match between the top two football teams is finally here! Fans around the world are eagerly awaiting this historic game that could change the landscape of the sport...</p>
+        </div>
+
+        <div id="entertainment" class="tab-content">
+            <h2 class="article-title">Entertainment: New Movie Release</h2>
+            <img src="https://via.placeholder.com/800x400?text=Movie+Release" alt="Movie Release" class="article-image">
+            <p class="article-content">The latest blockbuster movie has hit the screens! Directed by an acclaimed filmmaker, this movie is expected to break records worldwide...</p>
+        </div>
+
+        <div id="technology" class="tab-content">
+            <h2 class="article-title">Technology: The Future of AI</h2>
+            <img src="https://via.placeholder.com/800x400?text=AI+Future" alt="Artificial Intelligence" class="article-image">
+            <p class="article-content">Artificial Intelligence is transforming every industry. Experts believe that the future of AI could bring new breakthroughs in healthcare, finance, and even space exploration...</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 Daily News. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

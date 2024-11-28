@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../domain/stores/user_store.dart';
 import '../../../helpers/extensions.dart';
 import '../../../helpers/helpers.dart';
 import '../../../helpers/styles/styles.dart';
@@ -12,16 +11,10 @@ import '../../../di/service_locator.dart';
 import '../auth_cubit.dart';
 import '../auth_state.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  final authCubit = getIt<AuthCubit>();
-  String role = getIt<UserStore>().appUser.role!;
+  static final authCubit = getIt<AuthCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           child: Text(
-                            'register as $role',
+                            'register as ${state.role}',
                             style: Styles.mediumStyle(
                               fontSize: 15,
                               color: context.colorScheme.primary,

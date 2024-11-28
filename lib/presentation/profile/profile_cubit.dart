@@ -25,21 +25,8 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> getUser() async {
     if (state.user.id == null) {
-      getIt<UserStore>().getUser().then((user) => {
-            if (user == null)
-              {
-                userRepository
-                    .getProfile()
-                    .then((response) => response.fold((error) {}, (user) {
-                          emit(state.copyWith(user: user));
-                          getIt<UserStore>().setUser(user);
-                        })),
-              }
-            else
-              {
-                emit(state.copyWith(user: user)),
-              }
-          });
+      final user = getIt<UserStore>().appUser;
+      emit(state.copyWith(user: user));
     }
   }
 

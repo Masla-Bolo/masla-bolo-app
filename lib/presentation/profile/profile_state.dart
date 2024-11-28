@@ -2,9 +2,6 @@ import '../../domain/entities/issue_entity.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/model/paginate.dart';
 
-import '../../di/service_locator.dart';
-import '../../domain/stores/user_store.dart';
-
 class ProfileState {
   UserEntity user;
   ProfileState({
@@ -12,7 +9,7 @@ class ProfileState {
   });
 
   factory ProfileState.empty() => ProfileState(
-        user: getIt<UserStore>().appUser,
+        user: UserEntity.empty(),
       );
 
   copyWith({

@@ -130,6 +130,19 @@ class IssueHelper extends Equatable {
     }
   }
 
+  static int getValue(
+    IssueStatus status,
+    List<IssueStatus> totalStatuses,
+  ) {
+    Map<int, IssueStatus> map = {
+      for (int i = 0; i < totalStatuses.length; i++) i: totalStatuses[i]
+    };
+    if (map.containsValue(status)) {
+      return map.entries.firstWhere((entry) => entry.value == status).key;
+    }
+    return 0;
+  }
+
   @override
   List<Object?> get props => [isSelected, item];
 }

@@ -4,13 +4,13 @@ import '../../auth/auth_navigator.dart';
 
 class PresentationAuthModule {
   static Future<void> configurePresentaionAuthModuleInjection() async {
-    getIt.registerSingleton<AuthNavigator>(AuthNavigator(getIt()));
-    getIt.registerSingleton<AuthCubit>(AuthCubit(
-      getIt(),
-      getIt(),
-      getIt(),
-      getIt(),
-      getIt(),
-    ));
+    getIt.registerLazySingleton<AuthNavigator>(() => AuthNavigator(getIt()));
+    getIt.registerLazySingleton<AuthCubit>(() => AuthCubit(
+          getIt(),
+          getIt(),
+          getIt(),
+          getIt(),
+          getIt(),
+        ));
   }
 }

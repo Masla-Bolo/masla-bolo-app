@@ -10,15 +10,10 @@ import '../../../helpers/styles/styles.dart';
 import '../../../di/service_locator.dart';
 import 'info_card.dart';
 
-class GetStartedAbout extends StatefulWidget {
+class GetStartedAbout extends StatelessWidget {
   const GetStartedAbout({super.key});
 
-  @override
-  State<GetStartedAbout> createState() => _GetStartedAboutState();
-}
-
-class _GetStartedAboutState extends State<GetStartedAbout> {
-  final cubit = getIt<GetStartedCubit>();
+  static final cubit = getIt<GetStartedCubit>();
 
   @override
   Widget build(BuildContext context) {

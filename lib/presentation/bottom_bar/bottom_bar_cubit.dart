@@ -10,7 +10,9 @@ import 'bottom_bar_state.dart';
 
 class BottomBarCubit extends Cubit<BottomBarState> {
   final BottomBarNavigator navigation;
-  BottomBarCubit(this.navigation) : super(BottomBarState.empty());
+  BottomBarCubit(this.navigation) : super(BottomBarState.empty()) {
+    onInit();
+  }
 
   onInit() {
     final user = getIt<UserStore>().appUser;

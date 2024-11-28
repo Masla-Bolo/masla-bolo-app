@@ -26,6 +26,7 @@ abstract class IssueRepository {
   });
   Future<Either<IssueFailure, IssueEntity>> createIssue(IssueEntity issue);
   Future<Either<IssueFailure, IssueEntity>> updateIssue(IssueEntity issue);
+  Future<Either<IssueFailure, bool>> updateIssueStatus(IssueEntity issue);
   Future<Either<IssueFailure, void>> likeUnlikeIssue(int issueId);
   Future<Either<IssueFailure, bool>> deleteIssue(int issueId);
 }

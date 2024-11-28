@@ -82,9 +82,7 @@ class NotificationService {
     if (message?.data != null) {
       var notification =
           NotificationJson.fromJson(message?.data ?? {}).toDomain();
-      notification.isNew =
-          true; // if isNew is true, you can change that notification UI to show the user that this is the new One.
-      // adding the incoming notification to the notification list maintained in your application.
+      notification.isNew = true;
       getIt<NotificationCubit>().addNotification(notification);
     }
   }

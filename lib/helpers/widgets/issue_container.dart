@@ -14,15 +14,17 @@ class IssueContainer extends StatelessWidget {
     required this.onTap,
     required this.issue,
     required this.image,
+    this.isUser = true,
   });
   final IssueEntity issue;
   final void Function() onTap;
   final String? image;
+  final bool isUser;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      // onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Container(

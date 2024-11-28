@@ -5,7 +5,9 @@ import '../../profile/components/settings/settings_sub_screens/like_issue/like_i
 
 class LikeIssueModule {
   static Future<void> configureLikeIssueModuleInjection() async {
-    getIt.registerSingleton<LikeIssueNavigator>(LikeIssueNavigator(getIt()));
-    getIt.registerSingleton<LikeIssueCubit>(LikeIssueCubit(getIt(), getIt()));
+    getIt.registerLazySingleton<LikeIssueNavigator>(
+        () => LikeIssueNavigator(getIt()));
+    getIt.registerLazySingleton<LikeIssueCubit>(
+        () => LikeIssueCubit(getIt(), getIt()));
   }
 }

@@ -5,33 +5,33 @@ import '../../helpers/strings.dart';
 import '../entities/user_entity.dart';
 
 class UserStore extends Cubit<UserEntity> {
-  final LocalStorageRepository localStorageRepository;
-  UserEntity _user = UserEntity.empty();
-  UserEntity get appUser => _user;
-  UserStore(this.localStorageRepository) : super(UserEntity.empty());
+  final LocalStorageRepository _localStorageRepository;
 
-  setUser(UserEntity user) async {
-    await localStorageRepository
-        .setUser(userKey, user)
-        .then((resp) => resp.fold((error) {}, (success) {
-              _user = user;
-              emit(_user);
-            }));
+  UserStore(this._localStorageRepository) : super(UserEntity.empty());
+
+  UserEntity get appUser => state;
+
+  Future<void> setUser(UserEntity user) async {
+    try {
+      final result = await _localStorageRepository.setUser(userKey, user);
+      result.fold(
+        (error) => {},
+        (_) => emit(user),
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<UserEntity?> getUser() async {
-    if (appUser.id != null) {
-      return appUser;
-    }
-    return localStorageRepository.getUser(userKey).then(
-          (result) => result.fold(
-            (left) {
-              return null;
-            },
-            (user) {
-              return user;
-            },
-          ),
-        );
+    if (state.id != null) return state;
+    final result = await _localStorageRepository.getUser(userKey);
+    return result.fold(
+      (error) => null,
+      (user) {
+        emit(user);
+        return user;
+      },
+    );
   }
 }

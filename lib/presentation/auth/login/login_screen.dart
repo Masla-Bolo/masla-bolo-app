@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../di/service_locator.dart';
-import '../../../domain/stores/user_store.dart';
 import '../../../helpers/extensions.dart';
 import '../../../helpers/helpers.dart';
 import '../../../helpers/styles/app_images.dart';
@@ -14,16 +13,10 @@ import '../../../helpers/widgets/input_field.dart';
 import '../auth_cubit.dart';
 import '../auth_state.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final authCubit = getIt<AuthCubit>();
-  String role = getIt<UserStore>().appUser.role!;
+  static final authCubit = getIt<AuthCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         20.verticalSpace,
                         ElevatedButton(
                           onPressed: () {
-                            loader(() => authCubit.login(role));
+                            loader(() => authCubit.login(state.role));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: context.colorScheme.onPrimary,
@@ -129,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           child: Text(
-                            "sign in as $role",
+                            "sign in as ${state.role}",
                             style: Styles.mediumStyle(
                               fontSize: 15,
                               color: context.colorScheme.primary,
@@ -162,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ]),
                         ),
                         15.verticalSpace,
-                        if (role == "user") ...[
+                        if (state.role == "user") ...[
                           Row(
                             children: [
                               const Expanded(child: Divider()),

@@ -9,7 +9,6 @@ import '../../helpers/helpers.dart';
 import '../../service/location_service.dart';
 import '../../service/permission_service.dart';
 import 'auth_navigator.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../helpers/strings.dart';
 
@@ -31,13 +30,6 @@ class AuthCubit extends Cubit<AuthState> {
     this.permissionService,
   ) : super(AuthState.initial());
 
-  void onInit() {
-    emit(state.copyWith(
-      loginKey: GlobalKey<FormState>(),
-      signUpKey: GlobalKey<FormState>(),
-    ));
-  }
-
   Future<void> login(String role) async {
     final isValid = state.loginKey.currentState?.validate() ?? false;
     if (isValid) {
@@ -46,7 +38,7 @@ class AuthCubit extends Cubit<AuthState> {
           .then((response) => response.fold((error) {
                 showToast(error.error);
               }, (user) {
-                if (!user.verified && user.role == "user") {
+                if (!(user.verified ?? false) && user.role == "user") {
                   return authRepository
                       .sendEmail(user.email!)
                       .then((response) => response.fold((error) {}, (value) {
@@ -92,50 +84,50 @@ class AuthCubit extends Cubit<AuthState> {
       showToast(
           "Location services are disabled, turn on your locations to create an account");
       return;
-    }
-
-    var role = getIt<UserStore>().appUser.role;
-    if (role == null) {
-      await localStorageRepository.getValue(roleKey).then(
-            (result) => result.fold(
-              (error) {
-                showToast("Choose your role first!").then((_) {
-                  goToGetStated();
-                });
-              },
-              (value) {
-                role = value;
-              },
-            ),
-          );
-    }
-    if (role != null) {
-      state.user.role = role;
-      state.user.location.latitude = locationService.position.latitude;
-      state.user.location.longitude = locationService.position.longitude;
-      return authRepository.register(state.user).then(
-            (response) => response.fold(
-              (error) {
-                showToast(error.error);
-              },
+    } else {
+      var role = getIt<UserStore>().appUser.role;
+      if (role == null) {
+        await localStorageRepository.getValue(roleKey).then(
               (result) => result.fold(
-                (email) {
-                  return authRepository
-                      .sendEmail(email)
-                      .then((response) => response.fold((error) {
-                            showToast(error.error);
-                          }, (value) {
-                            if (value) {
-                              goToVerifyEmail(email);
-                            }
-                          }));
+                (error) {
+                  showToast("Choose your role first!").then((_) {
+                    goToGetStated();
+                  });
                 },
-                (user) {
-                  navigation.goToBottomBar();
+                (value) {
+                  role = value;
                 },
               ),
-            ),
-          );
+            );
+      }
+      if (role != null) {
+        state.user.role = role;
+        state.user.location.latitude = locationService.position.latitude;
+        state.user.location.longitude = locationService.position.longitude;
+        return authRepository.register(state.user).then(
+              (response) => response.fold(
+                (error) {
+                  showToast(error.error);
+                },
+                (result) => result.fold(
+                  (email) {
+                    return authRepository
+                        .sendEmail(email)
+                        .then((response) => response.fold((error) {
+                              showToast(error.error);
+                            }, (value) {
+                              if (value) {
+                                goToVerifyEmail(email);
+                              }
+                            }));
+                  },
+                  (user) {
+                    navigation.goToBottomBar();
+                  },
+                ),
+              ),
+            );
+      }
     }
   }
 

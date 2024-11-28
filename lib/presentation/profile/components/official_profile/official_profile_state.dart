@@ -1,9 +1,7 @@
 import 'package:masla_bolo_app/domain/entities/official_entity.dart';
 import 'package:masla_bolo_app/domain/model/issue_json.dart';
 
-import '../../../../di/service_locator.dart';
 import '../../../../domain/entities/user_entity.dart';
-import '../../../../domain/stores/user_store.dart';
 import '../../profile_state.dart';
 
 final officialStatus = [
@@ -33,7 +31,7 @@ class OfficialProfileState {
           IssueStatus.officialSolved: MyIssuesState.empty(),
           IssueStatus.solved: MyIssuesState.empty(),
         },
-        user: getIt<UserStore>().appUser,
+        user: UserEntity.empty(),
       );
 
   copyWith({

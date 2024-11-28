@@ -10,20 +10,9 @@ import '../get_started_state.dart';
 import 'get_started_header.dart';
 import 'role_card.dart';
 
-class GetStartedRole extends StatefulWidget {
+class GetStartedRole extends StatelessWidget {
   const GetStartedRole({super.key});
-
-  @override
-  State<GetStartedRole> createState() => _GetStartedRoleState();
-}
-
-class _GetStartedRoleState extends State<GetStartedRole> {
-  final cubit = getIt<GetStartedCubit>();
-  @override
-  void initState() {
-    super.initState();
-    cubit.onInit();
-  }
+  static final cubit = getIt<GetStartedCubit>();
 
   @override
   Widget build(BuildContext context) {

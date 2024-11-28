@@ -11,33 +11,12 @@ import '../../../../../../di/service_locator.dart';
 import '../../../../../../helpers/styles/styles.dart';
 import '../../../../../../helpers/widgets/indicator.dart';
 
-class LikeIssuePage extends StatefulWidget {
+class LikeIssuePage extends StatelessWidget {
   const LikeIssuePage({
     super.key,
   });
 
-  @override
-  State<LikeIssuePage> createState() => _LikeIssuePageState();
-}
-
-class _LikeIssuePageState extends State<LikeIssuePage> {
-  final cubit = getIt<LikeIssueCubit>();
-  final scrollController = ScrollController();
-  @override
-  void initState() {
-    super.initState();
-    if (!cubit.state.isLoaded) {
-      cubit.getLikedIssues();
-    }
-    scrollController.addListener(() {
-      if (scrollController.hasClients) {
-        final threshold = scrollController.position.maxScrollExtent * 0.2;
-        if (scrollController.position.pixels >= threshold) {
-          cubit.scrollAndCall();
-        }
-      }
-    });
-  }
+  static final cubit = getIt<LikeIssueCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +52,7 @@ class _LikeIssuePageState extends State<LikeIssuePage> {
                         }
                       },
                       child: SingleChildScrollView(
-                        controller: scrollController,
+                        controller: state.scrollController,
                         physics: const AlwaysScrollableScrollPhysics(),
                         child: (!state.isLoaded)
                             ? ListView.builder(

@@ -14,7 +14,9 @@ class GetStartedCubit extends Cubit<GetStartedState> {
   GetStartedCubit(
     this.navigator,
     this.localStorageRepository,
-  ) : super(GetStartedState.empty());
+  ) : super(GetStartedState.empty()) {
+    onInit();
+  }
 
   onInit() {
     localStorageRepository.setValue(getStartedKey, "GET_STARTED");

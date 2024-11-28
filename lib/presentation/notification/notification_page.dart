@@ -87,7 +87,14 @@ class _NotificationPageState extends State<NotificationPage> {
                                             ),
                                           ),
                                         )
-                                      : ListView.builder(
+                                      : ListView.separated(
+                                          separatorBuilder: (context, index) {
+                                            return Divider(
+                                              color:
+                                                  context.colorScheme.secondary,
+                                              thickness: 0.3,
+                                            );
+                                          },
                                           physics:
                                               const NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,

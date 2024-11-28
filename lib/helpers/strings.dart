@@ -6,5 +6,5 @@ const allIssuesKey = "ALL-ISSUES";
 const myIssuesKey = "MY-ISSUES";
 const likedIssuesKey = "LIKED-ISSUES";
 const serviceInItKey = "SERVICE_INIT";
-const baseUrl = 'http://192.168.100.14:8000/api';
-String socketUrl(int id) => "ws://192.168.100.14:8000/ws/comments/$id/";
+const baseUrl = 'http://192.168.1.106:8000/api';
+String socketUrl(int id) => "ws://192.168.1.106:8000/ws/comments/$id/";

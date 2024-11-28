@@ -10,13 +10,14 @@ import '../../profile/profile_navigator.dart';
 
 class ProfileModule {
   static Future<void> configureProfileModuleInjection() async {
-    getIt.registerSingleton<ProfileNavigator>(ProfileNavigator(getIt()));
-    getIt.registerSingleton<ProfileCubit>(ProfileCubit(
-      getIt(),
-      getIt(),
-      getIt(),
-      getIt(),
-    ));
+    getIt.registerLazySingleton<ProfileNavigator>(
+        () => ProfileNavigator(getIt()));
+    getIt.registerLazySingleton<ProfileCubit>(() => ProfileCubit(
+          getIt(),
+          getIt(),
+          getIt(),
+          getIt(),
+        ));
     getIt.registerLazySingleton<OfficialProfileCubit>(
       () => OfficialProfileCubit(
           getIt(),

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:masla_bolo_app/data/local_storage/local_storage_repository.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
+import 'package:masla_bolo_app/presentation/home/components/issue/issue_helper.dart';
 
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/failures/issue_failure.dart';
@@ -149,6 +150,22 @@ class ApiIssueRepository implements IssueRepository {
     }
     final data = IssueJson.fromJson(response.data).toDomain();
     return right(data);
+  }
+
+  @override
+  Future<Either<IssueFailure, bool>> updateIssueStatus(
+    IssueEntity issue,
+  ) async {
+    final response = await networkRepository.patch(
+      url: '/issues/${issue.id}/',
+      data: {
+        'status': IssueHelper.getIssueStatus(issue.status),
+      },
+    );
+    if (response.failed) {
+      return left(IssueFailure(error: response.message));
+    }
+    return right(true);
   }
 
   @override

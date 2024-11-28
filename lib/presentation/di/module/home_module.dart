@@ -7,18 +7,18 @@ import '../../home/components/issue/issue_navigator.dart';
 
 class HomeModule {
   static Future<void> configureLikeHomeModuleInjection() async {
-    getIt.registerSingleton<IssueNavigator>(IssueNavigator(getIt()));
-    getIt.registerSingleton<IssueCubit>(IssueCubit(
-      getIt(),
-      getIt(),
-      getIt(),
-      getIt(),
-      getIt(),
-      getIt(),
-      getIt(),
-    ));
-    getIt
-        .registerSingleton<IssueDetailNavigator>(IssueDetailNavigator(getIt()));
+    getIt.registerLazySingleton<IssueNavigator>(() => IssueNavigator(getIt()));
+    getIt.registerLazySingleton<IssueCubit>(() => IssueCubit(
+          getIt(),
+          getIt(),
+          getIt(),
+          getIt(),
+          getIt(),
+          getIt(),
+          getIt(),
+        ));
+    getIt.registerLazySingleton<IssueDetailNavigator>(
+        () => IssueDetailNavigator(getIt()));
     getIt.registerFactoryParam<IssueDetailCubit, IssueDetailInitialParams,
         dynamic>(
       (params, _) => IssueDetailCubit(

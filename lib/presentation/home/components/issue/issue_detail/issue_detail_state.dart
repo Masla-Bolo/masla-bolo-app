@@ -11,8 +11,10 @@ class IssueDetailState {
   IssueEntity currentIssue;
   TextEditingController commentController;
   WebSocketChannel? channel;
+  ScrollController scrollController;
   IssueDetailState({
     this.issueLoading = false,
+    required this.scrollController,
     required this.currentIssue,
     required this.comments,
     required this.commentController,
@@ -35,6 +37,7 @@ class IssueDetailState {
   }) =>
       IssueDetailState(
         issueLoading: issueLoading ?? this.issueLoading,
+        scrollController: scrollController,
         currentIssue: currentIssue ?? this.currentIssue,
         channel: channel ?? this.channel,
         replyTo: replyTo ?? replyTo,
@@ -46,6 +49,7 @@ class IssueDetailState {
   factory IssueDetailState.empty() => IssueDetailState(
         currentIssue: IssueEntity.empty(),
         channel: null,
+        scrollController: ScrollController(),
         commentController: TextEditingController(),
         replyTo: null,
         comments: List<CommentsEntity>.empty(growable: true),

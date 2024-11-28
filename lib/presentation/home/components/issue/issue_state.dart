@@ -8,7 +8,9 @@ class IssueState {
   bool isLoaded;
   bool isScrolled;
   ScrollController scrollController;
+  FocusNode focusNode;
   IssueState({
+    required this.focusNode,
     this.isLoaded = false,
     required this.scrollController,
     this.isScrolled = false,
@@ -24,6 +26,7 @@ class IssueState {
     ScrollController? scrollController,
   }) =>
       IssueState(
+        focusNode: focusNode,
         scrollController: scrollController ?? this.scrollController,
         isScrolled: isScrolled ?? this.isScrolled,
         isLoaded: isLoaded ?? this.isLoaded,
@@ -32,6 +35,7 @@ class IssueState {
 
   factory IssueState.empty() => IssueState(
         scrollController: ScrollController(),
+        focusNode: FocusNode(),
         issuesPagination: Paginate.empty(),
         isLoaded: false,
       );

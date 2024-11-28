@@ -9,14 +9,14 @@ class UserEntity {
   String? image;
   int? id;
   bool? isSocial;
-  bool verified;
+  bool? verified;
   String? role;
   Location location;
   UserEntity({
     this.isSocial,
     this.image,
     Location? location,
-    this.verified = false,
+    this.verified,
     this.email,
     this.role = "user",
     this.password,
@@ -32,7 +32,7 @@ class UserEntity {
     int? id,
     bool? isSocial,
     Location? location,
-    bool? emailVerified,
+    bool? verified,
     String? role,
   }) =>
       UserEntity(
@@ -40,7 +40,7 @@ class UserEntity {
         isSocial: isSocial ?? this.isSocial,
         image: image ?? this.image,
         id: id ?? this.id,
-        verified: emailVerified ?? verified,
+        verified: verified ?? this.verified,
         email: email ?? this.email,
         role: role ?? this.role,
         password: password ?? this.password,
@@ -52,7 +52,6 @@ class UserEntity {
         username: '',
         verified: false,
         role: "user",
-        location: Location.empty(),
         id: null,
         password: "",
         image: "",

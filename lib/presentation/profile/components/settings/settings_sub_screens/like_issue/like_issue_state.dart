@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../../../../../domain/entities/issue_entity.dart';
 import '../../../../../../domain/model/paginate.dart';
 
@@ -6,8 +8,11 @@ class LikeIssueState {
   final bool isLoaded;
   final bool isScrolled;
   Map<String, dynamic> queryParams;
+  ScrollController scrollController;
+
   LikeIssueState({
     this.isScrolled = false,
+    required this.scrollController,
     required this.queryParams,
     required this.issuesPagination,
     this.isLoaded = false,
@@ -16,6 +21,7 @@ class LikeIssueState {
   factory LikeIssueState.empty() => LikeIssueState(
         issuesPagination: Paginate.empty(),
         queryParams: {},
+        scrollController: ScrollController(),
       );
 
   LikeIssueState copyWith({
@@ -24,6 +30,7 @@ class LikeIssueState {
     bool? isScrolled,
   }) {
     return LikeIssueState(
+        scrollController: scrollController,
         isScrolled: isScrolled ?? this.isScrolled,
         queryParams: {},
         issuesPagination: issuesPagination ?? this.issuesPagination,

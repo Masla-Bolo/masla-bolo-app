@@ -6,17 +6,28 @@ import 'package:masla_bolo_app/presentation/profile/components/official_profile/
 import 'package:masla_bolo_app/presentation/profile/components/official_profile/official_profile_state.dart';
 import 'package:masla_bolo_app/presentation/profile/components/official_profile/official_verification.dart';
 
-class OfficialProfile extends StatelessWidget {
+class OfficialProfile extends StatefulWidget {
   const OfficialProfile({super.key});
 
-  static final cubit = getIt<OfficialProfileCubit>();
+  @override
+  State<OfficialProfile> createState() => _OfficialProfileState();
+}
+
+class _OfficialProfileState extends State<OfficialProfile> {
+  final cubit = getIt<OfficialProfileCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (!cubit.state.isAllIssuesLoaded) cubit.onInit();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OfficialProfileCubit, OfficialProfileState>(
         bloc: cubit,
         builder: (context, state) {
-          final officialVerified = state.user.verified;
+          final officialVerified = state.user.verified ?? false;
           return officialVerified
               ? const OfficialIssues()
               : const OfficialVerification();

@@ -12,6 +12,7 @@ class AuthState {
   List<Otp> otpCodes;
   bool canResend;
   int timeLeft;
+  String get role => getIt<UserStore>().appUser.role!;
   final GlobalKey<FormState> loginKey;
   final GlobalKey<FormState> signUpKey;
   Timer? timer;

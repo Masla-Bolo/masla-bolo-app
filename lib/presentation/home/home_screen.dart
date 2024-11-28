@@ -12,28 +12,11 @@ import '../../helpers/styles/styles.dart';
 import 'components/issue/issue_post/issue_post.dart';
 import 'components/issue/issue_post/issue_post_shimmer.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final issueCubit = getIt<IssueCubit>();
-  final controller = TextEditingController();
-  late final FocusNode focusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    focusNode = FocusNode();
-    if (!issueCubit.state.isLoaded) {
-      issueCubit.init().then((_) {
-        issueCubit.initServices();
-      });
-    }
-  }
+  static final issueCubit = getIt<IssueCubit>();
+  static final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

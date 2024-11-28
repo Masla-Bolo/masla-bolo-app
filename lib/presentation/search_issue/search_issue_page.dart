@@ -15,22 +15,10 @@ import '../home/components/issue/issue_post/issue_post.dart';
 import '../home/components/issue/issue_post/issue_post_params.dart';
 import '../home/components/issue/issue_post/issue_post_shimmer.dart';
 
-class SearchIssuePage extends StatefulWidget {
+class SearchIssuePage extends StatelessWidget {
   const SearchIssuePage({super.key});
 
-  @override
-  State<SearchIssuePage> createState() => _SearchIssuePageState();
-}
-
-class _SearchIssuePageState extends State<SearchIssuePage> {
-  final cubit = getIt<SearchIssueCubit>();
-  late final FocusNode focusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    focusNode = FocusNode();
-  }
+  static final cubit = getIt<SearchIssueCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +41,7 @@ class _SearchIssuePageState extends State<SearchIssuePage> {
                             width: 0.85.sw,
                             height: 35,
                             child: InputField(
-                              focusNode: focusNode,
+                              focusNode: state.focusNode,
                               onTap: null,
                               borderRadius: 10,
                               showCrossIcon: state.queryParams["search"] != null

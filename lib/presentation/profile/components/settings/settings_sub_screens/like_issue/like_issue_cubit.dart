@@ -11,7 +11,19 @@ class LikeIssueCubit extends Cubit<LikeIssueState> {
 
   final IssueRepository issueRepository;
   LikeIssueCubit(this.navigation, this.issueRepository)
-      : super(LikeIssueState.empty());
+      : super(LikeIssueState.empty()) {
+    if (!state.isLoaded) {
+      getLikedIssues();
+    }
+    state.scrollController.addListener(() {
+      if (state.scrollController.hasClients) {
+        final threshold = state.scrollController.position.maxScrollExtent * 0.2;
+        if (state.scrollController.position.pixels >= threshold) {
+          scrollAndCall();
+        }
+      }
+    });
+  }
 
   getLikedIssues({
     bool clearAll = false,
