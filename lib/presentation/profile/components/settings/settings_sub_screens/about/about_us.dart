@@ -41,7 +41,7 @@ class AboutUs extends StatelessWidget {
                 const InfoCard(
                   title: "🤝 Our Community Focus",
                   subTitle:
-                      "Masla Bolo is more than a platform; it’s a community built on trust and understanding. We connect users with like-minded individuals.",
+                      "Report It is more than a platform; it’s a community built on trust and understanding. We connect users with like-minded individuals.",
                 ),
                 10.verticalSpace,
                 const InfoCard(

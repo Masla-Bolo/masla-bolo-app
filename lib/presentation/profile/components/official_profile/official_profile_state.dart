@@ -15,10 +15,12 @@ class OfficialProfileState {
   bool isAllIssuesLoaded;
   OfficialEntity official;
   UserEntity user;
+  bool selectionEnabled;
   Map<IssueStatus, MyIssuesState> allIssues;
 
   OfficialProfileState({
     required this.user,
+    this.selectionEnabled = false,
     required this.allIssues,
     this.isAllIssuesLoaded = false,
     OfficialEntity? official,
@@ -31,16 +33,19 @@ class OfficialProfileState {
           IssueStatus.officialSolved: MyIssuesState.empty(),
           IssueStatus.solved: MyIssuesState.empty(),
         },
+        selectionEnabled: false,
         user: UserEntity.empty(),
       );
 
   copyWith({
     OfficialEntity? official,
     bool? isAllIssuesLoaded,
+    bool? selectionEnabled,
     Map<IssueStatus, MyIssuesState>? allIssues,
     UserEntity? user,
   }) =>
       OfficialProfileState(
+        selectionEnabled: selectionEnabled ?? this.selectionEnabled,
         isAllIssuesLoaded: isAllIssuesLoaded ?? this.isAllIssuesLoaded,
         allIssues: allIssues ?? this.allIssues,
         user: user ?? this.user,

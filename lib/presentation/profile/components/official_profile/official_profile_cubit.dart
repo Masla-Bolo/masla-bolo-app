@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masla_bolo_app/main.dart';
@@ -36,10 +34,6 @@ class OfficialProfileCubit extends Cubit<OfficialProfileState> {
     });
   }
 
-  emwit() {
-    log("Verified: ${state.user.verified}");
-  }
-
   refreshIssues(IssueStatus status) {
     baseProfileIssuesService.refreshIssues(status);
   }
@@ -71,5 +65,29 @@ class OfficialProfileCubit extends Cubit<OfficialProfileState> {
     if (value >= 0 && value < controller.length) {
       controller.animateTo(value);
     }
+  }
+
+  void onLongPressIssue(IssueEntity issue) {
+    emit(state.copyWith(
+      selectionEnabled: !state.selectionEnabled,
+    ));
+  }
+
+  void disableIssueSelection() {
+    state.allIssues.map((key, val) {
+      final value = val.issues.results.map((issue) {
+        issue.selected = false;
+        return issue;
+      });
+      return MapEntry(key, value);
+    });
+    emit(state.copyWith(selectionEnabled: false, allIssues: state.allIssues));
+  }
+
+  void toggleIssueSelection(IssueEntity issue) {
+    issue.selected = !issue.selected;
+    emit(state.copyWith(
+      allIssues: state.allIssues,
+    ));
   }
 }

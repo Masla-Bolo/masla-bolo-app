@@ -97,6 +97,15 @@ class _BaseProfileTabViewState extends State<BaseProfileTabView> {
                                   image: state.user.image,
                                   isUser: state.user.role == "user",
                                   issue: issue,
+                                  toggleIssueSelection: () {
+                                    widget.params.toggleIssueSelection
+                                        ?.call(issue);
+                                  },
+                                  selectionEnabled:
+                                      widget.params.selectionEnabled,
+                                  onLongPress: () {
+                                    widget.params.onLongPressIssue?.call(issue);
+                                  },
                                   onTap: () {
                                     widget.params.goToIssueDetail(issue);
                                   },

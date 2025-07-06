@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen>
                       child: Column(
                         children: [
                           Text(
-                            'Masla Bolo',
+                            'Report It',
                             style: Styles.boldStyle(
                               family: FontFamily.dmSans,
                               fontSize: 36,

@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         60.verticalSpace,
                         Center(
-                          child: Text('MASLA BOLO!',
+                          child: Text('Report It!',
                               style: Styles.boldStyle(
                                 fontSize: 30,
                                 color: context.colorScheme.onPrimary,

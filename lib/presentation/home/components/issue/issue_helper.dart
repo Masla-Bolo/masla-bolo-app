@@ -87,8 +87,8 @@ class IssueHelper extends Equatable {
         return "official_solved";
       case IssueStatus.solved:
         return "solved";
-      default:
-        return "not_approved";
+      // default:
+      //   return "not_approved";
     }
   }
 

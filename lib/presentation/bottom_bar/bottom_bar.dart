@@ -38,7 +38,7 @@ class BottomBar extends StatelessWidget {
                           cubit: getIt(),
                           homeCubit: getIt(),
                         )
-                      : null,
+                      : const SizedBox.shrink(),
             ),
           );
         });

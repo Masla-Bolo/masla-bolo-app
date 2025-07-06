@@ -22,10 +22,12 @@ class IssueEntity {
   Location location;
   bool seeMore; // for issuePost seemore-seeLess
   int currentIndex; // for issuePost pageView
+  bool selected; // for officialIssueSelection
 
   IssueEntity({
     this.seeMore = false,
     this.currentIndex = 0,
+    this.selected = false,
     required this.id,
     required this.location,
     required this.description,

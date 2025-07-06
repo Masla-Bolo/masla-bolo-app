@@ -141,11 +141,11 @@ class SearchIssueCubit extends Cubit<SearchIssueState> {
       return;
     }
     if (state.hasChanges) {
-      final shouldDiscard = await showConfirmationDialog(
-          "Are you sure you want to discard your changes");
-      if (shouldDiscard) {
-        _closeDrawerAndResetState();
-      }
+      // final shouldDiscard = await showConfirmationDialog(
+      //     "Are you sure you want to discard your changes");
+      // if (shouldDiscard) {
+      //   _closeDrawerAndResetState();
+      // }
     } else {
       emit(state.copyWith(canPop: true));
     }
@@ -163,14 +163,14 @@ class SearchIssueCubit extends Cubit<SearchIssueState> {
     getIssues(clearAll: true);
   }
 
-  void _closeDrawerAndResetState() {
-    emit(state.copyWith(
-      categories: state.previousCategoryCopy,
-      sortBy: state.previousSortBy,
-      canPop: true,
-    ));
-    navigation.pop();
-  }
+  // void _closeDrawerAndResetState() {
+  //   emit(state.copyWith(
+  //     categories: state.previousCategoryCopy,
+  //     sortBy: state.previousSortBy,
+  //     canPop: true,
+  //   ));
+  //   navigation.pop();
+  // }
 
   void clearAllCategoryFilters() {
     final categories = state.categories

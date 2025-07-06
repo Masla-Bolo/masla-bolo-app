@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "MASLA BOLO",
+                            "Report It",
                             style: Styles.boldStyle(
                               fontSize: 20,
                               color: context.colorScheme.onPrimary,

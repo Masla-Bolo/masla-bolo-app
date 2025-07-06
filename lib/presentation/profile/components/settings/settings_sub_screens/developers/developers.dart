@@ -41,38 +41,40 @@ class Developers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              10.verticalSpace,
-              Header(
-                title: "Developers",
-                fontSize: 22,
-                onBackTap: () => Navigator.of(context).pop(),
-              ),
-              20.verticalSpace,
-              _buildDeveloperCard(
-                context,
-                name: "Muhammad Ashar",
-                role: "Full Stack & Flutter Developer",
-                description:
-                    "Experienced in Flutter, and backend services, with expertise in building interactive, full-stack applications. Currently exploring cloud services and AI for interactive experiences.",
-                email: "asheressani@gmail.com",
-                phone: "+923312079579",
-              ),
-              const SizedBox(height: 20),
-              _buildDeveloperCard(
-                context,
-                name: "Osama Ali Khan",
-                role: "Python Developer & Aspiring Data Analyst",
-                description:
-                    "Specializes in Python programming with a growing interest in data analysis. Passionate about uncovering insights through data-driven solutions.",
-                email: "osamakhannnn499@gmail.com",
-                phone: "+923196172259",
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                10.verticalSpace,
+                Header(
+                  title: "Developers",
+                  fontSize: 22,
+                  onBackTap: () => Navigator.of(context).pop(),
+                ),
+                20.verticalSpace,
+                _buildDeveloperCard(
+                  context,
+                  name: "Muhammad Ashar",
+                  role: "Full Stack & Flutter Developer",
+                  description:
+                      "Experienced in Flutter, and backend services, with expertise in building interactive, full-stack applications. Currently exploring cloud services and AI for interactive experiences.",
+                  email: "asheressani@gmail.com",
+                  phone: "+923312079579",
+                ),
+                const SizedBox(height: 20),
+                _buildDeveloperCard(
+                  context,
+                  name: "Osama Ali Khan",
+                  role: "Python Developer & Aspiring Data Analyst",
+                  description:
+                      "Specializes in Python programming with a growing interest in data analysis. Passionate about uncovering insights through data-driven solutions.",
+                  email: "osamakhannnn499@gmail.com",
+                  phone: "+923196172259",
+                ),
+              ],
+            ),
           ),
         ),
       ),

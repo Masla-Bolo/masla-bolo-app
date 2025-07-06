@@ -46,7 +46,7 @@ class GetStartedAbout extends StatelessWidget {
                       20.verticalSpace,
                       Center(
                         child: Text(
-                          "Welcome to Masla Bolo!",
+                          "Welcome to Report It!",
                           style: Styles.boldStyle(
                             fontSize: 30,
                             color: context.colorScheme.onPrimary,
@@ -69,7 +69,7 @@ class GetStartedAbout extends StatelessWidget {
                       ),
                       30.verticalSpace,
                       const InfoCard(
-                        title: "🚧 Why Masla Bolo?",
+                        title: "🚧 Why Report It?",
                         subTitle:
                             "Easily report infrastructure issues like potholes, broken lights, and illegal dumping. Help us improve your city!",
                       ),
