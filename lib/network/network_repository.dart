@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:masla_bolo_app/service/network_monitor.dart';
 

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:masla_bolo_app/di/service_locator.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
+import 'package:masla_bolo_app/presentation/issue_map/issue_map_cubit.dart';
 import 'package:masla_bolo_app/presentation/notification/notification_cubit.dart';
 import 'package:masla_bolo_app/presentation/search_issue/search_issue_cubit.dart';
 import 'package:masla_bolo_app/service/permission_service.dart';
@@ -60,6 +61,7 @@ class IssueCubit extends Cubit<IssueState> {
     await Future.wait([
       getIssues(),
       getIt<SearchIssueCubit>().getIssues(),
+      getIt<IssueMapCubit>().fetchIssues(),
       getIt<NotificationCubit>().getMyNotifications(),
     ]);
   }

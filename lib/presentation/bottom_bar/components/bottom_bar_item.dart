@@ -1,5 +1,4 @@
-import 'package:masla_bolo_app/presentation/search_issue/search_issue_page.dart';
-
+import 'package:masla_bolo_app/presentation/issue_map/issue_map.dart';
 import '../../home/home_screen.dart';
 import '../../add_issue/create_issue_screen.dart';
 import '../../notification/notification_page.dart';
@@ -22,7 +21,7 @@ class BottomBarItem {
     ),
     BottomBarItem(
       image: AppImages.search,
-      page: const SearchIssuePage(),
+      page: const IssueMapScreen(),
     ),
     BottomBarItem(
       image: AppImages.writeGrey,
@@ -45,7 +44,7 @@ class BottomBarItem {
     ),
     BottomBarItem(
       image: AppImages.search,
-      page: const SearchIssuePage(),
+      page: const IssueMapScreen(),
     ),
     BottomBarItem(
       image: AppImages.bell,

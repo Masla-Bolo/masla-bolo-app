@@ -3,9 +3,11 @@ import 'package:masla_bolo_app/data/local_storage/local_storage_repository.dart'
 import 'package:masla_bolo_app/helpers/strings.dart';
 import 'package:masla_bolo_app/presentation/home/components/issue/issue_helper.dart';
 
+import '../../domain/entities/issue_coordinates_entity.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/failures/issue_failure.dart';
 import '../../domain/failures/local_storage_failure.dart';
+import '../../domain/model/issue_coordinates_model.dart';
 import '../../domain/model/paginate.dart';
 import '../../domain/repositories/issue_repository.dart';
 import '../../domain/model/issue_json.dart';
@@ -46,6 +48,20 @@ class ApiIssueRepository implements IssueRepository {
     );
 
     return right(pagination);
+  }
+
+  @override
+  Future<Either<IssueFailure, List<IssueCoordinatesEntity>>>
+      getIssuesCoordinates() async {
+    final response = await networkRepository.get(url: "/issues/locations/");
+    if (response.failed) {
+      return left(IssueFailure(error: response.message));
+    }
+    final data = response.data as List;
+    final issueCoordinates =
+        data.map((e) => IssueCoordinatesModel.fromJson(e).toDomain()).toList();
+
+    return right(issueCoordinates);
   }
 
   @override

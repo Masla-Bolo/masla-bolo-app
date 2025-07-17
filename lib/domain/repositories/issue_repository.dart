@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:masla_bolo_app/domain/entities/issue_coordinates_entity.dart';
 import 'package:masla_bolo_app/domain/failures/issue_failure.dart';
 
 import '../entities/issue_entity.dart';
@@ -10,6 +11,10 @@ abstract class IssueRepository {
     Map<String, dynamic>? queryParams,
     List<IssueEntity> previousIssues,
   });
+
+  Future<Either<IssueFailure, List<IssueCoordinatesEntity>>>
+      getIssuesCoordinates();
+
   Future<Either<IssueFailure, Paginate<IssueEntity>>> myIssues({
     String url = '/issues/my/',
     Map<String, dynamic>? queryParams,

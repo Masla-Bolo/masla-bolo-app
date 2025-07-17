@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -64,6 +66,7 @@ class DioClient {
     dynamic data;
     int code = 200;
     String success = "false";
+    log("ERROR IN DIO: ${error.message}");
     if (error.response?.data != null) {
       final responseData = error.response!.data;
       code = responseData["code"] ?? 200;

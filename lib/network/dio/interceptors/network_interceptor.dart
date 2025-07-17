@@ -14,9 +14,12 @@ class NetworkInterceptor extends Interceptor {
     var body = response.data;
     if (body != null) {
       if (body["data"] != null) {
-        if (body["data"]['token'] != null) {
-          _tokenValue = body['data']['token'];
-          localStorageRepository.setValue(tokenKey, _tokenValue);
+        final data = body["data"];
+        if (data is Map<String, dynamic>) {
+          if (data['token'] != null) {
+            _tokenValue = data['token'];
+            localStorageRepository.setValue(tokenKey, _tokenValue);
+          }
         }
       }
     }

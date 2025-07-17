@@ -20,5 +20,6 @@ class RouteName {
   static const notificationSettings = "/notification-settings";
   static const privacyPolicy = "/privacy-policy";
   static const searchIssue = "/search-issue";
+  static const issueMap = "/issue-map";
   static const searchIssueFilter = "/search-issue-filter";
 }
