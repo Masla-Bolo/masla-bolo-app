@@ -1,6 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:masla_bolo_app/domain/entities/location.dart';
-
+import '../model/emergency_contact_model.dart';
 import '../model/issue_json.dart';
 import 'user_entity.dart';
 
@@ -20,12 +20,14 @@ class IssueEntity {
   DateTime updatedAt;
   UserEntity user;
   Location location;
+  EmergencyContactModel? emergencyContact;
   bool seeMore; // for issuePost seemore-seeLess
   int currentIndex; // for issuePost pageView
   bool selected; // for officialIssueSelection
 
   IssueEntity({
     this.seeMore = false,
+    this.emergencyContact,
     this.currentIndex = 0,
     this.selected = false,
     required this.id,

@@ -1,5 +1,6 @@
 import 'package:masla_bolo_app/domain/entities/location.dart';
 import 'package:masla_bolo_app/domain/model/base_model.dart';
+import 'package:masla_bolo_app/domain/model/emergency_contact_model.dart';
 import 'package:masla_bolo_app/presentation/home/components/issue/issue_helper.dart';
 
 import '../entities/user_entity.dart';
@@ -31,9 +32,11 @@ class IssueJson implements BaseModel<IssueEntity> {
   DateTime updatedAt;
   UserEntity user;
   Location location;
+  EmergencyContactModel? emergencyContact;
 
   IssueJson({
     Location? location,
+    this.emergencyContact,
     required this.id,
     required this.isLiked,
     required this.description,
@@ -59,6 +62,9 @@ class IssueJson implements BaseModel<IssueEntity> {
       categories: json['categories'].isNotEmpty
           ? getStringList(json["categories"])
           : [],
+      emergencyContact: json["emergency_contact"] != null
+          ? EmergencyContactModel.fromJson(json["emergency_contact"])
+          : null,
       likesCount: json['likes_count'] ?? 0,
       commentsCount: json['comments_count'] ?? 0,
       isAnonymous: json['is_anonymous'] ?? false,
@@ -86,6 +92,7 @@ class IssueJson implements BaseModel<IssueEntity> {
         createdAt: issueEntity.createdAt,
         updatedAt: issueEntity.updatedAt,
         user: issueEntity.user,
+        emergencyContact: issueEntity.emergencyContact,
       );
 
   @override
@@ -105,6 +112,7 @@ class IssueJson implements BaseModel<IssueEntity> {
         createdAt: createdAt,
         updatedAt: updatedAt,
         user: user,
+        emergencyContact: emergencyContact,
       );
 
   Map<String, dynamic> createIssueToJson() {
@@ -133,6 +141,7 @@ class IssueJson implements BaseModel<IssueEntity> {
       "is_liked": isLiked,
       "created_at": createdAt.toIso8601String(),
       "updated_at": updatedAt.toIso8601String(),
+      "emergency_contact": emergencyContact?.toJson(),
     };
   }
 }

@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:masla_bolo_app/presentation/home/components/issue/issue_helper.dart';
 import '../../../../../../helpers/styles/app_images.dart';
+import 'emergency_contact/emergency_contact_button.dart';
+import 'emergency_contact/emergency_contact_sheet.dart';
 import 'issue_comment/issue_comments.dart';
 import '../issue_detail_cubit.dart';
 import '../issue_detail_state.dart';
@@ -104,6 +106,16 @@ class IssueDetailDiscussion extends StatelessWidget {
                   ],
                 ),
               ),
+              10.verticalSpace,
+              if (state.currentIssue.emergencyContact != null)
+                EmergencyContactButton(
+                  onTap: () {
+                    showEmergencyContactBottomSheet(
+                      context,
+                      state.currentIssue.emergencyContact!,
+                    );
+                  },
+                ),
               10.verticalSpace,
               Divider(
                 color: context.colorScheme.onPrimary,
