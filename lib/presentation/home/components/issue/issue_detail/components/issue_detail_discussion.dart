@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:masla_bolo_app/presentation/home/components/issue/issue_helper.dart';
+import '../../../../../../domain/model/issue_json.dart';
 import '../../../../../../helpers/styles/app_images.dart';
 import 'emergency_contact/emergency_contact_button.dart';
 import 'emergency_contact/emergency_contact_sheet.dart';
@@ -26,6 +27,9 @@ class IssueDetailDiscussion extends StatelessWidget {
     return BlocBuilder<IssueDetailCubit, IssueDetailState>(
         bloc: cubit,
         builder: (context, state) {
+          final raiseEligible =
+              (state.currentIssue.status != IssueStatus.notApproved &&
+                  state.currentIssue.status != IssueStatus.solved);
           return Column(
             children: [
               10.verticalSpace,
@@ -36,36 +40,42 @@ class IssueDetailDiscussion extends StatelessWidget {
                     Expanded(
                       child: OutlinedButton.icon(
                         onPressed: () {},
-                        icon: GestureDetector(
-                          onTap: () {
-                            cubit.likeUnlikeIssue();
-                          },
-                          child: SvgPicture.asset(
-                            state.currentIssue.isLiked
-                                ? AppImages.raised
-                                : AppImages.raise,
-                            height: 30,
-                            colorFilter: ColorFilter.mode(
-                              context.colorScheme.onPrimary,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                        ),
+                        icon: raiseEligible
+                            ? GestureDetector(
+                                onTap: () {
+                                  cubit.likeUnlikeIssue();
+                                },
+                                child: SvgPicture.asset(
+                                  state.currentIssue.isLiked
+                                      ? AppImages.raised
+                                      : AppImages.raise,
+                                  height: 30,
+                                  colorFilter: ColorFilter.mode(
+                                    context.colorScheme.onPrimary,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                              )
+                            : null,
                         label: Row(
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                cubit.likeUnlikeIssue();
-                              },
-                              child: Text(
-                                state.currentIssue.isLiked ? "Raised" : "Raise",
-                                style: Styles.boldStyle(
-                                  fontSize: 15,
-                                  color: context.colorScheme.onPrimary,
-                                  family: FontFamily.varela,
+                            if (raiseEligible) ...[
+                              GestureDetector(
+                                onTap: () {
+                                  cubit.likeUnlikeIssue();
+                                },
+                                child: Text(
+                                  state.currentIssue.isLiked
+                                      ? "Raised"
+                                      : "Raise",
+                                  style: Styles.boldStyle(
+                                    fontSize: 15,
+                                    color: context.colorScheme.onPrimary,
+                                    family: FontFamily.varela,
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                             const Spacer(),
                             Text(
                               state.currentIssue.likesCount < 1

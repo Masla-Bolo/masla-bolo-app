@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:masla_bolo_app/domain/model/issue_json.dart';
 import 'package:masla_bolo_app/helpers/styles/app_images.dart';
 import '../../../../../helpers/widgets/rounded_image.dart';
 import 'issue_post_params.dart';
@@ -187,37 +188,40 @@ class IssuePost extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        params.likeUnlikeIssue.call(params.issue);
-                      },
-                      child: SvgPicture.asset(
-                        params.issue.isLiked
-                            ? AppImages.raised
-                            : AppImages.raise,
-                        height: 22,
-                        colorFilter: ColorFilter.mode(
-                          context.colorScheme.onPrimary,
-                          BlendMode.srcIn,
+                    if (params.issue.status != IssueStatus.notApproved &&
+                        params.issue.status != IssueStatus.solved) ...[
+                      GestureDetector(
+                        onTap: () {
+                          params.likeUnlikeIssue.call(params.issue);
+                        },
+                        child: SvgPicture.asset(
+                          params.issue.isLiked
+                              ? AppImages.raised
+                              : AppImages.raise,
+                          height: 22,
+                          colorFilter: ColorFilter.mode(
+                            context.colorScheme.onPrimary,
+                            BlendMode.srcIn,
+                          ),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        params.likeUnlikeIssue.call(params.issue);
-                      },
-                      child: Text(
-                        params.issue.likesCount < 1
-                            ? "Raise"
-                            : "${IssueHelper.getLikesCount(params.issue.likesCount)} Raises",
-                        style: Styles.mediumStyle(
-                            fontSize: 12,
-                            color: context.colorScheme.onPrimary,
-                            family: FontFamily.varela),
+                      GestureDetector(
+                        onTap: () {
+                          params.likeUnlikeIssue.call(params.issue);
+                        },
+                        child: Text(
+                          params.issue.likesCount < 1
+                              ? "Raise"
+                              : "${IssueHelper.getLikesCount(params.issue.likesCount)} Raises",
+                          style: Styles.mediumStyle(
+                              fontSize: 12,
+                              color: context.colorScheme.onPrimary,
+                              family: FontFamily.varela),
+                        ),
                       ),
-                    ),
-                    5.horizontalSpace,
-                    const Text("•"),
+                      5.horizontalSpace,
+                      const Text("•"),
+                    ],
                     5.horizontalSpace,
                     GestureDetector(
                       onTap: () {

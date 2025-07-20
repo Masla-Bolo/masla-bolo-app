@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:masla_bolo_app/domain/entities/location.dart';
 
 import '../../domain/entities/user_entity.dart';
 import '../../domain/failures/auth_failure.dart';
@@ -29,6 +30,7 @@ class ApiAuthRepository implements AuthRepository {
     if (response.failed) {
       return left(AuthFailure(error: response.message));
     } else {
+      signInWithEmailPassword(email: email, password: password);
       final data = response.data['user'];
       final user = UserJson.fromData(data).toDomain();
       userStore.setUser(user);
@@ -36,7 +38,7 @@ class ApiAuthRepository implements AuthRepository {
     }
   }
 
-  // incase of user registering it will return a string with email and incase of admin it will return user in which there will be normal registration.
+  // incase of user registering it will return a string with email and incase of official it will return user in which there will be normal registration.
   @override
   Future<Either<AuthFailure, Either<String, UserEntity>>> register(
       UserEntity user) async {
@@ -47,11 +49,17 @@ class ApiAuthRepository implements AuthRepository {
     if (response.failed) {
       return left(AuthFailure(error: response.message));
     } else if (response.data['email'] != null && !response.failed) {
+      signInWithEmailPassword(
+          email: user.email ?? "", password: user.password ?? "");
       return right(left(response.data['email']));
+    } else if (response.data["user"] != null && !response.failed) {
+      signInWithEmailPassword(
+          email: user.email ?? "", password: user.password ?? "");
+      final newUser = UserJson.fromData(response.data['user']).toDomain();
+      userStore.setUser(newUser);
+      return right(right(newUser));
     } else {
-      final user = UserJson.fromData(response.data['user']).toDomain();
-      userStore.setUser(user);
-      return right(right(user));
+      return left(AuthFailure(error: response.message));
     }
   }
 
@@ -81,8 +89,17 @@ class ApiAuthRepository implements AuthRepository {
     return left(AuthFailure(error: response.message));
   }
 
+  Future<void> signInWithEmailPassword(
+      {required String email, required String password}) async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
+
   @override
-  Future<Either<AuthFailure, UserEntity>> googleSignIn() async {
+  Future<Either<AuthFailure, UserEntity>> googleSignIn(
+      Location location) async {
     final googleUser = await GoogleSignIn().signIn();
     if (googleUser == null) {
       return left(AuthFailure(error: "Not Attempted to sign in!"));
@@ -101,6 +118,7 @@ class ApiAuthRepository implements AuthRepository {
         image: result.user?.photoURL ?? '',
         isSocial: true,
         role: "user",
+        location: location,
       );
       GoogleSignIn().signOut();
 

@@ -120,6 +120,8 @@ class IssueJson implements BaseModel<IssueEntity> {
     return {
       'title': title,
       "location": location.toJson(),
+      "latitude": location.latitude,
+      "longitude": location.longitude,
       'description': description,
       'images': images,
       'categories': categories,

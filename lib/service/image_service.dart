@@ -11,18 +11,56 @@ class ImageService {
   final picker = ImagePicker();
   Future<XFile?> getImage(ImageSource source) async {
     final file = await picker.pickImage(source: source);
-    if (file != null) {
-      return file;
-    }
-    return null;
+    return file;
   }
 
   Future<List<XFile>> getImages() async {
     final files = await picker.pickMultiImage();
-    if (files.isNotEmpty) {
-      return files;
-    }
-    return [];
+    return files.isNotEmpty ? files : [];
+  }
+
+  Future<List<XFile>> showOptionsWithMulti() async {
+    final result = await showCupertinoModalPopup<List<XFile>>(
+      context: AppNavigation.context,
+      builder: (context) => CupertinoActionSheet(
+        actions: [
+          CupertinoActionSheetAction(
+            child: Text(
+              'Photo Gallery',
+              style: Styles.semiBoldStyle(
+                family: FontFamily.varela,
+                fontSize: 15,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+            onPressed: () async {
+              final files = await getImages();
+              if (context.mounted) {
+                Navigator.of(context).pop(files); // Always return List<XFile>
+              }
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: Text(
+              'Camera',
+              style: Styles.semiBoldStyle(
+                family: FontFamily.varela,
+                fontSize: 15,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+            onPressed: () async {
+              final file = await getImage(ImageSource.camera);
+              if (context.mounted) {
+                Navigator.of(context).pop(file != null ? [file] : []);
+              }
+            },
+          ),
+        ],
+      ),
+    );
+
+    return result ?? [];
   }
 
   Future<XFile?> showOptions() async {

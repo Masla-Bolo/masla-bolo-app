@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:masla_bolo_app/domain/entities/location.dart';
 import 'package:masla_bolo_app/presentation/auth/verify_email/otp.dart';
 
 import '../../di/service_locator.dart';
@@ -54,15 +55,25 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> googleSignIn() async {
-    return authRepository
-        .googleSignIn()
-        .then((response) => response.fold((error) {
-              showToast(error.error);
-            }, (user) {
-              if (user.id != null) {
-                navigation.goToBottomBar();
-              }
-            }));
+    await permissionService.permissionServiceCall();
+    final enabled = await locationService.getLocation();
+    if (!enabled) {
+      showToast(
+          "Location services are disabled, turn on your locations to create an account");
+      return;
+    } else {
+      return authRepository
+          .googleSignIn(Location(
+              latitude: locationService.position.latitude,
+              longitude: locationService.position.longitude))
+          .then((response) => response.fold((error) {
+                showToast(error.error);
+              }, (user) {
+                if (user.id != null) {
+                  navigation.goToBottomBar();
+                }
+              }));
+    }
   }
 
   void exitEmailVerification() async {

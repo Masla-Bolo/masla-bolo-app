@@ -88,6 +88,7 @@ class UserJson implements BaseModel<UserEntity> {
       "id": id,
       "role": role,
       "password": password,
+      "location": location.toJson(),
       "latitude": location.latitude,
       "longitude": location.longitude,
     };

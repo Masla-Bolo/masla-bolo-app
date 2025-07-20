@@ -28,7 +28,7 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
   ) : super(CreateIssueState.empty());
 
   Future<void> getImages() async {
-    final images = await imageHelper.getImages();
+    final images = await imageHelper.showOptionsWithMulti();
     if (images.isNotEmpty) {
       state.issue.fileImages.addAll(images);
       emit(state.copyWith(issue: state.issue));
@@ -60,28 +60,41 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
       return;
     }
 
-    final imagesFuture = imageHelper.uploadImages(state.issue.fileImages);
-    return imagesFuture.then((images) {
-      if (images.isEmpty) {
-        showToast("Provide an image or a video as a proof");
-      } else {
-        state.issue.images = images;
-        state.issue.location.latitude = locationService.position.latitude;
-        state.issue.location.longitude = locationService.position.longitude;
-        final categories = state.categories
-            .where((val) => val.isSelected)
-            .map((value) => value.item)
-            .toList();
-        state.issue.categories = categories;
-        issueRepository.createIssue(state.issue).then((_) {
-          getIt<BottomBarCubit>().updateIndex(0);
-          emit(state.copyWith(
+    final images = await imageHelper.uploadImages(state.issue.fileImages);
+
+    if (images.isEmpty) {
+      showToast("Provide an image or a video as a proof");
+      return;
+    }
+
+    state.issue.images = images;
+    state.issue.location.latitude = locationService.position.latitude;
+    state.issue.location.longitude = locationService.position.longitude;
+
+    final categories = state.categories
+        .where((val) => val.isSelected)
+        .map((value) => value.item)
+        .toList();
+
+    state.issue.categories = categories;
+
+    final response = await issueRepository.createIssue(state.issue);
+
+    response.fold(
+      (error) {
+        showToast(error.error);
+      },
+      (success) {
+        showToast("Issue created successfully");
+        getIt<BottomBarCubit>().updateIndex(0);
+        emit(
+          state.copyWith(
             issue: IssueEntity.empty(),
             categories: IssueHelper.cloneInitialCategories(),
-          ));
-        });
-      }
-    });
+          ),
+        );
+      },
+    );
   }
 
   void updateSelection(IssueHelper value) {
