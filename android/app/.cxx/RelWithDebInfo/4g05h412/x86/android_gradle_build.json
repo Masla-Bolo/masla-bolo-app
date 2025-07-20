@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "/home/asher/src/flutter_linux_3.22.2-stable/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/usr/bin/ninja",
+      "-C",
+      "/media/asher/Extra/GRINDING/Personal/Personal Projects/Masla Bolo/masla_bolo_app/android/app/.cxx/RelWithDebInfo/4g05h412/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/usr/bin/ninja",
+    "-C",
+    "/media/asher/Extra/GRINDING/Personal/Personal Projects/Masla Bolo/masla_bolo_app/android/app/.cxx/RelWithDebInfo/4g05h412/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {},
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/home/asher/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/home/asher/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}

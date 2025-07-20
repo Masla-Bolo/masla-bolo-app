@@ -1,0 +1,2 @@
+/media/asher/Extra/GRINDING/Personal/Personal Projects/Masla Bolo/masla_bolo_app/android/app/.cxx/RelWithDebInfo/4g05h412/x86/CMakeFiles/edit_cache.dir
+/media/asher/Extra/GRINDING/Personal/Personal Projects/Masla Bolo/masla_bolo_app/android/app/.cxx/RelWithDebInfo/4g05h412/x86/CMakeFiles/rebuild_cache.dir
