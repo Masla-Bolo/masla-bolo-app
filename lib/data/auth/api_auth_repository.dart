@@ -49,11 +49,11 @@ class ApiAuthRepository implements AuthRepository {
     if (response.failed) {
       return left(AuthFailure(error: response.message));
     } else if (response.data['email'] != null && !response.failed) {
-      signInWithEmailPassword(
+      createUserWithEmailPassword(
           email: user.email ?? "", password: user.password ?? "");
       return right(left(response.data['email']));
     } else if (response.data["user"] != null && !response.failed) {
-      signInWithEmailPassword(
+      createUserWithEmailPassword(
           email: user.email ?? "", password: user.password ?? "");
       final newUser = UserJson.fromData(response.data['user']).toDomain();
       userStore.setUser(newUser);
@@ -87,6 +87,14 @@ class ApiAuthRepository implements AuthRepository {
       return right(user);
     }
     return left(AuthFailure(error: response.message));
+  }
+
+  Future<void> createUserWithEmailPassword(
+      {required String email, required String password}) async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 
   Future<void> signInWithEmailPassword(

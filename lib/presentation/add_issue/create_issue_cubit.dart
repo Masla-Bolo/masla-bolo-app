@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
 import 'package:masla_bolo_app/service/permission_service.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/repositories/issue_repository.dart';
+import '../../helpers/styles/app_images.dart';
 import '../../service/location_service.dart';
 import '../bottom_bar/bottom_bar_cubit.dart';
 import '../home/components/issue/issue_helper.dart';
@@ -85,7 +87,12 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
         showToast(error.error);
       },
       (success) {
-        showToast("Issue created successfully");
+        showToast("Issue created successfully",
+            params: ToastParam(
+              backgroundColor: AppColor.green,
+              image: AppImages.successful,
+              textColor: AppColor.white,
+            ));
         getIt<BottomBarCubit>().updateIndex(0);
         emit(
           state.copyWith(
