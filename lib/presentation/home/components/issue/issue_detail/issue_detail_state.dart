@@ -11,8 +11,10 @@ class IssueDetailState {
   IssueEntity currentIssue;
   TextEditingController commentController;
   WebSocketChannel? channel;
+  bool issueUpdateLoader;
   ScrollController scrollController;
   IssueDetailState({
+    this.issueUpdateLoader = false,
     this.issueLoading = false,
     required this.scrollController,
     required this.currentIssue,
@@ -30,12 +32,14 @@ class IssueDetailState {
     List<CommentsEntity>? comments,
     bool? commentLoading,
     bool? issueLoading,
+    bool? issueUpdateLoader,
     CommentsEntity? replyTo,
     WebSocketChannel? channel,
     IssueEntity? currentIssue,
     TextEditingController? commentController,
   }) =>
       IssueDetailState(
+        issueUpdateLoader: issueUpdateLoader ?? this.issueUpdateLoader,
         issueLoading: issueLoading ?? this.issueLoading,
         scrollController: scrollController,
         currentIssue: currentIssue ?? this.currentIssue,

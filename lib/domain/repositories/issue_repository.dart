@@ -3,6 +3,7 @@ import 'package:masla_bolo_app/domain/entities/issue_coordinates_entity.dart';
 import 'package:masla_bolo_app/domain/failures/issue_failure.dart';
 
 import '../entities/issue_entity.dart';
+import '../model/issue_json.dart';
 import '../model/paginate.dart';
 
 abstract class IssueRepository {
@@ -31,7 +32,10 @@ abstract class IssueRepository {
   });
   Future<Either<IssueFailure, IssueEntity>> createIssue(IssueEntity issue);
   Future<Either<IssueFailure, IssueEntity>> updateIssue(IssueEntity issue);
-  Future<Either<IssueFailure, bool>> updateIssueStatus(IssueEntity issue);
+  Future<Either<IssueFailure, bool>> updateIssueStatus(
+    int id,
+    IssueStatus status,
+  );
   Future<Either<IssueFailure, void>> likeUnlikeIssue(int issueId);
   Future<Either<IssueFailure, bool>> deleteIssue(int issueId);
 }

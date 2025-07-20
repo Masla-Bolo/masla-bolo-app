@@ -74,7 +74,12 @@ class IssueDetailBody extends StatelessWidget {
                                 )));
                       }).toList(),
                     ),
-                    IssueBlinker(status: state.currentIssue.status),
+                    IssueBlinker(
+                      status: state.currentIssue.status,
+                      onStatusChange: (newStatus) {
+                        cubit.updateIssueStatus(newStatus);
+                      },
+                    ),
                     IssueDetailDiscussion(
                       focusNode: state.focusNode,
                       cubit: cubit,

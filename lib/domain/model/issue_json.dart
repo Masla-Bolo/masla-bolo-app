@@ -14,6 +14,7 @@ enum IssueStatus {
   approved,
   solving,
   officialSolved,
+  userConfirmation,
   solved,
 }
 

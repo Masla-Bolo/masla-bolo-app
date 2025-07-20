@@ -170,12 +170,13 @@ class ApiIssueRepository implements IssueRepository {
 
   @override
   Future<Either<IssueFailure, bool>> updateIssueStatus(
-    IssueEntity issue,
+    int id,
+    IssueStatus status,
   ) async {
     final response = await networkRepository.patch(
-      url: '/issues/${issue.id}/',
+      url: '/issues/${id.toString()}/change-status/',
       data: {
-        'status': IssueHelper.getIssueStatus(issue.status),
+        'new_status': IssueHelper.getIssueStatus(status),
       },
     );
     if (response.failed) {

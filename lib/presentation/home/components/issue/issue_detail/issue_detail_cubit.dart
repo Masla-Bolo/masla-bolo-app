@@ -2,17 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:masla_bolo_app/domain/entities/issue_entity.dart';
 import 'package:masla_bolo_app/domain/model/comments_json.dart';
+import 'package:masla_bolo_app/domain/model/issue_json.dart';
 import 'package:masla_bolo_app/helpers/strings.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../../../../domain/entities/comments_entity.dart';
 import '../../../../../domain/repositories/comment_repository.dart';
 import '../../../../../domain/stores/user_store.dart';
+import '../../../../../helpers/helpers.dart';
 import '../issue_cubit.dart';
 import 'issue_detail_initial_params.dart';
 import '../../../../../service/image_service.dart';
@@ -63,55 +63,68 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     navigator.pop();
   }
 
-  void fetchIssueById() {
+  void fetchIssueById({bool showLoading = true}) {
     if (!isClosed) {
-      localStorageRepository.getIssue(params.issueId.toString()).then(
-            (resp) => resp.fold(
-              (error) {
-                emit(state.copyWith(
-                  issueLoading: true,
-                  commentLoading: true,
-                  currentIssue: IssueEntity.empty(),
-                ));
-                issueRepository.getIssueyId(issueId: params.issueId).then(
-                      (response) => response.fold(
-                        (error) {
-                          emit(state.copyWith(
-                            issueLoading: false,
-                            commentLoading: false,
-                            currentIssue: error.issue,
-                          ));
-                        },
-                        (issue) {
-                          emit(state.copyWith(
-                            commentLoading: true,
-                            issueLoading: false,
-                            currentIssue: issue,
-                          ));
-                          fetchComments();
-                        },
-                      ),
-                    );
-              },
-              (issue) {
-                emit(state.copyWith(
-                  issueLoading: false,
-                  commentLoading: true,
-                  currentIssue: issue,
-                ));
-                fetchComments();
-              },
-            ),
-          );
+      if (showLoading) {
+        getLocalIssue();
+      } else {
+        getApiIssue();
+      }
     }
+  }
+
+  void getLocalIssue() async {
+    emit(state.copyWith(
+      issueLoading: true,
+      commentLoading: true,
+    ));
+    await localStorageRepository.getIssue(params.issueId.toString()).then(
+          (resp) => resp.fold(
+            (error) {
+              getApiIssue();
+            },
+            (issue) {
+              emit(state.copyWith(
+                commentLoading: true,
+                issueLoading: false,
+                currentIssue: issue,
+              ));
+              fetchComments();
+            },
+          ),
+        );
     initWebSocket();
+  }
+
+  void getApiIssue() {
+    issueRepository.getIssueyId(issueId: params.issueId).then(
+          (response) => response.fold(
+            (error) {
+              emit(state.copyWith(
+                issueLoading: false,
+                commentLoading: false,
+                currentIssue: error.issue,
+              ));
+            },
+            (issue) {
+              emit(state.copyWith(
+                commentLoading: true,
+                issueLoading: false,
+                currentIssue: issue,
+              ));
+              fetchComments();
+            },
+          ),
+        );
   }
 
   Future<void> fetchComments() async {
     commentRepository.getComments(params: {
       'issueId': params.issueId,
     }).then(
-      (response) => response.fold((error) {}, (comments) {
+      (response) => response.fold((error) {
+        emit(state.copyWith(commentLoading: false));
+      }, (comments) {
         if (!isClosed) {
           if (comments.isNotEmpty) {
             emit(state.copyWith(
@@ -293,5 +306,26 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
     state.channel!.sink.close();
     state.scrollController.dispose();
     return super.close();
+  }
+
+  void updateIssueStatus(IssueStatus newStatus) {
+    emit(state.copyWith(issueUpdateLoader: true));
+    issueRepository
+        .updateIssueStatus(state.currentIssue.id, newStatus)
+        .then((response) {
+      response.fold((error) {
+        emit(state.copyWith(issueUpdateLoader: false));
+        showToast(error.error,
+            params: ToastParam(
+              toastAlignment: Alignment.bottomCenter,
+            ));
+      }, (isUpdated) {
+        if (isUpdated) {
+          fetchIssueById(showLoading: false);
+          getIt<IssueCubit>().getIssues(clearAll: true);
+          emit(state.copyWith(issueUpdateLoader: false));
+        }
+      });
+    });
   }
 }

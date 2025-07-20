@@ -35,56 +35,65 @@ class IssueDetail extends StatelessWidget {
                               child:
                                   Text("Unable to fetch the issue right now!"),
                             )
-                          : Column(
+                          : Stack(
                               children: [
-                                10.verticalSpace,
-                                Row(
+                                Column(
                                   children: [
-                                    10.horizontalSpace,
-                                    GestureDetector(
-                                      onTap: () {
-                                        cubit.goBack();
-                                      },
-                                      child: Icon(Icons.arrow_back_ios_new,
-                                          size: 20,
-                                          color: context.colorScheme.onPrimary),
+                                    10.verticalSpace,
+                                    Row(
+                                      children: [
+                                        10.horizontalSpace,
+                                        GestureDetector(
+                                          onTap: () {
+                                            cubit.goBack();
+                                          },
+                                          child: Icon(Icons.arrow_back_ios_new,
+                                              size: 20,
+                                              color: context
+                                                  .colorScheme.onPrimary),
+                                        ),
+                                        20.horizontalSpace,
+                                        Expanded(
+                                          child: Text(
+                                            state.currentIssue.title,
+                                            style: Styles.boldStyle(
+                                              fontSize: 20,
+                                              color:
+                                                  context.colorScheme.onPrimary,
+                                              family: FontFamily.dmSans,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    20.horizontalSpace,
-                                    Expanded(
-                                      child: Text(
-                                        state.currentIssue.title,
-                                        style: Styles.boldStyle(
-                                          fontSize: 20,
-                                          color: context.colorScheme.onPrimary,
-                                          family: FontFamily.dmSans,
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 50),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          state.currentIssue.isAnonymous
+                                              ? "by an Anonymous user"
+                                              : "by: ${state.currentIssue.user.username}",
+                                          style: Styles.lightStyle(
+                                            fontSize: 15,
+                                            color:
+                                                context.colorScheme.onPrimary,
+                                            family: FontFamily.dmSans,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 50),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      state.currentIssue.isAnonymous
-                                          ? "by an Anonymous user"
-                                          : "by: ${state.currentIssue.user.username}",
-                                      style: Styles.lightStyle(
-                                        fontSize: 15,
-                                        color: context.colorScheme.onPrimary,
-                                        family: FontFamily.dmSans,
+                                    Expanded(
+                                      child: SingleChildScrollView(
+                                        controller: state.scrollController,
+                                        child: IssueDetailBody(cubit: cubit),
                                       ),
                                     ),
-                                  ),
+                                    IssueDetailFooter(cubit: cubit),
+                                  ],
                                 ),
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    controller: state.scrollController,
-                                    child: IssueDetailBody(cubit: cubit),
-                                  ),
-                                ),
-                                IssueDetailFooter(cubit: cubit),
+                                if (state.issueUpdateLoader)
+                                  const Center(child: Indicator())
                               ],
                             )),
             );

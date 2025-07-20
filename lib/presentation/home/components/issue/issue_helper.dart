@@ -87,6 +87,8 @@ class IssueHelper extends Equatable {
         return "official_solved";
       case IssueStatus.solved:
         return "solved";
+      case IssueStatus.userConfirmation:
+        return "pending_user_confirmation";
       // default:
       //   return "not_approved";
     }
@@ -104,6 +106,8 @@ class IssueHelper extends Equatable {
         return IssueStatus.officialSolved;
       case 'solved':
         return IssueStatus.solved;
+      case 'pending_user_confirmation':
+        return IssueStatus.userConfirmation;
       default:
         return IssueStatus.notApproved;
     }
@@ -141,6 +145,71 @@ class IssueHelper extends Equatable {
       return map.entries.firstWhere((entry) => entry.value == status).key;
     }
     return 0;
+  }
+
+  static IssueStatus? getNextStatus(IssueStatus currentStatus) {
+    switch (currentStatus) {
+      case IssueStatus.notApproved:
+        return IssueStatus.approved;
+      case IssueStatus.approved:
+        return IssueStatus.solving;
+      case IssueStatus.solving:
+        return IssueStatus.officialSolved;
+      case IssueStatus.officialSolved:
+        return IssueStatus.userConfirmation;
+      case IssueStatus.userConfirmation:
+        return IssueStatus.solved;
+      case IssueStatus.solved:
+        return null; // No next status
+    }
+  }
+
+  static String getActionText(
+      IssueStatus currentStatus, IssueStatus nextStatus) {
+    switch (nextStatus) {
+      case IssueStatus.approved:
+        return 'Approve Issue';
+      case IssueStatus.solving:
+        return 'Start Solving';
+      case IssueStatus.officialSolved:
+        return 'Mark as Official Solved';
+      case IssueStatus.solved:
+        return 'Mark as Solved';
+      default:
+        return 'Update Status';
+    }
+  }
+
+  static String getStatusDescription(
+      IssueStatus currentStatus, IssueStatus nextStatus) {
+    switch (nextStatus) {
+      case IssueStatus.approved:
+        return 'This will approve the issue and allow it to be worked on.';
+      case IssueStatus.solving:
+        return 'This will mark the issue as being actively worked on.';
+      case IssueStatus.officialSolved:
+        return 'This will mark the issue as officially solved by the team.';
+      case IssueStatus.solved:
+        return 'This will mark the issue as completely resolved.';
+      default:
+        return 'This will update the issue status.';
+    }
+  }
+
+  static bool canTransitionTo(
+      IssueStatus currentStatus, IssueStatus targetStatus) {
+    final nextStatus = getNextStatus(currentStatus);
+    return nextStatus == targetStatus;
+  }
+
+  static List<IssueStatus> getStatusHierarchy() {
+    return [
+      IssueStatus.notApproved,
+      IssueStatus.approved,
+      IssueStatus.solving,
+      IssueStatus.officialSolved,
+      IssueStatus.solved,
+    ];
   }
 
   @override
