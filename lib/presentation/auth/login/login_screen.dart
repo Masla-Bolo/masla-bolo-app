@@ -2,12 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../di/service_locator.dart';
 import '../../../helpers/extensions.dart';
 import '../../../helpers/helpers.dart';
-import '../../../helpers/styles/app_images.dart';
 import '../../../helpers/styles/styles.dart';
 import '../../../helpers/widgets/input_field.dart';
 import '../auth_cubit.dart';
@@ -155,51 +152,52 @@ class LoginScreen extends StatelessWidget {
                               ]),
                         ),
                         15.verticalSpace,
-                        if (state.role == "user") ...[
-                          Row(
-                            children: [
-                              const Expanded(child: Divider()),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0),
-                                child: Text(
-                                  'or',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: context.colorScheme.onPrimary,
-                                  ),
-                                ),
-                              ),
-                              const Expanded(child: Divider()),
-                            ],
-                          ),
-                          15.verticalSpace,
-                          OutlinedButton.icon(
-                            onPressed: () {
-                              loader(() => authCubit.googleSignIn());
-                            },
-                            icon: SvgPicture.asset(
-                              AppImages.google,
-                              height: 20,
-                            ),
-                            label: Text(
-                              'Sign in with Google',
-                              style: Styles.boldStyle(
-                                fontSize: 14,
-                                color: context.colorScheme.onPrimary,
-                                family: FontFamily.varela,
-                              ),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              minimumSize: const Size(double.infinity, 48),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                          15.verticalSpace,
-                        ],
+                        // if (state.role == "user") ...[
+                        //   Row(
+                        //     children: [
+                        //       const Expanded(child: Divider()),
+                        //       Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //             horizontal: 16.0),
+                        //         child: Text(
+                        //           'or',
+                        //           style: TextStyle(
+                        //             fontSize: 13,
+                        //             fontWeight: FontWeight.bold,
+                        //             color: context.colorScheme.onPrimary,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //       const Expanded(child: Divider()),
+                        //     ],
+                        //   ),
+                        // 15.verticalSpace,
+
+                        // OutlinedButton.icon(
+                        //   onPressed: () {
+                        //     loader(() => authCubit.googleSignIn());
+                        //   },
+                        //   icon: SvgPicture.asset(
+                        //     AppImages.google,
+                        //     height: 20,
+                        //   ),
+                        //   label: Text(
+                        //     'Sign in with Google',
+                        //     style: Styles.boldStyle(
+                        //       fontSize: 14,
+                        //       color: context.colorScheme.onPrimary,
+                        //       family: FontFamily.varela,
+                        //     ),
+                        //   ),
+                        //   style: OutlinedButton.styleFrom(
+                        //     minimumSize: const Size(double.infinity, 48),
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //   ),
+                        // ),
+                        15.verticalSpace,
+                        //   ],
                       ],
                     ),
                   ),

@@ -6,8 +6,10 @@ class CreateIssueState {
   final GlobalKey<FormState> key;
   final IssueEntity issue;
   final List<IssueHelper> categories;
+  final bool isLoading;
   CreateIssueState({
     required this.key,
+    this.isLoading = false,
     required this.issue,
     required this.categories,
   });
@@ -17,8 +19,10 @@ class CreateIssueState {
     IssueEntity? issue,
     bool? commentLoading,
     List<IssueHelper>? categories,
+    bool? isLoading,
   }) =>
       CreateIssueState(
+        isLoading: isLoading ?? this.isLoading,
         key: key ?? this.key,
         issue: issue ?? this.issue,
         categories: categories ?? this.categories,

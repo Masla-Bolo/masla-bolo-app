@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:masla_bolo_app/helpers/styles/app_colors.dart';
+import 'package:masla_bolo_app/presentation/home/components/issue/issue_cubit.dart';
 import 'package:masla_bolo_app/service/permission_service.dart';
 import '../../domain/entities/issue_entity.dart';
 import '../../domain/repositories/issue_repository.dart';
@@ -12,7 +13,6 @@ import 'create_issue_navigator.dart';
 import 'create_issue_state.dart';
 import '../../helpers/helpers.dart';
 import '../../service/image_service.dart';
-
 import '../../di/service_locator.dart';
 
 class CreateIssueCubit extends Cubit<CreateIssueState> {
@@ -62,44 +62,43 @@ class CreateIssueCubit extends Cubit<CreateIssueState> {
       return;
     }
 
-    final images = await imageHelper.uploadImages(state.issue.fileImages);
-
-    if (images.isEmpty) {
+    if (state.issue.fileImages.isEmpty) {
       showToast("Provide an image or a video as a proof");
       return;
     }
 
+    final images = await imageHelper.uploadImages(state.issue.fileImages);
+    emit(state.copyWith(isLoading: true));
     state.issue.images = images;
     state.issue.location.latitude = locationService.position.latitude;
     state.issue.location.longitude = locationService.position.longitude;
-
     final categories = state.categories
         .where((val) => val.isSelected)
         .map((value) => value.item)
         .toList();
-
     state.issue.categories = categories;
-
     final response = await issueRepository.createIssue(state.issue);
-
     response.fold(
       (error) {
         showToast(error.error);
+        emit(state.copyWith(isLoading: false));
       },
-      (success) {
+      (success) async {
         showToast("Issue created successfully",
             params: ToastParam(
               backgroundColor: AppColor.green,
               image: AppImages.successful,
               textColor: AppColor.white,
             ));
-        getIt<BottomBarCubit>().updateIndex(0);
         emit(
           state.copyWith(
+            isLoading: false,
             issue: IssueEntity.empty(),
             categories: IssueHelper.cloneInitialCategories(),
           ),
         );
+        await getIt<IssueCubit>().init();
+        getIt<BottomBarCubit>().updateIndex(0);
       },
     );
   }

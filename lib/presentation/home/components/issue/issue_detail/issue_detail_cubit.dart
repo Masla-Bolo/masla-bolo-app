@@ -65,38 +65,15 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
 
   void fetchIssueById({bool showLoading = true}) {
     if (!isClosed) {
-      if (showLoading) {
-        getLocalIssue();
-      } else {
-        getApiIssue();
-      }
+      getApiIssue(showLoading: showLoading);
     }
   }
 
-  void getLocalIssue() async {
+  void getApiIssue({bool showLoading = true}) {
     emit(state.copyWith(
-      issueLoading: true,
-      commentLoading: true,
+      issueLoading: showLoading,
+      commentLoading: showLoading,
     ));
-    await localStorageRepository.getIssue(params.issueId.toString()).then(
-          (resp) => resp.fold(
-            (error) {
-              getApiIssue();
-            },
-            (issue) {
-              emit(state.copyWith(
-                commentLoading: true,
-                issueLoading: false,
-                currentIssue: issue,
-              ));
-              fetchComments();
-            },
-          ),
-        );
-    initWebSocket();
-  }
-
-  void getApiIssue() {
     issueRepository.getIssueyId(issueId: params.issueId).then(
           (response) => response.fold(
             (error) {
@@ -116,6 +93,7 @@ class IssueDetailCubit extends Cubit<IssueDetailState> {
             },
           ),
         );
+    initWebSocket();
   }
 
   Future<void> fetchComments() async {

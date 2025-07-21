@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../helpers/strings.dart';
 import '../network_response.dart';
-import 'interceptors/dio_retry_interceptor.dart';
 
 class DioClient {
   final List<Interceptor> interceptors;
@@ -31,22 +28,23 @@ class DioClient {
 
   void _initializeDioClient() {
     dio.interceptors.addAll([
-      RetryInterceptor(
-        dio: dio,
-        options: RetryOptions(
-          retries: maxRetries,
-          retryInterval: const Duration(seconds: retryDelay),
-          retryEvaluator: (error) async {
-            if (error.type == DioExceptionType.connectionError ||
-                error.type == DioExceptionType.connectionTimeout ||
-                (error.response?.statusCode != null &&
-                    error.response!.statusCode! >= 500)) {
-              return true;
-            }
-            return false;
-          },
-        ),
-      ),
+      // RetryInterceptor(
+      //   dio: dio,
+      //   options: RetryOptions(
+      //     retries: maxRetries,
+      //     retryInterval: const Duration(seconds: retryDelay),
+      //     retryEvaluator: (error) async {
+      //       if (error.type == DioExceptionType.connectionError ||
+      //           error.type == DioExceptionType.connectionTimeout ||
+      //           (error.response?.statusCode != null &&
+      //               error.response!.statusCode! >= 500) ||
+      //           (error.requestOptions.method == "GET")) {
+      //         return true;
+      //       }
+      //       return false;
+      //     },
+      //   ),
+      // ),
       ...interceptors,
       PrettyDioLogger(
         requestHeader: true,
@@ -66,7 +64,6 @@ class DioClient {
     dynamic data;
     int code = 200;
     String success = "false";
-    log("ERROR IN DIO: ${error.message}");
     if (error.response?.data != null) {
       final responseData = error.response!.data;
       code = responseData["code"] ?? 200;
